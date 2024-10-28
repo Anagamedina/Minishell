@@ -2,6 +2,8 @@
 
 **Desarrollado por Ana Medina Burgos y Darunny Salazar**
 
+![Minishell Demo](assets/demo.gif)
+
 El proyecto **Minishell** busca crear un shell funcional que interprete y ejecute comandos de manera similar a Bash, cumpliendo con los requisitos fundamentales de la Academia 42.
 
 ## Objetivo
