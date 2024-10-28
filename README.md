@@ -1,4 +1,3 @@
-# Minishell
 # Proyecto Minishell
 
 **Desarrollado por Ana Medina Burgos y Darunny Salazar**
