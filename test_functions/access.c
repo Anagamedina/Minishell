@@ -2,7 +2,7 @@
 #include <unistd.h>
 
 int main() {
-    const char *ruta_archivo = "archivo.txt"; // Nombre del archivo a verificar
+    const char *ruta_archivo = "ejemplo.txt"; // Nombre del archivo a verificar
 
     // Verificamos si el archivo existe
     if (access(ruta_archivo, F_OK) == 0) {
