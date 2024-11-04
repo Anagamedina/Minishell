@@ -9,6 +9,9 @@
 # include <stdlib.h>  // malloc, free, exit
 # include <stdio.h>   // perror, printf
 # include <fcntl.h>   // open
+# include <sys/wait.h>  // wait, waitid
+# include <sys/types.h>  // pid_t
+
 #include "parsing.h"
 
 #endif
