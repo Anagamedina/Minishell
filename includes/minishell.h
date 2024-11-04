@@ -11,6 +11,7 @@
 # include <fcntl.h>   // open
 # include <sys/wait.h>  // wait, waitid
 # include <sys/types.h>  // pid_t
+# include "../libft/libft.h"
 
 #include "parsing.h"
 

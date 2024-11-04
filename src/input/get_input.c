@@ -21,7 +21,9 @@ t_cmd	*cmd_new(char *str, char **paths)
 		return (NULL);
 	}
 	cmd_path = get_cmd_path(new->cmd_args[0], paths);
+
 	if (cmd_path == NULL)
+	//para aqui!!!!!!!
 		return (handle_cmd_error(new));
 	free(new->cmd_args[0]);
 	new->cmd_args[0] = cmd_path;
@@ -38,11 +40,17 @@ t_cmd	*create_cmd_list(t_input *input)
 	int		i;
 
 	i = 0;
+	while (input->argvs[i])
+	{
+		printf("%s\n", input->argvs[i]);
+		i ++;
+	}
 	first = cmd_new(input->argvs[2], input->path);
 	if (!first)
 		return (NULL);
 	first->cmd_id = 2;
 	cmd = first;
+	i = 0;
 	while (i < input->cmd_count - 1)
 	{
 		new = cmd_new(input->argvs[3 + i], input->path);
@@ -58,37 +66,9 @@ t_cmd	*create_cmd_list(t_input *input)
 	}
 	return (first);
 }
-// BUSCA PATH EN ENV
-char	**get_path(char **env)
-{
-	char	**paths;
-	char	*path_var;
-	int		i;
-
-	paths = NULL;
-	path_var = NULL;
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path_var = ft_strdup(env[i] + 5);
-			break ;
-		}
-		i++;
-	}
-	if (path_var)
-	{
-		paths = ft_split(path_var, ':');
-		free(path_var);
-		if (!paths)
-			return (NULL);
-	}
-	return (paths);
-}
 
 // OPEN INPUT FILE
-static int	open_files(t_input *input, char **argv, int argc)
+int	open_files(t_input *input, char **argv, int argc)
 {
 	input->input_fd = open(argv[1], O_RDONLY);
 	if (input->input_fd == -1)
@@ -111,18 +91,20 @@ t_input	init_input(int argc, char **argv, char **env)
 {
 	t_input	input;
 
-	// input.cmd_count = (argc - 3);
+	input.cmd_count = (argc - 1);
+	// printf("%d\n", input.cmd_count);
 	input.argvs = argv;
-	input.input_fd = open(argv[1], O_RDONLY);
+	// input.input_fd = open(argv[1], O_RDONLY);
 	input.env = env;
-	if (!open_files(&input, argv, argc))
-		exit(EXIT_FAILURE);
+	// if (!open_files(&input, argv, argc))
+	// 	exit(EXIT_FAILURE);
 	input.path = get_path(env);
 	if (!input.path)
 	{
 		perror("Error: No se pudo obtener las rutas");
 		exit(EXIT_FAILURE);
 	}
+
 	input.first_cmd = create_cmd_list(&input);
 	if (input.first_cmd == NULL)
 	{

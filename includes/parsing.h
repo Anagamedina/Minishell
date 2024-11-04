@@ -32,20 +32,30 @@ typedef struct s_input
 }				t_input;
 
 
-// Commands and command lists
+//	GET_INPUT.C
+//	Commands and command lists
 t_cmd			*cmd_new(char *str, char **paths);
 t_cmd			*create_cmd_list(t_input *pipex);
+int				open_files(t_input *input, char **argv, int argc);
+t_input			init_input(int argc, char **argv, char **env);
 
+
+//	PATHS.C
 // Path and command management
-char			**get_path(char **env);
-char			*get_cmd_path(char *cmd, char **paths);
+char		*get_cmd_path(char *cmd, char **paths);
+t_cmd		*handle_cmd_error(t_cmd *new);
+char		**get_path(char **env);
 
 // Memory release functions
 void			free_cmd(t_cmd *cmd);
 void			free_cmd_list(t_cmd *cmd_list);
 void			free_paths(t_input pipex);
+void			free_input(t_input input);
 void			free_pipex(t_input pipex);
 void			free_split_result(char **result);
-t_cmd			*handle_cmd_error(t_cmd *new);
 
+
+// tests
+void print_input(t_input *input);
+void print_paths(char **paths);
 #endif

@@ -21,6 +21,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 		free(cmd_path);
 		i++;
 	}
+	// print_paths(&cmd_path);
 	return (NULL);
 }
 
@@ -31,3 +32,36 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 	free(new);
 	return (NULL);
 }
+
+
+// BUSCA PATH EN ENV
+char	**get_path(char **env)
+{
+	char	**paths;
+	char	*path_var;
+	int		i;
+
+	paths = NULL;
+	path_var = NULL;
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path_var = ft_strdup(env[i] + 5);
+			break ;
+		}
+		i++;
+	}
+	if (path_var)
+	{
+		paths = ft_split(path_var, ':');
+		free(path_var);
+		if (!paths)
+			return (NULL);
+	}
+	return (paths);
+}
+
+
+ 
