@@ -1,5 +1,8 @@
 
 #include "../../includes/minishell.h"
+//paths[0] = "/usr/local/bin"
+//full_path = "/usr/local/bin/"
+// cmd_path =  "/usr/local/bin/ls"
 
 char	*get_cmd_path(char *cmd, char **paths)
 {
@@ -7,11 +10,12 @@ char	*get_cmd_path(char *cmd, char **paths)
 	char	*full_path;
 	int		i;
 
+	if (cmd == NULL) return NULL;
 	// Retorna una copia del comando si es válido
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
 	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		full_path = ft_strjoin(paths[i], "/");
 		cmd_path = ft_strjoin(full_path, cmd);
@@ -34,7 +38,7 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 }
 
 
-// BUSCA PATH EN ENV
+// // Obtiene las rutas en PATH del entorno
 char	**get_path(char **env)
 {
 	char	**paths;
@@ -58,7 +62,10 @@ char	**get_path(char **env)
 		paths = ft_split(path_var, ':');
 		free(path_var);
 		if (!paths)
+		{
+			perror("Error: No se pudo dividir PATH en subrutas");
 			return (NULL);
+		}
 	}
 	return (paths);
 }

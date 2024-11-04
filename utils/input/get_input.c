@@ -3,6 +3,9 @@
 #include "../../includes/minishell.h"
 
 //  CREAR NODOS DE CADA COMANDO
+//str  =  "ls -l"
+// new->cmd_args[0]  = "ls",
+// new->cmd_args[1]  = "-l".
 t_cmd	*cmd_new(char *str, char **paths)
 {
 	t_cmd	*new;
@@ -21,10 +24,9 @@ t_cmd	*cmd_new(char *str, char **paths)
 		return (NULL);
 	}
 	cmd_path = get_cmd_path(new->cmd_args[0], paths);
-
 	if (cmd_path == NULL)
-	//para aqui!!!!!!!
 		return (handle_cmd_error(new));
+
 	free(new->cmd_args[0]);
 	new->cmd_args[0] = cmd_path;
 	new->next = NULL;
@@ -40,11 +42,11 @@ t_cmd	*create_cmd_list(t_input *input)
 	int		i;
 
 	i = 0;
-	while (input->argvs[i])
-	{
-		printf("%s\n", input->argvs[i]);
-		i ++;
-	}
+//	while (input->argvs[i])
+//	{
+//		printf("%s\n", input->argvs[i]);
+//		i ++;
+//	}
 	first = cmd_new(input->argvs[2], input->path);
 	if (!first)
 		return (NULL);
@@ -68,24 +70,24 @@ t_cmd	*create_cmd_list(t_input *input)
 }
 
 // OPEN INPUT FILE
-int	open_files(t_input *input, char **argv, int argc)
-{
-	input->input_fd = open(argv[1], O_RDONLY);
-	if (input->input_fd == -1)
-	{
-		perror("Error: Cannot open INPUT file");
-		return (0);
-	}
-	input->output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (input->output_fd == -1)
-	{
-		perror("Error: Cannot open OUTPUT file");
-		close(input->input_fd);
-		return (0);
-	}
-	return (1);
-}
-
+//int	open_files(t_input *input, char **argv, int argc)
+//{
+//	input->input_fd = open(argv[1], O_RDONLY);
+//	if (input->input_fd == -1)
+//	{
+//		perror("Error: Cannot open INPUT file");
+//		return (0);
+//	}
+//	input->output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+//	if (input->output_fd == -1)
+//	{
+//		perror("Error: Cannot open OUTPUT file");
+//		close(input->input_fd);
+//		return (0);
+//	}
+//	return (1);
+//}
+//
 // INIT STRUCT 
 t_input	init_input(int argc, char **argv, char **env)
 {

@@ -15,16 +15,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
 
 SRC_DIR = src
-INPUT_DIR = src/input
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
 
 SRC = 	$(SRC_DIR)/minishell.c \
-		$(INPUT_DIR)/get_input.c \
-		$(INPUT_DIR)/paths.c \
-		$(INPUT_DIR)/free_errors.c \
-		$(INPUT_DIR)/tests.c 
+
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
