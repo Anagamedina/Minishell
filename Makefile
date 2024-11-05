@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
+#    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/04 12:18:27 by anamedin         ###   ########.fr        #
+#    Updated: 2024/11/05 12:59:06 by  dasalaza        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -32,11 +32,11 @@ LIBFT = $(LIBFT_DIR)/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(MINISHELL_H) Makefile
-	@mkdir -p $(dir $@)
-# @mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
+# @mkdir -p $(dir $@)
 
 	$(CC) $(CFLAGS) -c $< -o $@
 

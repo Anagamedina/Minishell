@@ -12,6 +12,8 @@
 # include <sys/wait.h>  // wait, waitid
 # include <sys/types.h>  // pid_t
 # include "../libft/libft.h"
+# include <readline/readline.h>
+// # include <readline/history.h>
 
 #include "../utils/parsing.h"
 
