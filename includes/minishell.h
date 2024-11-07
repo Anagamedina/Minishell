@@ -25,7 +25,6 @@ typedef enum e_token_type
     REDIR_INPUT,    // Representa la redirección de entrada '<'
     CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
     NULL_TYPE       // Representa el final de la lista de tokens
-
 }                   t_token_type;
 
 //bonus libft
