@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/07 13:36:22 by anamedin         ###   ########.fr        #
+#    Updated: 2024/11/07 14:28:23 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/env_list.c 
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
-
+#falta los .o del bonus 
 
 LIBFT = $(LIBFT_DIR)/libft.a
 

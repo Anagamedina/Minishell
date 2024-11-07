@@ -15,12 +15,11 @@ int main(void)
 			continue;
 		}
 	}
-	// 2. Parsear el input
-	// if (check_syntax(input))
-	// {
-	// 	// Aquí deberías crear y manejar la lista de comandos
-	// 	// Suponiendo lista_comandos es un arreglo de cadenas
+	//Parsear el input
+	if (check_syntax(input))
+	{
+		
 
-	// }
+	}
 	return 0;
 }

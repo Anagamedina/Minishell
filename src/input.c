@@ -6,11 +6,17 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/07 13:38:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:48:39 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
+
+
+
+
 
 char	*read_input(void)
 {
@@ -22,16 +28,15 @@ char	*read_input(void)
 		{
 			// Si el usuario presiona Ctrl+D, salimos del bucle
 			printf("\nExiting minishell.\n");
-			break;
-			// continue;
+			continue;
 		}
 
 		if (input && *input)
 		{
             add_history(input);
-			printf("You entered: %s\n", input); // Muestra la entrada del usuario
+			printf("You entered: %s\n", input);
 		}
-		// free(input); // Liberamos la memoria asignada
+		free(input);
 	}
 	return (input);
 
