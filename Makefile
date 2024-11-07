@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
+#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/05 12:59:06 by  dasalaza        ###   ########.fr        #
+#    Updated: 2024/11/07 13:36:22 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
 
 SRC = 	$(SRC_DIR)/minishell.c \
-
+		$(SRC_DIR)/input.c \
+		$(SRC_DIR)/env.c \
+		$(SRC_DIR)/env_list.c 
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

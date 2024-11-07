@@ -1,7 +1,3 @@
-//
-// Created by daruuu on 11/2/24.
-//
-
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -14,8 +10,10 @@
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "macros.h"
+# include "prototype.h"
 
-#include "../utils/parsing.h"
+// #include "../utils/parsing.h"
 
 typedef enum e_token_type
 {
