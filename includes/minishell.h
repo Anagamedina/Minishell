@@ -15,8 +15,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-#include "../utils/parsing.h"
-
 typedef enum e_token_type
 {
     WORD,           // Representa una palabra o comando
@@ -30,11 +28,11 @@ typedef enum e_token_type
 //bonus libft
 typedef struct s_tokens
 {
-    char            *str;            // Contenido del token
-    t_token_type    token_type;      // Tipo del token
-    size_t          length;          // Longitud de 'str' (opcional)
+    char            *str;			// Contenido del token
+    t_token_type    token_type;		// Tipo del token
+    size_t          length;			// Longitud de 'str' (opcional)
     struct s_tokens *next;
-    struct s_tokens *prev;           // Puntero opcional al token anterior
+    struct s_tokens *prev;			// Puntero opcional al token anterior
 }                   t_tokens;
 
 //  
