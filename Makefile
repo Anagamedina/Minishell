@@ -15,16 +15,28 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 
 SRC_DIR = src
+SRC_ENV= $(SRC_DIR)/env
+SRC_INPUT= $(SRC_DIR)/input
+SRC_TOKEN = $(SRC_DIR)/tokenize
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
 
 SRC = 	$(SRC_DIR)/minishell.c \
-		$(SRC_DIR)/input.c \
-		$(SRC_DIR)/env.c \
-		$(SRC_DIR)/env_list.c 
+		$(SRC_INPUT)/input.c \
+		$(SRC_ENV)/env.c \
+		$(SRC_ENV)/env_list.c \
+		$(SRC_TOKEN)/check_syntax_01.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+
+#OBJ = $(patsubst \
+#		$(SRC_DIR)/%.c, \
+#		$(SRC_INPUT)/%.c, \
+#		$(SRC_ENV)/%.c, \
+#		$(SRC_TOKEN)/%.o, \
+#		$(OBJ_DIR)/%.o, \
+#		$(SRC))
 #falta los .o del bonus 
 
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -37,10 +49,9 @@ $(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(MINISHELL_H) Makefile
-	@mkdir -p $(OBJ_DIR)
-# @mkdir -p $(dir $@)
-
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
+#	@mkdir -p $(OBJ_DIR)
 
 # ==================================== #
 $(LIBFT):

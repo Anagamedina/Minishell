@@ -29,6 +29,7 @@ t_token_type	set_token_type(char *str)
 
 //  ls -l | cat -w | < **
 
+/*
 int	identify_redirecctions_pipes(char *readline)
 {
 	int words_in_line;
@@ -42,3 +43,4 @@ int	identify_redirecctions_pipes(char *readline)
 	}
 
 }
+*/

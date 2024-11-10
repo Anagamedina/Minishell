@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-
-
-
-
-
+#include "../../includes/minishell.h"
 
 char	*read_input(void)
 {
