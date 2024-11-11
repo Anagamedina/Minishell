@@ -27,6 +27,11 @@ typedef enum e_token_type
 }                   t_token_type;
 
 //bonus libft
+//cat -n abcd
+//cat
+//-n
+//abcd
+
 typedef struct s_tokens
 {
     char            *str;            // Contenido del token

@@ -28,9 +28,8 @@ int main(int argc, char **argv, char **envp)
 
 	}
 	//Parsear el input
-	/*if (check_syntax(input))
+	/*if (check_syntax(ietput))
 	{
-		
 
 	}*/
 	return (0);
