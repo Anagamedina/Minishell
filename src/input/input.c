@@ -146,6 +146,115 @@ void	validate_input(char *line)
 {
 	if (check_quotes_line(line) == 0)
 		printf("Error: Unmatched double quotes in the input.\n");
-	else if (check_syntax_order(line) == 1)
+//	else if (check_syntax_order(line) == 1)
+}
+
+int	is_valid_variable_key(const char *line)
+{
+	int i;
+
+	i = 0;
+	//	verificar primer caracter si es a-zA-z o _
+	if (ft_isalpha(line[i]) == 1 || line[i] == '_')
+		return (0);
+	i++;
+	while (line[i] != '\0' && line[i] != '=')
+	{
+		if (ft_isalnum(line[i]) == 1 || line[i] == '_')
+			return (0);
+		i ++;
+	}
+	return (1);
+}
+
+//	variablename=variable
+int	check_correct_variable_syntax(const char *line)
+{
+	int i;
+
+	i = 0;
+	//	verificar primer caracter si es a-zA-z o '_'
+	if (!(ft_isalpha(line[i])) || line[i] == '_')
+		return (0);
+	i++;
+//		while (line[i] != '\0' && line[i] != '=')
+	while (line[i] != '\0')
+	{
+		if (!(ft_isalnum(line[i])) || line[i] == '_')
+			return (0);
+		i ++;
+	}
+	if (line[i] == '=')
+		return (1);
+	return (0);
+}
+
+char	*clean_line_local_variables(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0' && line[i] != '=')
+		i++;
+//	hello=123
+	if (i > 0)
+	{
+		while (line[i] != '\0' && line[i] != ' ')
+		{
+			if (ft_isascii(line[i] == 1))
+				return (0);
+			i ++;
+		}
+	}
+	else
+		return (NULL);
+}
+
+/*
+ * gestionar variables locales(crear una lista)
+ * siguiendo el patron el el prompt string=string
+ * hay que guardarlo en una struct separado de env
+ * Example:
+ * case01:
+ * 		daruny=123
+ * 		echo $daruny -> 123
+ * case02:
+ * 		daruny="1"
+ * 		echo $daruny -> 1
+ * case03:
+ * 		d='1'
+ * 		echo $d -> 1
+ */
+
+t_env	*get_local_variables_list(char *line)
+{
+	t_env	*local_variable;
+	int 	i;
+	int 	len_key;
+	int 	len_value;
+
+	i = 0;
+	// check quote or double qoute
+	while (line[i] != '\0')
+	{
+		local_variable = init_struct_env();
+		if (local_variable == NULL)
+			return (NULL);
+		local_variable->full_var = ft_strdup(line);
+//		daruny=12345
+		len_key = ft_strchr_c(line, '=');
+		while (i < len_key && len_key > 0)
+		{
+			local_variable->key[i] = line[i];
+			i ++;
+		}
+		len_value = ft_strrchr_c(line, '=');
+		i = ft_strlen(line);
+		while (i > 0 && len_value > 0)
+		{
+			local_variable->value[i] = line[];
+
+		}
+	}
 
 }
