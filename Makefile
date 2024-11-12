@@ -26,7 +26,10 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_INPUT)/input.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_list.c \
-		$(SRC_TOKEN)/check_syntax_01.c
+		$(SRC_TOKEN)/token_type.c \
+		$(SRC_TOKEN)/token_utils.c \
+		$(SRC_TOKEN)/tokenize_input.c \
+		$(SRC_TOKEN)/token_free.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

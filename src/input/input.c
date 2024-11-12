@@ -142,10 +142,9 @@ int	check_syntax_order(char *line)
 	return (flag);
 }
 
-void	validate_input(char *line)
+/*void	validate_input(char *line)
 {
 	if (check_quotes_line(line) == 0)
 		printf("Error: Unmatched double quotes in the input.\n");
 	else if (check_syntax_order(line) == 1)
-
-}
+}*/
