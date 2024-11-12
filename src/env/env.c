@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+
+//TODO: falta corregir este codigo
+
 t_env	*get_env(char **envp)
 {
 	t_env	*head = NULL;
