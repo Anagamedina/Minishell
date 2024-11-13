@@ -69,44 +69,10 @@ int	check_quotes_line(char *line)
 }
 
 /*
- * VERIFICAR el patron
- * comanddo (opciones) [argumentos]
- *KEY=VALUE
-*/
-
-/*
-	aux function
-static char	*ft_epur(char *str)
-{
-	int		i = 0;
-	int		j = 0;
-	char	*result;
-
-	result = malloc(sizeof(char) * (strlen(str) + 1));
-	if (!result)
-		return (NULL);
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	while (str[i] != '\0')
-	{
-		while (str[i] && (str[i] != ' ' && str[i] != '\t'))
-			result[j++] = str[i++];
-		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
-			i++;
-		if (str[i] != '\0')
-			result[j++] = ' ';
-	}
-	result[j] = '\0';
-	return (result);
-}
-*/
-
-/*
  * TODO daruny: terminar esta funcion
  * checkear el orden la linea: comando option argumento
  * echo -n abcd
- */
-
+*/
 
 //	NOMBRE=VALOR
 int	validate_var_name(const char *line)
@@ -148,7 +114,6 @@ int	validate_var_value(const char *line)
 	}
 	return (1);
 }
-
 
 char	*get_var_name(char *line)
 {
@@ -219,7 +184,7 @@ char	*get_var_value(char *line)
  * 		echo $d -> 1
  * 	TODO: daruny: terminar esta funcion de get_local_variables_list
  */
-t_env	*get_local_variables_list(char *line)
+t_env	*create_local_vars_list(char *line)
 {
 	t_env	*local_variable;
 	int 	i;
@@ -256,5 +221,4 @@ void	validate_input(char *line)
 		add to new lista enlazada de variables locales
 	}
 */
-
 }

@@ -15,7 +15,9 @@ t_env	*get_env(char **envp);
 void	print_env_list(t_env *env_list);
 
 //	input.c
+int		check_quotes_line(char *line);
 char	*get_var_name(char *line);
 char	*get_var_value(char *line);
+void 	validate_input(char *line);
 
 #endif
