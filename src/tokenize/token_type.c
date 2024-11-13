@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int ft_strcmp(char *s1, char *s2)
+static int ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 && *s2 && (*s1 == *s2))
 	{
@@ -31,24 +31,13 @@ t_token_type	set_token_type(char *str)
 		return (REDIR_OUTPUT);
 	else if (ft_strcmp(str, "|") == 0)
 		return (PIPE);
-	else if (ft_strcmp(str, ">>"))
+	else if (ft_strcmp(str, ">>") == 0)
 		return (CONCAT_OUTPUT);
 	else if (str && ft_strlen(str) > 0)
 		return (WORD);
 	else
 		return (NULL_TYPE);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

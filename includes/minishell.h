@@ -15,7 +15,7 @@
 
 // #include "../utils/parsing.h"
 
-typedef enum e_token_type
+typedef enum t_token_type
 {
     WORD,           // Representa una palabra o comando
     PIPE,           // Representa el operador de tubería '|'
