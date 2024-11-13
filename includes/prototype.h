@@ -15,6 +15,7 @@ t_env	*get_env(char **envp);
 void	print_env_list(t_env *env_list);
 
 //	input.c
-
+char	*get_var_name(char *line);
+char	*get_var_value(char *line);
 
 #endif
