@@ -6,8 +6,9 @@
 
 
 typedef struct s_env t_env;
+typedef struct s_tokens t_tokens;
+
 typedef struct t_token_type t_token_type;
-typedef struct t_tokens t_tokens;
 
 //**************ENV************/
 t_env			*init_struct_env(void);

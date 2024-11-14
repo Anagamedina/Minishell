@@ -86,6 +86,8 @@ static void skip_whitespace(char *str, int *i)
  * tabulaciones o comillas) en la posición de la lista out*/
 static int copy_word(char **out, char *str, int start, int end, int *k)
 {
+
+	//TODO eleminar parametros ANA
 	out[*k] = (char *)malloc(sizeof(char) * (end - start + 1));
 	if (!out[*k])
 		return (-1);
@@ -97,6 +99,7 @@ static int copy_word(char **out, char *str, int start, int end, int *k)
  * comenzar el procesamiento de la cadena*/
 static int init_vars_split(int *i, int *k, int *wc, char ***out, char *str)
 {
+	//TODO eleminar parametros ANA
 	*i = 0;
 	*k = 0;
 	*wc = count_words(str);

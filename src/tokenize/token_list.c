@@ -24,6 +24,7 @@
 
 t_tokens	*init_token(char *str, t_token_type token_type)
 {
+
 	t_tokens	*new_token;
 
 	new_token = malloc(sizeof(t_tokens));
@@ -46,7 +47,7 @@ t_tokens	*init_token(char *str, t_token_type token_type)
 ** Devuelve un puntero a la lista de tokens o NULL si falla alguna asignación de memoria.
 */
 
-t_list	*tokenize_list(char *line)
+t_list *tokenize_list(char *line)
 {
 	t_list 			*tokens_list = NULL;
 	char 			**tokens;
