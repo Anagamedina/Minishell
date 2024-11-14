@@ -19,7 +19,6 @@ NAME = libft.a
 HEADER = libft.h
 
 SRCS =  ft_bzero.c ft_calloc.c \
-	ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c ft_memchr.c\
 	ft_atoi.c ft_strchr.c ft_strjoin.c \
     ft_strlen.c ft_strnstr.c ft_substr.c \
     ft_itoa.c ft_strdup.c ft_strlcat.c \

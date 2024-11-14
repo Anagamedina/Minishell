@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
+# include "prototype.h"
 # include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
 # include <stdlib.h>  // malloc, free, exit
 # include <stdio.h>   // perror, printf
@@ -11,9 +12,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "macros.h"
-# include "prototype.h"
-
-// #include "../utils/parsing.h"
 
 //bonus libft
 //cat -n abcd
@@ -21,23 +19,20 @@
 //-n
 //abcd
 
-
-typedef enum e_token_type
+typedef enum e_type_token
 {
-	WORD,           // Representa una palabra o comando
+	WORD = 0,           // Representa una palabra o comando
 	PIPE,           // Representa el operador de tubería '|'
 	REDIR_OUTPUT,   // Representa la redirección de salida '>'
 	REDIR_INPUT,    // Representa la redirección de entrada '<'
 	CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
 	NULL_TYPE       // Representa el final de la lista de tokens
-}	t_token_type;
-
-
+}	t_type_token;
 
 typedef struct s_tokens
 {
     char            *str;            // Contenido del token
-    t_token_type    token_type;      // Tipo del token
+    t_type_token	type_token;      // Tipo del token
     size_t          length;          // Longitud de 'str' (opcional)
     struct s_tokens *next;
     struct s_tokens *prev;           // Puntero opcional al token anterior

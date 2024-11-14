@@ -22,7 +22,7 @@
 ** Devuelve un puntero al nuevo token, o NULL si falla la asignación de memoria.
 */
 
-t_tokens	*init_token(char *str, t_token_type token_type)
+t_tokens	*init_token(char *str, t_type_token token_type)
 {
 
 	t_tokens	*new_token;
@@ -31,7 +31,7 @@ t_tokens	*init_token(char *str, t_token_type token_type)
 	if(!new_token)
 		return (NULL);
 	new_token->str = ft_strdup(str);
-	new_token->token_type = token_type;
+	new_token->type_token = token_type;
 	new_token->length = ft_strlen(str);
 	new_token->next = NULL;
 	new_token->prev = NULL;

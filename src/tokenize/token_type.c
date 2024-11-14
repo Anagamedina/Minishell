@@ -23,7 +23,7 @@ static int ft_strcmp(char *s1, char *s2)
 }
 
 //	(*tokens)->str
-t_token_type	set_token_type(char *str)
+int	set_token_type(char *str)
 {
 	if (ft_strcmp(str, "<") == 0)
 		return (REDIR_INPUT);
