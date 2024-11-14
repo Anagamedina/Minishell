@@ -29,7 +29,8 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_TOKEN)/token_type.c \
 		$(SRC_TOKEN)/token_utils.c \
 		$(SRC_TOKEN)/tokenize_input.c \
-		$(SRC_TOKEN)/token_free.c
+		$(SRC_TOKEN)/token_free.c \
+		$(SRC_TOKEN)/token_list.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
@@ -58,7 +59,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(MINISHELL_H) Makefile
 
 # ==================================== #
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	$(MAKE) -C $(LIBFT_DIR) bonus
 
 # ==================================== #
 clean:

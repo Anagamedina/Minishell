@@ -19,11 +19,12 @@ char			*read_input(void);
 int 			check_quotes_line(char *line);
 
 //********TOKENIZE*************/
+char			**tokenize_line(char *line);
 char 			**ft_split_quote(char *str);
 t_tokens		*init_token(char *str, int token_type);
 int 			set_token_type(char *str);
-t_list			*tokenize_list(char *line);
-
+t_list			*tokenize_list(char **tokens);
+void			print_list_token(t_list *tokens_list);
 
 
 #endif

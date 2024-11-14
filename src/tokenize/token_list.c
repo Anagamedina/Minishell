@@ -22,7 +22,7 @@
 ** Devuelve un puntero al nuevo token, o NULL si falla la asignación de memoria.
 */
 
-t_tokens	*init_token(char *str, t_type_token token_type)
+t_tokens	*init_token(char *str, int token_type)
 {
 
 	t_tokens	*new_token;
@@ -38,6 +38,23 @@ t_tokens	*init_token(char *str, t_type_token token_type)
 	return (new_token);
 }
 
+
+void	print_list_token(t_list *tokens_list)
+{
+	t_list	*current = tokens_list;
+	t_tokens *token;
+
+	while (current != NULL)
+	{
+		token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
+		printf("%s\n", token->str);
+		current = current->next;
+	}
+}
+
+
+
+
 /*
 ** Toma una línea de entrada y la divide en tokens, creando una lista enlazada de `t_list` donde
 ** cada nodo contiene un `t_tokens` que representa un token individual.
@@ -47,17 +64,17 @@ t_tokens	*init_token(char *str, t_type_token token_type)
 ** Devuelve un puntero a la lista de tokens o NULL si falla alguna asignación de memoria.
 */
 
-t_list *tokenize_list(char *line)
+t_list *tokenize_list(char **tokens)
 {
-	t_list 			*tokens_list = NULL;
-	char 			**tokens;
+	t_list			*tokens_list = NULL;
+	//char 			**tokens;
 	t_tokens 		*new_token;
 	t_list 			*new_node;
-	t_token_type 	type;
+	int 			type;
 	int i;
 
 	i = 0;
-	tokens = ft_split_quote(line);
+	//tokens = ft_split_quote(line);
 	if(!tokens)
 		return (NULL);
 	while(tokens[i])
@@ -86,4 +103,3 @@ t_list *tokenize_list(char *line)
 
 
 
-/**/

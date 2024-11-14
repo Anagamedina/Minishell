@@ -15,21 +15,12 @@
 char	*read_input(void)
 {
 	char *input;
-	while (1)
+
+	input = readline("minishell> "); // Muestra el prompt y lee la entrada
+	if (input && *input)
 	{
-		input = readline("minishell> "); // Muestra el prompt y lee la entrada
-		if (input == NULL)
-		{
-			// Si el usuario presiona Ctrl+D, salimos del bucle
-			printf("\nExiting minishell.\n");
-			continue;
-		}
-		if (input && *input)
-		{
-            add_history(input);
-			printf("You entered: %s\n", input);
-		}
-		free(input);
+		add_history(input);
+		//printf("line: %s\n", input);
 	}
 	return (input);
 }
@@ -63,7 +54,7 @@ int	check_quotes_line(char *line)
 	if (single_quotes % 2 != 0)
 	{
 		printf("Error: Unmatched single quotes in the input.\n");
-		return (0);
+		return (2);
 	}
 	return (1);
 }

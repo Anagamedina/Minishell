@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_input.c                                   :+:      :+:    :+:   */
+/*   tokenize_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -25,13 +25,11 @@ tokens[6] = "output.txt";
 tokens[7] = NULL;
 .*/
 
-char **tokenize_input(char *input)
+char	**tokenize_line(char *line)
 {
-	if (!check_quotes_line(input))
-	{
-		printf("Error: Unmatched quotes in the input.\n");
-		return NULL;
-	}
-	char **tokens = ft_split_quote(input);
+	char	**tokens;
+
+	tokens = NULL;
+	tokens = ft_split_quote(line);
 	return (tokens);
 }

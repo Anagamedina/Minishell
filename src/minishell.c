@@ -6,9 +6,13 @@ int main(int argc, char **argv, char **envp)
 	(void) argv;
 	char	*input;
 	t_env	*test_env;
+	char 	**line_tokens = NULL;
+	int 	i;
+	t_list 	*tokens_list = NULL;
+
 
 	test_env = get_env(envp);
-//	print_env_list(test_env);
+	//print_env_list(test_env);
 	if (!test_env)
 	{
 		fprintf(stderr, "Error al inicializar la lista de variables de entorno.\n");
@@ -24,8 +28,22 @@ int main(int argc, char **argv, char **envp)
 			printf("Error al leer el input\n");
 			continue;
 		}
-
+		line_tokens = tokenize_line(input);
+		//if (line_tokens == NULL)
+		if (!check_quotes_line(input))
+		{
+			printf("Error: Unmatched quotes in the line.\n");
+			continue;
+		}
+		i = 0;
+		while (line_tokens[i] != NULL)
+		{
+			printf("[%i] %s\n", i, line_tokens[i]);
+			i++;
+		}
+		print_list_token(tokens_list);
 	}
+
 	//Parsear el input
 	/*if (check_syntax(ietput))
 	{
