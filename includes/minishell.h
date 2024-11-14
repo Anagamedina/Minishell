@@ -15,22 +15,24 @@
 
 // #include "../utils/parsing.h"
 
-typedef enum e_token_type
-{
-    WORD,           // Representa una palabra o comando
-    PIPE,           // Representa el operador de tubería '|'
-    REDIR_OUTPUT,   // Representa la redirección de salida '>'
-    REDIR_INPUT,    // Representa la redirección de entrada '<'
-    CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
-    NULL_TYPE       // Representa el final de la lista de tokens
-
-}                   t_token_type;
-
 //bonus libft
 //cat -n abcd
 //cat
 //-n
 //abcd
+
+
+typedef enum e_token_type
+{
+	WORD,           // Representa una palabra o comando
+	PIPE,           // Representa el operador de tubería '|'
+	REDIR_OUTPUT,   // Representa la redirección de salida '>'
+	REDIR_INPUT,    // Representa la redirección de entrada '<'
+	CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
+	NULL_TYPE       // Representa el final de la lista de tokens
+}	t_token_type;
+
+
 
 typedef struct s_tokens
 {
@@ -41,7 +43,9 @@ typedef struct s_tokens
     struct s_tokens *prev;           // Puntero opcional al token anterior
 }                   t_tokens;
 
-//  
+
+
+//
 typedef struct s_env
 {
     char            *key;            // Clave de la variable de entorno
