@@ -15,7 +15,7 @@
 
 //TODO: falta corregir este codigo
 
-t_env	*get_env(char **envp)
+t_env	*init_env_list(char **envp)
 {
 	t_env	*head = NULL;
 	t_env	*new_env;
@@ -52,6 +52,20 @@ void	print_env_list(t_env *env_list)
 		env_list = env_list->next;
 	}
 }
+// env
+t_env	*get_env(char **envp)
+{
+	t_env	*new_env;
+
+	new_env = NULL;
+	new_env = init_env_list(envp);
+	if (!new_env)
+		return (NULL);
+	return(new_env);
+}
+
+
+
 
 /*
  * find key iterating througth list

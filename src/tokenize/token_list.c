@@ -12,7 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-
 /*
 ** Crea e inicializa un nuevo nodo `t_tokens` con la cadena y tipo de token proporcionados.
 ** - Reserva memoria para el token.
@@ -24,7 +23,6 @@
 
 t_tokens	*init_token(char *str, int token_type)
 {
-
 	t_tokens	*new_token;
 
 	new_token = malloc(sizeof(t_tokens));
@@ -38,7 +36,6 @@ t_tokens	*init_token(char *str, int token_type)
 	return (new_token);
 }
 
-
 void	print_list_token(t_list *tokens_list)
 {
 	t_list	*current = tokens_list;
@@ -47,13 +44,43 @@ void	print_list_token(t_list *tokens_list)
 	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
-		printf("%s\n", token->str);
+		printf("%s ", token->str);
+		printf("tipo: %d ", token->type_token);
+		printf("len: %zu\n", token->length);
+
 		current = current->next;
 	}
 }
 
+/* Retorno: Un array de strings,
+ * donde cada elemento es un token
+ * tokens[0] = "echo";
+ * tokens[1] = "hello world"; // Comillas gestionadas como un solo token
+tokens[2] = "|";
+tokens[5] = ">";
+tokens[6] = "output.txt";
+tokens[7] = NULL;
+*/
+/*
+ * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
+ * y creando una lista enlazada con los tokens procesados.
+ * Retorna la lista de tokens o NULL si hay un error.
+ */
 
+t_list	*generate_token_list(char *line)
+{
+	char	**tokens;
+	t_list 	*tokens_list;
 
+//	if (!check_quotes_line(line))
+//		return (NULL);
+	tokens_list = NULL;
+	tokens = NULL;
+	tokens = ft_split_quote(line);
+	tokens_list = tokenize_list(tokens);
+
+	return (tokens_list);
+}
 
 /*
 ** Toma una línea de entrada y la divide en tokens, creando una lista enlazada de `t_list` donde
@@ -70,17 +97,17 @@ t_list *tokenize_list(char **tokens)
 	//char 			**tokens;
 	t_tokens 		*new_token;
 	t_list 			*new_node;
-	int 			type;
+//	int 			type;
 	int i;
 
 	i = 0;
 	//tokens = ft_split_quote(line);
 	if(!tokens)
 		return (NULL);
-	while(tokens[i])
+	while (tokens[i])
 	{
-		type = set_token_type(tokens[i]);
-		new_token = init_token(tokens[i], type);
+//		type = set_token_type(tokens[i]);
+		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		if(!new_token)
 		{
 			ft_lstclear(&tokens_list, free);

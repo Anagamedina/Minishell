@@ -19,7 +19,7 @@ static int ft_strcmp(char *s1, char *s2)
 		s1++;
 		s2++;
 	}
-	return (*((unsigned char*)s1 - *(unsigned char *)s2));
+	return (*(unsigned char*)s1 - *(unsigned char *)s2);
 }
 
 //	(*tokens)->str
@@ -33,10 +33,10 @@ int	set_token_type(char *str)
 		return (PIPE);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (CONCAT_OUTPUT);
-	else if (str && ft_strlen(str) > 0)
+	else if (str && ft_strlen(str) >= 0)
 		return (WORD);
 	else
-		return (NULL_TYPE);
+		return (NULL_TYPE);	//error en seleccionar!!!
 }
 
 
