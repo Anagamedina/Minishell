@@ -17,6 +17,7 @@ void			print_env_list(t_env *env_list);
 //************** ENV_LIST ************/
 t_env			*init_struct_env(void);
 t_env	*create_local_vars_list(char *line);
+void	free_env_list(t_env *head);
 
 //************** ENV_LOCALS ************/
 

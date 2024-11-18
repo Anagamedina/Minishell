@@ -137,7 +137,6 @@ char	*get_var_value(char *line)
 void	check_var_local_input(char *line)
 {
 	t_env	*var_local_list;
-
 //
 	if (!(validate_var_name(line)))
 	{
@@ -153,6 +152,7 @@ void	check_var_local_input(char *line)
 	if (!var_local_list)
 	{
 		printf("Error creating local variable list\n");
+		free_env_list(var_local_list);
 		return ;
 	}
 	else

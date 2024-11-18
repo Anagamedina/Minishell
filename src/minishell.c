@@ -27,7 +27,7 @@ int main(int argc, char **argv, char **envp)
 		printf("--------------------\n");
 		printf("check_var_local_input\n");
 		printf("--------------------\n");
-		check_var_local_input(input);
+//		check_var_local_input(input);
 		printf("--------------------\n");
 		tokens_list = generate_token_list(input);
 //		if (!tokens_list)
