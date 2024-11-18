@@ -40,32 +40,27 @@ int	set_token_type(char *str)
 
 void update_words_to_builtin(t_list *tokens_list)
 {
-	t_list *current;
-	t_tokens *token;
-	char	*built_ins;
-
-	built_ins = {"echo", "export", "unset", "env", "cd", };
+	t_list	 	*current;
+	t_tokens 	*token;
+	char		*built_ins[] = BUILTINS_LIST;
+	int 		i;
 
 	current = tokens_list;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		while (token->type_token == WORD)
+		if (token->type_token == WORD)
 		{
-			if(ft_strcmp(token->str, "echo") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "export") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "unset") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "env") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "cd") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "pwd") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "exit") == 0)
-				token->type_token = BUILT_INS;
+			i = 0;
+			while(built_ins[i])
+			{
+				if(ft_strcmp(token->str, built_ins[i]) == 0)
+				{
+					token->type_token = BUILT_INS;
+					break;
+				}
+				i++;
+			}
 		}
 		current = current->next;
 	}
