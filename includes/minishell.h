@@ -27,6 +27,7 @@ typedef enum e_type_token
 	REDIR_INPUT,    // Representa la redirección de entrada '<'
 	CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
 	NULL_TYPE       // Representa el final de la lista de tokens
+	BUILT_INS       // Representa builtins
 }	t_type_token;
 
 typedef struct s_tokens

@@ -52,6 +52,31 @@ void	print_list_token(t_list *tokens_list)
 	}
 }
 
+int	analize_tokens(t_list *tokens_list)
+{
+	t_list		*current;
+	t_tokens	*token;
+	int 		i;
+
+	current = tokens_list;
+	while (current->next != NULL)
+	{
+		token = (t_tokens *)current->content;
+		if (token->type_token == WORD)
+		{
+			i = 0;
+			while (token->str[i])
+			{
+				if (token->str[i] < 'a' || token->str[i] > 'z')
+					return (FALSE);
+				i++;
+			}
+		}
+		current = current->next;
+	}
+	return (TRUE);
+}
+
 /* Retorno: Un array de strings,
  * donde cada elemento es un token
  * tokens[0] = "echo";
@@ -77,8 +102,13 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);
+	//	analizar cada token
 	tokens_list = tokenize_list(tokens);
-
+	if (analize_tokens(tokens_list) == 0)
+	{
+		printf("error analize tokens WORDS\n");
+		return (NULL);
+	}
 	return (tokens_list);
 }
 
