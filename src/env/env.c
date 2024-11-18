@@ -12,7 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-
 //TODO: falta corregir este codigo
 
 t_env	*init_env_list(char **envp)

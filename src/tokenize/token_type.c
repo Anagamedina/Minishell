@@ -9,7 +9,6 @@
 /*   Updated: 2024/11/12 13:30:21 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 static int ft_strcmp(char *s1, char *s2)
@@ -33,13 +32,11 @@ int	set_token_type(char *str)
 		return (PIPE);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (CONCAT_OUTPUT);
-	else if (str && ft_strlen(str) >= 0)
+	else if (str && ft_strlen(str) > 0)
 		return (WORD);
 	else
 		return (NULL_TYPE);	//error en seleccionar!!!
 }
-
-
 
 //  ls -l | cat -w | < **
 /*int	identify_redirecctions_pipes(char *readline)
@@ -54,4 +51,3 @@ int	set_token_type(char *str)
 
 	}
 }*/
-

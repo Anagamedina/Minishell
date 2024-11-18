@@ -25,10 +25,30 @@ t_env	*init_struct_env(void)
 	new_envp->next = NULL;
 	return (new_envp);
 }
+/*
+ * using this function to free the env list local variable
+ */
+void	free_env_list(t_env *head)
+{
+	t_env *tmp;
+
+	while (head != NULL)
+	{
+		tmp = head;
+		head = head->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp->full_var);
+
+		free(tmp);
+	}
+}
 
 /*
- * Crea un nodo de una lista enlazada para almacenar una variable local.
- * Obtiene el nombre (key) y el valor (value) de la variable a partir de una línea en formato NOMBRE=VALOR.
+ * Crea un nodo de una lista enlazada para almacenar una variable local
+ * en el entorno actual del shell.
+ * get name (key) and value (value) de la variable
+ * formato NOMBRE=VALOR.
  * Retorna un puntero a la estructura creada, o NULL si ocurre un error.
  */
 t_env	*create_local_vars_list(char *line)

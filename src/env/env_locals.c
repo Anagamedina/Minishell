@@ -5,25 +5,26 @@
  * Un nombre válido comienza con una letra o un guion bajo ('_')
  * y solo puede contener caracteres alfanuméricos.
  * Retorna 1 si es válido, 0 si no lo es.
- */
+*/
 int	validate_var_name(const char *line)
 {
 	int i;
 
-	i = 0;
 	// Verificar primer carácter si es a-zA-Z o '_'
-	if ((ft_isalpha(line[i])) || line[i] == '_')
-		return (0);
-	i++;
+	// agregar caso de '_' da error !!!
+	if (!(ft_isalpha(line[0])) || ft_isdigit(line[0]))
+		return (FALSE);	//0
+	i = 1;
 	while (line[i] != '\0' && line[i] != '=')
 	{
-		if ((ft_isalnum(line[i])))
-			return (0);
+		if (!(ft_isalnum(line[i]) || line[i] == '_'))
+			return (FALSE);
 		i++;
 	}
 	if (line[i] == '=')
-		return (1);
-	return (0);
+		return (TRUE);
+	else
+		return (FALSE);
 }
 
 /*
@@ -37,18 +38,18 @@ int	validate_var_value(const char *line)
 	int i;
 
 	i = 0;
-	while (line[i] != '\0' || line[i] != '=')
+	while (line[i] != '=' && line[i] != '\0')
 		i++;
 	if (line[i] != '=')
-		return (0);
+		return (FALSE);
 	i++;
 	while (line[i] != '\0')
 	{
-		if (!(ft_isalnum(line[i]))) // Verifica si los caracteres son alfanuméricos
-			return (0);
+		if (!(ft_isascii(line[i])))
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 /*
@@ -137,23 +138,26 @@ void	check_var_local_input(char *line)
 {
 	t_env	*var_local_list;
 
-//if (check_quotes_line(line) == 0)
-		//printf("Error: Unmatched double quotes in the input.\n");
-//	if ( !(validate_var_name(line)) || !(validate_var_value(line)))
-	if ((validate_var_name(line)))
-		printf("Error validating var_name and var_value\n");
+//
+	if (!(validate_var_name(line)))
+	{
+		printf("Error validating var_name\n");
+		return ;
+	}
+	if (!(validate_var_value(line)))
+	{
+		printf("Error validating var_value\n");
+		return ;
+	}
+	var_local_list = create_local_vars_list(line);
+	if (!var_local_list)
+	{
+		printf("Error creating local variable list\n");
+		return ;
+	}
 	else
 	{
-		printf("llega aqui 1\n");
-		var_local_list = create_local_vars_list(line);
-		printf("%s\n", var_local_list->key);
-//		print_env_list(var_local_list);
+		printf("var_key: %s\n", var_local_list->key);
+		printf("var_value: %s\n", var_local_list->value);
 	}
-/*	if (line is correct)
-	{
- 		get_var_name
- 		get_var_value
-		add to new lista enlazada de variables locales
-	}
-*/
 }

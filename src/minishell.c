@@ -6,7 +6,7 @@ int main(int argc, char **argv, char **envp)
 	(void) argv;
 	char	*input;
 	t_env	*test_env;
-//	t_list 	*tokens_list = NULL;
+	t_list 	*tokens_list = NULL;
 
 	test_env = get_env(envp);
 	if (!test_env)
@@ -19,14 +19,20 @@ int main(int argc, char **argv, char **envp)
 		input = read_input();
 		if (!input || !check_quotes_line(input))
 		{
-			// printf(stderr, "Error al leer el input\n");
 			printf("Error al leer el input\n");
-//			printf("Error: Unmatched quotes in the line.\n");
+			free(input);
 			continue;
 		}
-//		check_var_local_input(input);
-//		tokens_list = generate_token_list(input);
-//		print_list_token(tokens_list);
+//		caso: variable local de shell
+		printf("--------------------\n");
+		printf("check_var_local_input\n");
+		printf("--------------------\n");
+		check_var_local_input(input);
+		printf("--------------------\n");
+		tokens_list = generate_token_list(input);
+//		if (!tokens_list)
+//			printf("error token list\n");
+		print_list_token(tokens_list);
 	}
 	return (0);
 }

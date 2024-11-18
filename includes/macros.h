@@ -4,4 +4,7 @@
 # include "prototype.h"
 # include "minishell.h"
 
+#define TRUE 1
+#define FALSE 0
+
 #endif

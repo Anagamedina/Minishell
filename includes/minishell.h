@@ -38,8 +38,6 @@ typedef struct s_tokens
     struct s_tokens *prev;           // Puntero opcional al token anterior
 }                   t_tokens;
 
-
-
 //
 typedef struct s_env
 {

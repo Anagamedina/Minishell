@@ -91,29 +91,24 @@ t_list	*generate_token_list(char *line)
 ** Devuelve un puntero a la lista de tokens o NULL si falla alguna asignación de memoria.
 */
 
-t_list *tokenize_list(char **tokens)
+t_list	*tokenize_list(char **tokens)
 {
 	t_list			*tokens_list = NULL;
-	//char 			**tokens;
 	t_tokens 		*new_token;
 	t_list 			*new_node;
-//	int 			type;
 	int i;
 
 	i = 0;
-	//tokens = ft_split_quote(line);
 	if(!tokens)
 		return (NULL);
 	while (tokens[i])
 	{
-//		type = set_token_type(tokens[i]);
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		if(!new_token)
 		{
 			ft_lstclear(&tokens_list, free);
 			return (NULL);
 		}
-
 		new_node = ft_lstnew(new_token);
 		if(!new_node)
 		{
@@ -127,6 +122,3 @@ t_list *tokenize_list(char **tokens)
 	free(tokens);
 	return (tokens_list);
 }
-
-
-
