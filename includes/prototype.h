@@ -7,7 +7,7 @@
 
 typedef struct s_env t_env;
 typedef struct s_tokens t_tokens;
-
+typedef struct s_cmd t_cmd;
 
 //**************ENV************/
 t_env			*init_env_list(char **envp);
@@ -16,8 +16,8 @@ void			print_env_list(t_env *env_list);
 
 //************** ENV_LIST ************/
 t_env			*init_struct_env(void);
-t_env	*create_local_vars_list(char *line);
-void	free_env_list(t_env *head);
+t_env			*create_local_vars_list(char *line);
+void			free_env_list(t_env *head);
 
 //************** ENV_LOCALS ************/
 
@@ -43,4 +43,8 @@ void 			update_words_to_builtin(t_list *tokens_list);
 
 //**************PRINT********/
 void			print_list_token(t_list *tokens_list);
+
+//************** INIT_COMMAND.C ********/
+void			print_list_commands(t_list *cmd_list);
+
 #endif

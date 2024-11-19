@@ -114,7 +114,7 @@ static int init_vars_split(int *i, int *k, int *wc, char ***out, char *str)
 /*Es la función principal que utiliza
 las otras funciones para dividir la cadena
  en palabras, considerando las comillas.
- */
+*/
 
 //**********MAIN FUNCTION***************/
 char **ft_split_quote(char *str)
