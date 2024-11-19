@@ -26,9 +26,9 @@ typedef enum e_type_token
 	REDIR_OUTPUT,   // Representa la redirección de salida '>'
 	REDIR_INPUT,    // Representa la redirección de entrada '<'
 	CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
-	NULL_TYPE       // Representa el final de la lista de tokens
+	NULL_TYPE,       // Representa el final de la lista de tokens
 	BUILT_INS       // Representa builtins
-}	t_type_token;
+}					t_type_token;
 
 typedef struct s_tokens
 {
@@ -37,7 +37,7 @@ typedef struct s_tokens
     size_t          length;          // Longitud de 'str' (opcional)
     struct s_tokens *next;
     struct s_tokens *prev;           // Puntero opcional al token anterior
-}                   t_tokens;
+}					t_tokens;
 
 //
 typedef struct s_env
@@ -84,6 +84,5 @@ typedef struct s_mini
     int             exit_status;    // Estado de salida del último comando ejecutado
     // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
-
 
 #endif

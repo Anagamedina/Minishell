@@ -52,6 +52,7 @@ void	print_env_list(t_env *env_list)
 	}
 }
 // env
+//	************** MAIN FUNCTION ***********/
 t_env	*get_env(char **envp)
 {
 	t_env	*new_env;
@@ -60,29 +61,34 @@ t_env	*get_env(char **envp)
 	new_env = init_env_list(envp);
 	if (!new_env)
 		return (NULL);
-	return(new_env);
+	return (new_env);
 }
 
-
-
-
 /*
- * find key iterating througth list
+ * to find a variable in env
+ * we need to use getenv()
+ * char *getenv(const char *varname);
+ *
  * and change env->value;
+ * find key iterating througth list
  */
+
 /*
-void	modify_var_env(t_env **list_envp, char *key)
+void	find_env_variable(t_env **list_envp, char *key)
 {
     
 }
 */
+
 /*
- *	crear una nueva VARIABLE de entorno a nuestro ENV
+ *	crear una nueva VARIABLE de entorno
+ *	y agregarla a nuestro ENV list
  *	call init_struct_env()
  *	ft_lst_add_back()
  */
 /*
-t_env	*add_new_var(t_env **list_envp, char *new_var)
+void	add_new_var(t_env **list_envp, char *new_var)
 {
+
 }
 */

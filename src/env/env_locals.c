@@ -12,7 +12,7 @@ int	validate_var_name(const char *line)
 
 	// Verificar primer carácter si es a-zA-Z o '_'
 	// agregar caso de '_' da error !!!
-	if (!(ft_isalpha(line[0])) || ft_isdigit(line[0]))
+	if (!(ft_isalpha(line[0])) && ft_isdigit(line[0]))
 		return (FALSE);	//0
 	i = 1;
 	while (line[i] != '\0' && line[i] != '=')

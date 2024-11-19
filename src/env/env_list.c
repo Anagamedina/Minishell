@@ -39,7 +39,6 @@ void	free_env_list(t_env *head)
 		free(tmp->key);
 		free(tmp->value);
 		free(tmp->full_var);
-
 		free(tmp);
 	}
 }
@@ -63,3 +62,5 @@ t_env	*create_local_vars_list(char *line)
 	local_variable->next = NULL;
 	return (local_variable);
 }
+
+//	hello=daruny
