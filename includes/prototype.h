@@ -37,8 +37,10 @@ char 			**ft_split_quote(char *str);
 t_tokens		*init_token(char *str, int token_type);
 int 			set_token_type(char *str);
 t_list			*tokenize_list(char **tokens);
+int				analize_tokens(t_list *tokens_list);
+int				identify_commands(t_list *tokens_list);
+void 			update_words_to_builtin(t_list *tokens_list);
+
+//**************PRINT********/
 void			print_list_token(t_list *tokens_list);
-int	I			analize_tokens(t_list *tokens_list);
-
-
 #endif

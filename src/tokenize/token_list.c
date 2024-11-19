@@ -102,10 +102,16 @@ t_list	*generate_token_list(char *line)
 	tokens = NULL;
 	tokens = ft_split_quote(line);
 	tokens_list = tokenize_list(tokens);
-	if (analize_tokens(tokens_list) == 0)
+/*	if (!(analize_tokens(tokens_list)))
 	{
 		printf("error analize tokens WORDS\n");
 		ft_lstclear(&tokens_list, free);
+		return (NULL);
+	}*/
+	//update_words_to_builtin(tokens_list);
+	if(identify_commands(tokens_list) == 0)
+	{
+		printf("error identify commands\n");
 		return (NULL);
 	}
 	return (tokens_list);

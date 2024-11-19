@@ -37,75 +37,82 @@ int	set_token_type(char *str)
 	else
 		return (NULL_TYPE);	//error en seleccionar!!!
 }
+// Función que verifica si el token es un built-in
+static int is_builtin(char *str)
+{
+	char *built_ins[] = BUILTINS_LIST;
+	int i = 0;
 
+	while (built_ins[i])
+	{
+		if (ft_strcmp(str, built_ins[i]) == 0)
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+
+// Función que actualiza los tokens a built-ins si corresponde
 void update_words_to_builtin(t_list *tokens_list)
 {
-	t_list	 	*current;
-	t_tokens 	*token;
-	char		*built_ins[] = BUILTINS_LIST;
-	int 		i;
+	t_list *current = tokens_list;
 
-	current = tokens_list;
 	while (current)
 	{
-		token = (t_tokens *)current->content;
-		if (token->type_token == WORD)
+		t_tokens *token = (t_tokens *)current->content;
+
+		if (token->type_token == WORD)  // Si el token es una palabra
 		{
-			i = 0;
-			while(built_ins[i])
-			{
-				if(ft_strcmp(token->str, built_ins[i]) == 0)
-				{
-					token->type_token = BUILT_INS;
-					break;
-				}
-				i++;
-			}
+			if (is_builtin(token->str))
+				token->type_token = BUILT_INS;
 		}
+
+		current = current->next;
+	}
+}
+// Función que actualiza el tipo de los tokens después de un pipe
+void update_after_pipe_to_builtin(t_list *tokens_list)
+{
+	t_list *current = tokens_list;
+	int after_pipe = 0;  // Flag para saber si es después de un pipe
+
+	while (current)
+	{
+		t_tokens *token = (t_tokens *)current->content;
+
+		if (token->type_token == PIPE)
+			after_pipe = 1;
+		else if (after_pipe && token->type_token == WORD)
+		{
+			if (is_builtin(token->str))
+				token->type_token = BUILT_INS;
+			after_pipe = 0;  // Reset flag
+		}
+
 		current = current->next;
 	}
 }
 
-
-int	identify_commands(t_list *tokens_list)
+// **Identifica los comandos en la lista de tokens
+int identify_commands(t_list *tokens_list)
 {
-	t_list		*current;
-	t_tokens	*tokens;
-	int 		is_start;
+	t_list      *current;
+	t_tokens    *tokens;
 
 	if (!tokens_list)
 		return (FALSE);
 
-	is_start = 1; // Se espera un comando al inicio
 	current = tokens_list;
 	while (current)
 	{
 		tokens = (t_tokens *)current->content;
-		if (tokens->type_token == BUILT_INS)
+		if (tokens->type_token == WORD)
 		{
-			if (is_start)
-				is_start = 0;
-
+			update_words_to_builtin(tokens_list);
 		}
-		else if (tokens->type_token == PIPE)
-			is_start = 1;  // Después de un pipe, se espera un nuevo comando
-		else
-			is_start = 0;
 		current = current->next;
 	}
+	update_after_pipe_to_builtin(tokens_list);
+
 	return (TRUE);
 }
-
-//  ls -l | cat -w | < **
-/*int	identify_redirecctions_pipes(char *readline)
-{
-	int words_in_line;
-	char **clean_line;
-
-	words_in_line = count_words(readline);
-	if (words_in_line > 0) {
-		clean_line = ft_split(readline, ' ');
-		//  categorizar cada token con su tipo
-
-	}
-}*/
