@@ -24,11 +24,11 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 //		caso: variable local de shell
-		printf("--------------------\n");
-		printf("check_var_local_input\n");
-		printf("--------------------\n");
+//		printf("--------------------\n");
+//		printf("check_var_local_input\n");
+//		printf("--------------------\n");
 //		check_var_local_input(input);
-		printf("--------------------\n");
+//		printf("--------------------\n");
 		tokens_list = generate_token_list(input);
 //		if (!tokens_list)
 //			printf("error token list\n");
