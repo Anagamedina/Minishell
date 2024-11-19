@@ -40,35 +40,60 @@ int	set_token_type(char *str)
 
 void update_words_to_builtin(t_list *tokens_list)
 {
-	t_list *current;
-	t_tokens *token;
-	char	*built_ins;
-
-	built_ins = {"echo", "export", "unset", "env", "cd", };
+	t_list	 	*current;
+	t_tokens 	*token;
+	char		*built_ins[] = BUILTINS_LIST;
+	int 		i;
 
 	current = tokens_list;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		while (token->type_token == WORD)
+		if (token->type_token == WORD)
 		{
-			if(ft_strcmp(token->str, "echo") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "export") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "unset") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "env") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "cd") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "pwd") == 0)
-				token->type_token = BUILT_INS;
-			else if(ft_strcmp(token->str, "exit") == 0)
-				token->type_token = BUILT_INS;
+			i = 0;
+			while(built_ins[i])
+			{
+				if(ft_strcmp(token->str, built_ins[i]) == 0)
+				{
+					token->type_token = BUILT_INS;
+					break;
+				}
+				i++;
+			}
 		}
 		current = current->next;
 	}
+}
+
+
+int	identify_commands(t_list *tokens_list)
+{
+	t_list		*current;
+	t_tokens	*tokens;
+	int 		is_start;
+
+	if (!tokens_list)
+		return (FALSE);
+
+	is_start = 1; // Se espera un comando al inicio
+	current = tokens_list;
+	while (current)
+	{
+		tokens = (t_tokens *)current->content;
+		if (tokens->type_token == BUILT_INS)
+		{
+			if (is_start)
+				is_start = 0;
+
+		}
+		else if (tokens->type_token == PIPE)
+			is_start = 1;  // Después de un pipe, se espera un nuevo comando
+		else
+			is_start = 0;
+		current = current->next;
+	}
+	return (TRUE);
 }
 
 //  ls -l | cat -w | < **
