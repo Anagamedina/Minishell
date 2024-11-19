@@ -66,6 +66,36 @@ void update_words_to_builtin(t_list *tokens_list)
 	}
 }
 
+
+int	identify_commands(t_list *tokens_list)
+{
+	t_list		*current;
+	t_tokens	*tokens;
+	int 		is_start;
+
+	if (!tokens_list)
+		return (FALSE);
+
+	is_start = 1; // Se espera un comando al inicio
+	current = tokens_list;
+	while (current)
+	{
+		tokens = (t_tokens *)current->content;
+		if (tokens->type_token == BUILT_INS)
+		{
+			if (is_start)
+				is_start = 0;
+
+		}
+		else if (tokens->type_token == PIPE)
+			is_start = 1;  // Después de un pipe, se espera un nuevo comando
+		else
+			is_start = 0;
+		current = current->next;
+	}
+	return (TRUE);
+}
+
 //  ls -l | cat -w | < **
 /*int	identify_redirecctions_pipes(char *readline)
 {

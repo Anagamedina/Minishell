@@ -38,6 +38,7 @@ t_tokens		*init_token(char *str, int token_type);
 int 			set_token_type(char *str);
 t_list			*tokenize_list(char **tokens);
 void			print_list_token(t_list *tokens_list);
+int	I			analize_tokens(t_list *tokens_list);
 
 
 #endif

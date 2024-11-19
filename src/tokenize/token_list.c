@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 /*
 ** Crea e inicializa un nuevo nodo `t_tokens` con la cadena y tipo de token proporcionados.
 ** - Reserva memoria para el token.
@@ -102,11 +101,11 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);
-	//	analizar cada token
 	tokens_list = tokenize_list(tokens);
 	if (analize_tokens(tokens_list) == 0)
 	{
 		printf("error analize tokens WORDS\n");
+		ft_lstclear(&tokens_list, free);
 		return (NULL);
 	}
 	return (tokens_list);
