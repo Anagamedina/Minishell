@@ -32,6 +32,7 @@ char			*read_input(void);
 int 			check_quotes_line(char *line);
 
 //********TOKENIZE*************/
+int 			ft_strcmp(char *s1, char *s2);
 t_list			*generate_token_list(char *line);
 char 			**ft_split_quote(char *str);
 t_tokens		*init_token(char *str, int token_type);
