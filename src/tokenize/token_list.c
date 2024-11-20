@@ -100,8 +100,8 @@ t_list	*generate_token_list(char *line)
 //		return (NULL);
 	tokens_list = NULL;
 	tokens = NULL;
-	tokens = ft_split_quote(line);
-	tokens_list = tokenize_list(tokens);
+	tokens = ft_split_quote(line);	//clean line
+	tokens_list = tokenize_list(tokens);	//creamos linked list
 /*	if (!(analize_tokens(tokens_list)))
 	{
 		printf("error analize tokens WORDS\n");

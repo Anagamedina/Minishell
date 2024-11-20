@@ -14,7 +14,7 @@
 # include "macros.h"
 
 //bonus libft
-//cat -n abcd
+//echo -n abcd
 //cat
 //-n
 //abcd
@@ -68,6 +68,7 @@ typedef struct s_pipex
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
+	//char			*path;
 	int				pipe_input_fd;
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
