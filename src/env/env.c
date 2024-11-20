@@ -62,27 +62,3 @@ t_env	*get_env(char **envp)
 		return (NULL);
 	return(new_env);
 }
-
-
-
-
-/*
- * find key iterating througth list
- * and change env->value;
- */
-/*
-void	modify_var_env(t_env **list_envp, char *key)
-{
-    
-}
-*/
-/*
- *	crear una nueva VARIABLE de entorno a nuestro ENV
- *	call init_struct_env()
- *	ft_lst_add_back()
- */
-/*
-t_env	*add_new_var(t_env **list_envp, char *new_var)
-{
-}
-*/
