@@ -46,5 +46,6 @@ void			print_list_token(t_list *tokens_list);
 
 //************** INIT_COMMAND.C ********/
 void			print_list_commands(t_list *cmd_list);
+t_cmd			*create_new_command(t_tokens *current_token, int i);
 
 #endif

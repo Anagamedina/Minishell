@@ -97,7 +97,6 @@ void	update_after_pipe_to_builtin(t_list *tokens_list)
 	}
 }
 
-
 //**********MAIN FUNCTION***************/
 // **Identifica los comandos en la lista de tokens
 int	identify_commands(t_list *tokens_list)
