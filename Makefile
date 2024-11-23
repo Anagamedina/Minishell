@@ -26,7 +26,7 @@ MINISHELL_H = includes/minishell.h
 SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_INPUT)/input.c \
 		$(SRC_ENV)/env.c \
-		$(SRC_ENV)/env_locals_utils.c \
+		$(SRC_ENV)/env_utils.c \
 		$(SRC_ENV)/env_locals_list.c \
 		$(SRC_ENV)/free_env.c \
 		$(SRC_TOKEN)/token_type.c \
