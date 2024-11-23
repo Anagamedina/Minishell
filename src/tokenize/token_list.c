@@ -37,16 +37,20 @@ t_tokens	*init_token(char *str, int token_type)
 
 void	print_list_token(t_list *tokens_list)
 {
-	t_list	*current = tokens_list;
-	t_tokens *token;
+	t_list		*current;
+	t_tokens	*token;
+	int			i;
 
+	current = tokens_list;
+	i = 1;
 	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
-		printf("%s ", token->str);
-		printf("tipo: %d ", token->type_token);
-		printf("len: %zu\n", token->length);
-
+		printf("---------- TOKEN [%i] :\n", i);
+		printf("str: [%s]\n", token->str);
+		printf("type: [%i]\n", token->type_token);
+		printf("len: [%zu]\n", token->length);
+		i ++;
 		current = current->next;
 	}
 }
@@ -76,14 +80,15 @@ int	analize_tokens(t_list *tokens_list)
 	return (TRUE);
 }
 
-/* Retorno: Un array de strings,
- * donde cada elemento es un token
+/* Retorno: Un array de strings
+ * Comillas gestionadas como un solo tokengs,
+ * cada elemento es un token
  * tokens[0] = "echo";
- * tokens[1] = "hello world"; // Comillas gestionadas como un solo token
-tokens[2] = "|";
-tokens[5] = ">";
-tokens[6] = "output.txt";
-tokens[7] = NULL;
+ * tokens[1] = "hello world";
+ * tokens[2] = "|";
+ * tokens[5] = ">";
+ * tokens[6] = "output.txt";
+ * tokens[7] = NULL;
 */
 /*
  * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
@@ -96,20 +101,11 @@ t_list	*generate_token_list(char *line)
 	char	**tokens;
 	t_list 	*tokens_list;
 
-//	if (!check_quotes_line(line))
-//		return (NULL);
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);	//clean line
 	tokens_list = tokenize_list(tokens);	//creamos linked list
-/*	if (!(analize_tokens(tokens_list)))
-	{
-		printf("error analize tokens WORDS\n");
-		ft_lstclear(&tokens_list, free);
-		return (NULL);
-	}*/
-	//update_words_to_builtin(tokens_list);
-	if(identify_commands(tokens_list) == 0)
+	if (identify_commands(tokens_list) == 0)
 	{
 		printf("error identify commands\n");
 		return (NULL);

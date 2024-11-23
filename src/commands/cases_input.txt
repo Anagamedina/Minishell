@@ -1,0 +1,64 @@
+### Ejemplo 1: Manejo Básico de Variables y `echo`
+
+export VAR=hello
+echo $VAR
+unset VAR
+echo $VAR
+
+# Resultado Esperado:
+# hello
+# <línea en blanco>
+
+---
+
+### Ejemplo 2: Uso de `cd`, `pwd` y `env`
+pwd
+export PATH=$PATH:/new/path
+env | grep PATH
+cd /tmp
+pwd
+
+# Resultado Esperado (aproximado):
+# /home/user
+# PATH=/usr/bin:/bin:/new/path
+# /tmp
+
+---
+
+### Ejemplo 3: Manejo de Redirecciones con `echo`
+echo "Hello, World!" > output.txt
+env > env_backup.txt
+cat output.txt
+unset PATH
+env
+
+# Resultado Esperado:
+# Hello, World!
+# <línea en blanco: no se muestra nada para `env` tras unset PATH>
+
+---
+
+### Ejemplo 4: Uso Combinado con Pipes
+export VAR1=foo
+export VAR2=bar
+env | grep VAR
+echo $VAR1 | grep foo
+
+# Resultado Esperado:
+# VAR1=foo
+# VAR2=bar
+# foo
+
+---
+
+### Ejemplo 5: Casos con Errores y Manejo de Entradas
+cd nonexistent_dir
+export 123INVALID=hello
+unset
+echo $HOME
+
+# Resultado Esperado:
+# bash: cd: nonexistent_dir: No such file or directory
+# bash: export: `123INVALID=hello': not a valid identifier
+# bash: unset: not enough arguments
+# /home/user

@@ -46,7 +46,19 @@ void 			update_words_to_builtin(t_list *tokens_list);
 void			print_list_token(t_list *tokens_list);
 
 //************** INIT_COMMAND.C ********/
+
+int				is_type_of_operator(t_tokens *token);
+t_cmd			*init_command(void);
 void			print_list_commands(t_list *cmd_list);
 t_cmd			*create_new_command(t_tokens *current_token, int i);
+t_list			*add_tokens_to_linked_list_commands(t_list *token_list);
 
+//************** ERRORS_COMMAND.C ********/
+void			free_command(t_cmd *cmd);
+void			free_command_list(t_cmd *cmd_list);
+void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
+
+int				error_empty_token(t_tokens *token, t_list *cmd_list);
+int				error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
+int				error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 #endif

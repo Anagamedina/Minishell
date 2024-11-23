@@ -12,6 +12,7 @@
 
 #include "libft.h"
 
+/*
 size_t	ft_strlen(const char *str)
 {
 	size_t	len;
@@ -21,6 +22,7 @@ size_t	ft_strlen(const char *str)
 		len++;
 	return (len);
 }
+*/
 
 char	*ft_free(char **ptr)
 {

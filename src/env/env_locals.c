@@ -6,6 +6,8 @@
  * y solo puede contener caracteres alfanuméricos.
  * Retorna 1 si es válido, 0 si no lo es.
 */
+// hello=ana
+// _hello=ana
 int	validate_var_name(const char *line)
 {
 	int i;
@@ -57,6 +59,8 @@ int	validate_var_value(const char *line)
  * Retorna una nueva cadena con el nombre de la variable.
  * Si ocurre un error de memoria, retorna NULL.
  */
+// hello=ana
+//	hello
 char	*get_var_name(char *line)
 {
 	int		i;
@@ -148,6 +152,7 @@ void	check_var_local_input(char *line)
 		printf("Error validating var_value\n");
 		return ;
 	}
+
 	var_local_list = create_local_vars_list(line);
 	if (!var_local_list)
 	{

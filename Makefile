@@ -18,6 +18,7 @@ SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_INPUT= $(SRC_DIR)/input
 SRC_TOKEN = $(SRC_DIR)/tokenize
+SRC_CMD = $(SRC_DIR)/commands
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
@@ -30,7 +31,9 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_TOKEN)/token_type.c \
 		$(SRC_TOKEN)/token_utils.c \
 		$(SRC_TOKEN)/token_free.c \
-		$(SRC_TOKEN)/token_list.c
+		$(SRC_TOKEN)/token_list.c \
+		$(SRC_CMD)/init_commands.c \
+		$(SRC_CMD)/errors_commands.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
