@@ -4,14 +4,15 @@ int main(int argc, char **argv, char **envp)
 {
 	(void) argc;
 	(void) argv;
-	char	*input;
+	char	*input = NULL; // Inicializar input a NULL
 	t_env	*test_env;
-	t_list 	*tokens_list = NULL;
+	t_list 	*locals = NULL;
 
+	t_list 	*tokens_list = NULL;
 	test_env = get_env(envp);
 	if (!test_env)
 	{
-		fprintf(stderr, "Error al inicializar la lista de variables de entorno.\n");
+		printf("Error al inicializar la lista de variables de entorno.\n");
 		return (EXIT_FAILURE);
 	}
 	while (1)
@@ -33,10 +34,19 @@ int main(int argc, char **argv, char **envp)
 		printf("--------------------------------------\n");
 
 		printf("********** FUNCTION TO ADD CREATE EACH COMMAND:\n");
-		t_list	*commands_list = add_tokens_to_linked_list_commands(tokens_list);
+		t_list *commands_list = add_tokens_to_linked_list_commands(tokens_list);
 		printf("--------------------------------------------\n");
 		printf("********** PRINT LIST COMMANDS:\n");
 		print_list_commands((t_list *) commands_list);
+
+		if (!locals)
+			locals = (t_list *) create_local_vars_list(input);
+
+			//if (ft_strcmp(input, "env") == 0)
+			//print_env_list(test_env);
+		else
+			handle_input(NULL, (t_list **) test_env, &locals);
+
 	}
 	return (0);
 }

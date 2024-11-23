@@ -1,148 +1,84 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built-in_export.c                                  :+:      :+:    :+:   */
+/*   built-in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/20 11:54:33 by anamedin         ###   ########.fr       */
+/*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
+/*   Updated: 2024/11/21 16:53:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*modify_var_env()
-    |
-    v
-get_var_name(line)    -> Obtén el nombre de la variable (key)
-    |
-    v
-get_var_value(line)   -> Obtén el valor de la variable (value)
-    |
-    v
-find_env_var(*env_list, key)   -> ¿La variable ya existe en la lista?
-    |
-    |---> Si existe: actualizarla
-    |       |
-    |       v
-    |   free(existing_var->value)       -> Libera el valor antiguo
-    |   existing_var->value = strdup(value)  -> Asigna el nuevo valor
-    |   free(existing_var->full_var)      -> Libera la cadena completa anterior
-    |   existing_var->full_var = strdup(line) -> Asigna la nueva cadena
-    |
-    |---> Si no existe: crear nueva
-            |
-            v
-create_env_node(line) -> Crear un nuevo nodo
-            |
-            v
-add_env_back(*env_list, new_node) -> Añadir el nuevo nodo al final de la lista
-*/
 
-
-
-
+#include "../../includes/minishell.h"
 
 /*
- * Función que busca una variable de entorno en la lista.
- * Si la encuentra, retorna el nodo correspondiente; si no, retorna NULL.
+ * Maneja el caso donde el primer token es "export".
+ * Puede listar variables de entorno o agregar/modificar una.
  */
- t_env	*find_env_var (t_env *env_list, char *key)
- {
-	 while (env_list != NULL)
-	 {
-		if (ft_strcmp(env_list->key, key) == 0)
-			return (env_list);
-		env_list = env_list->next;
-	}
-	 return (NULL);
-}
-
-
-/*
- * Función que crea un nuevo nodo para una variable de entorno a partir de la línea
- * proporcionada (por ejemplo, "PATH=/usr/local/bin").
- * Retorna un puntero al nodo creado o NULL si ocurre un error.
- */
-t_env	*create_env_node(char *line)
+void	handle_export(t_list **tokens, t_list **env_list)
 {
-	 t_env	*node = init_env_list();
-	 if (!node)
-		 return (NULL);
-	 node->full_var = ft_strdup(line);
-	 node->key = get_var_name(line);
-	 node->value = get_var_value(line);
-	 return (node);
-}
+	t_tokens	*next_token;
 
-
-/*
- * Función que agrega un nuevo nodo al final de la lista de variables de entorno.
- */
-void	add_env_back(t_env **env_list, t_env *new_node)
-{
-	 t_env	*current;
-
-	 if(!env_list || !new_node)
-		 return ;
-
-	 current = *env_list;
-	 while (current->next != NULL)
-		 current = current->next;
-	current->next = new_node;
-}
-
-/*
- * Función que modifica una variable de entorno en la lista de entornos.
- * Si la variable ya existe, se actualiza su valor; si no, se agrega una nueva variable
- * al final de la lista.
- */
-
-void	modify_var_env(t_env **env_list, char *line)
-{
-	 char *key;
-	 char *value;
-	 t_env *existing_var;
-
-	 key = get_var_name(line);
-	 value = get_var_value(line);
-	 existing_var = find_env_var(*env_list);
-
-	 if (existing_var)
-	 {
-		 free(existing_var->value);
-		 existing_var->value = ft_strdup(value);
-		 free(existing_var->full_var);
-		 existing_var->full_var = ft_strdup(line);
-	 }
-	 else
-	 {
-		 t_env *new_node = create_env_node(line);
-		 if (new_node)
-			 add_env_back((env_list, new_node));
-	 }
-
-}
-
-
-
-//**********BORRAR************/
-//*tokens[0] es export (el nombre del builtin),
-//tokens[1] es PATH=/usr/local/bin,
-// PATH=/usr/local/bin y HOME=/home/user.
-// Estos se consideran los argumentos para el comando export*/
-
-//*Los tokens que siguen a export (tokens[1], tokens[2], ...)
-// representan las variables de entorno que deseas añadir o modificar.*/
-
-
-/*
- * static int	just_export(t_env *env)
-{
-	while (env != NULL)
+	// Si solo es "export", listar las variables de entorno
+	if (!(*tokens)->next)
 	{
-		printf("declare -x %s=\"%s\"\n", env->key, env->val);
-		env = env->next;
+		only_export(*env_list);
+		return;
 	}
-	return (0);
+
+	// Si hay un siguiente token, verificar si tiene formato "key=value"
+	next_token = (t_tokens *)(*tokens)->next->content;
+	if (ft_strrchr_c(next_token->str, '='))
+	{
+		export_var(next_token->str, env_list);
+		return;
+	}
+
+	// Si no es válido, mostrar un error
+	printf("Error: formato no válido para 'export'.\n");
 }
+
+/*
+ * Maneja el caso donde el primer token es una asignación local
+ * o un comando desconocido.
+ */
+void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars)
+{
+	char	*line = first_token->str;
+
+	// Si contiene un '=', es una variable local
+	if (ft_strrchr_c(line, '='))
+	{
+		create_local_var(line, local_vars);
+		return;
+	}
+
+	// Caso de comando no reconocido
+	printf("Error: comando no reconocido.\n");
+}
+
+/*
+ * Gestiona el comando ingresado por el usuario.
+ * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
+ */
+void	handle_input(t_list **tokens, t_list **env_list, t_list **local_vars)
+{
+	t_tokens	*first_token;
+	char	*line;
+
+	if (!tokens || !*tokens)
+		return;
+	first_token = (t_tokens *)(*tokens)->content;
+	line = first_token->str;
+
+	// Delegar según el contenido del primer token
+	if (ft_strcmp(line, "export") == 0)
+		handle_export(tokens, env_list);
+	else
+		handle_local_or_unknown(first_token, local_vars);
+}
+
+

@@ -18,6 +18,8 @@ void			print_env_list(t_env *env_list);
 t_env			*init_struct_env(void);
 t_env			*create_local_vars_list(char *line);
 void			free_env_list(t_env *head);
+t_env			*init_env(char *line);
+t_list			*init_env_list(char **envp);
 
 //************** ENV_LOCALS ************/
 
@@ -25,7 +27,8 @@ int				validate_var_name(const char *line);
 int				validate_var_value(const char *line);
 char			*get_var_name(char *line);
 char			*get_var_value(char *line);
-void			check_var_local_input(char *line);
+void			create_local_var(char *line, t_list **local_vars);
+t_env	*create_local_vars_list(char *line);
 
 //*************INPUT***********/
 char			*read_input(void);
@@ -61,4 +64,17 @@ void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
 int				error_empty_token(t_tokens *token, t_list *cmd_list);
 int				error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int				error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
+void			print_env_list(t_env *env_list);
+
+
+//**************BUILTINS-1********/
+
+t_env	*find_env_var (t_list *env_list, char *key);
+void	add_env_back(t_env **env_list, t_env *new_node);
+void	export_var(char *line, t_list **env_list);
+int		only_export(t_env *env_list);
+void	handle_export(t_list **tokens, t_list **env_list);
+void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
+void	handle_input(t_list **tokens, t_list **env_list, t_list **local_vars);
+
 #endif
