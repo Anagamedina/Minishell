@@ -1,38 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/23 11:05:47 by anamedin          #+#    #+#             */
+/*   Updated: 2024/11/23 11:06:00 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+// Función principal para procesar el input
+int main(int argc, char **argv, char **env)
 {
 	(void) argc;
 	(void) argv;
-	char	*input;
+	char	*input = NULL; // Inicializar input a NULL
 	t_env	*test_env;
-	t_list 	*tokens_list = NULL;
+	t_list 	*locals = NULL;
 
-	test_env = get_env(envp);
+	// Inicializar lista de variables de entorno
+	test_env = init_env(*env);
 	if (!test_env)
 	{
-		fprintf(stderr, "Error al inicializar la lista de variables de entorno.\n");
+		printf("Error al inicializar la lista de variables de entorno.\n");
 		return (EXIT_FAILURE);
 	}
+
+	// Bucle principal
 	while (1)
 	{
-		input = read_input();
-		if (!input || !check_quotes_line(input))
+		input = read_input(); // Leer el input del usuario
+		if (!input || !check_quotes_line(input)) // Validar el input
 		{
-			printf("Error al leer el input\n");
+			printf("Error al leer el input o las comillas no coinciden.\n");
 			free(input);
 			continue;
 		}
-//		caso: variable local de shell
-//		printf("--------------------\n");
-//		printf("check_var_local_input\n");
-//		printf("--------------------\n");
-//		check_var_local_input(input);
-//		printf("--------------------\n");
-		tokens_list = generate_token_list(input);
-//		if (!tokens_list)
-//			printf("error token list\n");
-		print_list_token(tokens_list);
+
+		if (!locals)
+			locals = (t_list *) create_local_vars_list(input);
+
+		//if (ft_strcmp(input, "env") == 0)
+			//print_env_list(test_env);
+		else
+			handle_input(NULL, (t_list **)test_env, &locals);
+
 	}
+
 	return (0);
 }

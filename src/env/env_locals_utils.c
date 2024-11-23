@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_locals.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
+/*   Updated: 2024/11/23 11:04:41 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../../includes/minishell.h"
 
 /*
@@ -111,53 +124,5 @@ char	*get_var_value(char *line)
 	return (var_value);
 }
 
-/*
- * gestionar variables locales(crear una lista)
- * siguiendo el patron el el prompt:
- * 	"MY_VAR=hello world!";		//valido
- * 	"1INVALID=hello";		//invalido
- * 	"VALID_VAR=";		//valido(valor vacio es permitico)
 
- * hay que guardarlo en una struct separado de env
- * Example:
- * case01:
- * 		daruny=123
- * 		echo $daruny -> 123
- * case02:
- * 		daruny="1"
- * 		echo $daruny -> 1
- * case03:
- * 		d='1'
- * 		echo $d -> 1
- * 	TODO: daruny: terminar esta funcion !!
- */
 
-//**************MAIN FUNCTION***********/
-//	hello=daruny
-void	check_var_local_input(char *line)
-{
-	t_env	*var_local_list;
-//
-	if (!(validate_var_name(line)))
-	{
-		printf("Error validating var_name\n");
-		return ;
-	}
-	if (!(validate_var_value(line)))
-	{
-		printf("Error validating var_value\n");
-		return ;
-	}
-	var_local_list = create_local_vars_list(line);
-	if (!var_local_list)
-	{
-		printf("Error creating local variable list\n");
-		free_env_list(var_local_list);
-		return ;
-	}
-	else
-	{
-		printf("var_key: %s\n", var_local_list->key);
-		printf("var_value: %s\n", var_local_list->value);
-	}
-}

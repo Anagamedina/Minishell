@@ -12,37 +12,25 @@
 
 #include "../../includes/minishell.h"
 
-t_env	*init_struct_env(void)
-{
-	t_env	*new_envp;
 
-	new_envp = (t_env *)malloc(sizeof(t_env));
-	if (!new_envp)
-		return (NULL);
-	new_envp->value = NULL;
-	new_envp->key = NULL;
-	new_envp->full_var = NULL;
-	new_envp->next = NULL;
-	return (new_envp);
-}
-/*
- * using this function to free the env list local variable
- */
-void	free_env_list(t_env *head)
+void	create_local_var(char *line, t_list **local_vars)
 {
-	t_env *tmp;
+	t_env *new_local_var;
 
-	while (head != NULL)
+	if (!(validate_var_name(line)))
 	{
-		tmp = head;
-		head = head->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp->full_var);
-
-		free(tmp);
+		printf("Error validating var_name\n");
+		return ;
 	}
+	if (!(validate_var_value(line)))
+	{
+		printf("Error validating var_value\n");
+		return ;
+	}
+	new_local_var = init_env(line);
+	ft_lstadd_back(local_vars, ft_lstnew(new_local_var));
 }
+
 
 /*
  * Crea un nodo de una lista enlazada para almacenar una variable local
@@ -53,13 +41,13 @@ void	free_env_list(t_env *head)
  */
 t_env	*create_local_vars_list(char *line)
 {
-	t_env	*local_variable;
+	t_env	*local_vars;
 
-	local_variable = init_struct_env();
-	if (local_variable == NULL)
+	local_vars = init_env_list();
+	if (local_vars == NULL)
 		return (NULL);
-	local_variable->key = get_var_name(line);
-	local_variable->value = get_var_value(line);
-	local_variable->next = NULL;
-	return (local_variable);
+	local_vars->key = get_var_name(line);
+	local_vars->value = get_var_value(line);
+	local_vars->next = NULL;
+	return (local_vars);
 }
