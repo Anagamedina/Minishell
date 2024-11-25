@@ -9,6 +9,7 @@ file(GLOB TOKENIZE_FILES src/tokenize/*.c)
 file(GLOB COMMAND_FILES src/commands/*.c)
 file(GLOB ENV_FILES src/env/*.c)
 file(GLOB LIBFT_DIR libft/*.c)
+file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built-ins-1/*.c)
 #file(GLOB BUILTINS_DARUNY src/builtins_part02/*.c)
 
@@ -24,18 +25,14 @@ add_executable(minishell
 # main
         src/minishell.c
 #        ${HEADERS}
-# input
         ${INPUT_FILES}
-# tokenize
         ${TOKENIZE_FILES}
-# commands
         ${COMMAND_FILES}
-# environment
         ${ENV_FILES}
         ${LIBFT_DIR}
-        src/commands/errors_commands.c
         ${BUILTINS_ANA}
+        ${MINI}
 )
 
-# Enlazar con la biblioteca readline
+# link with readline library
 target_link_libraries(minishell readline)

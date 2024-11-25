@@ -1,9 +1,9 @@
 
 #include "../../includes/minishell.h"
 
-t_mini *mini_list(char **envp)
+t_mini	*mini_list(char **envp)
 {
-    t_mini *minishell;
+    t_mini	*minishell;
 
     minishell = malloc(sizeof(t_mini));
     if (!minishell)
@@ -23,12 +23,11 @@ t_mini *mini_list(char **envp)
     return (minishell);
 }
 
-
-void print_mini(t_mini *mini)
+void	print_mini(t_mini *mini)
 {
     if (!mini)
     {
-        printf("Estructura t_mini no inicializada.\n");
+		printf("Estructura t_mini no inicializada.\n");
         return;
     }
 
@@ -58,5 +57,3 @@ void print_mini(t_mini *mini)
 
     printf("=== Fin de t_mini ===\n");
 }
-
-
