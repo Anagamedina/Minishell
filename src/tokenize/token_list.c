@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/12 13:29:40 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:15:04 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,11 @@ int	analize_tokens(t_list *tokens_list)
  * tokens[6] = "output.txt";
  * tokens[7] = NULL;
 */
-/*
+/**
  * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
  * y creando una lista enlazada con los tokens procesados.
  * Retorna la lista de tokens o NULL si hay un error.
+ * TODO: posible error
  */
 
 t_list	*generate_token_list(char *line)

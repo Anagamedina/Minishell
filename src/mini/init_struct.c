@@ -1,39 +1,6 @@
 
 #include "../../includes/minishell.h"
-/*
-t_mini *init_mini(void)
-{
-    t_mini  *new_mini;
 
-    new_mini = malloc(sizeof(t_mini));
-    if (!new_mini)
-        return (NULL);
-    new_mini->bash_lvl = 0;
-    new_mini->chars_in_line = -1;
-    new_mini->cmds = NULL;
-    new_mini->env = NULL;
-    new_mini->exit_status = -1;
-    new_mini->token = NULL;
-    return (new_mini);
-}
-
-t_mini  *mini_list(char **envp)
-{
-    t_mini  *minishell;
-
-	minishell = init_mini();
-	if (!minishell)
-		return (NULL);
-
-	minishell->env = init_env_list(envp);
-	if (!minishell->env)
-	{
-		free(minishell);
-		return (NULL);
-	}
-	return (minishell);
-}
-*/
 t_mini *mini_list(char **envp)
 {
     t_mini *minishell;
@@ -50,6 +17,7 @@ t_mini *mini_list(char **envp)
     if (!minishell->env)
     {
         free(minishell);
+        printf("error con env ***********8.\n");
         return (NULL);
     }
     return (minishell);

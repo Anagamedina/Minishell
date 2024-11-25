@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/25 14:49:31 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:10:50 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_env	*init_env(char *line)
 		return (NULL);
 	new_env->full_var = ft_strdup(line);
 	split_var = ft_split(line, '=');
-	new_env->key =  split_var[0];
-	new_env->value = split_var[1];
+	new_env->key = (split_var[0]);
+    new_env->value = (split_var[1]);	
 	new_env->next = NULL;
 	return (new_env);
 }
@@ -45,19 +45,26 @@ t_list	*init_env_list(char **envp)
         ft_lstadd_back(&env_list, ft_lstnew(new_env)); // Añade el nuevo nodo
         i++;
     }
-
     return (env_list);
 }
 
-void	print_env_list(t_list *env_list)
+void print_env_list(t_list *env_list)
 {
-	t_list *current = env_list;
-	t_env *env;
+    if (!env_list)
+    {
+        printf("La lista de variables de entorno está vacía o no fue inicializada.\n");
+        return;
+    }
 
-	while (current != NULL)
-	{
-		env = (t_env *)current->content;
-		printf("%s=%s\n", env->key, env->value);
-		current = current->next;
-	}
+    t_list *current = env_list;
+
+    while (current != NULL)
+    {
+        if (current->content)
+        {
+            t_env *env = (t_env *)current->content;
+            printf("%s=%s\n", env->key ? env->key : "(null)", env->value ? env->value : "(null)");
+        }
+        current = current->next;
+    }
 }

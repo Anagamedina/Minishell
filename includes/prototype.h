@@ -76,7 +76,7 @@ void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars);
 
 //************ MAIN BUILTINS ********/
 
-void        cases_builtins(t_list *cmd_list, t_list *env_list);
+void            cases_builtins(t_mini *mini);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

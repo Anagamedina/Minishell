@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/25 11:29:22 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/25 16:11:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ void	init_process_export(t_list *tokens, t_list *env_list)
 {
 	t_tokens	*next_token;
 
-	// Si solo es "export", listar las variables de entorno
-	if ((tokens)->next == NULL)
-	{
-		only_export(env_list->content);
-		return;
-	}
 	// Si hay un siguiente token, verificar si tiene formato "key=value"
 	next_token = tokens->next->content;
 	if (validate_var_name(next_token->str) && validate_var_value(next_token->str))
