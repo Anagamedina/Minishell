@@ -63,6 +63,20 @@ typedef struct s_cmd
     struct s_cmd    *next;          // Puntero al siguiente comando	
 }				t_cmd;
 
+typedef struct s_mini
+{
+    int             bash_lvl;       // Nivel de la shell
+    int             chars_in_line;  // Contador de caracteres en línea de entrada
+    t_list          *env;           // Variables de entorno
+    t_list          *token;         // Lista de tokens
+    t_list          *cmds;         // Lista de commands 
+    int             exit_status;    // Estado de salida del último comando ejecutado
+    // char            *prompt;        // Prompt actual (opcional) ???
+}                   t_mini;
+// t_pipex         *first_pipe;    // Estructura del primer pipe
+
+#endif
+/*
 typedef struct s_pipex
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
@@ -72,17 +86,4 @@ typedef struct s_pipex
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
-}				t_pipex;
-
-typedef struct s_mini
-{
-    int             bash_lvl;       // Nivel de la shell
-    int             chars_in_line;  // Contador de caracteres en línea de entrada
-    t_env           *env;           // Variables de entorno
-    t_tokens        *token;         // Lista de tokens
-    t_pipex         *first_pipe;    // Estructura del primer pipe
-    int             exit_status;    // Estado de salida del último comando ejecutado
-    // char            *prompt;        // Prompt actual (opcional) ???
-}                   t_mini;
-
-#endif
+}				t_pipex;*/

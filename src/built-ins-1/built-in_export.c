@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built-in_utils.c                                   :+:      :+:    :+:   */
+/*   built-in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/21 16:53:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:29:22 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_process_export(t_list *tokens, t_list *env_list)
 	t_tokens	*next_token;
 
 	// Si solo es "export", listar las variables de entorno
-	if (!(tokens)->next)
+	if ((tokens)->next == NULL)
 	{
 		only_export(env_list->content);
 		return;
@@ -67,7 +67,7 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
  * Gestiona el comando ingresado por el usuario.
  * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
  */
-
+/*
 void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars)
 {
 	t_tokens	*first_token;
@@ -83,5 +83,4 @@ void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars)
 	else
 		handle_local_or_unknown(first_token, local_vars);
 }
-
-
+*/

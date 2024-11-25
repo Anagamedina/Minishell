@@ -8,10 +8,12 @@
 typedef struct s_env t_env;
 typedef struct s_tokens t_tokens;
 typedef struct s_cmd t_cmd;
+typedef struct s_mini t_mini;
+
 
 //**************ENV************/
 t_list			*init_env_list(char **envp);
-void			print_env_list(t_env *env_list);
+void			print_env_list(t_list *env_list);
 
 //************** ENV_LIST ************/
 t_env			*init_struct_env(void);
@@ -60,7 +62,6 @@ void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
 int				error_empty_token(t_tokens *token, t_list *cmd_list);
 int				error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int				error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
-void			print_env_list(t_env *env_list);
 
 
 //**************BUILTINS-1********/
@@ -72,5 +73,15 @@ int		only_export(t_env *env_list);
 void	init_process_export(t_list *tokens, t_list *env_list);
 void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars);
+
+//************ MAIN BUILTINS ********/
+
+void        cases_builtins(t_list *cmd_list, t_list *env_list);
+
+//************ INIT_STRUCTUC MINISHELL ********/
+
+t_mini          *init_mini(void);
+t_mini          *mini_list(char **envp);
+void            print_mini(t_mini *mini);
 
 #endif

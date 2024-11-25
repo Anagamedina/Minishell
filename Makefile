@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/07 14:28:23 by anamedin         ###   ########.fr        #
+#    Updated: 2024/11/25 12:48:01 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
+SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
 SRC_TOKEN = $(SRC_DIR)/tokenize
 SRC_BUILTINS1 = $(SRC_DIR)/built-ins-1
@@ -37,7 +38,9 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_CMD)/init_commands.c \
 		$(SRC_CMD)/errors_commands.c \
 		$(SRC_BUILTINS1)/built-in_export.c \
-		$(SRC_BUILTINS1)/built-in_utils.c
+		$(SRC_BUILTINS1)/built-in_utils.c \
+		$(SRC_DIR)/built_ins_main.c \
+		$(SRC_MINI)/init_struct.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

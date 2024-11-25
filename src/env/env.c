@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/07 14:19:05 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:49:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,28 @@ t_env	*init_env(char *line)
 	return (new_env);
 }
 
-
 t_list	*init_env_list(char **envp)
 {
-	t_list	*env_list;
-	t_list	*var_list;
-	t_env	*new_env;
-	int		i;
+    t_list *env_list = NULL;
+    t_env *new_env;
+    int i = 0;
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		var_list = (t_list *)init_env(envp[i]);
-		new_env = (t_env *) ft_lstnew(var_list);
-		if (!new_env)
-		{
-			free(var_list);
-			ft_lstclear(&env_list, free);
-			return (NULL);
-		}
-		ft_lstadd_back(&env_list, (t_list *)new_env);
-		i++;
-	}
-	return (env_list);
+    while (envp[i] != NULL)
+    {
+        new_env = init_env(envp[i]);
+        if (!new_env)
+        {
+            ft_lstclear(&env_list, free);  // Limpia la lista si ocurre un error
+            return (NULL);
+        }
+        ft_lstadd_back(&env_list, ft_lstnew(new_env)); // Añade el nuevo nodo
+        i++;
+    }
+
+    return (env_list);
 }
 
-/*void print_env_list(t_list *env_list)
+void	print_env_list(t_list *env_list)
 {
 	t_list *current = env_list;
 	t_env *env;
@@ -64,4 +60,4 @@ t_list	*init_env_list(char **envp)
 		printf("%s=%s\n", env->key, env->value);
 		current = current->next;
 	}
-}*/
+}
