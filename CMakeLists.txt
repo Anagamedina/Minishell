@@ -9,6 +9,8 @@ file(GLOB TOKENIZE_FILES src/tokenize/*.c)
 file(GLOB COMMAND_FILES src/commands/*.c)
 file(GLOB ENV_FILES src/env/*.c)
 file(GLOB LIBFT_DIR libft/*.c)
+file(GLOB BUILTINS_ANA src/built-ins-1/*.c)
+#file(GLOB BUILTINS_DARUNY src/builtins_part02/*.c)
 
 include_directories(includes)
 
@@ -32,6 +34,7 @@ add_executable(minishell
         ${ENV_FILES}
         ${LIBFT_DIR}
         src/commands/errors_commands.c
+        ${BUILTINS_ANA}
 )
 
 # Enlazar con la biblioteca readline

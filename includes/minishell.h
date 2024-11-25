@@ -85,5 +85,4 @@ typedef struct s_mini
     // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
 
-
 #endif

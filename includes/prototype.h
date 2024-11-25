@@ -10,16 +10,13 @@ typedef struct s_tokens t_tokens;
 typedef struct s_cmd t_cmd;
 
 //**************ENV************/
-t_env			*init_env_list(char **envp);
-t_env			*get_env(char **envp);
+t_list			*init_env_list(char **envp);
 void			print_env_list(t_env *env_list);
 
 //************** ENV_LIST ************/
 t_env			*init_struct_env(void);
-t_env			*create_local_vars_list(char *line);
-void			free_env_list(t_env *head);
+void			free_env(t_env *env);
 t_env			*init_env(char *line);
-t_list			*init_env_list(char **envp);
 
 //************** ENV_LOCALS ************/
 
@@ -27,8 +24,7 @@ int				validate_var_name(const char *line);
 int				validate_var_value(const char *line);
 char			*get_var_name(char *line);
 char			*get_var_value(char *line);
-void			create_local_var(char *line, t_list **local_vars);
-t_env	*create_local_vars_list(char *line);
+t_list			*create_local_vars_list(char *line, t_list *local_vars_list);
 
 //*************INPUT***********/
 char			*read_input(void);
@@ -73,8 +69,8 @@ t_env	*find_env_var (t_list *env_list, char *key);
 void	add_env_back(t_env **env_list, t_env *new_node);
 void	export_var(char *line, t_list **env_list);
 int		only_export(t_env *env_list);
-void	handle_export(t_list **tokens, t_list **env_list);
+void	init_process_export(t_list *tokens, t_list *env_list);
 void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
-void	handle_input(t_list **tokens, t_list **env_list, t_list **local_vars);
+void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars);
 
 #endif

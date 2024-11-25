@@ -48,39 +48,31 @@ void	add_env_back(t_env **env_list, t_env *new_node)
 }
 
 
-
-void	export_var(char *line, t_list **env_list)
+void 	check_value(char *value, char *line, t_env *env_var)
 {
-	char	*key;
-	char	*value;
-	t_env	*env_var;
+	if (value && ft_strcmp(line, "+="))
+		env_var->value = ft_strjoin(env_var->value, value);
+	else if (value && ft_strcmp(line, "="))
+	{
+		free(env_var->value);
+		env_var->value = value;
+	}
+	else if(!value)
+		env_var->value = ft_strdup("");
 
-	if (!validate_var_name(key))
+}
+
+void create_new_key(char *line, char *key, char *value, t_list **env_list)
+{
+	t_env *new_var = init_env(line);
+	if (!new_var)
 	{
-		printf("Error: nombre de variable no válido\n");
-		return;
+		printf("Error: no se pudo crear la variable\n");
+		free(key);
+		free(value);
+		return ;
 	}
-	env_var = find_env_var(*env_list, key);
-	if (env_var)
-	{
-		if (value && ft_strcmp(line, "+="))
-			env_var->value = ft_strjoin(env_var->value, value);
-		else
-		{
-			free(env_var->value);
-			env_var->value = value;
-		}
-	}
-	else
-	{
-		t_env *new_var = init_env(line);
-		if (!new_var)
-		{
-			printf("Error: no se pudo crear la variable\n");
-			return;
-		}
-		ft_lstadd_back(env_list, ft_lstnew(new_var));
-	}
+	ft_lstadd_back(env_list, ft_lstnew(new_var));
 }
 
 
@@ -93,3 +85,37 @@ int	only_export(t_env *env_list)
 	}
 	return (0);
 }
+
+
+
+void	export_var(char *line, t_list **env_list)
+{
+	char	*key;
+	char	*value;
+	t_env	*env_var;
+
+	key = get_var_name(line);
+	value = get_var_value(line);
+
+	if (!validate_var_name(key))
+	{
+		printf("Error: nombre de variable no válido\n");
+		free(key);
+		free(value);
+		return;
+	}
+
+	env_var = find_env_var(*env_list, key);
+	if (env_var)
+	{
+		// Funcion auxiliar para gestionar los casos de value.
+		check_value(value, line, env_var);
+	}
+	else
+	{
+		// Creacion de nueva Key.
+		create_new_key(line, key, value, env_list);
+	}
+}
+
+

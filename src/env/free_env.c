@@ -10,24 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
 /*
  * using this function to free the env list local variable
  */
-void	free_env_list(t_env *head)
+
+void	free_env(t_env *env)
 {
-	t_env *tmp;
+	if (!env)
+		return;
 
-	while (head != NULL)
-	{
-		tmp = head;
-		head = head->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp->full_var);
-
-		free(tmp);
-	}
+	// Liberar los campos dinámicos si fueron asignados
+	if (env->key)
+		free(env->key);
+	if (env->value)
+		free(env->value);
+	if (env->full_var)
+		free(env->full_var);
+	// Liberar la estructura en sí
+	free(env);
 }
