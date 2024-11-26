@@ -1,5 +1,6 @@
 #ifndef PROTOTYPE_H
 #define PROTOTYPE_H
+#pragma once
 
 #include "../libft/libft.h"
 # include "minishell.h"

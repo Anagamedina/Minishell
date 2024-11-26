@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#pragma once
 # include "prototype.h"
 # include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
 # include <stdlib.h>  // malloc, free, exit
@@ -18,6 +19,7 @@
 //cat
 //-n
 //abcd
+
 
 typedef enum e_type_token
 {
