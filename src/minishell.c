@@ -7,7 +7,7 @@ int main(int argc, char **argv, char **envp)
 	char	*input = NULL; 
 	t_mini	*minishell;
 
-	minishell = mini_list(envp);
+	minishell = init_mini_list(envp);
 
 	if (!minishell)
  	{
@@ -25,18 +25,17 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		minishell->token = generate_token_list(input);
-		continue;
 		// if (!minishell->token)
-		// 	printf("error token list\n");
-		// print_list_token(minishell->token);
+		// continue;
+		print_list_token(minishell->token);
 
 		// printf("********** CREATE EACH COMMAND:\n");
-		// minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
-		// printf("********** PRINT EACH COMMAND:\n");
-		// print_list_commands(minishell->cmds);
-		// printf("********** cases builtins :\n");
+		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
+		printf("********** PRINT EACH COMMAND:\n");
+		print_list_commands(minishell->cmds);
+		printf("********** cases builtins :\n");
 
-		//cases_builtins(minishell);
+		cases_builtins(minishell);
 
     	// t_cmd   *token_02;
 

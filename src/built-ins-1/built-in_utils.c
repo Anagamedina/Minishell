@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/25 11:10:05 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:46:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,6 @@ t_env	*find_env_var (t_list *env_list, char *key)
 	return (NULL);
 }
 
-
-
-/*
- * Función que agrega un nuevo nodo al final de la lista de variables de entorno.
- */
-/*void	add_env_back(t_env **env_list, t_env *new_node)
-{
-	t_env	*current;
-
-	if(!env_list || !new_node)
-		return ;
-
-	current = *env_list;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new_node;
-}*/
 
 
 void 	check_value(char *value, char *line, t_env *env_var)

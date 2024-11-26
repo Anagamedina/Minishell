@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/25 16:11:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/26 13:08:18 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,22 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
  * Gestiona el comando ingresado por el usuario.
  * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
  */
-/*
-void	builtin_export(t_list **tokens, t_list **env_list, t_list **local_vars)
-{
-	t_tokens	*first_token;
-	char		*line;
 
-	if (!tokens || !*tokens)
-		return;
-	first_token = (t_tokens *)(*tokens)->content;
-	line = first_token->str;
-	// Delegar según el contenido del primer token
-	if (ft_strcmp(line, "export") == 0)
-		init_process_export(*tokens, *env_list);
-	else
-		handle_local_or_unknown(first_token, local_vars);
+void	builtin_export(t_list *mini)
+{
+	t_mini	*mini_struct;
+	t_cmd	*cmd_01;
+	char	*line;
+
+	mini_struct = mini->content;
+	cmd_01 = mini_struct->cmds->content;
+	if (ft_strcmp() == 0)
+	{
+		/* code */
+	}
+	
+
+
+    init_process_export(mini->token, mini->env);
+
 }
-*/

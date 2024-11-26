@@ -1,7 +1,7 @@
 
 #include "../../includes/minishell.h"
 
-t_mini	*mini_list(char **envp)
+t_mini	*init_mini_list(char **envp)
 {
     t_mini	*minishell;
 

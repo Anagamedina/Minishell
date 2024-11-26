@@ -40,7 +40,7 @@ char 			**ft_split_quote(char *str);
 t_tokens		*init_token(char *str, int token_type);
 int 			set_token_type(char *str);
 t_list			*tokenize_list(char **tokens);
-int				analize_tokens(t_list *tokens_list);
+int				check_lowercase_tokens(t_list *tokens_list);
 int				identify_commands(t_list *tokens_list);
 void 			update_words_to_builtin(t_list *tokens_list);
 
@@ -81,8 +81,7 @@ void            cases_builtins(t_mini *mini);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
-t_mini          *init_mini(void);
-t_mini          *mini_list(char **envp);
+t_mini          *init_mini_list(char **envp);
 void            print_mini(t_mini *mini);
 
 #endif

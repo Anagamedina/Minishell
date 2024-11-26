@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/25 17:15:04 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:32:29 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	print_list_token(t_list *tokens_list)
 	}
 }
 
-int	analize_tokens(t_list *tokens_list)
+/*int	check_lowercase_tokens(t_list *tokens_list)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -78,41 +78,8 @@ int	analize_tokens(t_list *tokens_list)
 		current = current->next;
 	}
 	return (TRUE);
-}
+}*/
 
-/* Retorno: Un array de strings
- * Comillas gestionadas como un solo tokengs,
- * cada elemento es un token
- * tokens[0] = "echo";
- * tokens[1] = "hello world";
- * tokens[2] = "|";
- * tokens[5] = ">";
- * tokens[6] = "output.txt";
- * tokens[7] = NULL;
-*/
-/**
- * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
- * y creando una lista enlazada con los tokens procesados.
- * Retorna la lista de tokens o NULL si hay un error.
- * TODO: posible error
- */
-
-t_list	*generate_token_list(char *line)
-{
-	char	**tokens;
-	t_list 	*tokens_list;
-
-	tokens_list = NULL;
-	tokens = NULL;
-	tokens = ft_split_quote(line);	//clean line
-	tokens_list = tokenize_list(tokens);	//creamos linked list
-	if (identify_commands(tokens_list) == 0)
-	{
-		printf("error identify commands\n");
-		return (NULL);
-	}
-	return (tokens_list);
-}
 
 /*
 ** Toma una línea de entrada y la divide en tokens, creando una lista enlazada de `t_list` donde
@@ -152,5 +119,45 @@ t_list	*tokenize_list(char **tokens)
 		i++;
 	}
 	free(tokens);
+	return (tokens_list);
+}
+
+
+
+
+
+/* Retorno: Un array de strings
+ * Comillas gestionadas como un solo tokengs,
+ * cada elemento es un token
+ * tokens[0] = "echo";
+ * tokens[1] = "hello world";
+ * tokens[2] = "|";
+ * tokens[5] = ">";
+ * tokens[6] = "output.txt";
+ * tokens[7] = NULL;
+*/
+
+
+/**
+ * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
+ * y creando una lista enlazada con los tokens procesados.
+ * Retorna la lista de tokens o NULL si hay un error.
+ * TODO: posible error
+ */
+
+t_list	*generate_token_list(char *line)
+{
+	char	**tokens;
+	t_list 	*tokens_list;
+
+	tokens_list = NULL;
+	tokens = NULL;
+	tokens = ft_split_quote(line);
+	tokens_list = tokenize_list(tokens);	//creamos linked list
+	if (identify_commands(tokens_list) == 0)
+	{
+		// printf("error identify commands\n");
+		return (NULL);
+	}
 	return (tokens_list);
 }
