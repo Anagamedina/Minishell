@@ -30,7 +30,9 @@ void	init_process_export(t_list *tokens, t_list *env_list)
 	next_token = tokens->next->content;
 	if (validate_var_name(next_token->str) && validate_var_value(next_token->str))
 	{
-		export_var(next_token->str, env_list->content);
+		print_env_list((t_list *) env_list);
+		printf("entro init a export:7777777777777777777777777777\n");
+		export_var(next_token->str, (t_list **) env_list);
 		return;
 	}
 	else	// Si no es válido, mostrar un error
@@ -62,21 +64,19 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
  * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
  */
 
-void	builtin_export(t_list *mini)
+void	builtin_export(t_mini *mini)
 {
-	t_mini	*mini_struct;
 	t_cmd	*cmd_01;
-	char	*line;
 
-	mini_struct = mini->content;
-	cmd_01 = mini_struct->cmds->content;
-	if (ft_strcmp() == 0)
+	cmd_01 = mini->cmds->content;
+	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
 	{
-		/* code */
+
+		printf("entro en builtin a init:\n");
+		init_process_export(mini->token, mini->env);
 	}
 	
 
 
-    init_process_export(mini->token, mini->env);
 
 }

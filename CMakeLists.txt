@@ -35,6 +35,7 @@ add_executable(minishell
         ${LIBFT_DIR}
         ${BUILTINS_ANA}
         ${MINI}
+        src/built_ins_main.c
 )
 
 # link with readline library

@@ -28,6 +28,20 @@ t_env	*init_env(char *line)
 	return (new_env);
 }
 
+t_env	*init_empty_env_node(void)
+{
+	t_env *new_env = NULL;
+
+	new_env = malloc(sizeof(t_env));
+	if(!new_env)
+		return (NULL);
+	new_env->full_var = NULL;
+	new_env->key = NULL;
+	new_env->value = NULL;
+	new_env->next = NULL;
+	return (new_env);
+}
+
 t_list	*init_env_list(char **envp)
 {
     t_list *env_list = NULL;
@@ -50,21 +64,32 @@ t_list	*init_env_list(char **envp)
 
 void print_env_list(t_list *env_list)
 {
-    if (!env_list)
-    {
-        printf("La lista de variables de entorno está vacía o no fue inicializada.\n");
-        return;
-    }
+	t_list *current;
+	t_env  *env;
 
-    t_list *current = env_list;
+	if (!env_list)
+	{
+		printf("La lista de variables de entorno está vacía o no fue inicializada.\n");
+		return;
+	}
 
-    while (current != NULL)
-    {
-        if (current->content)
-        {
-            t_env *env = (t_env *)current->content;
-            printf("%s=%s\n", env->key ? env->key : "(null)", env->value ? env->value : "(null)");
-        }
-        current = current->next;
-    }
+	current = env_list;
+	while (current != NULL)
+	{
+		if (current->content)
+		{
+			env = (t_env *)current->content;
+			if (env->key)
+				printf("%s=", env->key);
+			else
+				printf("(null)=");
+
+			if (env->value)
+				printf("%s\n", env->value);
+			else
+				printf("(null)\n");
+		}
+		current = current->next;
+	}
 }
+
