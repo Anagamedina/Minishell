@@ -46,7 +46,7 @@ void	print_list_token(t_list *tokens_list)
 	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
-		printf("---------- TOKEN [%i] :\n", i);
+		printf("----- TOKEN [%i] :\n", i);
 		printf("str: [%s]\n", token->str);
 		printf("type: [%i]\n", token->type_token);
 		printf("len: [%zu]\n", token->length);
@@ -92,15 +92,16 @@ void	print_list_token(t_list *tokens_list)
 
 t_list	*tokenize_list(char **tokens)
 {
-	t_list			*tokens_list = NULL;
-	t_tokens 		*new_token;
-	t_list 			*new_node;
+	t_list		*tokens_list;
+	t_tokens	*new_token;
+	t_list		*new_node;
 	int i;
 
+	tokens_list = NULL;
 	i = 0;
 	if(!tokens)
 		return (NULL);
-	while (tokens[i])
+	while (tokens[i] != NULL)
 	{
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		if(!new_token)
@@ -122,10 +123,6 @@ t_list	*tokenize_list(char **tokens)
 	return (tokens_list);
 }
 
-
-
-
-
 /* Retorno: Un array de strings
  * Comillas gestionadas como un solo tokengs,
  * cada elemento es un token
@@ -142,13 +139,12 @@ t_list	*tokenize_list(char **tokens)
  * Analiza una línea de entrada, verificando las comillas, dividiéndola en tokens
  * y creando una lista enlazada con los tokens procesados.
  * Retorna la lista de tokens o NULL si hay un error.
- * TODO: posible error
- */
+*/
 
 t_list	*generate_token_list(char *line)
 {
 	char	**tokens;
-	t_list 	*tokens_list;
+	t_list	*tokens_list;
 
 	tokens_list = NULL;
 	tokens = NULL;

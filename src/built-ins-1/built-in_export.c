@@ -16,9 +16,9 @@
  * Maneja el caso donde el primer token es "export".
  * Puede listar variables de entorno o agregar/modificar una.
  * caso 01:
- * line = export
- * caso 02:
  * line = export key=value
+ * caso 02:
+ * line = export
  * case 03:
  * error
  */
@@ -28,15 +28,26 @@ void	init_process_export(t_list *tokens, t_list *env_list)
 
 	// Si hay un siguiente token, verificar si tiene formato "key=value"
 	next_token = tokens->next->content;
+//	TODO: ana :)
+//	hay un error: al momento de agregar una variable nueva
+//	y lo imprimimos, sale correcto pero si volvemos a crear una variable nueva
+//	y la imprimimos, sale error de perdida de variable
 	if (validate_var_name(next_token->str) && validate_var_value(next_token->str))
 	{
-		print_env_list((t_list *) env_list);
-		printf("entro init a export:7777777777777777777777777777\n");
-		export_var(next_token->str, (t_list **) env_list);
+		export_var(next_token->str, &env_list);
 		return;
 	}
+////		caso 02: line = export
+/*
+	else if ()
+	{
+
+	}
+*/
 	else	// Si no es válido, mostrar un error
+	{
 		printf("Error: formato no válido para 'export'.\n");
+	}
 }
 
 /*
@@ -64,6 +75,8 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
  * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
  */
 
+// **************** MAIN FUNCTION ******************
+
 void	builtin_export(t_mini *mini)
 {
 	t_cmd	*cmd_01;
@@ -71,12 +84,16 @@ void	builtin_export(t_mini *mini)
 	cmd_01 = mini->cmds->content;
 	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
 	{
-
-		printf("entro en builtin a init:\n");
 		init_process_export(mini->token, mini->env);
 	}
-	
+	/*else if ((ft_strcmp((char *)cmd_01->cmd, "unset") == 0))
+	{
 
-
-
+	}
+	else if ((ft_strcmp((char *)cmd_01->cmd, "env") == 0))
+	{
+		print_env_list(mini->env);
+	}*/
+	else
+		return;
 }

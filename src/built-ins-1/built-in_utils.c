@@ -12,7 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-// Buscar una variable por clave en la lista
+/*
+ * Buscar una variable por clave en la lista
+*/
 
 t_env	*find_env_var(t_list *env_list, char *key)
 {
@@ -30,28 +32,7 @@ t_env	*find_env_var(t_list *env_list, char *key)
 	return (NULL);
 }
 
-int find_key_list(t_list *env_list, const char *key)
-{
-	t_env	*env_var;
-	char	*tmp_key;
-	int 	i;
-	while (env_list != NULL)
-	{
-		env_var = (t_env *)env_list->content;
-		tmp_key = env_var->key;
-		i = 0;
-		while (tmp_key != NULL && tmp_key[i] != '\0' && key[i] != '\0')
-		{
-			if (tmp_key[i] != key[i])
-				return 0;
-			i++;
-		}
-		env_list = env_list->next;
-	}
-	return 1;  // Retorna 0 si no se encuentra la clave
-}
-
-void 	check_value(char *value, char *line, t_env *env_var)
+void	check_value(char *value, char *line, t_env *env_var)
 {
 	if (value && ft_strcmp(line, "+="))
 		env_var->value = ft_strjoin(env_var->value, value);
@@ -62,31 +43,37 @@ void 	check_value(char *value, char *line, t_env *env_var)
 	}
 	else if(!value)
 		env_var->value = ft_strdup("");
-
 }
 
 void	create_new_key(char *line, char *key, char *value, t_list **env_list)
 {
-	t_env *new_var = init_empty_env_node();
-	t_list *new_node;
+	t_env	*new_var;
+	t_list	*new_node;
 
+	new_var = init_empty_env_node();
 	if (!new_var)
 	{
-		printf("Error: no se pudo crear la variable\n");
+		fprintf(stderr, "Error: no se pudo crear la variable\n");
 		free(key);
 		free(value);
 		return;
 	}
+	new_var->key = key;
+	new_var->value = value;
+	new_var->full_var = line;
+
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 	{
-		printf("Error: no se pudo crear el nodo de la lista\n");
+//		printf("Error: no se pudo crear el nodo de la lista\n");
+		fprintf(stderr, "Error: no se pudo crear el nodo de la lista\n");
 		free_env(new_var);
-		free(key);
-		free(value);
 		return;
 	}
+//	add node to env_list with ft_lstadd_back
 	ft_lstadd_back(env_list, new_node); // Agregar el nodo a la lista
+	printf("AFTER LST ADD_BACK\n");
+	print_env_list(*env_list);
 }
 
 /*
@@ -125,29 +112,32 @@ int	only_export(t_env *env_list)
 
 //**********MAIN FUNCTION********** */
 
+//void	export__or_update_var(char *line, t_list **env_list)
 void	export_var(char *line, t_list **env_list)
 {
-	char    *key;
-	char    *value;
-	t_env   *env_var;
-	t_list  *find_node;
+	char	*key;
+	char	*value;
+	t_env	*env_var;
 
 	// Obtener la clave y el valor de la línea
 	key = get_var_name(line);
 	value = get_var_value(line);
 
-	// Verificar si la clave ya está en la lista
-	if (!find_key_list((t_list *) env_list, key))
+//	Encontrar la variable en el entorno
+	env_var = find_env_var(*env_list, key);
+	if (env_var == NULL)
 	{
+		printf("create new key^^^^^^^^^^^^^^^^^^^\n");
 		create_new_key(line, key, value, env_list);
-		return;
 	}
 	else
 	{
-		env_var = find_env_var(*env_list, key); // Encontrar la variable en el entorno
-		check_value(value, line, env_var);  // Actualizar el valor de la variable
+		// Si ya existe, actualizar su valor
+		check_value(value, line, env_var);
 	}
 	free(key);
+	if (!env_var)
+		free(value);
 }
 
 /*
@@ -216,5 +206,3 @@ void	export_var(char *line, t_list **env_list)
 	}
 }
 */
-
-
