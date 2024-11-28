@@ -20,12 +20,14 @@ SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
 SRC_TOKEN = $(SRC_DIR)/tokenize
 SRC_BUILTINS1 = $(SRC_DIR)/built-ins-1
+SRC_BUILTINS2 = $(SRC_DIR)/builtins_part02
 SRC_CMD = $(SRC_DIR)/commands
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
 
 SRC = 	$(SRC_DIR)/minishell.c \
+		$(SRC_MINI)/init_struct.c \
 		$(SRC_INPUT)/input.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_utils.c \
@@ -40,7 +42,10 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_BUILTINS1)/built-in_export.c \
 		$(SRC_BUILTINS1)/built-in_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
-		$(SRC_MINI)/init_struct.c
+		$(SRC_BUILTINS2)/builtin_pwd.c \
+		$(SRC_BUILTINS2)/builtin_cd.c \
+		$(SRC_BUILTINS2)/builtin_exit.c
+
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

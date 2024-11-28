@@ -75,6 +75,7 @@ typedef struct s_mini
     int             exit_status;    // Estado de salida del último comando ejecutado
     // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
+
 // t_pipex         *first_pipe;    // Estructura del primer pipe
 
 #endif

@@ -14,7 +14,7 @@ file(GLOB ENV_FILES src/env/*.c)
 file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built-ins-1/*.c)
-#file(GLOB BUILTINS_DARUNY src/builtins_part02/*.c)
+file(GLOB BUILTINS_DARUNY src/builtins_part02/*.c)
 
 include_directories(includes)
 
@@ -25,9 +25,7 @@ execute_process(
 )
 
 add_executable(minishell
-# main
         src/minishell.c
-#        ${HEADERS}
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
@@ -36,6 +34,7 @@ add_executable(minishell
         ${BUILTINS_ANA}
         ${MINI}
         src/built_ins_main.c
+        ${BUILTINS_DARUNY}
 )
 
 # link with readline library

@@ -27,8 +27,7 @@ int main(int argc, char **argv, char **envp)
 		minishell->token = generate_token_list(input);
 		if (minishell->token == NULL)
 			continue;
-		print_list_token(minishell->token);
-
+//		print_list_token(minishell->token);
 		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		print_list_commands(minishell->cmds);
 		cases_builtins(minishell);
