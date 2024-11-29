@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/26 12:46:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:30:04 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,55 +65,37 @@ void	create_new_key(char *line, char *key, char *value, t_list **env_list)
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 	{
-//		printf("Error: no se pudo crear el nodo de la lista\n");
 		fprintf(stderr, "Error: no se pudo crear el nodo de la lista\n");
 		free_env(new_var);
 		return;
 	}
 //	add node to env_list with ft_lstadd_back
-	ft_lstadd_back(env_list, new_node); // Agregar el nodo a la lista
+	ft_lstadd_back(env_list, new_node); 
 	printf("AFTER LST ADD_BACK\n");
 	print_env_list(*env_list);
 }
 
-/*
-void create_new_key(char *line, char *key, char *value, t_list *env_list)
+
+void	only_export(t_list *env_list)
 {
-//	t_env *new_var = init_env(line);
-	t_env *new_var;
+	t_env	*env_var;
 
-
-	new_var = init_env(line);
-	printf("line: %s\n", line);
-	printf("key: %s\n", new_var->key);
-	printf("value: %s\n", new_var->key);
-	if (!new_var)
-	{
-		printf("Error: no se pudo crear la variable\n");
-		free(key);
-		free(value);
-		return ;
-	}
-	ft_lstadd_back((t_list **) env_list, ft_lstnew(new_var));
-}
-*/
-
-
-int	only_export(t_env *env_list)
-{
 	while (env_list != NULL)
 	{
-		printf("declare -x %s=\"%s\"\n", env_list->key, env_list->value);
-		env_list= env_list->next;
+		env_var = (t_env *)env_list->content;
+		if (env_var && env_var->key) // Asegúrate de que `env_var` y su `key` no sean NULL
+		{
+			printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value ? env_var->value : "");
+		}
+		env_list = env_list->next;
 	}
-	return (0);
 }
+
 
 
 //**********MAIN FUNCTION********** */
 
-//void	export__or_update_var(char *line, t_list **env_list)
-void	export_var(char *line, t_list **env_list)
+void	update_var(char *line, t_list **env_list)
 {
 	char	*key;
 	char	*value;
@@ -139,70 +121,3 @@ void	export_var(char *line, t_list **env_list)
 	if (!env_var)
 		free(value);
 }
-
-/*
-void	export_var(char *line, t_list **env_list)
-{
-	char	*key;
-	char	*value;
-	t_env	*env_var;
-	t_list	*find_node;
-
-	printf("++++++++++=lista env export\n");
-	print_env_list(*env_list);
-
-	key = get_var_name(line);
-	value = get_var_value(line);
-	find_node = *env_list;
-	if (find_key_list(find_node, key) == 1)
-	{
-		env_var = find_env_var(*env_list, key);
-		check_value(value, line, env_var);
-	}
-	else
-	{
-		// Crear una nueva clave
-		create_new_key(line, key, value, env_list);
-	}
-	free(key); // Liberar memoria reservada para key
-}
-*/
-
-/*
-void	export_var(char *line, t_list **env_list)
-{
-	char	*key;
-	char	*value;
-	t_env	*env_var;
-
-	printf("++++++++++=lista env export\n ");
-	print_env_list((t_list *) env_list);
-	printf("-------------------------\n ");
-	key = get_var_name(line);
-	value = get_var_value(line);
-//
-//	printf("key: %s\n", key);
-//	printf("value: %s\n", value);
-*/
-/*	if (!validate_var_name(key))
-	{
-		printf("Error: nombre de variable no válido\n");
-		free(key);
-		free(value);
-		return;
-	}*//*
-
-
-	env_var = find_env_var((t_list *) env_list, key);
-	if (env_var != NULL)
-	{
-		// Funcion auxiliar para gestionar los casos de value.
-		check_value(value, line, env_var);
-	}
-	else
-	{
-		// Creacion de nueva Key.
-		create_new_key(line, key, value, (t_list *) &env_list);
-	}
-}
-*/

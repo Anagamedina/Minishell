@@ -13,7 +13,6 @@ void    cases_builtins(t_mini *mini)
 
     if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
     {
-        printf("entro en export:\n");
 		builtin_export(mini);
     }
     else if (ft_strcmp((char *)cmd_01->cmd, "cd") == 0)

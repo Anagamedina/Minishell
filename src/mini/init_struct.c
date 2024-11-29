@@ -11,7 +11,7 @@ t_mini	*init_mini_list(char **envp)
     minishell->bash_lvl = 0;
     minishell->chars_in_line = -1;
     minishell->cmds = NULL;
-    minishell->env = init_env_list(envp); // Asigna la lista de variables de entorno
+    minishell->env = init_env_list(envp);
     minishell->exit_status = -1;
     minishell->token = NULL;
     if (!minishell->env)
@@ -38,19 +38,19 @@ void	print_mini(t_mini *mini)
 
     printf("\n--- Variables de Entorno ---\n");
     if (mini->env)
-        print_env_list((t_list *)mini->env); // Implementar esta función
+        print_env_list((t_list *)mini->env); 
     else
         printf("No hay variables de entorno.\n");
 
     // printf("\n--- Tokens ---\n");
     if (mini->token)
-        print_list_token((t_list *)mini->token); // Implementar esta función
+        print_list_token((t_list *)mini->token); 
     else
         printf("No hay tokens.\n");
 
     printf("\n--- Comandos ---\n");
     if (mini->cmds)
-        print_list_token((t_list *)mini->cmds); // Implementar esta función
+        print_list_token((t_list *)mini->cmds); 
     else
         printf("No hay comandos.\n");
     

@@ -70,8 +70,8 @@ int				error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 
 //t_env	*find_env_var (t_list *env_list, char *key);
 void	add_env_back(t_env **env_list, t_env *new_node);
-void	export_var(char *line, t_list **env_list);
-int		only_export(t_env *env_list);
+void	update_var(char *line, t_list **env_list);
+void   	only_export(t_list *env_list);
 void	init_process_export(t_list *tokens, t_list *env_list);
 void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void	builtin_export(t_mini *mini);

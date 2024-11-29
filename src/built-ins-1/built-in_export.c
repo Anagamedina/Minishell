@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/26 13:08:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:08:36by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,25 @@
 void	init_process_export(t_list *tokens, t_list *env_list)
 {
 	t_tokens	*next_token;
+	// t_tokens	*token_first;
 
-	// Si hay un siguiente token, verificar si tiene formato "key=value"
 	next_token = tokens->next->content;
-//	TODO: ana :)
-//	hay un error: al momento de agregar una variable nueva
-//	y lo imprimimos, sale correcto pero si volvemos a crear una variable nueva
-//	y la imprimimos, sale error de perdida de variable
+	// token_first = tokens->content;
+	// printf("----------%s\n", token_first->str);
+	//		caso 02: line = export
+	// if (token_first)
+	// {
+	// 	printf("entra en only export\n");
+	// 	only_export(env_list);
+	// 	return;
+	// }
 	if (validate_var_name(next_token->str) && validate_var_value(next_token->str))
 	{
-		export_var(next_token->str, &env_list);
+		update_var(next_token->str, &env_list);
 		return;
 	}
-////		caso 02: line = export
-/*
-	else if ()
-	{
-
-	}
-*/
-	else	// Si no es válido, mostrar un error
+	
+	else
 	{
 		printf("Error: formato no válido para 'export'.\n");
 	}
@@ -80,11 +79,23 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
 void	builtin_export(t_mini *mini)
 {
 	t_cmd	*cmd_01;
+	t_tokens 	*first_token;
 
+	first_token = mini->token->content;
 	cmd_01 = mini->cmds->content;
 	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
 	{
-		init_process_export(mini->token, mini->env);
+		if (first_token->next == NULL)
+		{
+			printf("entro en export sin variable\n");
+			only_export(mini->env);
+		}
+		else
+		{
+			printf("entro en export con variable\n");
+			init_process_export(mini->token, mini->env);
+		}
+		
 	}
 	/*else if ((ft_strcmp((char *)cmd_01->cmd, "unset") == 0))
 	{
