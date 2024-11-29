@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/25 12:48:01 by anamedin         ###   ########.fr        #
+#    Updated: 2024/11/29 13:03:53 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
 SRC_TOKEN = $(SRC_DIR)/tokenize
-SRC_BUILTINS1 = $(SRC_DIR)/built-ins-1
-SRC_BUILTINS2 = $(SRC_DIR)/builtins_part02
+SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
+SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
 OBJ_DIR = obj
 LIBFT_DIR = libft
@@ -39,8 +39,8 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_TOKEN)/token_list.c \
 		$(SRC_CMD)/init_commands.c \
 		$(SRC_CMD)/errors_commands.c \
-		$(SRC_BUILTINS1)/built-in_export.c \
-		$(SRC_BUILTINS1)/built-in_utils.c \
+		$(SRC_BUILTINS1)/built_in_export.c \
+		$(SRC_BUILTINS1)/built_in_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
