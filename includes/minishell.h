@@ -23,14 +23,19 @@
 
 typedef enum e_type_token
 {
-	WORD = 0,           // Representa una palabra o comando
-	PIPE,           // Representa el operador de tubería '|'
-	REDIR_OUTPUT,   // Representa la redirección de salida '>'
-	REDIR_INPUT,    // Representa la redirección de entrada '<'
-	CONCAT_OUTPUT,   // Representa la redirección de concatenación '>>'
-	NULL_TYPE,     // Representa el final de la lista de tokens
-	BUILT_INS       // Representa builtins
-}	t_type_token;
+	WORD = 0,           // Representa una palabra o comando genérico
+	PIPE,               // Representa el operador de tubería '|'
+	REDIR_OUTPUT,       // Representa la redirección de salida '>'
+	REDIR_INPUT,        // Representa la redirección de entrada '<'
+	CONCAT_OUTPUT,      // Representa la redirección de concatenación '>>'
+	KEY_VALUE,
+	ONLY_KEY,
+	NULL_TYPE,          // Representa el final de la lista de tokens
+	ECHO,               // Builtin: echo
+	CD,                 // Builtin: cd
+	PWD,                // Builtin: pwd
+	EXPORT,             // Builtin: export
+}					t_type_token;
 
 typedef struct s_tokens
 {
