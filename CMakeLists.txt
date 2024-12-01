@@ -13,8 +13,8 @@ file(GLOB COMMAND_FILES src/commands/*.c)
 file(GLOB ENV_FILES src/env/*.c)
 file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
-file(GLOB BUILTINS_ANA src/built-ins-1/*.c)
-file(GLOB BUILTINS_DARUNY src/builtins_part02/*.c)
+file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
+file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 
 include_directories(includes)
 

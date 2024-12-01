@@ -69,7 +69,7 @@ void	update_words_to_builtin(t_list *tokens_list)
 		if (token->type_token == WORD)  // Si el token es una palabra
 		{
 			if (is_builtin(token->str))
-				token->type_token = BUILT_INS;
+				token->type_token = BUILTINS;
 		}
 
 		current = current->next;
@@ -94,7 +94,7 @@ void	update_after_pipe_to_builtin(t_list *tokens_list)
 		else if (after_pipe && token->type_token == WORD)
 		{
 			if (is_builtin(token->str))
-				token->type_token = BUILT_INS;
+				token->type_token = BUILTINS;
 			after_pipe = 0;  // Reset flag
 		}
 		current = current->next;

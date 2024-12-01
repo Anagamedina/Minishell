@@ -124,28 +124,61 @@ t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 	t_list		*commands_list;
 	t_list		*new_node;
 	t_cmd		*new_cmd;
-	t_tokens	*curr_token;
+	t_tokens	*token;
+	t_list		*current;
+	t_list		*tmp_current;
 	int			cmd_id;
 
 	commands_list = NULL;
 	cmd_id = 1;
-	while (token_list)
+	current = token_list;
+	while (current)
 	{
-		curr_token = (t_tokens *)token_list->content;
-		if (!error_empty_token(curr_token, commands_list))
+		token = (t_tokens *)current->content;
+		if (!error_empty_token(token, commands_list))
 			return (NULL);
-		if (curr_token->type_token == BUILT_INS)
+		if (token->type_token == BUILTINS)
 		{
-			new_cmd = create_new_command(curr_token, cmd_id);
+			new_cmd = create_new_command(token, cmd_id);
 			if (!error_cmd_creation(new_cmd, commands_list))
 				return (NULL);
 			new_node = ft_lstnew(new_cmd);
 			if (!error_node_creation(new_node, new_cmd, commands_list))
 				return (NULL);
+
+			// Objetivo: Para cada comando contar el numero de argumento
+			int numero_argumentos = 0;
+			tmp_current = current->next; // inicio de los argumentos.
+			// Nota: Falta la condicion de parar cuando encuentre un token diferente a word.
+			while(tmp_current)
+			{
+				token = (t_tokens *)tmp_current->content;
+				if (token->type_token == WORD) {
+					numero_argumentos++;
+				}
+				tmp_current = tmp_current->next;
+			}
+			new_cmd->cmd_args = malloc(sizeof(char *) * (numero_argumentos + 1));
+			tmp_current = current->next;
+			int j = 0;
+			while (j < numero_argumentos)
+			{
+				token = (t_tokens *)tmp_current->content;
+				new_cmd->cmd_args[j] = token->str;
+				tmp_current = tmp_current->next;
+				j++;
+			}
+			printf("Numero argumentos: %d\n", numero_argumentos);
+			j = 0;
+			while (j < numero_argumentos)
+			{
+				printf("arg[%d] = [%s]\n", j, new_cmd->cmd_args[j]);
+				j++;
+			}
 			ft_lstadd_back(&commands_list, new_node);
 			cmd_id++;
 		}
-		token_list = token_list->next;
+		current = current->next;
 	}
 	return (commands_list);
 }

@@ -30,12 +30,13 @@ typedef enum e_type_token
 	CONCAT_OUTPUT,      // Representa la redirección de concatenación '>>'
 	KEY_VALUE,
 	ONLY_KEY,
+	BUILTINS,
 	NULL_TYPE,          // Representa el final de la lista de tokens
-	ECHO,               // Builtin: echo
-	CD,                 // Builtin: cd
-	PWD,                // Builtin: pwd
-	EXPORT,             // Builtin: export
 }					t_type_token;
+//	ECHO,               // Builtin: echo
+//	CD,                 // Builtin: cd
+//	PWD,                // Builtin: pwd
+//	EXPORT,             // Builtin: export
 
 typedef struct s_tokens
 {
