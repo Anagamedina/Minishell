@@ -29,6 +29,7 @@ t_cmd	*init_command(void)
 		return (NULL);
 	new_cmd->cmd = NULL;
 	new_cmd->cmd_args = NULL;
+	new_cmd->count_args = -1;
 	new_cmd->cmd_id = 0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
@@ -119,6 +120,16 @@ t_cmd	*create_new_command(t_tokens *current_token, int i)
  * or NULL if an error occurs.
 */
 
+t_list	*handle_error(t_list *cmds_list, t_list *new_cmd, t_list *new_node)
+{
+	if (new_cmd)
+		free_command(new_cmd);
+	if (new_node)
+		free(new_node);
+	ft_lstclear(&cmds_list, (void (*)(void *)) free_command);
+	return (NULL);
+}
+
 t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 {
 	t_list		*commands_list;
@@ -126,7 +137,6 @@ t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 	t_cmd		*new_cmd;
 	t_tokens	*token;
 	t_list		*current;
-	t_list		*tmp_current;
 	int			cmd_id;
 
 	commands_list = NULL;
@@ -147,30 +157,11 @@ t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 				return (NULL);
 
 			// Objetivo: Para cada comando contar el numero de argumento
-			int numero_argumentos = 0;
-			tmp_current = current->next; // inicio de los argumentos.
-			// Nota: Falta la condicion de parar cuando encuentre un token diferente a word.
-			while(tmp_current)
-			{
-				token = (t_tokens *)tmp_current->content;
-				if (token->type_token == WORD) {
-					numero_argumentos++;
-				}
-				tmp_current = tmp_current->next;
-			}
-			new_cmd->cmd_args = malloc(sizeof(char *) * (numero_argumentos + 1));
-			tmp_current = current->next;
+			contar_numero_argumentos_de_comandos(current, new_cmd);
+			agregar_argumentos_a_comando(&new_cmd, current);
+			printf("Numero argumentos: %d\n", new_cmd->count_args);
 			int j = 0;
-			while (j < numero_argumentos)
-			{
-				token = (t_tokens *)tmp_current->content;
-				new_cmd->cmd_args[j] = token->str;
-				tmp_current = tmp_current->next;
-				j++;
-			}
-			printf("Numero argumentos: %d\n", numero_argumentos);
-			j = 0;
-			while (j < numero_argumentos)
+			while (j < new_cmd->count_args)
 			{
 				printf("arg[%d] = [%s]\n", j, new_cmd->cmd_args[j]);
 				j++;
@@ -181,4 +172,40 @@ t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 		current = current->next;
 	}
 	return (commands_list);
+}
+
+// Pre: token_list apunta a un token de tipo BUILTIN.
+void contar_numero_argumentos_de_comandos(t_list *token_list, t_cmd *cmd)
+{
+	t_list		*current;
+	t_tokens	*token;
+
+	cmd->count_args = 0;
+	current = token_list->next;
+	token = (t_tokens *)current->content;
+	while(current && token->type_token != DELIMITER && token->type_token != BUILTINS)
+	{
+		token = (t_tokens *)current->content;
+		if (token->type_token == WORD) {
+			cmd->count_args = cmd->count_args + 1;
+		}
+		current = current->next;
+	}
+}
+
+void	agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list)
+{
+	t_list		*current;
+	t_tokens	*token;
+
+	(*cmd)->cmd_args = malloc(sizeof(char *) * ((*cmd)->count_args + 1));
+	current = token_list->next;
+	int j = 0;
+	while (j < (*cmd)->count_args)
+	{
+		token = (t_tokens *)current->content;
+		(*cmd)->cmd_args[j] = token->str;
+		current = current->next;
+		j++;
+	}
 }

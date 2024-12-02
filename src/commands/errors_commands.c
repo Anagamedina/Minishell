@@ -12,6 +12,8 @@ void	free_command(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd)
+		return ;
 	if (cmd->cmd)
 		free(cmd->cmd);
 	if (cmd->cmd_args)

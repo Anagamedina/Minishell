@@ -31,6 +31,7 @@ typedef enum e_type_token
 	KEY_VALUE,
 	ONLY_KEY,
 	BUILTINS,
+	DELIMITER,			// Para manejar ';' y '|'
 	NULL_TYPE,          // Representa el final de la lista de tokens
 }					t_type_token;
 //	ECHO,               // Builtin: echo
@@ -62,6 +63,7 @@ typedef struct s_cmd
 {
     char            *cmd;           // Nombre del comando, ej. "wc"
     char            **cmd_args;     // Argumentos del comando
+	int 			count_args;		// Numero de argumentos del comando
     int             cmd_id;         // ID del comando para orden en pipeline
     int             pipe[2];        // Descriptores para el pipe
     int             input_fd;       // Descriptor de archivo de entrada

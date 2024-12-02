@@ -55,6 +55,8 @@ t_cmd			*init_command(void);
 void			print_list_commands(t_list *cmd_list);
 t_cmd			*create_new_command(t_tokens *current_token, int i);
 t_list			*add_tokens_to_linked_list_commands(t_list *token_list);
+void 			contar_numero_argumentos_de_comandos(t_list *token_list, t_cmd *cmd);
+void			agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list);
 
 //************** ERRORS_COMMAND.C ********/
 void			free_command(t_cmd *cmd);
