@@ -123,7 +123,7 @@ t_cmd	*create_new_command(t_tokens *current_token, int i)
 t_list	*handle_error(t_list *cmds_list, t_list *new_cmd, t_list *new_node)
 {
 	if (new_cmd)
-		free_command(new_cmd);
+		free_command((t_cmd *)new_cmd);
 	if (new_node)
 		free(new_node);
 	ft_lstclear(&cmds_list, (void (*)(void *)) free_command);
