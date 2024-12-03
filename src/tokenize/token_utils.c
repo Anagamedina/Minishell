@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/12 13:30:33 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:55:15 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static int skip_quotes(char *str, int *i)
  */
 static int	count_words(char *str)
 {
-	int i;
-	int wc;
+	int	i;
+	int	wc;
 
 	i = 0;
 	wc = 0;
@@ -58,13 +58,16 @@ static int	count_words(char *str)
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i++;
 		if (str[i] == '\'' || str[i] == '"')
-		{
 			wc += skip_quotes(str, &i);
+		else if (str[i] == ';')
+		{
+			wc++; // Contar `;` como una palabra/token
+			i++;  // Avanzar al siguiente carácter
 		}
 		else if (str[i])
 		{
 			wc++;
-			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';'))
 				i++;
 		}
 	}
@@ -97,7 +100,7 @@ static int copy_word(char **out, char *str, int start, int end, int *k)
 
 /*Inicializa las variables necesarias antes de
  * comenzar el procesamiento de la cadena*/
-static int init_vars_split(int *i, int *k, int *wc, char ***out, char *str)
+static int	init_vars_split(int *i, int *k, int *wc, char ***out, char *str)
 {
 	//TODO eleminar parametros ANA
 	*i = 0;
@@ -110,12 +113,10 @@ static int init_vars_split(int *i, int *k, int *wc, char ***out, char *str)
 }
 
 
-
 /*Es la función principal que utiliza
 las otras funciones para dividir la cadena
  en palabras, considerando las comillas.
 */
-
 //**********MAIN FUNCTION***************/
 char **ft_split_quote(char *str)
 {
@@ -132,11 +133,16 @@ char **ft_split_quote(char *str)
 	{
 		skip_whitespace(str, &i);
 		j = i;
+		// si es comilla simple o comilla doble
 		if (str[i] == '\'' || str[i] == '"')
 			skip_quotes(str, &i);
+		else if (str[i] == ';')
+			i++;
 		else
-			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+		{
+			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';'))
 				i++;
+		}
 		if (i > j && copy_word(out, str, j, i, &k) == -1)
 			return (NULL);
 	}

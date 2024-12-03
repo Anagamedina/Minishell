@@ -34,7 +34,7 @@ void	check_syntax_dollar(t_mini *mini)
 	current_token = mini->token->content;
 	token_01 = current_token->next;
 
-	if (current_token->type_token == BUILT_INS)
+	if (current_token->type_token == BUILTINS)
 	{
 		if (token_01->str != NULL && check_dollar_in_token(token_01) == 1) //ECHO $VAR caso 1
 		{

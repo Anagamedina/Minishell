@@ -6,6 +6,8 @@
 
 #define TRUE 1
 #define FALSE 0
+#define SEMICOLON 59
+
 
 
 // Lista de comandos built-ins
