@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:20 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/12 13:30:21 by anamedin         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:09:56 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	set_token_type(char *str)
 		return (PIPE);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (CONCAT_OUTPUT);
+	else if (ft_strcmp(str, ";") == 0)
+		return (DELIMITER);
 	else if (str && ft_strlen(str) > 0)
 		return (WORD);
 	else

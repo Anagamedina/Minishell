@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/03 13:55:15 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2024/12/03 14:31:30 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	count_words(char *str)
 			i++;
 		if (str[i] == '\'' || str[i] == '"')
 			wc += skip_quotes(str, &i);
-		else if (str[i] == ';')
+		else if (str[i] == ';' || str[i] == '|')
 		{
 			wc++; // Contar `;` como una palabra/token
 			i++;  // Avanzar al siguiente carácter
@@ -67,7 +67,7 @@ static int	count_words(char *str)
 		else if (str[i])
 		{
 			wc++;
-			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';'))
+			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';' && str[i] != '|'))
 				i++;
 		}
 	}
@@ -136,11 +136,11 @@ char **ft_split_quote(char *str)
 		// si es comilla simple o comilla doble
 		if (str[i] == '\'' || str[i] == '"')
 			skip_quotes(str, &i);
-		else if (str[i] == ';')
+		else if (str[i] == ';' || str[i] == '|')
 			i++;
 		else
 		{
-			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';'))
+			while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != ';' && str[i] != '|'))
 				i++;
 		}
 		if (i > j && copy_word(out, str, j, i, &k) == -1)

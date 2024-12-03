@@ -3,17 +3,30 @@
 //
 #include "../../includes/minishell.h"
 
-//		$'
+//function auxiliar que verifique sintaxis de VAR $
 //		$[a-zA-Z][a-zA-Z0-9]*
-int	check_dollar_in_token(t_tokens *token)
+// gestionar que el $ siempre al principio del str
+static int syntax_var_dollar(char *str)
+{
+
+}
+
+
+//iterar por cada argumento de cada comando y 
+// le pasamos una funcion auxiliar de syntaxis
+//verificar que contiene un $ 
+int	check_dollar_in_token(t_cmd *cmd)
 {
 	int			i;
 
 	i = 0;
-	while (token->str[i] != '\0')
+	while (cmd->cmd_args[i]!= '\0')
 	{
-		if (token->str[i] == '$')
-			return (1);
+		if (cmd->cmd_args[i] == '$')
+		{
+			if (syntax_var_dollar(cmd->cmd_args[i]) == 1)
+				return (1);
+		}
 		i++;
 	}
 	return (0);
