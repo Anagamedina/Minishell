@@ -33,10 +33,9 @@ t_list			*create_local_vars_list(char *line, t_list *local_vars_list);
 //*************INPUT***********/
 char			*read_input(void);
 int 			check_quotes_line(char *line);
+void	        check_syntax_dollar(t_mini *mini);
 
-//********TOKENIZE*************/
-int 			ft_strcmp(char *s1, char *s2);
-t_list			*generate_token_list(char *line);
+
 char 			**ft_split_quote(char *str);
 t_tokens		*init_token(char *str, int token_type);
 int 			set_token_type(char *str);
@@ -93,5 +92,10 @@ void            print_mini(t_mini *mini);
 
 //************** builtin_pwd.c ********************/
 void	get_current_directory(t_mini *mini);
+
+
+//************** TOKEN_LIST.c ********************/
+t_list      *generate_token_list(char *line);
+int         ft_strcmp(char *s1, char *s2);
 
 #endif
