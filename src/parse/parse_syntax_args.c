@@ -50,11 +50,11 @@ void	check_syntax_dollar(t_mini *mini)
 {
 	t_tokens	*current_token;
 	t_cmd		*cmd_copy;
-	int 		j;
-	int 		i;
-
-	i = 0;
-	j = 0;
+//	int 		j;
+//	int 		i;
+//
+//	i = 0;
+//	j = 0;
 	current_token = mini->token->content;
 	cmd_copy = mini->cmds->content; //cmd1 
 
