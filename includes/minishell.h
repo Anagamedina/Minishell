@@ -28,12 +28,12 @@ typedef enum e_type_token
 	REDIR_OUTPUT,       // Representa la redirección de salida '>'
 	REDIR_INPUT,        // Representa la redirección de entrada '<'
 	CONCAT_OUTPUT,      // Representa la redirección de concatenación '>>'
-	KEY_VALUE,
-	ONLY_KEY,
 	BUILTINS,
-	DELIMITER,			// Para manejar ';' y '|'
+	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,          // Representa el final de la lista de tokens
 }					t_type_token;
+// KEY_VALUE,       agregar esto puede ser un poco lioso al momento de poner un = en un string
+// ONLY_KEY,
 //	ECHO,               // Builtin: echo
 //	CD,                 // Builtin: cd
 //	PWD,                // Builtin: pwd

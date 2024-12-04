@@ -22,7 +22,6 @@ static int syntax_var_dollar(char *str)
 	return (TRUE);
 }
 
-
 //iterar por cada argumento de cada comando y 
 // le pasamos una funcion auxiliar de syntaxis
 //verificar que contiene un $ 

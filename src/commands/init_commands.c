@@ -47,23 +47,22 @@ void	print_list_commands(t_list *cmd_list)
 {
 	t_list	*current;
 	t_cmd	*cmd;
-//	int		i;
+	int		i;
 
 	current = cmd_list;
-//	i = 0;
+	i = 0;
 	while (current != NULL)
 	{
 		cmd = (t_cmd *)current->content;
 		printf("----------------------------\n");
 		printf("Command name: %s\n", cmd->cmd);
-/*
 		printf("Args:\n");
+		i = 0;
 		while (cmd->cmd_args && cmd->cmd_args[i] != NULL)
 		{
 			printf("\targv[%d] = [%s]\n", i, cmd->cmd_args[i]);
 			i ++;
 		}
-*/
 		printf("Command ID: [%d]\n", cmd->cmd_id);
 		printf("----------------------------\n");
 		current = current->next;
@@ -159,13 +158,13 @@ t_list	*add_tokens_to_linked_list_commands(t_list *token_list)
 			// Objetivo: Para cada comando contar el numero de argumento
 			contar_numero_argumentos_de_comandos(current, new_cmd);
 			agregar_argumentos_a_comando(&new_cmd, current);
-			printf("Numero argumentos: %d\n", new_cmd->count_args);
-			int j = 0;
-			while (j < new_cmd->count_args)
-			{
-				printf("arg[%d] = [%s]\n", j, new_cmd->cmd_args[j]);
-				j++;
-			}
+			// printf("Numero argumentos: %d\n", new_cmd->count_args);
+			// int j = 0;
+			// while (j < new_cmd->count_args)
+			// {
+			// 	printf("arg[%d] = [%s]\n", j, new_cmd->cmd_args[j]);
+			// 	j++;
+			// }
 			ft_lstadd_back(&commands_list, new_node);
 			cmd_id++;
 		}
