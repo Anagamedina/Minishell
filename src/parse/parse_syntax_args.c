@@ -47,7 +47,6 @@ int	check_dollar_in_args(t_cmd *cmd)
 	return (0);
 }
 
-
 void	check_syntax_dollar(t_mini *mini)
 {
 	t_tokens	*current_token;

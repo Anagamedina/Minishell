@@ -15,6 +15,7 @@ file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
 file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
+file(GLOB PARSER_DIR src/parse/*.c)
 
 include_directories(includes)
 
@@ -35,6 +36,7 @@ add_executable(minishell
         ${MINI}
         src/built_ins_main.c
         ${BUILTINS_DARUNY}
+        ${PARSER_DIR}
 )
 
 # link with readline library
