@@ -28,8 +28,8 @@ int main(int argc, char **argv, char **envp)
 			// print_list_token(minishell->token);
 		if (minishell->token == NULL)
 			continue;
-		//print_list_token(minishell->token);
-		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
+		print_list_token(minishell->token);
+//		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		//print_list_commands(minishell->cmds);
 		check_syntax_dollar(minishell);
 		// cases_builtins(minishell);

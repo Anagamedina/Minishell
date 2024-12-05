@@ -7,6 +7,7 @@
 //		$[a-zA-Z][a-zA-Z0-9]*
 //		$[a-zA-Z][a-zA-Z0-9]*
 // gestionar que el $ siempre al principio del str
+// echo $_ a-zA-Z
 static int syntax_var_dollar(char *str)
 {
 	int i;
@@ -47,6 +48,7 @@ int	check_dollar_in_token(t_tokens *tokens_list)
 
 /**
  * check if the next character is a single quote like $'hello
+ * echo "'$USER'"
  */
 int	check_single_quote_after_dollar(const char *str)
 {
@@ -67,6 +69,7 @@ int	check_single_quote_after_dollar(const char *str)
 /**
  * check if the previous character is a backslash like \\$hello
  * return TRUE or FALSE
+ * echo "\$aaa
  */
 int	check_backslash_before_dollar(const char *str)
 {
@@ -99,6 +102,7 @@ void handle_variable_expansion(t_tokens *token)
 	}
 }
 
+//"' '"
 void	handle_special_quotes(t_tokens *token)
 {
 	if (token->str[0] == '\"' &&
@@ -120,24 +124,31 @@ void	handle_special_quotes(t_tokens *token)
 
 void	check_syntax_dollar(t_mini *mini)
 {
-	t_tokens *current_token;
-	t_tokens *token_copy;
+	t_list	*token_list;
+	t_tokens *token;
+//	t_tokens *token1;
 
-	current_token = mini->token->content;
-	token_copy = (t_tokens *)&current_token;
+	token_list = mini->token;
+	token = (t_tokens *) token_list->content;
+//	token1 = (t_tokens *) token_list->next->content;
 
 	//token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
 	// Si el primer token es BUILTIN y el segundo es un WORD
-	if (token_copy->type_token == BUILTINS && token_copy->next && token_copy->next->type_token == WORD) // echo
+	int condicion1 = token->type_token == BUILTINS;
+	int condicion2 = token_list->next != NULL;
+	int condicion3 = ((t_tokens *) (token_list->next->content))->type_token == WORD;
+	if (condicion1 && condicion2 && condicion3) // echo
+
+//	if (token->type_token == BUILTINS && token_list->next && ((t_tokens *)(token_list->next->content))->type_token == WORD) // echo
 	{
-		token_copy = token_copy->next; // Avanzar al primer token de tipo WORD
-		while (token_copy != NULL && token_copy->type_token == WORD)
+		token = (t_tokens *)token_list->next->content; // Avanzar al primer token de tipo WORD
+		while (token != NULL && token->type_token == WORD)
 		{
-			if (ft_strchr_c(token_copy->str, '$')) // Si contiene '$'
-				handle_variable_expansion(token_copy);
+			if (ft_strchr_c(token->str, '$')) // Si contiene '$'
+				handle_variable_expansion(token);
 			else
-				handle_special_quotes(token_copy);
-			token_copy = token_copy->next; // Avanzar al siguiente token
+				handle_special_quotes(token);
+			token = token->next; // Avanzar al siguiente token
 		}
 	}
 }
