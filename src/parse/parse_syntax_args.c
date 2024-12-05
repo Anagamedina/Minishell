@@ -5,6 +5,7 @@
 
 //function auxiliar que verifique sintaxis de VAR $
 //		$[a-zA-Z][a-zA-Z0-9]*
+//		$[a-zA-Z][a-zA-Z0-9]*
 // gestionar que el $ siempre al principio del str
 static int syntax_var_dollar(char *str)
 {
@@ -26,69 +27,117 @@ static int syntax_var_dollar(char *str)
 // le pasamos una funcion auxiliar de syntaxis
 //verificar que contiene un $ 
 
-int	check_dollar_in_args(t_cmd *cmd)
+int	check_dollar_in_token(t_tokens *tokens_list)
 {
-	int			i;
-	char 		**cmd_current;
+	t_tokens 		*token_current;
+	int 			found_dollar;
 
-	i = 0;
-	cmd_current = cmd->cmd_args;
-	while (cmd_current[i] != NULL)
+	found_dollar = 0;
+	token_current = (t_tokens *)tokens_list;
+	while (token_current != NULL)
 	{
-		int	valor_token_true_false = syntax_var_dollar(cmd_current[i]);
-		if (syntax_var_dollar(cmd_current[i]) == 1)
+		if (syntax_var_dollar((char *)token_current) == 1)
 		{
-			printf("**** cmd->args[%d]: [%s] %d\n", i, cmd_current[i], valor_token_true_false);
-			// return (1);
+			found_dollar = 1;
+		}
+		token_current = token_current->next;
+	}
+	return (found_dollar);
+}
+
+/**
+ * check if the next character is a single quote like $'hello
+ */
+int	check_single_quote_after_dollar(const char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] == '\'') // Si la siguiente es una comilla simple
+				return (1); // Retorna 1 si se detecta
+		}
+		i++;
+	}
+	return (0); // Retorna 0 si no encuentra el patrón `$'`
+}
+
+/**
+ * check if the previous character is a backslash like \\$hello
+ * return TRUE or FALSE
+ */
+int	check_backslash_before_dollar(const char *str)
+{
+	int i = 0;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			if (i > 0 && str[i - 1] == '\\') // Si la anterior es una comilla doble
+				return (1); // Retorna 1 si se detecta
 		}
 		i++;
 	}
 	return (0);
 }
 
+void handle_variable_expansion(t_tokens *token)
+{
+	if (check_single_quote_after_dollar(token->str) == 1 &&
+		check_backslash_before_dollar(token->str) == 1)
+	{
+		printf("single quote after $\n");
+		printf("token->str: [%s]\n", token->str);
+	}
+	else
+	{
+		printf("call function to expand variable\n");
+		// Aquí llamarías a la función expand_dollar o equivalente
+	}
+}
+
+void	handle_special_quotes(t_tokens *token)
+{
+	if (token->str[0] == '\"' &&
+		token->str[token->length - 1] == '\"' &&
+		token->str[1] == '\'' &&
+		token->str[token->length - 2] == '\'') // echo " '$USER' "
+	{
+		if (check_single_quote_after_dollar(token->str) == 1)
+		{
+			printf("single quote after $\n");
+			printf("token->str: [%s]\n", token->str);
+		}
+		else
+		{
+			printf("call function to expand variable in handle_special_quote()\n");
+		}
+	}
+}
+
 void	check_syntax_dollar(t_mini *mini)
 {
-	t_tokens	*current_token;
-	t_cmd		*cmd_copy;
-//	int 		j;
-//	int 		i;
-//
-//	i = 0;
-//	j = 0;
+	t_tokens *current_token;
+	t_tokens *token_copy;
+
 	current_token = mini->token->content;
-	cmd_copy = mini->cmds->content; //cmd1 
+	token_copy = (t_tokens *)&current_token;
 
-	if (current_token->type_token == BUILTINS) //echo
+	//token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
+	// Si el primer token es BUILTIN y el segundo es un WORD
+	if (token_copy->type_token == BUILTINS && token_copy->next && token_copy->next->type_token == WORD) // echo
 	{
-		if (cmd_copy != NULL && check_dollar_in_args(cmd_copy) == 1) //ECHO $VAR caso 1
+		token_copy = token_copy->next; // Avanzar al primer token de tipo WORD
+		while (token_copy != NULL && token_copy->type_token == WORD)
 		{
-			//si te encuentras un comilla simple despues de $ ANULAS EXPANADIR
-			//f()check_backslash == false
-			// expand_dollar(mini, token_01, i); //gestiona la ($')
-			// token_01 = token_01->next;
-			printf("comando syntaxis ok\n");
+			if (ft_strchr_c(token_copy->str, '$')) // Si contiene '$'
+				handle_variable_expansion(token_copy);
+			else
+				handle_special_quotes(token_copy);
+			token_copy = token_copy->next; // Avanzar al siguiente token
 		}
-// 		else if (token_01->str != NULL && token_01->str[0] == '"' && token_01->length >= 4) //caso 2
-// 		{
-// //			iteramos por str par aencontrar comilla simple(')
-// 			while (token_01->str[i] != '\0')
-// 			{
-// 				if (token_01->str[i] == '\\')    //comilla simple
-// 				{
-// 					if (check_dollar_in_token(token_01) == 1)
-// 					{
-// 						//si te encuentras un comilla simple despues de $ ANULAS EXPANADIR
-// 						//f()check_backslash == false
-// 						expand_dollar(mini, token_01, i);
-// 					}
-// 				}
-// 				i ++;
-// 			}
-// 		}
-// 		else if (token_01->str != NULL && token_01->str[0] == 103 &&token_01->length >= 4) //caso 3
-// 		{
-// //			imprime un dollar
-// 		}
-
 	}
 }
