@@ -23,7 +23,7 @@
                 "-S",
                 "${workspaceFolder}",
                 "-B",
-                "${workspaceFolder}/build"
+                "${workspaceFolder}"
             ],
             "group": "build",
             "problemMatcher": [],
