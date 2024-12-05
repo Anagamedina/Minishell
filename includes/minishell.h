@@ -20,7 +20,6 @@
 //-n
 //abcd
 
-
 typedef enum e_type_token
 {
 	WORD = 0,           // Representa una palabra o comando genérico
@@ -32,8 +31,6 @@ typedef enum e_type_token
 	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,          // Representa el final de la lista de tokens
 }					t_type_token;
-// KEY_VALUE,       agregar esto puede ser un poco lioso al momento de poner un = en un string
-// ONLY_KEY,
 //	ECHO,               // Builtin: echo
 //	CD,                 // Builtin: cd
 //	PWD,                // Builtin: pwd
@@ -44,6 +41,7 @@ typedef struct s_tokens
     char            *str;            // Contenido del token
     t_type_token	type_token;      // Tipo del token
     size_t          length;          // Longitud de 'str' (opcional)
+	int				id_token;			// Identificador del token
     struct s_tokens *next;
     struct s_tokens *prev;           // Puntero opcional al token anterior
 }                   t_tokens;
