@@ -32,7 +32,7 @@ t_list			*create_local_vars_list(char *line, t_list *local_vars_list);
 //*************INPUT***********/
 char			*read_input(void);
 int 			check_quotes_line(char *line);
-void	        check_syntax_dollar(t_mini *mini);
+void	        parser_tokens(t_mini *mini);
 
 
 char 			**ft_split_quote(char *str);
@@ -96,5 +96,19 @@ void	get_current_directory(t_mini *mini);
 //************** TOKEN_LIST.c ********************/
 t_list      *generate_token_list(char *line);
 int         ft_strcmp(char *s1, char *s2);
+
+//************** PARSER.c ********************/
+//************** parser_syntax_dollar.c ********************/
+
+
+//************** parser_syntax_quotes.c ********************/
+
+void	handle_special_quotes(t_tokens *token);
+void	handle_special_doble_quotes(t_tokens *token);
+
+//************** parser_syntax_expand.c ********************/
+void	handle_variable_expansion(t_tokens *token);
+int		check_dollar_after_single_quote(const char *str);
+int		check_backslash_before_dollar(const char *str);
 
 #endif

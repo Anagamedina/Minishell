@@ -30,14 +30,16 @@ t_tokens	*init_token(char *str, int token_type)
 	new_token->str = ft_strdup(str);
 	new_token->type_token = token_type;
 	new_token->length = ft_strlen(str);
+	new_token->id_token = -1;
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	return (new_token);
 }
 
+//CHULETAAAAAAA!!!!
 void	print_list_token(t_list *tokens_list)
 {
-	t_list		*current;
+	t_list		*current; // SIEMPRE PONER T_LIST
 	t_tokens	*token;
 	int			i;
 
@@ -51,7 +53,7 @@ void	print_list_token(t_list *tokens_list)
 		printf("type: [%i]\n", token->type_token);
 		printf("len: [%zu]\n", token->length);
 		i ++;
-		current = current->next;
+		current = current->next; //SIEMPRE ITERAR POR LA LISTA TOKENS_LIST!!
 	}
 }
 
@@ -104,6 +106,7 @@ t_list	*tokenize_list(char **tokens)
 	while (tokens[i] != NULL)
 	{
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
+		new_token->id_token = i;
 		if(!new_token)
 		{
 			ft_lstclear(&tokens_list, free);

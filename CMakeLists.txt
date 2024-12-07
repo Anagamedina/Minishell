@@ -15,7 +15,7 @@ file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
 file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
-file(GLOB PARSER_DIR src/parse/*.c)
+file(GLOB PARSER_DIR src/parser/*.c)
 
 include_directories(includes)
 

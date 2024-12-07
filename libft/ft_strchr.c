@@ -30,6 +30,20 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+int	ft_strchr_true(const char *s, char c)
+{
+	int	index;
+
+	index = 0;
+	while (s[index] != '\0')
+	{
+		if (s[index] == c)
+			return (1);
+		index++;
+	}
+	return (0);
+}
+
 /*int main(void)
 {
 	char str[20] = "hola que tal";
