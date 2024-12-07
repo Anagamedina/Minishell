@@ -103,12 +103,15 @@ int         ft_strcmp(char *s1, char *s2);
 
 //************** parser_syntax_quotes.c ********************/
 
-void	handle_special_quotes(t_tokens *token);
-void	handle_special_doble_quotes(t_tokens *token);
+int		handle_single_quote(t_tokens *token);
+int		handle_double_quotes(t_tokens *token);
+int		handle_special_quotes(t_tokens *token);
+
 
 //************** parser_syntax_expand.c ********************/
-void	handle_variable_expansion(t_tokens *token);
+void	handle_dollar_cases(t_tokens *token);
 int		check_dollar_after_single_quote(const char *str);
 int		check_backslash_before_dollar(const char *str);
+void	handle_tokens(t_tokens *token);
 
 #endif

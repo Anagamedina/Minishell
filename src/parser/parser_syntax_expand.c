@@ -53,16 +53,16 @@ int	check_backslash_before_dollar(const char *str)
  */
 /************ MAIN FUNCTION *************/
 
-void	handle_variable_expansion(t_tokens *token)
+void	handle_dollar_cases(t_tokens *token)
 {
 	if (check_backslash_before_dollar(token->str) == 1)
 	{
-		printf("******* backslash before \\$\n");
+		printf("backslash before \\$\n");
 		printf("token->str: [%s] con id: [%i]\n", token->str, token->id_token);
 	}
 	else if (check_dollar_after_single_quote(token->str) == 1)
 	{
-		printf("******* single quote after $\n");
+		printf("single quote after $\n");
 		printf("token->str: [%s] con id: [%i]\n", token->str, token->id_token);
 	}
 	else

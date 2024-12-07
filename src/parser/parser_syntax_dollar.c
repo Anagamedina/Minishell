@@ -3,7 +3,8 @@
 //
 #include "../../includes/minishell.h"
 
-void handle_single_quote(t_tokens *token);
+//void handle_single_quote(t_tokens *token);
+
 
 /*
 function auxiliar que verifique sintaxis de VAR $
@@ -74,20 +75,58 @@ void	parser_tokens(t_mini *mini)
 		{
 			// Avanzar al primer token de tipo WORD
 			token = (t_tokens *)token_list->next->content;
-			if (token->type_token != WORD)
+			if (token->type_token == WORD)
+				handle_tokens((t_tokens *) token);
+			else
+			{
 				break ;
-			if (token->str && ft_strchr_true(token->str, 36) == 1) // Si contiene '$'
-				handle_variable_expansion(token); //1caso
-			else if (token->str) // si te ecnuentras una doble comilla y una simple ("''")
-				handle_special_quotes(token);
-			else if (token->str)
-				handle_special_doble_quotes(token);//2caso cuando solo hsy comilla doble ("")
-			else if (token->str)
-				handle_single_quote(token);		//queremos detectar si hay una simple quote '$VAR' no expande
+			}
 			token_list = token_list->next; // Avanzar al siguiente token
 		}
 	}
 }
+
+void	handle_tokens(t_tokens *token)
+{
+	if (handle_single_quote(token) == 1)	// echo '$hello' ->printf($hello)
+	{
+		printf("printf without single quotes\n");
+	}
+	else if (handle_special_quotes(token) == 1)	// echo " '$USER' "
+	{
+		if (ft_strchr_true(token->str, 36) == 1)
+			handle_dollar_cases(token);
+	}
+	else if (handle_double_quotes(token) == 1)	// echo "$USER"
+	{
+		if (ft_strchr_true(token->str, 36) == 1)
+			handle_dollar_cases(token);
+	}
+
+	else
+	{
+//		echo $hello
+		if (ft_strchr_true(token->str, 36) == 1)
+			handle_dollar_cases(token);
+	}
+}
+/*
+	if (token->str[0] == '\"' && token->str[token->length - 1] == '\"' &&  (ft_strchr_true(token->str, 36) == 1))
+	{
+		handle_dollar_cases(token); //1caso
+	}
+	else
+		printf("entro en else");
+	else if (token->str[0] == '\'' && token->str[token->length - 1] == '\'')
+	{
+		printf("print token->str without simple quotes\n");
+	}
+	else
+	{
+		handle_special_quotes(token);
+	}	//queremos detectar si hay una simple quote '$VAR' no expande
+*/
+
 
 //token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
 //	if (token->type_token == BUILTINS && token_list->next && ((t_tokens *)(token_list->next->content))->type_token == WORD) // echo
