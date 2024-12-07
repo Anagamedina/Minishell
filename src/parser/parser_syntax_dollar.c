@@ -3,9 +3,6 @@
 //
 #include "../../includes/minishell.h"
 
-//void handle_single_quote(t_tokens *token);
-
-
 /*
 function auxiliar que verifique sintaxis de VAR $
 		$[a-zA-Z][a-zA-Z0-9]*
@@ -29,34 +26,47 @@ static int syntax_var_dollar(char *str)
 	return (TRUE);
 }
 
-//iterar por cada argumento de cada comando y 
-// le pasamos una funcion auxiliar de syntaxis
-//verificar que contiene un $ 
-
-int	check_dollar_in_token(t_tokens *tokens_list)
+char	*remove_quotes_str(char *str, char c)
 {
-	t_tokens 		*token_current;
-	int 			found_dollar;
+	int		i;
+	int		j;
+	int		new_len;
+	char	*new_str;
 
-	found_dollar = 0;
-	token_current = (t_tokens *)tokens_list;
-	while (token_current != NULL)
+	i = 0;
+	new_len = 0;
+	// Calcula la longitud del nuevo string sin el carácter c
+	while (str[i] != '\0')
 	{
-		if (syntax_var_dollar((char *)token_current) == 1)
-		{
-			found_dollar = 1;
-		}
-		token_current = token_current->next;
+		if (str[i] != c)
+			new_len++;
+		i++;
 	}
-	return (found_dollar);
+	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
+	if (new_str == NULL)
+		return (NULL);
+	// Reconstruye el nuevo string sin el carácter c
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+		{
+			new_str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	new_str[j] = '\0';
+	free(str); // Libera el string original
+	return (new_str);
 }
 
 /**
  * this function
  * check if a WORD contains a $ and expand it
  *
- */
-
+*/
 void	parser_tokens(t_mini *mini)
 {
 	t_list	*token_list;
@@ -88,9 +98,12 @@ void	parser_tokens(t_mini *mini)
 
 void	handle_tokens(t_tokens *token)
 {
+	char	*result;
 	if (handle_single_quote(token) == 1)	// echo '$hello' ->printf($hello)
 	{
 		printf("printf without single quotes\n");
+		result = remove_quotes_str(token->str, '\'');
+		printf("%s\n", result);
 	}
 	else if (handle_special_quotes(token) == 1)	// echo " '$USER' "
 	{
@@ -102,7 +115,6 @@ void	handle_tokens(t_tokens *token)
 		if (ft_strchr_true(token->str, 36) == 1)
 			handle_dollar_cases(token);
 	}
-
 	else
 	{
 //		echo $hello
@@ -110,23 +122,26 @@ void	handle_tokens(t_tokens *token)
 			handle_dollar_cases(token);
 	}
 }
-/*
-	if (token->str[0] == '\"' && token->str[token->length - 1] == '\"' &&  (ft_strchr_true(token->str, 36) == 1))
-	{
-		handle_dollar_cases(token); //1caso
-	}
-	else
-		printf("entro en else");
-	else if (token->str[0] == '\'' && token->str[token->length - 1] == '\'')
-	{
-		printf("print token->str without simple quotes\n");
-	}
-	else
-	{
-		handle_special_quotes(token);
-	}	//queremos detectar si hay una simple quote '$VAR' no expande
-*/
 
+//iterar por cada argumento de cada comando y
+// le pasamos una funcion auxiliar de syntaxis
+//verificar que contiene un $
 
-//token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
-//	if (token->type_token == BUILTINS && token_list->next && ((t_tokens *)(token_list->next->content))->type_token == WORD) // echo
+int	check_dollar_in_token(t_tokens *tokens_list)
+{
+	t_tokens 		*token_current;
+	int 			found_dollar;
+
+	found_dollar = 0;
+	token_current = (t_tokens *)tokens_list;
+	while (token_current != NULL)
+	{
+		if (syntax_var_dollar((char *)token_current) == 1)
+		{
+			found_dollar = 1;
+		}
+		token_current = token_current->next;
+	}
+	return (found_dollar);
+}
+
