@@ -82,7 +82,7 @@ void	parser_tokens(t_mini *mini)
 			// Avanzar al primer token de tipo WORD
 			token = (t_tokens *)token_list->next->content;
 			if (token->type_token == WORD)
-				handle_tokens((t_tokens *) token, env_var);
+				handle_tokens((t_tokens *) token, env_list);
 			else
 				break ;
 			token_list = token_list->next; // Avanzar al siguiente token
@@ -90,16 +90,29 @@ void	parser_tokens(t_mini *mini)
 	}
 }
 
-void	handle_tokens(t_tokens *token, t_env *env_list)
+void	handle_tokens(t_tokens *token, t_list *env_list)
 {
 	char	*result;
+	t_env	*first_env;
+
+/*
+	int i = 0;
+	while (env_list != NULL && i <= 10) // Iterar mientras haya nodos en la lista
+	{
+		first_env = (t_env *)env_list->content;
+//		env_var = (t_env *)env_list->content; // Obtener el contenido actual como t_env
+		printf("var[%i]: %s=%s\n", i, first_env->key, first_env->value);
+		env_list = env_list->next; // Avanzar al siguiente nodo
+		i++;
+	}
+*/
 
 	if (handle_single_quote(token) == 1)	// echo '$hello' ->printf($hello)
 	{
 		printf("printf without single quotes\n");
 		result = remove_quotes_str(token->str, '\'');
 		printf("%s\n", result);
-		expand_dollar(token, env_list);
+		expand_dollar(token, first_env);
 	}
 	else if (handle_special_quotes(token) == 1)	// echo " '$USER' "
 	{

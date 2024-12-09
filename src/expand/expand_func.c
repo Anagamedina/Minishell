@@ -49,24 +49,26 @@ char	*find_env_value(t_env *env_list, char *var_name_token)
 }
 */
 
-char	*find_env_value(t_env *env_list, char *var_name_token)
+char	*find_env_value(t_list *env_list, char *var_name_token)
 {
+	t_list	*curr_env_list;
 	t_env	*curr_env;
 
 	// Validación inicial
 	if (!env_list || !var_name_token)
 		return (NULL);
 
-	curr_env = env_list;
-	while (curr_env != NULL)
+	curr_env_list = env_list;
+	while (curr_env_list != NULL)
 	{
 		// Asegurarse de que key no sea NULL antes de comparar
+		curr_env = (t_env *)curr_env_list->content;
 		if (curr_env->key && ft_strcmp(var_name_token, curr_env->key) == 0)
 		{
 			// Duplicar el valor encontrado
 			return (curr_env->value ? ft_strdup(curr_env->value) : ft_strdup(""));
 		}
-		curr_env = curr_env->next; // Iterar con curr_env
+		curr_env_list = curr_env_list->next; // Iterar con curr_env
 	}
 	return (NULL); // Variable no encontrada
 }
@@ -130,14 +132,15 @@ int	found_dollar_syntax(char *str)
 /************ MAIN FUNCTION *************/
 //	echo $hello
 
-void	expand_dollar(t_tokens *token_list, t_env *env_list)
+void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
+	// Nota: Posible cambio a t_list.
     t_tokens	*curr_token;
     char		*var_name;
     char		*var_value;
-	t_env		*curr_env;
+//	t_env		*curr_env;
 
-	curr_env = env_list;
+//	curr_env = env_list;
 
 	printf("entra en expand_dolar\n");
     curr_token = token_list;
@@ -149,11 +152,11 @@ void	expand_dollar(t_tokens *token_list, t_env *env_list)
             var_name = get_var_from_token(curr_token);
             if (var_name)
 			{
-                var_value = find_env_value(curr_env, var_name);
+                var_value = find_env_value(env_list, var_name);
                 if (var_value)
 				{
                     free(curr_token->str);
-                    curr_token->str = var_value; // Ya es strdup desde find_env_value
+                    curr_token->str = ft_strdup(var_value); // Ya es strdup desde find_env_value
                 }
                 free(var_name);
             }

@@ -100,7 +100,7 @@ int         ft_strcmp(char *s1, char *s2);
 //************** PARSER.c ********************/
 //************** parser_syntax_dollar.c ********************/
 
-void expand_dollar(t_tokens *token_list, t_env *env_list);
+void expand_dollar(t_tokens *token_list, t_list *env_list);
 
 //************** parser_syntax_quotes.c ********************/
 
@@ -110,9 +110,9 @@ int		handle_special_quotes(t_tokens *token);
 
 
 //************** parser_syntax_expand.c ********************/
-void handle_dollar_cases(t_tokens *token, t_env *env_list);
+void handle_dollar_cases(t_tokens *token, t_list *env_list);
 int		check_dollar_after_single_quote(const char *str);
 int		check_backslash_before_dollar(const char *str);
-void handle_tokens(t_tokens *token, t_env *env_list);
+void handle_tokens(t_tokens *token, t_list *env_list);
 
 #endif

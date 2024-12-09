@@ -53,7 +53,7 @@ int	check_backslash_before_dollar(const char *str)
  */
 /************ MAIN FUNCTION *************/
 
-void handle_dollar_cases(t_tokens *token, t_env *env_list)
+void handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	if (check_backslash_before_dollar(token->str) == 1)
 	{
