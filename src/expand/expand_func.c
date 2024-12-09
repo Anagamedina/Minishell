@@ -1,6 +1,76 @@
 #include "../../includes/minishell.h"
 
-char *extract_value_env(char *str, t_env *env_list);
+int	found_dollar_syntax(char *str);
+
+/**
+  *Objetivo: i
+  * char	*get_var_value(char *line)
+  * char	*get_var_name(char *line)
+  remov e quote....()
+  * get_var_from_token
+  * find_env_value
+  * replace_var_in_token
+*/
+
+// echo "$hello"   hello
+char	*get_var_from_token(t_tokens *token_list)
+{
+	t_tokens	*curr_token;
+
+	curr_token = token_list;
+	while (curr_token != NULL)
+	{
+		// Verifica si el token tiene un $
+		if (found_dollar_syntax(curr_token->str) == 1) {
+			//si te encuentras un dolar me saltas el $ y strdup de VAR
+			return (ft_strdup(curr_token->str + 1));
+		}
+		curr_token = curr_token->next;
+	}
+	return (NULL);
+}
+
+
+/*
+char	*find_env_value(t_env *env_list, char *var_name_token)
+{
+	t_env	*curr_env;
+
+	curr_env = env_list;
+	while (env_list !=  NULL)
+	{
+		if (ft_strcmp(var_name_token, curr_env->key) == 0)
+		{
+			return (ft_strdup(curr_env->value));
+		}
+		env_list = env_list->next;
+	}
+	return (NULL);
+}
+*/
+
+char	*find_env_value(t_env *env_list, char *var_name_token)
+{
+	t_env	*curr_env;
+
+	// Validación inicial
+	if (!env_list || !var_name_token)
+		return (NULL);
+
+	curr_env = env_list;
+	while (curr_env != NULL)
+	{
+		// Asegurarse de que key no sea NULL antes de comparar
+		if (curr_env->key && ft_strcmp(var_name_token, curr_env->key) == 0)
+		{
+			// Duplicar el valor encontrado
+			return (curr_env->value ? ft_strdup(curr_env->value) : ft_strdup(""));
+		}
+		curr_env = curr_env->next; // Iterar con curr_env
+	}
+	return (NULL); // Variable no encontrada
+}
+
 
 /*
 function auxiliar que verifique sintaxis de VAR
@@ -9,7 +79,7 @@ function auxiliar que verifique sintaxis de VAR
  gestionar que el $ siempre al principio del str
  echo $_ a-zA-Z
 */
-static int syntax_var_dollar(char *str)
+static int	syntax_var_dollar(char *str)
 {
 	int i;
 
@@ -24,6 +94,7 @@ static int syntax_var_dollar(char *str)
 	}
 	return (TRUE);
 }
+
 //iterar por cada argumento de cada TOKEN y
 // le pasamos una funcion auxiliar de syntaxis
 //verificar que contiene un $
@@ -47,130 +118,61 @@ int	found_dollar_syntax(char *str)
 	return (FALSE);
 }
 
-
-/**expand $ en Bash se refiere a la expansión de variables,
+/**
+ * expand $ en Bash se refiere a la expansión de variables,
  * syntaxis: despues de $
  * 1)reemplaza el símbolo $ con el valor actual de una variable
  * 2)si la variable esté definida en el entorno del shell, buscar el valor de la variable en t_list_env
  * 3)
- *
  * */
-/*
-int validate_dollar(t_tokens *token_list)
-{
-	t_tokens	*curr_token;
-	//t_env		*curr_env;
 
-	curr_token = token_list;
-	//curr_env = env_list->content;
-//	verificar syntax
-
-	while (curr_token != NULL)
-	{
-		if (found_dollar_syntax(curr_token->str) == 1)
-		{
-			return (TRUE);
-		}
-		curr_token = curr_token->next;
-	}
-	return (FALSE);
-}*/
 
 /************ MAIN FUNCTION *************/
+//	echo $hello
 
-// echo hello $USER $ana
-/*
 void	expand_dollar(t_tokens *token_list, t_env *env_list)
 {
-	t_tokens	*curr_token;
-
-	curr_token = token_list;
-	while (token_list != NULL)
-	{
-		if (found_dollar_syntax(curr_token->str) == 1)
-		{
-			token_list->str = extract_value_env(curr_token->str, (t_list *) env_list);
-		}
-		token_list = token_list->next;
-	}
-}
-
-char	*extract_value_env(char *str, t_list *env_list)
-{
-	t_list	*curr_env;
-	t_env	*env_var;
+    t_tokens	*curr_token;
+    char		*var_name;
+    char		*var_value;
+	t_env		*curr_env;
 
 	curr_env = env_list;
-	while (curr_env != NULL)
+
+	printf("entra en expand_dolar\n");
+    curr_token = token_list;
+    while (curr_token != NULL)
 	{
-		env_var = (t_env *)curr_env->content;
-		printf("env_var->key: %s\n", env_var->key);
-		if (ft_strcmp((char *)env_var->key, str + 1) == 0)
+        if (found_dollar_syntax(curr_token->str))
 		{
-			return (ft_strdup(env_var->value));
-		}
-		curr_env = curr_env->next;
-	}
-	return (NULL);
+            // Obtener el nombre de la variable
+            var_name = get_var_from_token(curr_token);
+            if (var_name)
+			{
+                var_value = find_env_value(curr_env, var_name);
+                if (var_value)
+				{
+                    free(curr_token->str);
+                    curr_token->str = var_value; // Ya es strdup desde find_env_value
+                }
+                free(var_name);
+            }
+        }
+        curr_token = curr_token->next;
+    }
+}
+
+/*vt_env *env_node = env_list;
+while (env_node != NULL) {
+    // Aquí verificas que el nodo contiene la variable que estás buscando
+    if (ft_strcmp(env_node->key, var_name) == 0) {
+        var_value = env_node->value;
+        break;
+    }
+    env_node = env_node->next;
+}
+
+if (var_value == NULL) {
+    // Maneja el caso cuando no se encuentra la variable
 }
 */
-
-void expand_dollar(t_tokens *token_list, t_env *env_list)
-{
-	t_tokens	*curr_token;
-	char		*expanded_value;
-
-	curr_token = token_list;
-	expanded_value = NULL;
-	while (curr_token != NULL)
-	{
-		// Verifica si el token tiene un $
-		if (found_dollar_syntax(curr_token->str) == 1)
-		{
-			// Expande la variable
-//			expanded_value = extract_value_env(curr_token->str, env_list);
-//			expanded_value = get_var_name(curr_token->str);
-			while (env_list != NULL)
-			{
-				if (ft_strcmp(env_list->key, curr_token->str) == 0)
-				{
-				}
-			}
-
-
-
-
-
-
-
-			if (expanded_value != NULL)
-			{
-				// Libera el valor anterior y asigna el nuevo valor expandido
-				free(curr_token->str);
-				curr_token->str = expanded_value;
-			}
-		}
-		curr_token = curr_token->next;
-	}
-}
-
-/*char	*extract_value_env(char *str, t_env *env_list)
-{
-	t_env	*curr_env;
-
-	// Validar entrada
-	if (!str || str[0] != '$' || !env_list)
-		return (NULL);
-
-	curr_env = env_list;
-	while (curr_env != NULL)
-	{
-		// Validar que la clave no sea NULL antes de comparar
-		if (curr_env->key && ft_strcmp(curr_env->key, str + 1) == 0)
-		{
-			return (ft_strdup(curr_env->value)); // Retornar una copia del valor
-		}
-		curr_env = curr_env->next;
-	}
-	return (NULL);
-}*/

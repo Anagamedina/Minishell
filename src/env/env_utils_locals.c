@@ -94,30 +94,7 @@ char	*get_var_name(char *line)
 	return (var_name);
 }
 
-/*
-char	*get_var_name(char *line)
-{
-	int		i;
-	int		len;
-	char	*var_name;
 
-	i = 0;
-	while (line[i] != '\0' && line[i] != '=')
-		i++;
-	len = i;
-	var_name = malloc(sizeof(char) * (len + 1));
-	if (!var_name)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		var_name[i] = line[i];
-		i++;
-	}
-	var_name[i] = '\0';
-	return (var_name);
-}
-*/
 
 /*
  * Obtiene el valor de la variable a partir de una línea en formato NOMBRE=VALOR.

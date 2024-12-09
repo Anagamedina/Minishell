@@ -4,6 +4,7 @@
 #include "../../includes/minishell.h"
 
 
+
 char	*remove_quotes_str(char *str, char c)
 {
 	int		i;
@@ -59,6 +60,16 @@ void	parser_tokens(t_mini *mini)
 
 	token = (t_tokens *) token_list->content;
 	env_var = (t_env *)env_list->content;
+/*
+	int i = 0;
+	while (env_list != NULL) // Iterar mientras haya nodos en la lista
+	{
+		env_var = (t_env *)env_list->content; // Obtener el contenido actual como t_env
+		printf("var[%i]: %s=%s\n", i, env_var->key, env_var->value);
+		env_list = env_list->next; // Avanzar al siguiente nodo
+		i++;
+	}
+*/
 
 	// Si el primer token es BUILTIN y el segundo es un WORD
 	int condicion1 = token->type_token == BUILTINS;
@@ -79,7 +90,7 @@ void	parser_tokens(t_mini *mini)
 	}
 }
 
-void handle_tokens(t_tokens *token, t_env *env_list)
+void	handle_tokens(t_tokens *token, t_env *env_list)
 {
 	char	*result;
 

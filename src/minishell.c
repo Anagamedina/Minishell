@@ -32,6 +32,7 @@ int main(int argc, char **argv, char **envp)
 //		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		//print_list_commands(minishell->cmds);
 		parser_tokens(minishell);
+//		print_env_list(minishell->env);
 		// cases_builtins(minishell);
 	}
 	return (0);
