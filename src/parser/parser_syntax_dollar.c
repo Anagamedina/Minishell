@@ -48,13 +48,16 @@ char	*remove_quotes_str(char *str, char c)
 void	parser_tokens(t_mini *mini)
 {
 	t_list	*token_list;
-	t_tokens *token;
 	t_list	*env_list;
+
+	t_tokens *token;
 	t_env	*env_var;
 
 	token_list = mini->token;
-	token = (t_tokens *) token_list->content;
 	env_list = mini->env;
+
+
+	token = (t_tokens *) token_list->content;
 	env_var = (t_env *)env_list->content;
 
 	// Si el primer token es BUILTIN y el segundo es un WORD
@@ -70,9 +73,7 @@ void	parser_tokens(t_mini *mini)
 			if (token->type_token == WORD)
 				handle_tokens((t_tokens *) token, env_var);
 			else
-			{
 				break ;
-			}
 			token_list = token_list->next; // Avanzar al siguiente token
 		}
 	}
@@ -81,11 +82,13 @@ void	parser_tokens(t_mini *mini)
 void handle_tokens(t_tokens *token, t_env *env_list)
 {
 	char	*result;
+
 	if (handle_single_quote(token) == 1)	// echo '$hello' ->printf($hello)
 	{
 		printf("printf without single quotes\n");
 		result = remove_quotes_str(token->str, '\'');
 		printf("%s\n", result);
+		expand_dollar(token, env_list);
 	}
 	else if (handle_special_quotes(token) == 1)	// echo " '$USER' "
 	{

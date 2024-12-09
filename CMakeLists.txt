@@ -37,6 +37,7 @@ add_executable(minishell
         src/built_ins_main.c
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
+        src/expand/expand_func.c
 )
 
 # link with readline library
