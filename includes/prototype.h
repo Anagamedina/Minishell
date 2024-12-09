@@ -109,9 +109,9 @@ int		handle_special_quotes(t_tokens *token);
 
 
 //************** parser_syntax_expand.c ********************/
-void	handle_dollar_cases(t_tokens *token);
+void handle_dollar_cases(t_tokens *token, t_env *env_list);
 int		check_dollar_after_single_quote(const char *str);
 int		check_backslash_before_dollar(const char *str);
-void	handle_tokens(t_tokens *token);
+void handle_tokens(t_tokens *token, t_env *env_list);
 
 #endif

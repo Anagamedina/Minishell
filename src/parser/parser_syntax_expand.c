@@ -53,7 +53,7 @@ int	check_backslash_before_dollar(const char *str)
  */
 /************ MAIN FUNCTION *************/
 
-void	handle_dollar_cases(t_tokens *token)
+void handle_dollar_cases(t_tokens *token, t_env *env_list)
 {
 	if (check_backslash_before_dollar(token->str) == 1)
 	{
@@ -69,5 +69,6 @@ void	handle_dollar_cases(t_tokens *token)
 	{
 		printf("call function to expand variable\n");
 		printf("token->str: [%s] con id: [%i]\n", token->str, token->id_token);
+		expand_dollar(token, env_list);
 	}
 }

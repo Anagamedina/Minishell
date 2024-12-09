@@ -3,28 +3,6 @@
 //
 #include "../../includes/minishell.h"
 
-/*
-function auxiliar que verifique sintaxis de VAR $
-		$[a-zA-Z][a-zA-Z0-9]*
-		$[a-zA-Z][a-zA-Z0-9]*
- gestionar que el $ siempre al principio del str
- echo $_ a-zA-Z
-*/
-static int syntax_var_dollar(char *str)
-{
-	int i;
-
-	if (!(ft_isalpha(str[0])) || ft_isdigit(str[0]))
-		return (FALSE);
-	i = 1;
-	while (str[i] != '\0')
-	{
-		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			return (FALSE);
-		i++;
-	}
-	return (TRUE);
-}
 
 char	*remove_quotes_str(char *str, char c)
 {
@@ -71,9 +49,13 @@ void	parser_tokens(t_mini *mini)
 {
 	t_list	*token_list;
 	t_tokens *token;
+	t_list	*env_list;
+	t_env	*env_var;
 
 	token_list = mini->token;
 	token = (t_tokens *) token_list->content;
+	env_list = mini->env;
+	env_var = (t_env *)env_list->content;
 
 	// Si el primer token es BUILTIN y el segundo es un WORD
 	int condicion1 = token->type_token == BUILTINS;
@@ -86,7 +68,7 @@ void	parser_tokens(t_mini *mini)
 			// Avanzar al primer token de tipo WORD
 			token = (t_tokens *)token_list->next->content;
 			if (token->type_token == WORD)
-				handle_tokens((t_tokens *) token);
+				handle_tokens((t_tokens *) token, env_var);
 			else
 			{
 				break ;
@@ -96,7 +78,7 @@ void	parser_tokens(t_mini *mini)
 	}
 }
 
-void	handle_tokens(t_tokens *token)
+void handle_tokens(t_tokens *token, t_env *env_list)
 {
 	char	*result;
 	if (handle_single_quote(token) == 1)	// echo '$hello' ->printf($hello)
@@ -108,40 +90,17 @@ void	handle_tokens(t_tokens *token)
 	else if (handle_special_quotes(token) == 1)	// echo " '$USER' "
 	{
 		if (ft_strchr_true(token->str, 36) == 1)
-			handle_dollar_cases(token);
+			handle_dollar_cases(token, env_list);
 	}
 	else if (handle_double_quotes(token) == 1)	// echo "$USER"
 	{
 		if (ft_strchr_true(token->str, 36) == 1)
-			handle_dollar_cases(token);
+			handle_dollar_cases(token, env_list);
 	}
 	else
 	{
 //		echo $hello
 		if (ft_strchr_true(token->str, 36) == 1)
-			handle_dollar_cases(token);
+			handle_dollar_cases(token, env_list);
 	}
 }
-
-//iterar por cada argumento de cada comando y
-// le pasamos una funcion auxiliar de syntaxis
-//verificar que contiene un $
-
-int	check_dollar_in_token(t_tokens *tokens_list)
-{
-	t_tokens 		*token_current;
-	int 			found_dollar;
-
-	found_dollar = 0;
-	token_current = (t_tokens *)tokens_list;
-	while (token_current != NULL)
-	{
-		if (syntax_var_dollar((char *)token_current) == 1)
-		{
-			found_dollar = 1;
-		}
-		token_current = token_current->next;
-	}
-	return (found_dollar);
-}
-
