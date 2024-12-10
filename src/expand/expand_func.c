@@ -138,15 +138,12 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
     t_tokens	*curr_token;
     char		*var_name;
     char		*var_value;
-//	t_env		*curr_env;
-
-//	curr_env = env_list;
 
 	printf("entra en expand_dolar\n");
     curr_token = token_list;
     while (curr_token != NULL)
 	{
-        if (found_dollar_syntax(curr_token->str))
+        if (found_dollar_syntax(curr_token->str))	//poshile error con "$hello"
 		{
             // Obtener el nombre de la variable
             var_name = get_var_from_token(curr_token);
@@ -164,18 +161,3 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
         curr_token = curr_token->next;
     }
 }
-
-/*vt_env *env_node = env_list;
-while (env_node != NULL) {
-    // Aquí verificas que el nodo contiene la variable que estás buscando
-    if (ft_strcmp(env_node->key, var_name) == 0) {
-        var_value = env_node->value;
-        break;
-    }
-    env_node = env_node->next;
-}
-
-if (var_value == NULL) {
-    // Maneja el caso cuando no se encuentra la variable
-}
-*/

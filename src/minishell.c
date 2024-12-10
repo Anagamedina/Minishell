@@ -3,7 +3,7 @@
 int main(int argc, char **argv, char **envp)
 {
 	(void) argc;
-	(void) argv;
+	(void)	argv;
 	char	*input = NULL; 
 	t_mini	*minishell;
 
@@ -14,7 +14,6 @@ int main(int argc, char **argv, char **envp)
         printf("Error al inicializar minishell.\n");
         return (1);
     }
-
 	while (1)
 	{
 		input = read_input();
@@ -25,14 +24,14 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		}
 		minishell->token = generate_token_list(input);
-			// print_list_token(minishell->token);
 		if (minishell->token == NULL)
 			continue;
-		print_list_token(minishell->token);
+		parser_tokens(minishell);
+
+
+
 //		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		//print_list_commands(minishell->cmds);
-		parser_tokens(minishell);
-//		print_env_list(minishell->env);
 		print_list_token(minishell->token);
 		// cases_builtins(minishell);
 	}
