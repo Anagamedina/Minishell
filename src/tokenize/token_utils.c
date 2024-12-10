@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+static int copy_word(char **out, char *str, int start, int end, int *k);
 
 static char *ft_strncpy(char *s1, char *s2, int n)
 {
@@ -39,8 +40,11 @@ static int skip_quotes(char *str, int *i)
 	while (str[*i] && str[*i] != quote)
 		(*i)++;
 	if (str[*i] == quote)
+	{
 		(*i)++;
-	return (1);
+		return (1);
+	}
+	return (0);
 }
 
 /*Cuenta cuántas "palabras" hay en la cadena str,
@@ -57,7 +61,11 @@ static int	count_words(char *str)
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i++;
-		if (str[i] == '\'' || str[i] == '"')
+//		if (str[i] == '\"' && str[i + 1] == '\"')
+//		{
+//				i = 2;
+//		}
+		if (str[i] == '\'' || str[i] == '\"')
 			wc += skip_quotes(str, &i);
 		else if (str[i] == ';' || str[i] == '|')
 		{
@@ -118,7 +126,7 @@ las otras funciones para dividir la cadena
  en palabras, considerando las comillas.
 */
 //**********MAIN FUNCTION***************/
-char **ft_split_quote(char *str)
+char	**ft_split_quote(char *str)
 {
 	int i;
 	int j;
@@ -133,10 +141,9 @@ char **ft_split_quote(char *str)
 	{
 		skip_whitespace(str, &i);
 		j = i;
-		// si es comilla simple o comilla doble
-		if (str[i] == '\'' || str[i] == '"')
-			skip_quotes(str, &i);
-		else if (str[i] == ';' || str[i] == '|')
+//		if (str[i] == '\'' || str[i] == '"')
+//			skip_quotes(str, &i);
+		if (str[i] == ';' || str[i] == '|')
 			i++;
 		else
 		{
