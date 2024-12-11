@@ -3,8 +3,6 @@
 //
 #include "../../includes/minishell.h"
 
-
-
 char	*remove_quotes_str(char *str, char c)
 {
 	int		i;
@@ -41,6 +39,9 @@ char	*remove_quotes_str(char *str, char c)
 	return (new_str);
 }
 
+//	$echo "'$USER'"
+//	$echo "'$USER88huh'"
+
 /**
  * Parses the token list and expands variables for tokens of type WORD.
  *
@@ -64,25 +65,18 @@ void	parser_tokens(t_mini *mini)
 	env_list = mini->env;
 	curr_token = (t_tokens *) token_list->content; //rellanmos curr_token
 
-/*
-	int	is_builtin = curr_token->type_token == BUILTINS;
-	int	has_next_token = token_list->next != NULL;
-	int condicion3 = ((t_tokens *) (token_list->next->content))->type_token == WORD;
-
-	if (is_builtin && has_next_token && condicion3)
-*/
 	if ((curr_token->type_token == BUILTINS) && (token_list->next != NULL) \
 	&& (((t_tokens *) (token_list->next->content))->type_token == WORD))
 	{
 		// Iterate through the curr_token list starting from the second node
-		while (token_list->next != NULL)	//lista de token_list
+		while (token_list->next != NULL)
 		{
-			curr_token = (t_tokens *)token_list->next->content;//
+			curr_token = (t_tokens *)token_list->next->content;
 			if (curr_token->type_token == WORD)
 				handle_tokens((t_tokens *) curr_token, env_list);
 			else
 				break ;
-			token_list = token_list->next; // move to the next node in the list
+			token_list = token_list->next;
 		}
 	}
 }
@@ -113,7 +107,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 //		expand_dollar(token, first_env);
 		return ;
 	}
-	if (handle_special_quotes(token) == 1)	// echo " '$USER' "
+	if (handle_special_quotes(token) == 1)	//  echo "'$USER'" -> 'catalinaburgos'
 	{
 		if (ft_strchr_true(token->str, 36) == 1)
 			handle_dollar_cases(token, env_list);

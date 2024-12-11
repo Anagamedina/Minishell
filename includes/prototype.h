@@ -101,6 +101,7 @@ int         ft_strcmp(char *s1, char *s2);
 //************** parser_syntax_dollar.c ********************/
 
 void expand_dollar(t_tokens *token_list, t_list *env_list);
+char	*remove_quotes_str(char *str, char c);
 
 //************** parser_syntax_quotes.c ********************/
 

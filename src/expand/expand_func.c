@@ -108,12 +108,15 @@ int	found_dollar_syntax(char *str)
 	if (!str)
 		return (FALSE);
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		if (str[i] == '$')
+		if (str[i] == DOLLAR_SIGN)
 		{
-			if (str[i + 1] != '\0' && syntax_var_dollar(&str[i + 1]))
+			if (str[i + 1] != '\0')
+			{
+				//if (syntax_var_dollar(&str[i + 1]))
 				return (TRUE);
+			}
 		}
 		i++;
 	}
@@ -143,6 +146,9 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
     curr_token = token_list;
     while (curr_token != NULL)
 	{
+		printf("*****: [%s]\n", curr_token->str);
+		var_name = get_var_from_token(curr_token);
+		printf("var_name: [%s]\n", var_name);
         if (found_dollar_syntax(curr_token->str))	//poshile error con "$hello"
 		{
             // Obtener el nombre de la variable
