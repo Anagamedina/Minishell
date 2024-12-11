@@ -11,6 +11,7 @@
 # define DOUBLE_QUOTE '\"'
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
+# define BACKSLASH '\\'
 
 
 // Lista de comandos built-ins

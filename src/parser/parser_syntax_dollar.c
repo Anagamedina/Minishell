@@ -99,16 +99,18 @@ void	parser_tokens(t_mini *mini)
  */
 void	handle_tokens(t_tokens *token, t_list *env_list)
 {
-	char	*result;
 	t_env	*first_env;
+	char	*tmp;
 
 	// Handle single quotes:
-	if (handle_single_quote(token))	// echo '$hello' ->printf($hello)
+	if (handle_single_quote(token))
 	{
-		printf("processing single-quoted token\n");
-		result = remove_quotes_str(token->str, SINGLE_QUOTE);
-		printf("%s\n", result);
-		expand_dollar(token, first_env);
+		// echo '$hello' ->printf($hello)
+		tmp = remove_quotes_str(token->str, SINGLE_QUOTE);
+//		free(token->str);
+		token->str = ft_strdup(tmp);
+//		free(tmp);
+//		expand_dollar(token, first_env);
 		return ;
 	}
 	if (handle_special_quotes(token) == 1)	// echo " '$USER' "
