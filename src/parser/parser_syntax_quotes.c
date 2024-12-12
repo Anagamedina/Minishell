@@ -3,21 +3,17 @@
 //
 #include "../../includes/minishell.h"
 
-int handle_double_quotes(t_tokens *token)
+int	handle_double_quotes(t_tokens *token)
 {
-	if (token->str[0] == '\"' && token->str[token->length - 1] == '\"')
-	{
-			return (TRUE);
-	}
+	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
+		return (TRUE);
 	return (FALSE);
 }
 
-int handle_single_quote(t_tokens *token)
+int	handle_single_quote(t_tokens *token)
 {
-	if (token->str[0] == '\'' && token->str[token->length - 1] == '\'')
-	{
+	if (token->str[0] == S_QUOTE && token->str[token->length - 1] == S_QUOTE)
 		return (TRUE);
-	}
 	return (FALSE);
 }
 
@@ -30,12 +26,12 @@ int handle_single_quote(t_tokens *token)
  */
 int	handle_special_quotes(t_tokens *token)
 {
-	if (token->str[0] == '\"' && token->str[token->length - 1] == '\"' \
-		&& token->str[1] == '\'' &&
-		token->str[token->length - 2] == '\'') // echo " '$USER' "
+	if (token->str[0] == D_QUOTE \
+		&& token->str[token->length - 1] == D_QUOTE \
+		&& token->str[1] == S_QUOTE \
+		&& token->str[token->length - 2] == S_QUOTE)
 	{
 		return (TRUE);
 	}
 	return (FALSE);
 }
-

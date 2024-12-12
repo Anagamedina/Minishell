@@ -7,8 +7,8 @@
 #define TRUE 1
 #define FALSE 0
 #define SEMICOLON 59
-# define SINGLE_QUOTE '\''
-# define DOUBLE_QUOTE '\"'
+# define S_QUOTE '\''
+# define D_QUOTE '\"'
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
 # define BACKSLASH '\\'

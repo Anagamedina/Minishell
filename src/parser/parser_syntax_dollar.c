@@ -84,41 +84,39 @@ void	parser_tokens(t_mini *mini)
 /**
  * Processes a token and handles quotes, special cases, and variable expansion.
  *
- * This function checks the type of quoting or syntax present in the token.
- * Depending on the token type, it removes quotes, expands variables, or
- * handles special cases like `$` inside double quotes or unquoted strings.
+ * Depending on the token type:
+ * @see handle_single_quote Removes quotes from tokens with single quotes.
+ * @see remove_quotes_str Strips quotes from the token string.
  *
  * @param token Pointer to the token being processed.
  * @param env_list Pointer to the linked list of environment variables.
  */
 void	handle_tokens(t_tokens *token, t_list *env_list)
 {
-	t_env	*first_env;
 	char	*tmp;
 
-	// Handle single quotes:
-	if (handle_single_quote(token))
+	if (handle_single_quote(token))	// echo '$hello' ->printf($hello)
 	{
-		// echo '$hello' ->printf($hello)
-		tmp = remove_quotes_str(token->str, SINGLE_QUOTE);
-//		free(token->str);
+		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
-//		free(tmp);
-//		expand_dollar(token, first_env);
 		return ;
 	}
-	if (handle_special_quotes(token) == 1)	//  echo "'$USER'" -> 'catalinaburgos'
+	if (handle_double_quotes(token))	// echo "$USER"
 	{
-		if (ft_strchr_true(token->str, 36) == 1)
-			handle_dollar_cases(token, env_list);
-		return ;
-	}
-	if (handle_double_quotes(token) == 1)	// echo "$USER"
-	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN) == 1)
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 			handle_dollar_cases(token, env_list);	//expand variables
 		return ;
 	}
+	if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+			handle_dollar_cases(token, env_list);
+		return ;
+	}
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+//		$USER
 		handle_dollar_cases(token, env_list);	//expand variables
+		return ;
+	}
 }

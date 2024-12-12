@@ -18,7 +18,7 @@ int	check_dollar_after_single_quote(const char *str)  //$'..'
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == SINGLE_QUOTE && str[len_str - 1] == SINGLE_QUOTE)
+			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
 				return (1);
 		}
 		i++;
@@ -41,11 +41,11 @@ int	check_backslash_before_dollar(const char *str)
 		if (str[i] == DOLLAR_SIGN)
 		{
 			if (i > 0 && str[i - 1] == BACKSLASH)
-				return (1);
+				return (TRUE);
 		}
 		i++;
 	}
-	return (0);
+	return (FALSE);
 }
 
 int	has_only_one_digit_after_dollar(const char *str)
@@ -53,7 +53,18 @@ int	has_only_one_digit_after_dollar(const char *str)
 	int len;
 
 	len = (int) ft_strlen(str);
-	return (len == 2 && str[0] == '$' && str[1] >= '0' && str[1] <= '9');
+	return (len == 2 && str[0] == DOLLAR_SIGN \
+		&& str[1] >= '0' && str[1] <= '9');
+}
+
+/**
+ * Checks if the token starts with `$` followed by a digit
+ * and additional characters.
+ */
+
+int	is_digit_and_more_after_dollar(const char *str)
+{
+	return (str[0] == '$' && ft_isdigit(str[1]) == 1 && str[2] != '\0');
 }
 
 /**
@@ -110,38 +121,53 @@ char	*convert_escape_sequences(const char *str) //echo "$'\n..\t'"-> $'USER'
 
 
 /**
- * check if the next character is a single quote like $'hello
- * echo "'$USER'"
- * check backslash before		\\$
- * check single quote after		$'...'
- * llamamos a expand dollar
+ * Handles special cases of tokens that involve the `$`
+ *
+ * Processes various scenarios involving `$`:
+ * - Escaped `$` within double quotes.
+ * - `$` followed by a single quote.
+ * - `$` followed by a single digit.
+ * - `$` followed by a digit and additional characters.
+ * - General environment variable expansion.
+ *
+ * @param token Pointer to the token being processed.
+ * @param env_list Pointer to the list of environment variables.
+ *
+ * Specific cases:
+ * @see check_backslash_before_dollar
+ * Verifies if `$` is escaped by a backslash.
+ * @see check_dollar_after_single_quote
+ * Handles `$` inside single quotes.
+ * @see has_only_one_digit_after_dollar
+ * Checks for single-digit `$` variables.
+ * @see expand_dollar
+ * Expands variables that start with `$`.
  */
-/************ MAIN FUNCTION *************/
 
+/************ MAIN FUNCTION *************/
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*temp;
 
 	if (check_backslash_before_dollar(token->str) == 1)
 	{
-		// echo \$hello
-		temp = ft_strdup(token->str + 1);
-		free(token->str);
-		token->str = ft_strdup(temp);
+		// echo "\$USER" -> $USER
+		temp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(temp + 1);
 	}
 	else if (check_dollar_after_single_quote(token->str) == 1)
 	{
-		//	TODO: Ana
 		//	echo $'USER\n'
 		temp = convert_escape_sequences(token->str + 1);
 		free(token->str);
-		token->str = ft_strdup(remove_quotes_str(temp, SINGLE_QUOTE));
+		token->str = ft_strdup(remove_quotes_str(temp, S_QUOTE));
 	}
-	else if (has_only_one_digit_after_dollar(token->str) == 1)	//$1
+	else if (has_only_one_digit_after_dollar(token->str))
 	{
+		//	$1
 		token->str = ft_strdup("");
 	}
-	else if (token->str[0] == '$' && ft_isdigit(token->str[1]) == 1 && token->str[2] != '\0')
+	else if (is_digit_and_more_after_dollar(token->str))
 	{
 		//	$1hello
 		temp = ft_strdup(token->str + 2);
@@ -151,6 +177,5 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	else
 	{
 		expand_dollar(token, env_list);
-		printf("caso de comillas dobles simples: token->str: %s\n", token->str);
 	}
 }
