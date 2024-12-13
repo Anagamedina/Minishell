@@ -1,6 +1,9 @@
 #include "../../includes/minishell.h"
 
+typedef struct TODO TODO;
+
 int	found_dollar_syntax(char *str);
+char	*find_env_value(t_list *env_list, char *var_name_token);
 
 /**
   *Objetivo: i
@@ -11,20 +14,54 @@ int	found_dollar_syntax(char *str);
   * find_env_value
   * replace_var_in_token
 */
-
+//EXTRAEEER!!! NAME DEPSUES DEL DOLLAR
 // echo "$hello"   hello
-char *get_var_from_token(t_tokens *token_list, char *str)
+//	TODO: finish this function
+char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
+	char 		**split_word;
+	int 		i;
+	char 		*var_name;
+	char 		*var_value;
 
 	curr_token = token_list;
 	while (curr_token != NULL)
 	{
-		// Verifica si el token tiene un $
-		if (found_dollar_syntax(curr_token->str) == 1)
+		if (curr_token->type_token == WORD)
 		{
-			//si te encuentras un dolar me saltas el $ y strdup de VAR
-			return (ft_strdup(curr_token->str + 1));
+			split_word = ft_split_quote(curr_token->str);
+			i = 0;
+			if (split_word != NULL)
+			{
+				while (split_word[i] != NULL)
+				{
+					if (split_word[i][0] == DOLLAR_SIGN)
+					{
+						var_name = ft_strdup(split_word[i] + 1);
+						var_value = find_env_value(env_list, var_name);
+						printf("var_value: %s\n", var_value);
+						if (var_value != NULL)
+						{
+							free(split_word[i]);
+							split_word[i] = ft_strdup(var_value);
+						}
+						else // si no se encuentra el valor de la variable se deja vacio
+						{
+							free(split_word[i]);
+							split_word[i] = ft_strdup("");
+						}
+						free(var_name);
+						free(var_value);
+					}
+					i++;
+				}
+			}
+			i = 0;
+			while (split_word[i] != NULL)
+			{
+				printf("split_word: %s\n",(split_word[i++]));
+			}
 		}
 		curr_token = curr_token->next;
 	}
@@ -113,8 +150,6 @@ int	found_dollar_syntax(char *str)
 	{
 		if (str[i] == DOLLAR_SIGN)
 		{
-			printf("=========== %s\n", &str[i + 1]);
-			//if (str[i + 1] != '\0')
 			if (syntax_var_dollar(&str[i + 1]))
 				return (TRUE);
 		}
@@ -141,19 +176,28 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
     t_tokens	*curr_token;
     char		*var_name = NULL;
     char		*var_value = NULL;
+	char		*update_token_str;
 
-	printf("entra en expand_dolar\n");
     curr_token = token_list;
     while (curr_token != NULL)
 	{
-		//printf("*****: [%s]\n", curr_token->str);
-		//var_name = get_var_from_token(curr_token);
-		int conidicion = found_dollar_syntax(curr_token->str);
-		char *tmp = ft_strdup(remove_quotes_str(curr_token->str, D_QUOTE));
+		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
+		printf("update_token: %s\n", update_token_str);
+		curr_token->str = ft_strdup(update_token_str);
+		printf("curr->token : %s\n", curr_token->str);
+		char *tmp = get_var_from_token(token_list, env_list);
+		printf("tmp: %s\n", tmp);
+
+
+
+
+
+/*
+
         if (found_dollar_syntax(tmp))	//poshile error con "$hello"
 		{
             // Obtener el nombre de la variable
-            var_name = get_var_from_token(curr_token, NULL);
+            var_name = tmp;
 			printf("var_name: [%s]\n", var_name);
 			if (var_name)
 			{
@@ -165,7 +209,7 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
                 }
                 free(var_name);
             }
-        }
+        }*/
         curr_token = curr_token->next;
     }
 }

@@ -141,8 +141,8 @@ char	**ft_split_quote(char *str)
 	{
 		skip_whitespace(str, &i);
 		j = i;
-//		if (str[i] == '\'' || str[i] == '"')
-//			skip_quotes(str, &i);
+		if (str[i] == '\'' || str[i] == '"')//antes lo comentamos porque no iba bien un caso
+			skip_quotes(str, &i);
 		if (str[i] == ';' || str[i] == '|')
 			i++;
 		else
