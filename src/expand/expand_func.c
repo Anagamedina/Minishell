@@ -13,7 +13,7 @@ int	found_dollar_syntax(char *str);
 */
 
 // echo "$hello"   hello
-char	*get_var_from_token(t_tokens *token_list)
+char *get_var_from_token(t_tokens *token_list, char *str)
 {
 	t_tokens	*curr_token;
 
@@ -21,7 +21,8 @@ char	*get_var_from_token(t_tokens *token_list)
 	while (curr_token != NULL)
 	{
 		// Verifica si el token tiene un $
-		if (found_dollar_syntax(curr_token->str) == 1) {
+		if (found_dollar_syntax(curr_token->str) == 1)
+		{
 			//si te encuentras un dolar me saltas el $ y strdup de VAR
 			return (ft_strdup(curr_token->str + 1));
 		}
@@ -112,11 +113,10 @@ int	found_dollar_syntax(char *str)
 	{
 		if (str[i] == DOLLAR_SIGN)
 		{
-			if (str[i + 1] != '\0')
-			{
-				//if (syntax_var_dollar(&str[i + 1]))
+			printf("=========== %s\n", &str[i + 1]);
+			//if (str[i + 1] != '\0')
+			if (syntax_var_dollar(&str[i + 1]))
 				return (TRUE);
-			}
 		}
 		i++;
 	}
@@ -139,21 +139,23 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
 	// Nota: Posible cambio a t_list.
     t_tokens	*curr_token;
-    char		*var_name;
-    char		*var_value;
+    char		*var_name = NULL;
+    char		*var_value = NULL;
 
 	printf("entra en expand_dolar\n");
     curr_token = token_list;
     while (curr_token != NULL)
 	{
-		printf("*****: [%s]\n", curr_token->str);
-		var_name = get_var_from_token(curr_token);
-		printf("var_name: [%s]\n", var_name);
-        if (found_dollar_syntax(curr_token->str))	//poshile error con "$hello"
+		//printf("*****: [%s]\n", curr_token->str);
+		//var_name = get_var_from_token(curr_token);
+		int conidicion = found_dollar_syntax(curr_token->str);
+		char *tmp = ft_strdup(remove_quotes_str(curr_token->str, D_QUOTE));
+        if (found_dollar_syntax(tmp))	//poshile error con "$hello"
 		{
             // Obtener el nombre de la variable
-            var_name = get_var_from_token(curr_token);
-            if (var_name)
+            var_name = get_var_from_token(curr_token, NULL);
+			printf("var_name: [%s]\n", var_name);
+			if (var_name)
 			{
                 var_value = find_env_value(env_list, var_name);
                 if (var_value)
