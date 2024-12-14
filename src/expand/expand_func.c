@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-char	*find_env_value(t_list *env_list, char *var_name_token);
 
 /**
   *Objetivo: i

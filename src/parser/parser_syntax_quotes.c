@@ -35,3 +35,39 @@ int	handle_special_quotes(t_tokens *token)
 	}
 	return (FALSE);
 }
+
+char	*remove_quotes_str(char *str, char c)
+{
+	int		i;
+	int		j;
+	int		new_len;
+	char	*new_str;
+
+	i = 0;
+	new_len = 0;
+	// Calcula la longitud del nuevo string sin el carácter c
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+			new_len++;
+		i++;
+	}
+	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
+	if (new_str == NULL)
+		return (NULL);
+	// Reconstruye el nuevo string sin el carácter c
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != c)
+		{
+			new_str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	new_str[j] = '\0';
+	free(str); // Libera el string original
+	return (new_str);
+}

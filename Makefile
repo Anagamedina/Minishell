@@ -30,9 +30,6 @@ MINISHELL_H = includes/minishell.h
 SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_MINI)/init_struct.c \
 		$(SRC_INPUT)/input.c \
-		$(SRC_PARSE)/parser_syntax_dollar.c \
-		$(SRC_PARSE)/parser_syntax_expand.c \
-		$(SRC_PARSE)/parser_syntax_quotes.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_utils_locals.c \
 		$(SRC_ENV)/env_locals_list.c \
@@ -48,7 +45,10 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
-		$(SRC_BUILTINS2)/builtin_exit.c
+		$(SRC_BUILTINS2)/builtin_exit.c \
+		$(SRC_PARSE)/parser_syntax_expand.c \
+		$(SRC_PARSE)/parser_syntax_dollar.c \
+		$(SRC_PARSE)/parser_syntax_quotes.c
 
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))

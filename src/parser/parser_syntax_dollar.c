@@ -3,42 +3,45 @@
 //
 #include "../../includes/minishell.h"
 
-char	*remove_quotes_str(char *str, char c)
+/**
+ * Processes a token and handles quotes, special cases, and variable expansion.
+ *
+ * Depending on the token type:
+ * @see handle_single_quote Removes quotes from tokens with single quotes.
+ * @see remove_quotes_str Strips quotes from the token string.
+ *
+ * @param token Pointer to the token being processed.
+ * @param env_list Pointer to the linked list of environment variables.
+ */
+void	handle_tokens(t_tokens *token, t_list *env_list)
 {
-	int		i;
-	int		j;
-	int		new_len;
-	char	*new_str;
+	char	*tmp;
 
-	i = 0;
-	new_len = 0;
-	// Calcula la longitud del nuevo string sin el carácter c
-	while (str[i] != '\0')
+	if (handle_single_quote(token))	// echo '$hello' ->printf($hello)
 	{
-		if (str[i] != c)
-			new_len++;
-		i++;
+		tmp = remove_quotes_str(token->str, S_QUOTE);
+		token->str = ft_strdup(tmp);
+		return ;
 	}
-	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
-	if (new_str == NULL)
-		return (NULL);
-	// Reconstruye el nuevo string sin el carácter c
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
+	if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
 	{
-		if (str[i] != c)
-		{
-			new_str[j] = str[i];
-			j++;
-		}
-		i++;
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+			handle_dollar_cases(token, env_list);
+		return ;
 	}
-	new_str[j] = '\0';
-	free(str); // Libera el string original
-	return (new_str);
+	if (handle_double_quotes(token))	// echo "$USER"
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+			handle_dollar_cases(token, env_list);	//expand variables
+		return ;
+	}
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+//		$USER
+		handle_dollar_cases(token, env_list);	//expand variables
+		return ;
+	}
 }
-
 //	$echo "'$USER'"
 //	$echo "'$USER88huh'"
 
@@ -78,45 +81,5 @@ void	parser_tokens(t_mini *mini)
 				break ;
 			token_list = token_list->next;
 		}
-	}
-}
-
-/**
- * Processes a token and handles quotes, special cases, and variable expansion.
- *
- * Depending on the token type:
- * @see handle_single_quote Removes quotes from tokens with single quotes.
- * @see remove_quotes_str Strips quotes from the token string.
- *
- * @param token Pointer to the token being processed.
- * @param env_list Pointer to the linked list of environment variables.
- */
-void	handle_tokens(t_tokens *token, t_list *env_list)
-{
-	char	*tmp;
-
-	if (handle_single_quote(token))	// echo '$hello' ->printf($hello)
-	{
-		tmp = remove_quotes_str(token->str, S_QUOTE);
-		token->str = ft_strdup(tmp);
-		return ;
-	}
-	if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
-	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-			handle_dollar_cases(token, env_list);
-		return ;
-	}
-	if (handle_double_quotes(token))	// echo "$USER"
-	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-			handle_dollar_cases(token, env_list);	//expand variables
-		return ;
-	}
-	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-	{
-//		$USER
-		handle_dollar_cases(token, env_list);	//expand variables
-		return ;
 	}
 }

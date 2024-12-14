@@ -114,9 +114,17 @@ void		handle_dollar_cases(t_tokens *token, t_list *env_list);
 int			check_dollar_after_single_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
 void 		handle_tokens(t_tokens *token, t_list *env_list);
+int			has_string_before_dollar(const char *str);
 
 //************** parser_func.c ********************/
 
 void	expand_dollar(t_tokens *token_list, t_list *env_list);
+
+//************** expand_func.c ********************/
+
+char	*find_env_value(t_list *env_list, char *var_name_token);
+
+
+
 
 #endif
