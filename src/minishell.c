@@ -28,8 +28,6 @@ int main(int argc, char **argv, char **envp)
 			continue;
 		parser_tokens(minishell);
 
-
-
 //		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		//print_list_commands(minishell->cmds);
 		print_list_token(minishell->token);

@@ -18,7 +18,7 @@ SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
-SRC_PARSE= $(SRC_DIR)/parse
+SRC_PARSE= $(SRC_DIR)/parser
 SRC_TOKEN = $(SRC_DIR)/tokenize
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
@@ -30,9 +30,11 @@ MINISHELL_H = includes/minishell.h
 SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_MINI)/init_struct.c \
 		$(SRC_INPUT)/input.c \
-		$(SRC_PARSE)/parse_syntax_args.c \
+		$(SRC_PARSE)/parser_syntax_dollar.c \
+		$(SRC_PARSE)/parser_syntax_expand.c \
+		$(SRC_PARSE)/parser_syntax_quotes.c \
 		$(SRC_ENV)/env.c \
-		$(SRC_ENV)/env_utils.c \
+		$(SRC_ENV)/env_utils_locals.c \
 		$(SRC_ENV)/env_locals_list.c \
 		$(SRC_ENV)/free_env.c \
 		$(SRC_TOKEN)/token_type.c \

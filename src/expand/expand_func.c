@@ -1,8 +1,5 @@
 #include "../../includes/minishell.h"
 
-typedef struct TODO TODO;
-
-int	found_dollar_syntax(char *str);
 char	*find_env_value(t_list *env_list, char *var_name_token);
 
 /**
@@ -14,9 +11,13 @@ char	*find_env_value(t_list *env_list, char *var_name_token);
   * find_env_value
   * replace_var_in_token
 */
+char	*ft_strjoin_array(char **split_word);
+
 //EXTRAEEER!!! NAME DEPSUES DEL DOLLAR
 // echo "$hello"   hello
+//echo "$USER hello world $SHLVL"
 //	TODO: finish this function
+// Nota: el caso "echo "$HOLA $USER" esta "mal" porque agrega un espacio de mas al inicio.
 char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
@@ -24,6 +25,7 @@ char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 	int 		i;
 	char 		*var_name;
 	char 		*var_value;
+	char 		*tmp_new_token_str;
 
 	curr_token = token_list;
 	while (curr_token != NULL)
@@ -36,7 +38,7 @@ char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 			{
 				while (split_word[i] != NULL)
 				{
-					if (split_word[i][0] == DOLLAR_SIGN)
+					if (split_word[i][0] == DOLLAR_SIGN) // si el primer caracter es un $
 					{
 						var_name = ft_strdup(split_word[i] + 1);
 						var_value = find_env_value(env_list, var_name);
@@ -49,7 +51,7 @@ char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 						else // si no se encuentra el valor de la variable se deja vacio
 						{
 							free(split_word[i]);
-							split_word[i] = ft_strdup("");
+							split_word[i] = ft_strdup(" ");
 						}
 						free(var_name);
 						free(var_value);
@@ -57,15 +59,78 @@ char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 					i++;
 				}
 			}
-			i = 0;
-			while (split_word[i] != NULL)
+			tmp_new_token_str = ft_strjoin_array(split_word);
+			if (curr_token->str != NULL)
 			{
-				printf("split_word: %s\n",(split_word[i++]));
+				free(curr_token->str);
+			}
+			curr_token->str = ft_strdup(tmp_new_token_str);
+			if (tmp_new_token_str != NULL)
+			{
+				free(tmp_new_token_str);
 			}
 		}
 		curr_token = curr_token->next;
 	}
-	return (NULL);
+	return (tmp_new_token_str);
+}
+
+char	*ft_strncpy(char *dst, const char *src,  int n)
+{
+	int i = 0;
+	while(i < n && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+char	*ft_strjoin_array(char **split_word)
+{
+	int		i;
+	int		j;
+	int 	k;
+	char	*merged_token;
+	size_t	new_len;
+
+	i = 0;
+	new_len = 0;
+	while (split_word[i] != NULL)
+	{
+		new_len += ft_strlen(split_word[i]);
+		new_len++;
+		i++;
+	}
+	new_len --;
+	merged_token = (char *)malloc(sizeof(char) * (new_len + 1));
+	if (merged_token == NULL)
+		return (NULL);
+
+	i = 0;
+	int word_len = 0;
+	k = 0;
+	while (split_word[i] != NULL)
+	{
+		word_len = ft_strlen(split_word[i]);
+		j = 0;
+		while (split_word[i][j] != '\0')
+		{
+			merged_token[k] = split_word[i][j];
+			if (word_len - 1 == j)
+			{
+				k++;
+				merged_token[k] = ' ';
+			}
+			j++;
+			k++;
+		}
+
+		i ++;
+	}
+	merged_token[new_len] = '\0';
+	return (merged_token);
 }
 
 
@@ -174,8 +239,6 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
 	// Nota: Posible cambio a t_list.
     t_tokens	*curr_token;
-    char		*var_name = NULL;
-    char		*var_value = NULL;
 	char		*update_token_str;
 
     curr_token = token_list;
@@ -187,29 +250,6 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 		printf("curr->token : %s\n", curr_token->str);
 		char *tmp = get_var_from_token(token_list, env_list);
 		printf("tmp: %s\n", tmp);
-
-
-
-
-
-/*
-
-        if (found_dollar_syntax(tmp))	//poshile error con "$hello"
-		{
-            // Obtener el nombre de la variable
-            var_name = tmp;
-			printf("var_name: [%s]\n", var_name);
-			if (var_name)
-			{
-                var_value = find_env_value(env_list, var_name);
-                if (var_value)
-				{
-                    free(curr_token->str);
-                    curr_token->str = ft_strdup(var_value); // Ya es strdup desde find_env_value
-                }
-                free(var_name);
-            }
-        }*/
         curr_token = curr_token->next;
     }
 }

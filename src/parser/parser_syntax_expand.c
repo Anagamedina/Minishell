@@ -3,6 +3,8 @@
 //
 #include "../../includes/minishell.h"
 
+int has_string_before_dollar(char *str);
+
 /**
  * check if the next character is a single quote like $'hello
  * echo "'$USER'"
@@ -91,18 +93,34 @@ int	calculate_new_length(char *str)
 	return (len);
 }
 */
-char	*convert_escape_sequences(const char *str) //echo "$'\n..\t'"-> $'USER'
-{
-	int		i = 0;
-	int		j = 0;
-	char	*result;
 
-	result = malloc(ft_strlen(str) + 1);
-	if (!result)
-		perror("malloc error");
-	while (str[i])
+int	calculate_result_size(const char *str)
+{
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	while (str[i] != '\0')
 	{
-		if (str[i] == '\\' && str[i + 1])
+		if (str[i] == BACKSLASH && str[i + 1])
+			i ++;
+		len++;
+		i++;
+	}
+	return (len);
+}
+
+void	process_string(const char *str, char *result)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == BACKSLASH && str[i + 1])
 		{
 			if (str[i + 1] == 'n')
 				result[j++] = '\n';
@@ -116,6 +134,24 @@ char	*convert_escape_sequences(const char *str) //echo "$'\n..\t'"-> $'USER'
 			result[j++] = str[i++];
 	}
 	result[j] = '\0';
+}
+
+//echo "$'\n..\t'"-> $'USER'
+char	*convert_escape_sequences(const char *str)
+{
+	char	*result;
+	int 	len;
+
+	if (!str)
+		return (NULL);
+	len = calculate_result_size(str);
+	result = malloc(len + 1);
+	if (!result)
+	{
+		perror("malloc error");
+		return (NULL);
+	}
+	process_string(str, result);
 	return (result);
 }
 
@@ -158,6 +194,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	else if (check_dollar_after_single_quote(token->str) == 1)
 	{
 		//	echo $'USER\n'
+		//	check this function ??????????????????
 		temp = convert_escape_sequences(token->str + 1);
 		free(token->str);
 		token->str = ft_strdup(remove_quotes_str(temp, S_QUOTE));
@@ -166,6 +203,40 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	{
 		//	$1
 		token->str = ft_strdup("");
+	}
+	else if (has_string_before_dollar(token->str))
+	{
+		// Nota1: actualizar el atributo size del token
+		// Nota2: Limpiar frees
+		// print string de antes de dollar
+		int i = 0;
+		int len = 0;
+
+		temp = remove_quotes_str(token->str, D_QUOTE);
+//		if (token->str != NULL)
+//		{
+//			free(token->str);
+//		}
+		token->str = ft_strdup(temp);
+		if (temp != NULL)
+		{
+			free(temp);
+		}
+		while (token->str[i] != '\0' && token->str[i] != DOLLAR_SIGN)
+		{
+			i++;
+		}
+		len = i;
+		temp = ft_substr(token->str, 0, len);
+		if (token->str != NULL)
+		{
+			free(token->str);
+		}
+		token->str = ft_strdup(temp);
+		if (temp != NULL)
+		{
+			free(temp);
+		}
 	}
 	else if (is_digit_and_more_after_dollar(token->str))
 	{
@@ -178,4 +249,24 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	{
 		expand_dollar(token, env_list);
 	}
+}
+
+int has_string_before_dollar(char *str) {
+	int i;
+	int	j;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == DOLLAR_SIGN)
+		{
+			j = i - 1;
+			if ((str[j] >= 'A' && str[j] <= 'Z') || (str[j] >= 'a' && str[j] <= 'z'))
+			{
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
 }
