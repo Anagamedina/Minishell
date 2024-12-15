@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-static int copy_word(char **out, char *str, int start, int end, int *k);
 
-static char *ft_strncpy(char *s1, char *s2, int n)
+static char *ft_strncpy(char *s1, const char *s2, int n)
 {
 	int i = 0;
 	while (i < n && s2[i])
@@ -24,6 +23,7 @@ static char *ft_strncpy(char *s1, char *s2, int n)
 	s1[i] = '\0';
 	return (s1);
 }
+
 /*
  * Esta función se encarga de saltar entre comillas simples o dobles.
  *
@@ -31,9 +31,9 @@ static char *ft_strncpy(char *s1, char *s2, int n)
  * me vas a recorrer la i(puntero) hasta hacer match con la quote
  * Retorna 1 para indicar que se encontró una palabra
  * */
-static int skip_quotes(char *str, int *i)
+static int skip_quotes(const char *str, int *i)
 {
-	char quote;
+	char	quote;
 
 	quote = str[*i];
 	(*i)++;
@@ -62,9 +62,7 @@ static int	count_words(char *str)
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i++;
 //		if (str[i] == '\"' && str[i + 1] == '\"')
-//		{
 //				i = 2;
-//		}
 		if (str[i] == '\'' || str[i] == '\"')
 			wc += skip_quotes(str, &i);
 		else if (str[i] == ';' || str[i] == '|')
@@ -86,7 +84,7 @@ static int	count_words(char *str)
 Esta función salta los espacios,
 tabulaciones y saltos de línea.
  */
-static void skip_whitespace(char *str, int *i)
+static void skip_whitespace(const char *str, int *i)
 {
 	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n'))
 		(*i)++;

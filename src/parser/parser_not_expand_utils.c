@@ -1,4 +1,5 @@
 #include "../../includes/minishell.h"
+
 /**
  * check if the next character is a single quote like $'hello
  * echo "'$USER'"

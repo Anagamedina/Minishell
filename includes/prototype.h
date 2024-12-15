@@ -1,8 +1,7 @@
 #ifndef PROTOTYPE_H
 #define PROTOTYPE_H
-#pragma once
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 # include "minishell.h"
 # include "macros.h"
 

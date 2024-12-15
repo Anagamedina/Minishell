@@ -18,11 +18,12 @@ SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
-SRC_PARSE= $(SRC_DIR)/parser
+SRC_PARSER= $(SRC_DIR)/parser
 SRC_TOKEN = $(SRC_DIR)/tokenize
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
+SRC_EXPAND= $(SRC_DIR)/expand
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h
@@ -46,21 +47,14 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
-		$(SRC_PARSE)/parser_syntax_expand.c \
-		$(SRC_PARSE)/parser_syntax_dollar.c \
-		$(SRC_PARSE)/parser_syntax_quotes.c
-
+		$(SRC_PARSER)/parser_syntax_dollar.c \
+		$(SRC_PARSER)/parser_syntax_quotes.c \
+		$(SRC_PARSER)/parser_not_expand_utils.c \
+		$(SRC_PARSER)/parser_syntax_expand.c \
+		$(SRC_EXPAND)/expand_func.c
+#		$(SRC_EXPAND)/expand_utils.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
-
-#OBJ = $(patsubst \
-#		$(SRC_DIR)/%.c, \
-#		$(SRC_INPUT)/%.c, \
-#		$(SRC_ENV)/%.c, \
-#		$(SRC_TOKEN)/%.o, \
-#		$(OBJ_DIR)/%.o, \
-#		$(SRC))
-#falta los .o del bonus 
 
 LIBFT = $(LIBFT_DIR)/libft.a
 

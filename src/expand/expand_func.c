@@ -1,6 +1,5 @@
 #include "../../includes/minishell.h"
 
-
 /**
   *Objetivo: i
   * char	*get_var_value(char *line)
@@ -154,6 +153,7 @@ function auxiliar que verifique sintaxis de VAR
  gestionar que el $ siempre al principio del str
  echo $_ a-zA-Z
 */
+/*
 static int	syntax_var_dollar(char *str)
 {
 	int i;
@@ -169,6 +169,7 @@ static int	syntax_var_dollar(char *str)
 	}
 	return (TRUE);
 }
+*/
 
 /**
  * expand $ en Bash se refiere a la expansión de variables,
