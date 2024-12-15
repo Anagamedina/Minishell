@@ -5,11 +5,10 @@
 # include "minishell.h"
 # include "macros.h"
 
-typedef struct s_env t_env;
-typedef struct s_tokens t_tokens;
-typedef struct s_cmd t_cmd;
-typedef struct s_mini t_mini;
-
+typedef	struct	s_env t_env;
+typedef struct	s_tokens t_tokens;
+typedef struct	s_cmd t_cmd;
+typedef struct	s_mini t_mini;
 
 //**************ENV************/
 t_list			*init_env_list(char **envp);

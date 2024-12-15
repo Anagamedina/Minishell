@@ -11,21 +11,22 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
-** Crea e inicializa un nuevo nodo `t_tokens` con la cadena y tipo de token proporcionados.
-** - Reserva memoria para el token.
-** - Copia el contenido de `str` en el campo `str` del nuevo token.
-** - Calcula y asigna la longitud de `str`.
-** - Inicializa los punteros `next` y `prev` a NULL.
-** Devuelve un puntero al nuevo token, o NULL si falla la asignación de memoria.
-*/
+
+/**
+ * Crea e inicializa un nuevo nodo `t_tokens` con la cadena y tipo de token proporcionados.
+ * - Reserva memoria para el token.
+ * - Copia el contenido de `str` en el campo `str` del nuevo token.
+ * - Calcula y asigna la longitud de `str`.
+ * - Inicializa los punteros `next` y `prev` a NULL.
+ * Devuelve un puntero al nuevo token, o NULL si falla la asignación de memoria.
+ */
 
 t_tokens	*init_token(char *str, int token_type)
 {
 	t_tokens	*new_token;
 
 	new_token = malloc(sizeof(t_tokens));
-	if(!new_token)
+	if (!new_token)
 		return (NULL);
 	new_token->str = ft_strdup(str);
 	new_token->type_token = token_type;
@@ -36,10 +37,9 @@ t_tokens	*init_token(char *str, int token_type)
 	return (new_token);
 }
 
-//CHULETAAAAAAA!!!!
 void	print_list_token(t_list *tokens_list)
 {
-	t_list		*current; // SIEMPRE PONER T_LIST
+	t_list		*current;
 	t_tokens	*token;
 	int			i;
 
@@ -47,17 +47,18 @@ void	print_list_token(t_list *tokens_list)
 	i = 1;
 	while (current != NULL)
 	{
-		token = (t_tokens *)current->content;  // Accede a `t_tokens` dentro de `content`
+		token = (t_tokens *)current->content;
 		printf("----- TOKEN [%i] :\n", i);
 		printf("str: [%s]\n", token->str);
 		printf("type: [%i]\n", token->type_token);
 		printf("len: [%zu]\n", token->length);
 		i ++;
-		current = current->next; //SIEMPRE ITERAR POR LA LISTA TOKENS_LIST!!
+		current = current->next;
 	}
 }
 
-/*int	check_lowercase_tokens(t_list *tokens_list)
+/*
+int	check_lowercase_tokens(t_list *tokens_list)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -80,7 +81,8 @@ void	print_list_token(t_list *tokens_list)
 		current = current->next;
 	}
 	return (TRUE);
-}*/
+}
+*/
 
 
 /*
@@ -97,27 +99,27 @@ t_list	*tokenize_list(char **tokens)
 	t_list		*tokens_list;
 	t_tokens	*new_token;
 	t_list		*new_node;
-	int i;
+	int			i;
 
 	tokens_list = NULL;
 	i = 0;
-	if(!tokens)
+	if (!tokens)
 		return (NULL);
 	while (tokens[i] != NULL)
 	{
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		new_token->id_token = i;
-		if(!new_token)
+		if (new_token == NULL)
 		{
 			ft_lstclear(&tokens_list, free);
 			return (NULL);
 		}
 		new_node = ft_lstnew(new_token);
-		if(!new_node)
+		if (!new_node)
 		{
 			free(new_token);
 			ft_lstclear(&tokens_list, free);
-			return(NULL);
+			return (NULL);
 		}
 		ft_lstadd_back(&tokens_list, new_node);
 		i++;
@@ -152,7 +154,7 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);
-	tokens_list = tokenize_list(tokens);	//creamos linked list
+	tokens_list = tokenize_list(tokens);
 	if (identify_commands(tokens_list) == 0)
 	{
 		// printf("error identify commands\n");
