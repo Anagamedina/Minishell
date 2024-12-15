@@ -74,17 +74,6 @@ char	*get_var_from_token(t_tokens *token_list, t_list *env_list)
 	return (tmp_new_token_str);
 }
 
-char	*ft_strncpy(char *dst, const char *src,  int n)
-{
-	int i = 0;
-	while(i < n && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
 
 char	*ft_strjoin_array(char **split_word)
 {
@@ -133,24 +122,6 @@ char	*ft_strjoin_array(char **split_word)
 }
 
 
-/*
-char	*find_env_value(t_env *env_list, char *var_name_token)
-{
-	t_env	*curr_env;
-
-	curr_env = env_list;
-	while (env_list !=  NULL)
-	{
-		if (ft_strcmp(var_name_token, curr_env->key) == 0)
-		{
-			return (ft_strdup(curr_env->value));
-		}
-		env_list = env_list->next;
-	}
-	return (NULL);
-}
-*/
-
 char	*find_env_value(t_list *env_list, char *var_name_token)
 {
 	t_list	*curr_env_list;
@@ -197,29 +168,6 @@ static int	syntax_var_dollar(char *str)
 		i++;
 	}
 	return (TRUE);
-}
-
-//iterar por cada argumento de cada TOKEN y
-// le pasamos una funcion auxiliar de syntaxis
-//verificar que contiene un $
-
-int	found_dollar_syntax(char *str)
-{
-	int i;
-
-	if (!str)
-		return (FALSE);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == DOLLAR_SIGN)
-		{
-			if (syntax_var_dollar(&str[i + 1]))
-				return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
 }
 
 /**

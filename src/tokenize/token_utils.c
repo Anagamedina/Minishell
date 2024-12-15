@@ -92,7 +92,6 @@ static void skip_whitespace(char *str, int *i)
 		(*i)++;
 }
 
-
 /*Se encarga de copiar una palabra (definida entre espacios,
  * tabulaciones o comillas) en la posición de la lista out*/
 static int copy_word(char **out, char *str, int start, int end, int *k)

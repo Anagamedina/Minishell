@@ -116,6 +116,12 @@ int			check_backslash_before_dollar(const char *str);
 void 		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
 
+//************** parser_not_expand.c ********************/
+
+int		has_only_one_digit_after_dollar(const char *str);
+char	*convert_escape_sequences(const char *str);
+int		is_digit_and_more_after_dollar(const char *str);
+
 //************** parser_func.c ********************/
 
 void	expand_dollar(t_tokens *token_list, t_list *env_list);
