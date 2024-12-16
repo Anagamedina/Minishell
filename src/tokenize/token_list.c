@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:17:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:23:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_tokens	*init_token(char *str, int token_type)
 }
 
 /**
- * Prints all tokens in a linked list (`t_list`).
+ * Prints all tokens in a linked list (t_list).
  *
  * @param tokens_list Pointer to the head of the token list.
  */
@@ -127,7 +127,7 @@ t_list	*tokenize_list(char **tokens)
 	return (tokens_list);
 }
 
-//	**********MAIN FUNCTION***************/
+//**********MAIN FUNCTION**********************/
 /**
  * Splits the input line into tokens, processes quotes,
  * and creates a linked list of tokens.

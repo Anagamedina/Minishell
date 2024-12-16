@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 12:24:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:12:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,5 @@
 # define CD "cd"
 # define PWD "pwd"
 # define EXIT "exit"
-//# define BUILT_LIST ECHO, EXPORT, UNSET, ENV, CD, PWD, EXIT, NULL
-# define BUILT_LIST "echo", "export", "unset", "env", "cd", "pwd", "exit", NULL
 
 #endif

@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.co  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 23:12:28 by dasalaza          #+#    #+#             */
+/*   Updated: 2024/12/16 23:13:18 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 /**
  * check if the next character is a single quote like $'hello
  * echo "'$USER'"
+ * $'..'
  */
-int	check_dollar_after_single_quote(const char *str)  //$'..'
+int	check_dollar_after_single_quote(const char *str)
 {
-	int i;
-	int len_str;
+	int	i;
+	int	len_str;
 
 	i = 0;
 	len_str = (int) ft_strlen(str);
@@ -47,7 +60,7 @@ int	check_backslash_before_dollar(const char *str)
 
 int	has_only_one_digit_after_dollar(const char *str)
 {
-	int len;
+	int	len;
 
 	len = (int) ft_strlen(str);
 	return (len == 2 && str[0] == DOLLAR_SIGN \

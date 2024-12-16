@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 18:23:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:37:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_mini
     // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
 
-typedef struct	s_split_data
+typedef struct s_split_data
 {
 	char	**out;
 	char	*str;
