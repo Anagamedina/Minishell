@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 13:30:20 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/04 13:15:00 by  dasalaza        ###   ########.fr       */
+/*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
+/*   Updated: 2024/12/16 18:10:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	if (s1 == NULL || s2 == NULL)
-		return (-1);
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char )s2[i]);
-}
 
 int	set_token_type(char *str)
 {
@@ -43,24 +31,41 @@ int	set_token_type(char *str)
 }
 
 /**
- * verify if the token is a built_in
- */
+* Checks if a token is a builtin command.
+* - Receives the token string and compares it to supported builtins.
+* - Supported builtins: echo, export, unset, env, cd, pwd, exit.
+* - Returns TRUE if the token is a builtin, FALSE otherwise.
+*/
 static int	is_builtin(char *str)
 {
-	char	*built_ins[] = BUILTINS_LIST;
-	int		i;
-
-	i = 0;
-	while (built_ins[i])
-	{
-		if (ft_strcmp(str, built_ins[i]) == 0)
-			return (TRUE);
-		i++;
-	}
+	if (!str)
+		return (FALSE);
+	if (ft_strcmp(str, "echo") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "export") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "unset") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "env") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "cd") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "pwd") == 0)
+		return (TRUE);
+	if (ft_strcmp(str, "exit") == 0)
+		return (TRUE);
 	return (FALSE);
 }
 
-// Función que actualiza los tokens a built-ins si corresponde
+
+/**
+ * Updates the token types in the list if they are builtin commands.
+ * - Iterates through each node in `tokens_list`.
+ * - If a token is of type WORD and matches a builtin
+ * the type is changed to BUILTINS.
+ * - Requires each `t_list` node to contain a `t_tokens` struct as content.
+ */
+
 void	update_words_to_builtin(t_list *tokens_list)
 {
 	t_list		*current;
@@ -80,11 +85,13 @@ void	update_words_to_builtin(t_list *tokens_list)
 	}
 }
 
-// Función que actualiza el tipo de los tokens después de un pipe
 /**
+ * Update token types to BUILTINS for shell built-ins.
+ *
+ * Iterates through the token list, and if a token of type `WORD`
+ * @param tokens_list Linked list of tokens (t_list).
  * @see after_pipe: Flag para saber si es después de un pipe
  */
-
 void	update_after_pipe_to_builtin(t_list *tokens_list)
 {
 	t_list		*current;
@@ -109,8 +116,21 @@ void	update_after_pipe_to_builtin(t_list *tokens_list)
 }
 
 //**********MAIN FUNCTION***************/
-// **Identifica los comandos en la lista de tokens
+/**
+ * updating their types based on
+ * whether they are built-in commands or follow a pipe
+ *
+ * @param tokens_list Linked list of tokens (t_list).
+ * @return TRUE (1) if successful, FALSE (0) if the list is empty.
+ */
 
+void	identify_commands(t_list *tokens_list)
+{
+	update_words_to_builtin(tokens_list);
+	update_after_pipe_to_builtin(tokens_list);
+}
+
+/*
 int	identify_commands(t_list *tokens_list)
 {
 	t_list		*current;
@@ -130,4 +150,4 @@ int	identify_commands(t_list *tokens_list)
 	}
 	update_after_pipe_to_builtin(tokens_list);
 	return (TRUE);
-}
+}*/

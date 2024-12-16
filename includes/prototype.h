@@ -1,14 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
+/*   Updated: 2024/12/16 18:27:13 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PROTOTYPE_H
 #define PROTOTYPE_H
 
 # include "../libft/libft.h"
 # include "minishell.h"
+# include "prototype.h"
 # include "macros.h"
 
-typedef	struct	s_env t_env;
+typedef struct	s_env t_env;
 typedef struct	s_tokens t_tokens;
 typedef struct	s_cmd t_cmd;
 typedef struct	s_mini t_mini;
+typedef struct	s_split_data t_split_data;
+
 
 //**************ENV************/
 t_list			*init_env_list(char **envp);
@@ -33,16 +48,6 @@ int 			check_quotes_line(char *line);
 void	        parser_tokens(t_mini *mini);
 
 
-char 			**ft_split_quote(char *str);
-t_tokens		*init_token(char *str, int token_type);
-int 			set_token_type(char *str);
-t_list			*tokenize_list(char **tokens);
-int				check_lowercase_tokens(t_list *tokens_list);
-int				identify_commands(t_list *tokens_list);
-void 			update_words_to_builtin(t_list *tokens_list);
-
-//**************PRINT********/
-void			print_list_token(t_list *tokens_list);
 
 //************** INIT_COMMAND.C ********/
 
@@ -88,23 +93,49 @@ void            print_mini(t_mini *mini);
 //************************* BUILTINS-2 ***********************/
 
 //************** builtin_pwd.c ********************/
-void	get_current_directory(t_mini *mini);
+void			get_current_directory(t_mini *mini);
 
+//************************* TOKENIZE ************************/
 
 //************** TOKEN_LIST.c ********************/
-t_list      *generate_token_list(char *line);
-int         ft_strcmp(char *s1, char *s2);
+
+t_tokens	*init_token(char *str, int token_type);
+void		print_list_token(t_list *tokens_list);
+int			check_lowercase_tokens(t_list *tokens_list);
+t_list		*tokenize_list(char **tokens);
+t_list		*generate_token_list(char *line);
+
+//************** TOKEN_FREE.c ********************/
+
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strncpy(char *s1, const char *s2, int n);
+void		free_split_result(char **out);
+void		free_split_result_struct(char **out, int k);
+int			copy_word(t_split_data *data);
+
+//************** TOKEN_TYPE.c ********************/
+
+int 			set_token_type(char *str);
+void 			update_words_to_builtin(t_list *tokens_list);
+void			identify_commands(t_list *tokens_list);
+
+//************** TOKEN_UTILS.c ********************/
+char 			**ft_split_quote(char *str);
+
+
+
+
 
 //************** PARSER.c ********************/
 //************** parser_syntax_dollar.c ********************/
 
-char	*remove_quotes_str(char *str, char c);
+char		*remove_quotes_str(char *str, char c);
 
 //************** parser_syntax_quotes.c ********************/
 
-int		handle_single_quote(t_tokens *token);
-int		handle_double_quotes(t_tokens *token);
-int		handle_special_quotes(t_tokens *token);
+int			handle_single_quote(t_tokens *token);
+int			handle_double_quotes(t_tokens *token);
+int			handle_special_quotes(t_tokens *token);
 
 
 //************** parser_syntax_expand.c ********************/
@@ -116,17 +147,17 @@ int			has_string_before_dollar(const char *str);
 
 //************** parser_not_expand.c ********************/
 
-int		has_only_one_digit_after_dollar(const char *str);
-char	*convert_escape_sequences(const char *str);
-int		is_digit_and_more_after_dollar(const char *str);
+int			has_only_one_digit_after_dollar(const char *str);
+char		*convert_escape_sequences(const char *str);
+int			is_digit_and_more_after_dollar(const char *str);
 
 //************** parser_func.c ********************/
 
-void	expand_dollar(t_tokens *token_list, t_list *env_list);
+void		expand_dollar(t_tokens *token_list, t_list *env_list);
 
 //************** expand_func.c ********************/
 
-char	*find_env_value(t_list *env_list, char *var_name_token);
+char		*find_env_value(t_list *env_list, char *var_name_token);
 
 
 
