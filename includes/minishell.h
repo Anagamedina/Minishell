@@ -6,14 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 23:37:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:21:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#pragma once
 # include "prototype.h"
 # include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
 # include <stdlib.h>  // malloc, free, exit

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 23:11:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:41:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,10 @@ void		expand_dollar(t_tokens *token_list, t_list *env_list);
 //************** expand_func.c ********************/
 
 char		*find_env_value(t_list *env_list, char *var_name_token);
+
+//************** expand_utils.c ********************/
+int			process_token_is_word(const char *str);
+
+void		split_words_aux(char *split_word, t_list *env_list);
 
 #endif

@@ -39,6 +39,7 @@ add_executable(minishell
         ${PARSER_DIR}
         src/expand/expand_func.c
         src/parser/parser_not_expand_utils.c
+        src/expand/expand_utils.c
 )
 
 # link with readline library
