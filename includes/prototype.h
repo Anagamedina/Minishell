@@ -118,7 +118,7 @@ int			has_string_before_dollar(const char *str);
 
 int		has_only_one_digit_after_dollar(const char *str);
 char	*convert_escape_sequences(const char *str);
-int		is_digit_and_more_after_dollar(const char *str);
+int		has_dollar_followed_by_digit(const char *str);
 
 //************** parser_func.c ********************/
 

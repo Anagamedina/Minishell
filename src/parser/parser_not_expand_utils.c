@@ -1,9 +1,17 @@
-#include "../../includes/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
+/*   Updated: 2024/12/17 19:07:20 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-/**
- * check if the next character is a single quote like $'hello
- * echo "'$USER'"
- */
+	#include "../../includes/minishell.h"
+
 int	check_dollar_after_single_quote(const char *str)  //$'..'
 {
 	int i;
@@ -16,18 +24,13 @@ int	check_dollar_after_single_quote(const char *str)  //$'..'
 		if (str[i] == '$')
 		{
 			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
-				return (1);
+				return (TRUE);
 		}
 		i++;
 	}
 	return (0);
 }
 
-/**
- * check if the previous character is a backslash like \\$hello
- * return TRUE or FALSE
- * echo "\$aaa
- */
 int	check_backslash_before_dollar(const char *str)
 {
 	int	i;
@@ -54,16 +57,30 @@ int	has_only_one_digit_after_dollar(const char *str)
 		&& str[1] >= '0' && str[1] <= '9');
 }
 
-/**
- * Checks if the token starts with `$` followed by a digit
- * and additional characters.
- */
 
-int	is_digit_and_more_after_dollar(const char *str)
+/*int	has_dollar_followed_by_digit(const char *str)
 {
 	return (str[0] == '$' && ft_isdigit(str[1]) == 1 && str[2] != '\0');
-}
+}*/
 
+int	has_dollar_followed_by_digit(const char *str)
+{
+
+	int i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			if (ft_isdigit(str[i + 1]) == 1)
+			{
+				return (TRUE);
+			}
+		}
+		i++;
+	}
+	return (FALSE);
+
+}
 int	calculate_result_size(const char *str)
 {
 	int		i;
@@ -105,7 +122,6 @@ void	process_string(const char *str, char *result)
 	}
 	result[j] = '\0';
 }
-
 
 //echo "$'\n..\t'"-> $'USER'
 char	*convert_escape_sequences(const char *str)

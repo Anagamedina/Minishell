@@ -201,3 +201,4 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
         curr_token = curr_token->next;
     }
 }
+
