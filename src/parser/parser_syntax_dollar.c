@@ -6,29 +6,17 @@
 void	handle_tokens(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
-
-	if (handle_single_quote(token))	// echo '$hello' ->printf($hello)
+// echo '$hello' ->printf($hello)
+	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
 		return ;
 	}
-	/*if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
+	// echo "$USER"
+	if (handle_double_quotes(token))
 	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-			handle_dollar_cases(token, env_list);
-		return ;
-	}*/
-	if (handle_double_quotes(token))	// echo "$USER"
-	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-			handle_dollar_cases(token, env_list);	//expand variables
-		return ;
-	}
-	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-	{
-//		$USER
-		handle_dollar_cases(token, env_list);	//expand variables
+		handle_dollar_cases(token, env_list);
 		return ;
 	}
 }

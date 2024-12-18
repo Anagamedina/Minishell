@@ -10,12 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-	#include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	check_doble_dollar_single(const char *str)  //$'..'
+//$'..'
+int	check_doble_dollar_single(const char *str)
 {
-	int i;
-	int len_str;
+	int	i;
+	int	len_str;
 
 	i = 0;
 	len_str = (int) ft_strlen(str);
