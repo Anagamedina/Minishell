@@ -14,6 +14,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		return ;
 	}
 	// echo "$USER"
+	if (handle_special_quotes(token))
+	{
+		handle_dollar_cases(token, env_list);
+		return ;
+	}
 	if (handle_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list);

@@ -109,8 +109,8 @@ static int	handle_no_expand_cases(t_tokens *token)
 	printf("token actual: %s\n", token->str);
 	if (check_backslash_before_dollar(token->str))
 		return (handle_backslash_after_dollar(token));
-	/*if (check_doble_dollar_single(token->str)) //$'..'
-		return (handle_single_quotes_after_dollar(token));*/ // es la que cumple las \t
+	if (check_doble_dollar_single(token->str)) //$'..'
+		return (handle_single_quotes_after_dollar(token));// es la que cumple las \t
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
 	if (has_string_before_dollar(token->str))
@@ -166,32 +166,8 @@ static int handle_dollar_with_space_single(t_tokens *token)
 	return (TRUE);
 }
 
-void	handle_dollar_cases(t_tokens *token, t_list *env_list)
-{
-	char	*tmp;
 
-	tmp = NULL;
-//	"$'...'" ----> imprime
-	if (check_doble_dollar_single(token->str))
-	{
-		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
-		return ;
-	}
 
-	//funcion que detecte el caso raro $'...' ----> \t
-	if (check_dollar_simple(token->str)) //	$'..'
-	{
-		//	"$'...'"
-		handle_single_quotes_after_dollar(token);
-		//	"$ '...'"
-
-	}
-	free(tmp);
-	if (!handle_no_expand_cases(token))
-		expand_dollar(token, env_list);
-}
-/*
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
@@ -221,7 +197,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	if (!handle_no_expand_cases(token))
 		expand_dollar(token, env_list);
 }
-*/
 
 
 //echo $'USER'
@@ -244,3 +219,21 @@ int	check_dollar_simple(char *str)
 	}
 	return (0);
 }
+/*void	handle_dollar_cases(t_tokens *token, t_list *env_list)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (check_doble_dollar_single(token->str))
+	{
+		tmp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(tmp);
+		return ;
+	}
+
+	if (check_dollar_simple(token->str)) //	$'..'
+		handle_single_quotes_after_dollar(token);
+	free(tmp);
+	if (!handle_no_expand_cases(token))
+		expand_dollar(token, env_list);
+}*/
