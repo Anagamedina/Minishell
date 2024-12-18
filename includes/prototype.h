@@ -147,12 +147,12 @@ int			is_digit_and_more_after_dollar(const char *str);
 void		expand_dollar(t_tokens *token_list, t_list *env_list);
 
 //************** expand_func.c ********************/
-
-char		*find_env_value(t_list *env_list, char *var_name_token);
+void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
+char		*ft_strjoin_array(char **split_word);
 
 //************** expand_utils.c ********************/
 int			process_token_is_word(const char *str);
 
-void		split_words_aux(char *split_word, t_list *env_list);
+void		split_words_aux(char **split_word, t_list *env_list);
 
 #endif
