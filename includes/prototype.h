@@ -153,6 +153,6 @@ char		*ft_strjoin_array(char **split_word);
 //************** expand_utils.c ********************/
 int			process_token_is_word(const char *str);
 
-void		split_words_aux(char **split_word, t_list *env_list);
+void		replace_dollar_variable(char **split_word, t_list *env_list);
 
 #endif

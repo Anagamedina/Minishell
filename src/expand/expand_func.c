@@ -40,7 +40,7 @@ void	process_split_words(char **split_word, t_list *env_list)
 	i = 0;
 	while (split_word[i] != NULL)
 	{
-		split_words_aux(&split_word[i], env_list);
+		replace_dollar_variable(&split_word[i], env_list);
 		i ++;
 	}
 }
