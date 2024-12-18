@@ -12,7 +12,7 @@
 
 	#include "../../includes/minishell.h"
 
-int	check_dollar_after_single_quote(const char *str)  //$'..'
+int	check_doble_dollar_single(const char *str)  //$'..'
 {
 	int i;
 	int len_str;

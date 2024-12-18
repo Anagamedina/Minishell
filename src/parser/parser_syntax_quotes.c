@@ -15,7 +15,7 @@ int	handle_single_quote(t_tokens *token)
 	return (FALSE);
 }
 
-int	handle_special_quotes(t_tokens *token)
+int	handle_special_quotes(t_tokens *token) // " '
 {
 	if (token->str[0] == D_QUOTE \
 		&& token->str[token->length - 1] == D_QUOTE \

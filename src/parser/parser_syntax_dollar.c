@@ -13,12 +13,12 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		token->str = ft_strdup(tmp);
 		return ;
 	}
-	if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
+	/*if (handle_special_quotes(token))	//  echo "'$USER'" -> 'catalinaburgos'
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 			handle_dollar_cases(token, env_list);
 		return ;
-	}
+	}*/
 	if (handle_double_quotes(token))	// echo "$USER"
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))

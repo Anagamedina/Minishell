@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-// Created by daruuu on 12/1/24.
-//
 #include "../../includes/minishell.h"
 
-static int handle_backslash_dollar(t_tokens *token)
+int	check_dollar_simple(char *str);
+
+//----> \$USER
+static int	handle_backslash_after_dollar(t_tokens *token)
 {
-	char *temp;
+	char	*temp;
 
 	temp = remove_quotes_str(token->str, D_QUOTE);
 	token->str = ft_strdup(temp + 1);
@@ -28,8 +28,8 @@ static int handle_backslash_dollar(t_tokens *token)
 	}
 	return (TRUE);
 }
-
-static int  handle_dollar_insingle_quotes(t_tokens *token)
+// caso $'..'---> \t ...
+static int  handle_single_quotes_after_dollar(t_tokens *token)
 {
 	char *temp;
 
@@ -51,12 +51,12 @@ static int handle_one_digit_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-static int handle_string_before_dollar(t_tokens *token)
+static int	handle_string_before_dollar(t_tokens *token)
 {
 	char *temp;
 
 	temp = remove_quotes_str(token->str, D_QUOTE);
-	free(token->str);
+	//free(token->str); sale un doble free
 	token->str = ft_strdup(temp);
 	if (!token->str)
 	{
@@ -94,8 +94,9 @@ static int handle_digit_and_more_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-// Detecta el patrón $'...' dentro de ""
-static int	check_dollar_inside_double_with_single(const char *str)
+
+//caso--> "'$'"
+static int	check_dollar_special_quote(const char *str)
 {
 	if (ft_strchr_true(str, DOLLAR_SIGN) \
 		&& ft_strchr_true(str, D_QUOTE) && ft_strchr_true(str, S_QUOTE))
@@ -103,14 +104,38 @@ static int	check_dollar_inside_double_with_single(const char *str)
 	return (FALSE);
 }
 
+//caso  -------> "$'..'" ---> no expande ni tabulacion solo imprime
+/*
+int	check_doble_dollar_single(const char *str)
+{
+	int i;
+	int len_str;
 
-static int handle_no_expand_cases(t_tokens *token)
+	i = 0;
+	len_str = (int) ft_strlen(str);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			while (str[i] == ' ')
+				i++;
+			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (0);
+}
+*/
+
+static int	handle_no_expand_cases(t_tokens *token)
 {
 	printf("token actual: %s\n", token->str);
 	if (check_backslash_before_dollar(token->str))
-		return (handle_backslash_dollar(token));
-	if (check_dollar_after_single_quote(token->str))
-		return (handle_dollar_insingle_quotes(token));
+		return (handle_backslash_after_dollar(token));
+	/*if (check_doble_dollar_single(token->str)) //$'..'
+		return (handle_single_quotes_after_dollar(token));*/ // es la que cumple las \t
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
 	if (has_string_before_dollar(token->str))
@@ -120,19 +145,155 @@ static int handle_no_expand_cases(t_tokens *token)
 	return (0);
 
 }
+
+/*
+int	check_doble_dollar_space_single(const char *str)
+{
+	int i;
+	int len_str;
+
+	i = 0;
+	len_str = (int) ft_strlen(str);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			while (str[i] == ' ')
+				i++;
+			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (0);
+}
+ */
+
+
 /************ MAIN FUNCTION *************/
+/*
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	if (check_dollar_inside_double_with_single(token->str))
+	//"$'...'" ----> imprime
+	if (check_doble_dollar_single(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
 		return ;
 	}
+	//funcion que detecte el caso raro $'...' ----> \t
+	if (check_dollar_simple(token->str)) //	$'..'
+	{
+		//	"$'...'"
+		handle_single_quotes_after_dollar(token);
+		//	"$ '...'"
+
+	}
 	free(tmp);
 	if (!handle_no_expand_cases(token))
 		expand_dollar(token, env_list);
+}
+*/
+
+// Caso "$ '...'" -> manejar espacio después del dólar
+
+int	check_dollar_with_space_single(const char *str)
+{
+	int i;
+	int len_str;
+
+	i = 0;
+	len_str = (int) ft_strlen(str);
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			i++;
+			// Saltar espacios después de $
+			while (str[i] == ' ')
+				i++;
+			// Validar que la siguiente es una comilla simple y que la última también lo sea
+			if (str[i] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
+}
+
+static int handle_dollar_with_space_single(t_tokens *token)
+{
+	char	*temp;
+
+	temp = remove_quotes_str(token->str, D_QUOTE);
+	free(token->str);
+	token->str = ft_strdup(temp);
+	free(temp);
+	if (!token->str)
+	{
+		perror("error: ft_strdup failed");
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+void	handle_dollar_cases(t_tokens *token, t_list *env_list)
+{
+	char	*tmp;
+
+	tmp = NULL;
+
+	// Caso "$ '...'" -> manejar espacio después del dólar
+	if (check_dollar_with_space_single(token->str))
+	{
+		handle_dollar_with_space_single(token);
+		return ;
+	}
+
+	// Otros casos ya manejados
+	if (check_doble_dollar_single(token->str))
+	{
+		tmp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(tmp);
+		free(tmp);
+		return ;
+	}
+
+	if (check_dollar_simple(token->str)) // Maneja $'...'
+	{
+		handle_single_quotes_after_dollar(token);
+	}
+
+	free(tmp);
+	if (!handle_no_expand_cases(token))
+		expand_dollar(token, env_list);
+}
+
+
+//echo $'USER'
+//USER
+int	check_dollar_simple(char *str)
+{
+	int i;
+	int len_str;
+	int	flag;
+
+	i = 0;
+	len_str = (int) ft_strlen(str);
+	flag = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (0);
 }
