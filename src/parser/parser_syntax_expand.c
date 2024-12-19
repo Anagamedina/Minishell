@@ -225,18 +225,22 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	tmp = NULL;
 
-	// Caso "'$...'" -> ezpandir con comillas simples
+	// Caso "'$...'" -> expandir con comillas simples
+//	double quotes
+//	single quotes
+//	dollar_sign
+//	TODO: daruny(finish this function part 2)
 	if (check_double_simple_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
-		printf("token->str: %s\n", token->str);
+		printf("after remove d_quote token->str: %s\n", token->str);
 //		si hay mas d eun dollar buscar con find_en_value
 		free(tmp);
 		tmp = NULL;
-		tmp = remove_quotes_str(token->str, D_QUOTE);
+		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
-
+		printf("without s_quote token->str: %s\n", token->str);
 //		reemplazarlo y expandirlo y reemplazarlo en el token
 //		pero agregando la comilla simple a los extremos.
 		return ;
@@ -247,7 +251,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		handle_dollar_with_space_single(token);
 		return ;
 	}
-	// "$'...'" ----> imprime
+	//	"$'...'" ----> imprime
 	if (check_doble_dollar_single(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);

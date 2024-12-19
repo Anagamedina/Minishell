@@ -1,29 +1,35 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_tokens(t_tokens *token, t_list *env_list) {
+void	handle_tokens(t_tokens *token, t_list *env_list)
+{
 	char *tmp = NULL;
-	if (handle_single_quote(token)) {
+	if (handle_single_quote(token))
+	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
 		return;
 	}
-	if (handle_special_quotes(token)) {
-		if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
+	if (handle_special_quotes(token))
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		{
 			handle_dollar_cases(token, env_list);
 			return;
 		}
 	}
-	if (handle_double_quotes(token)) {
-		if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
+	if (handle_double_quotes(token))
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		{
 			handle_dollar_cases(token, env_list);
 			return;
 		}
 	}
-	if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
 		handle_dollar_cases(token, env_list);
 		return;
-
 	}
 }
 
