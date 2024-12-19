@@ -28,7 +28,7 @@ static int	handle_backslash_after_dollar(t_tokens *token)
 	}
 	return (TRUE);
 }
-// caso $'..'---> \t ...
+// caso $'..'---> \t ... SIN COMILLA DOBLES
 static int  handle_single_quotes_after_dollar(t_tokens *token)
 {
 	char *temp;
@@ -121,7 +121,6 @@ static int	handle_no_expand_cases(t_tokens *token)
 
 }
 
-/************ MAIN FUNCTION *************/
 
 // Caso "$ '...'" -> manejar espacio después del dólar
 
@@ -138,11 +137,9 @@ int	check_dollar_with_space_single(const char *str)
 		if (str[i] == '$')
 		{
 			i++;
-			// Saltar espacios después de $
 			while (str[i] == ' ')
 				i++;
-			// Validar que la siguiente es una comilla simple y que la última también lo sea
-			if (str[i] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+			if (str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
 				return (TRUE);
 		}
 		i++;
@@ -155,7 +152,7 @@ static int handle_dollar_with_space_single(t_tokens *token)
 	char	*temp;
 
 	temp = remove_quotes_str(token->str, D_QUOTE);
-	free(token->str);
+//	free(token->str);
 	token->str = ft_strdup(temp);
 	free(temp);
 	if (!token->str)
@@ -168,35 +165,6 @@ static int handle_dollar_with_space_single(t_tokens *token)
 
 
 
-void	handle_dollar_cases(t_tokens *token, t_list *env_list)
-{
-	char	*tmp;
-
-	tmp = NULL;
-
-	// Caso "$ '...'" -> manejar espacio después del dólar
-	if (check_dollar_with_space_single(token->str))
-	{
-		handle_dollar_with_space_single(token);
-		return ;
-	}
-	// Otros casos ya manejados
-	if (check_doble_dollar_single(token->str))
-	{
-		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
-		free(tmp);
-		return ;
-	}
-
-	if (check_dollar_simple(token->str)) // Maneja $'...'
-	{
-		handle_single_quotes_after_dollar(token);
-	}
-	free(tmp);
-	if (!handle_no_expand_cases(token))
-		expand_dollar(token, env_list);
-}
 
 
 //echo $'USER'
@@ -219,21 +187,35 @@ int	check_dollar_simple(char *str)
 	}
 	return (0);
 }
-/*void	handle_dollar_cases(t_tokens *token, t_list *env_list)
+
+/************ MAIN FUNCTION *************/
+
+void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
 
 	tmp = NULL;
+
+	// Caso "$ '...'" -> espacio después del dólar
+	if (check_dollar_with_space_single(token->str))
+	{
+		handle_dollar_with_space_single(token);
+		return ;
+	}
+	// "$'...'" ----> imprime
 	if (check_doble_dollar_single(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
+		free(tmp);
 		return ;
 	}
 
-	if (check_dollar_simple(token->str)) //	$'..'
+	if (check_dollar_simple(token->str)) // Maneja $'...'
+	{
 		handle_single_quotes_after_dollar(token);
+	}
 	free(tmp);
 	if (!handle_no_expand_cases(token))
 		expand_dollar(token, env_list);
-}*/
+}

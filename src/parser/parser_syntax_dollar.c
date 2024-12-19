@@ -1,28 +1,29 @@
-//
-// Created by daruuu on 12/1/24.
-//
+
 #include "../../includes/minishell.h"
 
-void	handle_tokens(t_tokens *token, t_list *env_list)
-{
-	char	*tmp;
-// echo '$hello' ->printf($hello)
-	if (handle_single_quote(token))
-	{
+void	handle_tokens(t_tokens *token, t_list *env_list) {
+	char *tmp = NULL;
+	if (handle_single_quote(token)) {
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
-		return ;
+		return;
 	}
-	// echo "$USER"
-	if (handle_special_quotes(token))
-	{
-		handle_dollar_cases(token, env_list);
-		return ;
+	if (handle_special_quotes(token)) {
+		if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
+			handle_dollar_cases(token, env_list);
+			return;
+		}
 	}
-	if (handle_double_quotes(token))
-	{
+	if (handle_double_quotes(token)) {
+		if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
+			handle_dollar_cases(token, env_list);
+			return;
+		}
+	}
+	if (ft_strchr_true(token->str, DOLLAR_SIGN)) {
 		handle_dollar_cases(token, env_list);
-		return ;
+		return;
+
 	}
 }
 
@@ -50,43 +51,3 @@ void	parser_tokens(t_mini *mini)
 		}
 	}
 }
-
-
-
-/**
- * Processes a token and handles quotes, special cases, and variable expansion.
- *
- * Depending on the token type:
- * @see handle_single_quote Removes quotes from tokens with single quotes.
- * @see remove_quotes_str Strips quotes from the token string.
- *
- * @param token Pointer to the token being processed.
- * @param env_list Pointer to the linked list of environment variables.
- */
-
-
-/**
- * Processes a token and handles quotes, special cases, and variable expansion.
- *
- * Depending on the token type:
- * @see handle_single_quote Removes quotes from tokens with single quotes.
- * @see remove_quotes_str Strips quotes from the token string.
- *
- * @param token Pointer to the token being processed.
- * @param env_list Pointer to the linked list of environment variables.
- */
-//	$echo "'$USER'"
-//	$echo "'$USER88huh'"
-
-/**
- * Parses the token list and expands variables for tokens of type WORD.
- *
- * This function checks if the first token is of type BUILTINS, followed by
- * a token of type WORD.
- * iterates through the token list and
- * expands any variables (tokens containing `$`)
- * using the environment variable list.
- *
- * @param mini Pointer to the main minishell structure,
- * which contains the token list and environment variables.
- */
