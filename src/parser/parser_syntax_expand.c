@@ -14,6 +14,7 @@
 
 int	check_dollar_simple(char *str);
 
+
 //----> \$USER
 static int	handle_backslash_after_dollar(t_tokens *token)
 {
@@ -188,6 +189,34 @@ int	check_dollar_simple(char *str)
 	return (0);
 }
 
+//	TODO: daruny(finish this function)
+int check_double_simple_dollar_case(char *str)
+{
+	int i;
+	int len_str;
+
+	len_str = (int) ft_strlen(str);
+	if (str[0] != D_QUOTE || str[len_str - 1] != D_QUOTE)
+		return (FALSE);
+	i = 1;
+	while (i < len_str - 1)
+	{
+		while (str[i] == ' ' && i < len_str - 1)
+			i++;
+		if (str[i] == S_QUOTE)
+		{
+			i++;
+			while (str[i] == ' ' && i < len_str - 1)
+				i ++;
+			if (str[i] == DOLLAR_SIGN && str[i + 1] != ' ' \
+			&& str[i + 1] != '\0')
+				return (TRUE);
+		}
+		i ++;
+	}
+	return (FALSE);
+}
+
 /************ MAIN FUNCTION *************/
 
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
@@ -196,6 +225,22 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	tmp = NULL;
 
+	// Caso "'$...'" -> ezpandir con comillas simples
+	if (check_double_simple_dollar_case(token->str))
+	{
+		tmp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(tmp);
+		printf("token->str: %s\n", token->str);
+//		si hay mas d eun dollar buscar con find_en_value
+		free(tmp);
+		tmp = NULL;
+		tmp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(tmp);
+
+//		reemplazarlo y expandirlo y reemplazarlo en el token
+//		pero agregando la comilla simple a los extremos.
+		return ;
+	}
 	// Caso "$ '...'" -> espacio después del dólar
 	if (check_dollar_with_space_single(token->str))
 	{
@@ -210,7 +255,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		free(tmp);
 		return ;
 	}
-
 	if (check_dollar_simple(token->str)) // Maneja $'...'
 	{
 		handle_single_quotes_after_dollar(token);
