@@ -51,8 +51,8 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_PARSER)/parser_syntax_quotes.c \
 		$(SRC_PARSER)/parser_not_expand_utils.c \
 		$(SRC_PARSER)/parser_syntax_expand.c \
-		$(SRC_EXPAND)/expand_func.c
-#		$(SRC_EXPAND)/expand_utils.c
+		$(SRC_EXPAND)/expand_func.c \
+		$(SRC_EXPAND)/expand_utils.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 

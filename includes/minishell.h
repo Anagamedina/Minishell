@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
+/*   Updated: 2024/12/17 11:21:11 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#pragma once
 # include "prototype.h"
 # include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
 # include <stdlib.h>  // malloc, free, exit
@@ -81,6 +92,16 @@ typedef struct s_mini
     int             exit_status;    // Estado de salida del último comando ejecutado
     // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
+
+typedef struct s_split_data
+{
+	char	**out;
+	char	*str;
+	int		start;
+	int		end;
+	int		k;       // Índice del token actual en el array
+	int		wc;
+}		t_split_data;
 
 // t_pipex         *first_pipe;    // Estructura del primer pipe
 
