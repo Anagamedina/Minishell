@@ -40,9 +40,10 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell->token == NULL)
 			continue ;
 		parser_tokens(minishell);
+		print_list_token_str(minishell->token);
 //		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		//print_list_commands(minishell->cmds);
-		print_list_token(minishell->token);
+//		print_list_token(minishell->token);
 		// cases_builtins(minishell);
 	}
 	return (0);

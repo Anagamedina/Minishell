@@ -31,7 +31,8 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 			if (curr_env->value != NULL)
 				return (ft_strdup(curr_env->value));
 			else
-				return (ft_strdup(" "));
+				return (NULL);
+//			return (ft_strdup(" "));
 		}
 		curr_env_list = curr_env_list->next;
 	}
@@ -51,9 +52,6 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 		var_value = find_value_in_env(env_list, var_name);
 
 		free(*split_word);
-
-		printf("replace_dollar_variable():\n");
-		printf("var_value: [%s]\n", var_value);
 		if (var_value != NULL)
 		{
 			*split_word = ft_strdup(var_value);
@@ -81,7 +79,6 @@ static char	*get_size_split_and_malloc(char **split_word)
 		new_len++;
 		i++;
 	}
-	printf("len of split_word: [%d]", i);
 	merged_token = NULL;
 	merged_token = (char *)malloc(sizeof(char) * (i + 1));
 	if (merged_token == NULL)

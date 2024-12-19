@@ -63,6 +63,23 @@ void	print_list_token(t_list *tokens_list)
 	}
 }
 
+void	print_list_token_str(t_list *tokens_list)
+{
+    t_list      *current;
+    t_tokens    *token;
+
+    current = tokens_list;
+    while (current != NULL)
+    {
+        token = (t_tokens *)current->content;
+        printf("[%s]", token->str);
+		if (current->next != NULL)
+			printf(" ");
+        current = current->next;
+    }
+	printf("\n");
+}
+
 /*
 int	check_lowercase_tokens(t_list *tokens_list)
 {

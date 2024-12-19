@@ -95,6 +95,7 @@ void		get_current_directory(t_mini *mini);
 
 t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
+void		print_list_token_str(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*tokenize_list(char **tokens);
 t_list		*generate_token_list(char *line);
