@@ -19,6 +19,7 @@ SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
 SRC_PARSER= $(SRC_DIR)/parser
+SRC_REDIR= $(SRC_DIR)/redir
 SRC_TOKEN = $(SRC_DIR)/tokenize
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
@@ -52,7 +53,11 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_PARSER)/parser_not_expand_utils.c \
 		$(SRC_PARSER)/parser_syntax_expand.c \
 		$(SRC_EXPAND)/expand_func.c \
-		$(SRC_EXPAND)/expand_utils.c
+		$(SRC_EXPAND)/expand_utils.c \
+		$(SRC_REDIR)/input_redir.c \
+		$(SRC_REDIR)/output_redir.c \
+		$(SRC_REDIR)/redir_utils.c \
+		$(SRC_REDIR)/heredoc.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
