@@ -36,6 +36,7 @@ int	set_token_type(char *str)
 * - Supported builtins: echo, export, unset, env, cd, pwd, exit.
 * - Returns TRUE if the token is a builtin, FALSE otherwise.
 */
+/*
 static int	is_builtin(char *str)
 {
 	if (!str)
@@ -56,7 +57,15 @@ static int	is_builtin(char *str)
 		return (TRUE);
 	return (FALSE);
 }
+*/
 
+int	is_builtin_command(const char *str)
+{
+	return (strcmp(str, ECHO) == 0 || strcmp(str, EXPORT) == 0 || \
+		strcmp(str, UNSET) == 0 || strcmp(str, ENV) == 0 || \
+		strcmp(str, CD) == 0 || strcmp(str, PWD) == 0 || \
+		strcmp(str, EXIT) == 0);
+}
 
 /**
  * Updates the token types in the list if they are builtin commands.
@@ -78,7 +87,7 @@ void	update_words_to_builtin(t_list *tokens_list)
 
 		if (curr_token->type_token == WORD)
 		{
-			if (is_builtin(curr_token->str))
+			if (is_builtin_command(curr_token->str))
 				curr_token->type_token = BUILTINS;
 		}
 		current = current->next;
@@ -107,7 +116,7 @@ void	update_after_pipe_to_builtin(t_list *tokens_list)
 			after_pipe = 1;
 		else if (after_pipe && curr_token->type_token == WORD)
 		{
-			if (is_builtin(curr_token->str))
+			if (is_builtin_command(curr_token->str))
 				curr_token->type_token = BUILTINS;
 			after_pipe = 0;
 		}

@@ -3,19 +3,21 @@
 
 void	handle_tokens(t_tokens *token, t_list *env_list)
 {
-	char *tmp = NULL;
+	char	*tmp;
+
+	tmp = NULL;
 	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
-		return;
+		return ;
 	}
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		{
 			handle_dollar_cases(token, env_list);
-			return;
+			return ;
 		}
 	}
 	if (handle_double_quotes(token))
@@ -23,13 +25,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		{
 			handle_dollar_cases(token, env_list);
-			return;
+			return ;
 		}
 	}
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
 	{
 		handle_dollar_cases(token, env_list);
-		return;
+		return ;
 	}
 }
 
@@ -41,10 +43,10 @@ void	parser_tokens(t_mini *mini)
 
 	token_list = mini->token;
 	env_list = mini->env;
-	curr_token = (t_tokens *) token_list->content; //rellanmos curr_token
+	curr_token = (t_tokens *) token_list->content;
 
 	if ((curr_token->type_token == BUILTINS) && (token_list->next != NULL) \
-	&& (((t_tokens *) (token_list->next->content))->type_token == WORD))
+		&& (((t_tokens *)(token_list->next->content))->type_token == WORD))
 	{
 		while (token_list->next != NULL)
 		{

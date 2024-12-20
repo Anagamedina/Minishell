@@ -111,6 +111,7 @@ int			copy_word(t_split_data *data);
 //************** TOKEN_TYPE.c ********************/
 
 int			set_token_type(char *str);
+int			is_builtin_command(const char *str);
 void		update_words_to_builtin(t_list *tokens_list);
 void		identify_commands(t_list *tokens_list);
 
@@ -132,16 +133,17 @@ int			handle_special_quotes(t_tokens *token);
 
 //************** parser_syntax_expand.c ********************/
 void		handle_dollar_cases(t_tokens *token, t_list *env_list);
-int			check_doble_dollar_single(const char *str);
+//int			check_doble_dollar_single(const char *str);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
 
 //************** parser_not_expand.c ********************/
 
-int		has_only_one_digit_after_dollar(const char *str);
-char	*convert_escape_sequences(const char *str);
-int		has_dollar_followed_by_digit(const char *str);
+int			check_doble_dollar_single(const char *str);
+int			has_only_one_digit_after_dollar(const char *str);
+char		*convert_escape_sequences(const char *str);
+int			has_dollar_followed_by_digit(const char *str);
 
 //************** parser_func.c ********************/
 
@@ -153,7 +155,6 @@ char		*ft_strjoin_array(char **split_word);
 
 //************** expand_utils.c ********************/
 int			process_token_is_word(const char *str);
-
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 
 #endif

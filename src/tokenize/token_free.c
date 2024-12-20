@@ -57,9 +57,7 @@ void	free_split_result_struct(char **out, int k)
 
 	i = 0;
 	while (out[k] != NULL && i < k)
-	{
 		free(out[i]);
-	}
 	free(out);
 }
 
@@ -75,4 +73,3 @@ int	copy_word(t_split_data *data)
 	data->k++;
 	return (0);
 }
-

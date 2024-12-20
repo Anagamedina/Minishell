@@ -4,10 +4,11 @@
  * check if the next character is a single quote like $'hello
  * echo "'$USER'"
  */
-int	check_dollar_after_single_quote(const char *str)  //$'..'
+//$'..'
+int	check_doble_dollar_single(const char *str)
 {
-	int i;
-	int len_str;
+	int	i;
+	int	len_str;
 
 	i = 0;
 	len_str = (int) ft_strlen(str);
@@ -42,7 +43,7 @@ int	check_backslash_before_dollar(const char *str)
 
 int	has_only_one_digit_after_dollar(const char *str)
 {
-	int len;
+	int	len;
 
 	len = (int) ft_strlen(str);
 	return (len == 2 && str[0] == DOLLAR_SIGN \
@@ -54,9 +55,24 @@ int	has_only_one_digit_after_dollar(const char *str)
  * and additional characters.
  */
 
-int	is_digit_and_more_after_dollar(const char *str)
+int	has_dollar_followed_by_digit(const char *str)
 {
-	return (str[0] == '$' && ft_isdigit(str[1]) == 1 && str[2] != '\0');
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			if (ft_isdigit(str[i + 1]) == 1)
+			{
+				return (TRUE);
+			}
+		}
+		i++;
+	}
+	return (FALSE);
+
 }
 
 int	calculate_result_size(const char *str)
@@ -106,7 +122,7 @@ void	process_string(const char *str, char *result)
 char	*convert_escape_sequences(const char *str)
 {
 	char	*result;
-	int 	len;
+	int		len;
 
 	if (!str)
 		return (NULL);
@@ -123,7 +139,7 @@ char	*convert_escape_sequences(const char *str)
 
 int	has_string_before_dollar(const char *str)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = 0;
@@ -132,12 +148,13 @@ int	has_string_before_dollar(const char *str)
 		if (str[i] == DOLLAR_SIGN)
 		{
 			j = i - 1;
-			if ((str[j] >= 'A' && str[j] <= 'Z') || (str[j] >= 'a' && str[j] <= 'z'))
+			if ((str[j] >= 'A' && str[j] <= 'Z') || \
+			(str[j] >= 'a' && str[j] <= 'z'))
 			{
-				return (1);
+				return (TRUE);
 			}
 		}
 		i++;
 	}
-	return (0);
+	return (FALSE);
 }
