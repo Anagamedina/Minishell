@@ -35,4 +35,10 @@
 # define PWD "pwd"
 # define EXIT "exit"
 
+
+/*--------------------Error messages-------------------*/
+# define PRINT_SYNTAX_ERR_1 "syntax error near unexpected token `|'\n"
+# define PRINT_SYNTAX_ERR_2 "syntax error near unexpected token `newline'\n"
+# define PRINT_SYNTAX_ERR_3 "syntax error\n"
+
 #endif
