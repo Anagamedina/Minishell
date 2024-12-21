@@ -12,8 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-//	TODO: daruny (terminar de implementar
-//	que si la variable no existe no realizar un strdup de un espacio vacio.
 char	*find_value_in_env(t_list *env_list, char *var_name_token)
 {
 	t_list	*curr_env_list;
@@ -32,7 +30,6 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 				return (ft_strdup(curr_env->value));
 			else
 				return (NULL);
-//			return (ft_strdup(" "));
 		}
 		curr_env_list = curr_env_list->next;
 	}
@@ -62,6 +59,89 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 		}
 		free(var_name);
 		free(var_value);
+	}
+}
+
+// especial case: "'$     '"
+// TODO: daruny finish this function
+char * replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list)
+{
+	char	*var_name;
+	char	*var_value;
+	char	*result;
+	int		i;
+	size_t	len_str;
+
+	i = 0;
+	len_str = ft_strlen(token_rm_d_quote);
+
+	while (token_rm_d_quote[i] != '\0' && i < len_str)
+	{
+		while (token_rm_d_quote[i] != DOLLAR_SIGN)
+			i++;
+		if (token_rm_d_quote[i] == DOLLAR_SIGN)
+//			$USER hello '
+		{
+			int len_var_name = 0;
+			int j;
+			i ++;
+			j = i;	// j apunta al inico del nombre de la variable
+			int pos_init_var_name = i;
+			// Bucle para calcular la longitud del nombre de la variable var name.
+			while (token_rm_d_quote[i] != SPACE)
+			{
+				i ++;
+				len_var_name ++;
+			}
+			printf("len_var_name: %d\n", len_var_name);
+			var_name = (char *)malloc(sizeof(char) * (len_var_name + 1));
+			int k = 0;
+//			coipamos despues del dollar sign
+			while (k < len_var_name)
+			{
+				var_name[k] = token_rm_d_quote[j];
+				k++;
+				j++;
+			}
+			var_name[k] = '\0';
+			var_value = find_value_in_env(env_list, var_name);
+			printf("var_value: %s\n", var_value);
+			if (var_value != NULL)
+			{
+				size_t new_len = ft_strlen(token_rm_d_quote) - len_var_name + 1 + ft_strlen(var_value);
+				result = (char *)malloc(sizeof(char) * new_len);
+				i = 0;
+				k = 0;
+				while (i < new_len && k < len_str)
+				{
+					int l = 0;
+					if (k == pos_init_var_name)
+					{
+						while (l < ft_strlen(var_value))
+						{
+							result[i] = var_value[l];
+							i ++;
+							l ++;
+						}
+						k ++;
+					}
+					else
+					{
+						result[i] = token_rm_d_quote[k];
+						i ++;
+						k ++;
+					}
+				}
+				result[i] = '\0';
+				return (result);
+			}
+			else
+			{
+				result = ft_strdup(token_rm_d_quote);
+			}
+
+		}
+		i++;
 	}
 }
 

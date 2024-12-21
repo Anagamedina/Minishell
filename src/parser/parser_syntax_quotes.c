@@ -53,3 +53,22 @@ char	*remove_quotes_str(char *str, char c)
 	free(str);
 	return (new_str);
 }
+
+char	*remove_d_quote_s_quotes_str(char *str)
+{
+	char	*rm_d_quote;
+	char	*rm_s_quote;
+	char	*result;
+
+	rm_d_quote = remove_quotes_str(str, D_QUOTE);
+	if (rm_d_quote == NULL)
+		return (NULL);
+
+	rm_s_quote = remove_quotes_str(rm_d_quote, S_QUOTE);
+	if (rm_s_quote == NULL)
+		return (NULL);
+	result = ft_strdup(rm_s_quote);
+	if (result == NULL)
+		return (NULL);
+	return (result);
+}

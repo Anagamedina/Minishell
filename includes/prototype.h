@@ -130,6 +130,7 @@ char		*remove_quotes_str(char *str, char c);
 int			handle_single_quote(t_tokens *token);
 int			handle_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
+char		*remove_d_quote_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
 void		handle_dollar_cases(t_tokens *token, t_list *env_list);
@@ -150,11 +151,13 @@ int			has_dollar_followed_by_digit(const char *str);
 void		expand_dollar(t_tokens *token_list, t_list *env_list);
 
 //************** expand_func.c ********************/
+void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
-char		*ft_strjoin_array(char **split_word);
 
 //************** expand_utils.c ********************/
 int			process_token_is_word(const char *str);
+char * replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);
+char		*ft_strjoin_array(char **split_word);
 
 #endif

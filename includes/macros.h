@@ -25,7 +25,7 @@
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
 # define BACKSLASH '\\'
-#define SPACE ' '
+# define SPACE ' '
 
 # define ECHO "echo"
 # define EXPORT "export"

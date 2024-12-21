@@ -178,10 +178,14 @@ int	check_dollar_simple(char *str)
 }
 
 //	TODO: daruny(finish this function)
+/**
+ * d_quote -> s_quote -> (string o $)
+ */
+
 int	check_double_simple_dollar_case(char *str)
 {
-	int i;
-	int len_str;
+	int	i;
+	int	len_str;
 
 	len_str = (int) ft_strlen(str);
 	if (str[0] != D_QUOTE || str[len_str - 1] != D_QUOTE)
@@ -217,21 +221,21 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	double quotes
 	single quotes
 	dollar_sign
+	TODO: daruny(finish this function part 2)
+	echo "'$USER and test works'"
 */
-//	TODO: daruny(finish this function part 2)
 	if (check_double_simple_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
-		printf("after remove d_quote token->str: %s\n", token->str);
-//		si hay mas d eun dollar buscar con find_en_value
-		free(tmp);
-		tmp = NULL;
-		tmp = remove_quotes_str(token->str, S_QUOTE);
-		token->str = ft_strdup(tmp);
-		printf("without s_quote token->str: %s\n", token->str);
-//		reemplazarlo y expandirlo y reemplazarlo en el token
-//		pero agregando la comilla simple a los extremos.
+		printf("rm d_quote: %s\n", token->str);
+//		get_var_from_token(token, env_list);
+		char *res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+		token->str = ft_strdup(res);
+/*
+		reemplazarlo y expandirlo y reemplazarlo en el token
+		pero agregando la comilla simple a los extremos.
+*/
 		return ;
 	}
 	// Caso "$ '...'" -> espacio después del dólar

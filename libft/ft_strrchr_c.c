@@ -1,6 +1,6 @@
 #include "libft.h"
 
-int	ft_strrchr_c(char *s, char c)
+int	ft_strrchr_c(const char *s, char c)
 {
 	int	index;
 
