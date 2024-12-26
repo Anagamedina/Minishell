@@ -184,32 +184,54 @@ int	check_dollar_simple(char *str)
  * d_quote -> s_quote -> (string o $)
  */
 
+//	"        '  askjdfhjkashdf    $USER'"
+
 int	check_double_simple_dollar_case(char *str)
 {
 	int	i;
 	int	len_str;
+	int	condition1;
+	int	condition2;
 
+	condition1 = FALSE;
+	condition2 = FALSE;
 	len_str = (int) ft_strlen(str);
+
 	if (str[0] != D_QUOTE || str[len_str - 1] != D_QUOTE)
 		return (FALSE);
 	i = 1;
+
 	while (i < len_str - 1)
 	{
-		while (str[i] == ' ' && i < len_str - 1)
-			i++;
 		if (str[i] == S_QUOTE)
-		{
-			i++;
-			while (str[i] == ' ' && i < len_str - 1)
-				i ++;
-			if (str[i] == DOLLAR_SIGN && str[i + 1] != ' ' \
-			&& str[i + 1] != '\0')
-				return (TRUE);
-		}
+			condition1 = TRUE;
+
+		while (str[i] == ' ' && i < len_str - 1)
+			i ++;
+
+		if (str[i] == DOLLAR_SIGN && i + 1 < len_str \
+			&& str[i + 1] != ' ' && str[i + 1] != '\0')
+			condition2 = TRUE;
+//		if (condition1 && condition2 && str[len_str - 2] == S_QUOTE)
+		if (condition1 && condition2)
+			return (TRUE);
 		i ++;
 	}
 	return (FALSE);
 }
+
+/*
+		if (str[i] == S_QUOTE)
+		{
+			i++;
+			tmp = str[i];
+			while (str[i] == ' ' && i < len_str - 1)
+				i ++;
+		}
+		else
+		{
+		}
+*/
 
 /************ MAIN FUNCTION *************/
 
@@ -230,14 +252,10 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
-		printf("rm d_quote: %s\n", token->str);
-//		get_var_from_token(token, env_list);
-		char *res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+
+		char	*res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
-/*
-		reemplazarlo y expandirlo y reemplazarlo en el token
-		pero agregando la comilla simple a los extremos.
-*/
+
 		return ;
 	}
 	// Caso "$ '...'" -> espacio después del dólar

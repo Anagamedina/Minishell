@@ -104,6 +104,7 @@ t_list		*generate_token_list(char *line);
 
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_strncpy(char *s1, const char *s2, int n);
+char		*ft_strcpy(char *dest, const char *src);
 void		free_split_result(char **out);
 void		free_split_result_struct(char **out, int k);
 int			copy_word(t_split_data *data);
@@ -138,6 +139,7 @@ void		handle_dollar_cases(t_tokens *token, t_list *env_list);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
+int			check_double_simple_dollar_case(char *str);
 
 //************** parser_not_expand.c ********************/
 

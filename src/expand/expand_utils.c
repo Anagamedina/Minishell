@@ -12,6 +12,21 @@
 
 #include "../../includes/minishell.h"
 
+char	*ft_strjoin_char(char *str, char c)
+{
+	char	*result;
+	size_t	len;
+
+	len = ft_strlen(str);
+	result = NULL;
+	result = malloc(sizeof(char) * (len + 2));
+	if (!result)
+		return (NULL);
+	ft_strcpy(result, str);
+	result[len] = c;
+	result[len + 1] = '\0';
+	return (result);
+}
 char	*find_value_in_env(t_list *env_list, char *var_name_token)
 {
 	t_list	*curr_env_list;
@@ -66,83 +81,62 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 // TODO: daruny finish this function
 char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list)
 {
+	char	*result;
 	char	*var_name;
 	char	*var_value;
-	char	*result;
+	char	*tmp;
 	size_t	i;
 	size_t	len_str;
 
-	i = 0;
+	if (!token_rm_d_quote || !env_list)
+		return (NULL);
+
+	result = ft_strdup("");
+	if (result == NULL)
+		return (NULL);
+
 	len_str = (int) ft_strlen(token_rm_d_quote);
 
-	while (token_rm_d_quote[i] != '\0' && i < len_str)
+	i = 0;
+	while (token_rm_d_quote[i] != '\0')
 	{
-		while (token_rm_d_quote[i] != DOLLAR_SIGN)
-			i++;
+//		while (token_rm_d_quote[i] != DOLLAR_SIGN)
+//			i++;
 		if (token_rm_d_quote[i] == DOLLAR_SIGN)
-//			$USER hello '
 		{
-			size_t	len_var_name = 0;
-			size_t	j;
-			i ++;
-			j = i;	// j apunta al inico del nombre de la variable
-			size_t	pos_init_var_name = i;
+			i++;
+			// start apunta al inico del nombre de la variable
+			int start = i;
 			// Bucle para calcular la longitud del nombre de la variable var name.
-			while (token_rm_d_quote[i] != SPACE)
+//			$user helllooo
+			while (token_rm_d_quote[i] != '\0' && token_rm_d_quote[i] != SPACE && token_rm_d_quote[i] != S_QUOTE)
 			{
 				i ++;
-				len_var_name ++;
 			}
-			printf("len_var_name: %ld\n", len_var_name);
-			var_name = (char *)malloc(sizeof(char) * (len_var_name + 1));
-			size_t	k = 0;
-//			coipamos despues del dollar sign
-			while (k < len_var_name)
+//			printf("len_var_name: %ld\n", len_var_name);
+			var_name = ft_substr(token_rm_d_quote, start, i - start);
+			if (var_name == NULL)
 			{
-				var_name[k] = token_rm_d_quote[j];
-				k++;
-				j++;
+				free(result);
+				return (NULL);
 			}
-			var_name[k] = '\0';
+
 			var_value = find_value_in_env(env_list, var_name);
-			printf("var_value: [%s]\n", var_value);
-			if (var_value != NULL)
-			{
-				size_t new_len = ft_strlen(token_rm_d_quote) - len_var_name + 1 + ft_strlen(var_value);
-				result = (char *)malloc(sizeof(char) * new_len);
-				i = 0;
-				k = 0;
-				while (i < new_len && k < len_str)
-				{
-					int l = 0;
-					if (k == pos_init_var_name)
-					{
-						while (l < (int)ft_strlen(var_value))
-						{
-							result[i] = var_value[l];
-							i ++;
-							l ++;
-						}
-						k ++;
-					}
-					else
-					{
-						result[i] = token_rm_d_quote[k];
-						i ++;
-						k ++;
-					}
-				}
-				result[i] = '\0';
-				return (result);
-			}
-			else
-			{
-				result = ft_strdup(token_rm_d_quote);
-			}
+			free(var_name);
+
+			tmp = result;
+			result = ft_strjoin(result, var_value ? var_value : "");
+			free(tmp);
 		}
-		i++;
+		else
+		{
+			tmp = result;
+			result = ft_strjoin_char(result, token_rm_d_quote[i]);
+			free(tmp);
+			i++;
+		}
 	}
-	return (ft_strdup(token_rm_d_quote));
+	return (result);
 }
 
 static char	*get_size_split_and_malloc(char **split_word)
