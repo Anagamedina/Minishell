@@ -33,7 +33,7 @@ void setUp(void);
 void tearDown(void);
 
 /* These functions are intended to be called at the beginning and end of an
- * entire test suite.  suiteTearDown() is passed the number of tests that
+ * entire test suite.  suiteTearDown() is passed the number of testing that
  * failed, and its return value becomes the exit code of main(). If using
  * Unity directly, you're in charge of calling these if they are desired.
  * If using Ceedling or the test runner generator, these will be called
@@ -45,7 +45,7 @@ int suiteTearDown(int num_failures);
  * Test Reset and Verify
  *-------------------------------------------------------*/
 
-/* These functions are intended to be called before during tests in order
+/* These functions are intended to be called before during testing in order
  * to support complex test loops, etc. Both are NOT built into Unity. Instead
  * the test runner generator will create them. resetTest will run teardown and
  * setup again, verifying any end-of-test needs between. verifyTest will only

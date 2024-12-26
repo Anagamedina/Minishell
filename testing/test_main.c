@@ -2,6 +2,7 @@
 // Created by daruuu on 12/24/24.
 //
 #define UNITY_INCLUDE_SETUP_STUBS
+
 # include "unity.h"
 # include "../includes/minishell.h"
 
@@ -15,14 +16,15 @@ t_mini	*g_minishell;
  * Crear un entorno limpio para cada prueba.
  * Evitar repetición de código común en las pruebas unitarias.
  */
-void setUp(void) {}
-/*
+
 void	setUp(void)
 {
+/*
 	extern char **environ;
 	g_minishell = init_mini_list(environ);
 	TEST_ASSERT_NOT_NULL(g_minishell);
-}*/
+*/
+}
 
 
 /**
@@ -33,14 +35,14 @@ void	setUp(void)
  * Prevenir fugas de memoria o recursos compartidos contaminados entre pruebas.
  */
 
-void tearDown(void) {}
-/*void	tearDown(void)
+void	tearDown(void)
 {
+/*
 	if (g_minishell && g_minishell->env)
 		ft_lstclear((t_list **) g_minishell->env, free);
 	free(g_minishell);
-}*/
-
+*/
+}
 
 /**
  * @brief When a valid variable is passed, it should replace the variable with the value

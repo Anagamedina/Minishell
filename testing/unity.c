@@ -2290,9 +2290,9 @@ int UnityParseOptions(int argc, char** argv)
         {
             switch (argv[i][1])
             {
-                case 'l': /* list tests */
+                case 'l': /* list testing */
                     return -1;
-                case 'n': /* include tests with name including this string */
+                case 'n': /* include testing with name including this string */
                 case 'f': /* an alias for -n */
                     UnityStrictMatch = (argv[i][1] == 'n'); /* strictly match this string if -n */
                     if (argv[i][2] == '=')
@@ -2316,7 +2316,7 @@ int UnityParseOptions(int argc, char** argv)
                 case 'v': /* verbose */
                     UnityVerbosity = 2;
                     break;
-                case 'x': /* exclude tests with name including this string */
+                case 'x': /* exclude testing with name including this string */
                     if (argv[i][2] == '=')
                     {
                         UnityOptionExcludeNamed = &argv[i][3];
@@ -2340,13 +2340,13 @@ int UnityParseOptions(int argc, char** argv)
                     /* FALLTHRU */
                 case 'h':
                     UnityPrint("Options: "); UNITY_PRINT_EOL();
-                    UnityPrint("-l        List all tests and exit"); UNITY_PRINT_EOL();
-                    UnityPrint("-f NAME   Filter to run only tests whose name includes NAME"); UNITY_PRINT_EOL();
+                    UnityPrint("-l        List all testing and exit"); UNITY_PRINT_EOL();
+                    UnityPrint("-f NAME   Filter to run only testing whose name includes NAME"); UNITY_PRINT_EOL();
                     UnityPrint("-n NAME   Run only the test named NAME"); UNITY_PRINT_EOL();
                     UnityPrint("-h        show this Help menu"); UNITY_PRINT_EOL();
                     UnityPrint("-q        Quiet/decrease verbosity"); UNITY_PRINT_EOL();
                     UnityPrint("-v        increase Verbosity"); UNITY_PRINT_EOL();
-                    UnityPrint("-x NAME   eXclude tests whose name includes NAME"); UNITY_PRINT_EOL();
+                    UnityPrint("-x NAME   eXclude testing whose name includes NAME"); UNITY_PRINT_EOL();
                     UNITY_OUTPUT_FLUSH();
                     return 1;
             }

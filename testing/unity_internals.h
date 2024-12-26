@@ -70,7 +70,7 @@
       /* https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=msvc-170 */
       /* NTDDI_WIN10_FE is equal to Windows 10 SDK 2104 */
       #if defined(_MSC_VER) && ((!defined(NTDDI_WIN10_FE)) || WDK_NTDDI_VERSION < NTDDI_WIN10_FE)
-        /* Based on tests and: */
+        /* Based on testing and: */
         /* https://docs.microsoft.com/en-us/cpp/c-language/noreturn?view=msvc-170 */
         /* https://en.cppreference.com/w/c/language/_Noreturn */
         #define UNITY_NORETURN _Noreturn
@@ -819,7 +819,7 @@ extern const char UnityStrErrShorthand[];
 #endif
 #endif
 
-/* Enable default macros for masking param tests test cases */
+/* Enable default macros for masking param testing test cases */
 #ifdef UNITY_SUPPORT_TEST_CASES
 #ifdef UNITY_SUPPORT_VARIADIC_MACROS
     #if !defined(TEST_CASE) && !defined(UNITY_EXCLUDE_TEST_CASE)

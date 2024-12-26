@@ -17,11 +17,11 @@ file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
 file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
-file(GLOB UNIT_C_TESTING tests/*.c)
+file(GLOB UNIT_C_TESTING testing/*.c)
 
 include_directories(includes)
-include_directories(tests/unity.h)
-include_directories(tests/unity_internals.h)
+include_directories(testing/unity.h)
+include_directories(testing/unity_internals.h)
 
 execute_process(
         COMMAND make
