@@ -92,6 +92,7 @@ static int	handle_digit_and_more_after_dollar(t_tokens *token)
 
 
 //caso--> "'$'"
+/*
 static int	check_dollar_special_quote(const char *str)
 {
 	if (ft_strchr_true(str, DOLLAR_SIGN) \
@@ -99,6 +100,7 @@ static int	check_dollar_special_quote(const char *str)
 		return (TRUE);
 	return (FALSE);
 }
+*/
 
 static int	handle_no_expand_cases(t_tokens *token)
 {

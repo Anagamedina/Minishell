@@ -15,9 +15,13 @@ file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
 file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
+file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
+file(GLOB UNIT_C_TESTING tests/*.c)
 
 include_directories(includes)
+include_directories(tests/unity.h)
+include_directories(tests/unity_internals.h)
 
 execute_process(
         COMMAND make
@@ -27,6 +31,7 @@ execute_process(
 
 add_executable(minishell
         src/minishell.c
+        src/built_ins_main.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
@@ -34,12 +39,10 @@ add_executable(minishell
         ${LIBFT_DIR}
         ${BUILTINS_ANA}
         ${MINI}
-        src/built_ins_main.c
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
-        src/expand/expand_func.c
-        src/parser/parser_not_expand_utils.c
-        src/expand/expand_utils.c
+        ${EXPAND_DIR}
+        ${UNIT_C_TESTING}
 )
 
 # link with readline library

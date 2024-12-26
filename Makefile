@@ -12,7 +12,8 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
+#CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
 
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
@@ -56,11 +57,10 @@ SRC = 	$(SRC_DIR)/minishell.c \
 		$(SRC_EXPAND)/expand_utils.c \
 		$(SRC_REDIR)/input_redir.c \
 		$(SRC_REDIR)/output_redir.c \
-		$(SRC_REDIR)/redir_utils.c \
-		$(SRC_REDIR)/heredoc.c
+		$(SRC_REDIR)/redir_utils.c
+#		$(SRC_REDIR)/heredoc.c
 
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
-
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # ==================================== #
@@ -73,11 +73,22 @@ $(NAME): $(LIBFT) $(OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(MINISHELL_H) Makefile
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
-#	@mkdir -p $(OBJ_DIR)
 
-# ==================================== #
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR) bonus
+
+# ==================================== #
+
+TEST_SRC = $(tests/*.c)
+TEST_OBJ = $(patsubst %.c, %.o, $(TEST_SRC))
+
+test: $(OBJ) $(TEST_OBJ)
+	cc -o testing_shell -Iincludes -I$(LIBFT_DIR) -fsanitize=address \
+	$(OBJ) $(TEST_OBJ) tests/unity.c $(LIBFT) -lreadline
+
+$(TEST_OBJ): %.o: %.c
+	cc -c -Iincludes -I$(LIBFT_DIR) -fsanitize=address $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # ==================================== #
 clean:

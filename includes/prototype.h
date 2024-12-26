@@ -156,7 +156,7 @@ void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
 
 //************** expand_utils.c ********************/
 int			process_token_is_word(const char *str);
-char * replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
+char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*ft_strjoin_array(char **split_word);
 
