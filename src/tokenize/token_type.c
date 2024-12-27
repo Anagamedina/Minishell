@@ -18,10 +18,14 @@ int	set_token_type(char *str)
 		return (REDIR_INPUT);
 	else if (ft_strcmp(str, ">") == 0)
 		return (REDIR_OUTPUT);
-	else if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (CONCAT_OUTPUT);
+	//else if (strcmp(str, "<<") == 0)
+		//return (HEREDOC);
+	else if (strcmp(str, "2>") == 0)
+		return (REDIR_ERR);
+	else if (ft_strcmp(str, "|") == 0)
+		return (PIPE);
 	else if (ft_strcmp(str, ";") == 0)
 		return (DELIMITER);
 	else if (str && ft_strlen(str) > 0)
