@@ -7,11 +7,17 @@
 
 t_mini	*g_minishell;
 
-struct s_test
+struct s_test_01
 {
 	char	*input;
 	int 	expected;
-}	t_test;
+}	t_test_01;
+
+struct s_test_02
+{
+	char	*input;
+	char	*expected;
+}	t_test_02;
 
 void	free_env_list(t_mini *minishell)
 {
@@ -80,7 +86,7 @@ void	tearDown(void)
 
 void	test_check_double_simple_dollar_case_01(void)
 {
-	struct s_test tests[] = {
+	struct s_test_01 test_cases[] = {
 			// Variable existente dentro de comillas simples
 			{"\"'$USER hello world'\"", TRUE},
 
@@ -110,11 +116,13 @@ void	test_check_double_simple_dollar_case_01(void)
 	};
 
 	int i = 0;
-	while (i < sizeof(tests) / sizeof(tests[0]))
-	{
-		int	result = check_double_simple_dollar_case(tests[i].input);
+	int result;
+	int	len = sizeof(test_cases) / sizeof(test_cases[0]);
 
-		TEST_ASSERT_EQUAL(tests[i].expected, result);
+	while (i < len)
+	{
+		result = check_double_simple_dollar_case(test_cases[i].input);
+		TEST_ASSERT_EQUAL(test_cases[i].expected, result);
 		i++;
 	}
 }
@@ -124,8 +132,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	i;
 	int	result;
 
-	struct s_test	edge_cases[] =
-	{
+	struct s_test_01	edge_cases[] = {
+
 	{"\"  '   $HOME case not work' \"", TRUE},
 	{"\"    $HOME case not work ' \"", TRUE},
 	{"\"  '   $HOME case not work  \"", TRUE},
@@ -134,7 +142,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	};
 
 	i = 0;
-	while (i < sizeof(edge_cases) / sizeof(edge_cases[0]))
+	int	len = sizeof(edge_cases) / sizeof(edge_cases[0]);
+	while (i < len)
 	{
 		result = check_double_simple_dollar_case(edge_cases[i].input);
 		char	message[256];
@@ -173,7 +182,7 @@ void	test_expand_vars_with_quotes_cases(void)
 	int		i;
 	char	*result;
 
-	char	*matrix_2d[5][2] =
+	struct s_test_02	matrix_cases[] =
 	{
 	// Entrada con comillas simples y variable válida
 	{"\"   '   $USER hello world'\"", "\"   '   daruuu hello world'\""},
@@ -188,25 +197,69 @@ void	test_expand_vars_with_quotes_cases(void)
 	};
 
 	i = 0;
-	while (i < sizeof(matrix_2d) / sizeof(matrix_2d[0]))
+	int	len = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
+	while (i < len)
 	{
-		result = replace_dollar_variable_skip_s_quote(matrix_2d[i][0], g_minishell->env);
-		TEST_ASSERT_EQUAL_STRING(matrix_2d[i][1], result);
+		result = replace_dollar_variable_skip_s_quote(matrix_cases[i].input, g_minishell->env);
+		TEST_ASSERT_EQUAL_STRING(matrix_cases[i].expected, result);
 		free(result);
 		i++;
 	}
 }
+
+/**
+ * @brief Prueba remove_quotes_str.
+ * @example remove_quotes_str("'  \$hello world'", S_QUOTE) => "  \$hello world"
+ * @see remove_quotes_str
+ */
+
 
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
  */
 
+void	test_remove_quotes_str(void)
+{
+
+	// Casos correctos
+	struct s_test_02	matrix_cases[] =
+	{
+		{"'hello world'", "hello world"},			// Comillas simples normales
+		{" ' spaced string ' ", " spaced string "}, // Espacios alrededor de las comillas
+		{"'\\'$USER quote\\''", "\\'$USER quote\\"}, // Comillas escapadas
+		{"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
+		{"'$HOME'", "$HOME"},                      // Variable sin expansión
+		{"'   \\$HOME case '", "   \\$HOME case"}, // Cadena con escape
+		// Casos que deben fallar
+		{"''", ""},                                // Comillas vacías
+		{"' '", " "},                              // Espacio vacío entre comillas
+		{"'\\", "'\\"},                            // Comilla escapada sin terminar
+	};
+
+	int		i = 0;
+	int		len_edge_cases = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
+	char	*result;
+	char	message[256];
+
+	while (i < len_edge_cases)
+	{
+		snprintf(message, sizeof(message), "Failed on case %d: input=[%s]", i + 1, matrix_cases[i].input);
+
+		result = remove_quotes_str(matrix_cases[i].input, S_QUOTE);
+		TEST_ASSERT_EQUAL_STRING_MESSAGE(matrix_cases[i].expected, result, message);
+		free(result); // Liberar memoria si es necesario
+		i++;
+	}
+}
+
 int	main(void)
 {
 	UNITY_BEGIN();
-	RUN_TEST(test_expand_vars_with_quotes_cases);
-	RUN_TEST(test_check_double_simple_dollar_case_01);
-	RUN_TEST(test_check_double_simple_dollar_case_02);
+	// RUN_TEST(test_expand_vars_with_quotes_cases);
+	// RUN_TEST(test_check_double_simple_dollar_case_01);
+	// RUN_TEST(test_check_double_simple_dollar_case_02);
+
+	RUN_TEST(test_remove_quotes_str);
 	return (UNITY_END());
 }

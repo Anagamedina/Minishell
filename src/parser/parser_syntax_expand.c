@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
-/*   Updated: 2024/12/17 19:06:56 by catalinab        ###   ########.fr       */
+/*   Updated: 2024/12/27 15:17:24 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int	check_dollar_special_quote(const char *str)
 }
 */
 
-static int	handle_no_expand_cases(t_tokens *token)
+int	handle_no_expand_cases(t_tokens *token)
 {
 	if (check_backslash_before_dollar(token->str))
 		return (handle_backslash_after_dollar(token));
@@ -240,14 +240,12 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	char	*tmp;
 
 	tmp = NULL;
+
 	/*
-	 Caso "'$...'" -> expandir con comillas simples
-	double quotes
-	single quotes
-	dollar_sign
-	TODO: daruny(finish this function part 2)
+	Caso "'$...'" -> expandir con comillas simples
 	echo "'$USER and test works'"
-*/
+	echo " $USER and test works'"
+	*/
 	if (check_double_simple_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
@@ -255,15 +253,18 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 		char	*res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
+		free(tmp);
 
 		return ;
 	}
+
 	// Caso "$ '...'" -> espacio después del dólar
 	if (check_dollar_with_space_single(token->str))
 	{
 		handle_dollar_with_space_single(token);
 		return ;
 	}
+
 	//	"$'...'" ----> imprime
 	if (check_doble_dollar_single(token->str))
 	{
@@ -272,6 +273,8 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		free(tmp);
 		return ;
 	}
+
+	//	"$USER"
 	if (check_dollar_simple(token->str)) // Maneja $'...'
 	{
 		handle_single_quotes_after_dollar(token);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
+#    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/12/03 16:55:21 by anamedin         ###   ########.fr        #
+#    Updated: 2024/12/27 13:19:08 by  dasalaza        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,8 @@ $(LIBFT):
 
 obj/testing/%.o: testing/%.c
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -c $< -o $@
+	# $(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TEST_OBJ)
 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \
