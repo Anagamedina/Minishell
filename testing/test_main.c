@@ -42,7 +42,7 @@ void	init_environment_testing(void)
 	TEST_ASSERT_NOT_NULL(g_minishell);
 }
 
-void clean_environment_testing(void)
+void	clean_environment_testing(void)
 {
 	free_env_list(g_minishell);
 }
@@ -205,8 +205,8 @@ void	test_expand_vars_with_quotes_cases(void)
 int	main(void)
 {
 	UNITY_BEGIN();
-//	RUN_TEST(test_expand_vars_with_quotes_cases);
-//	RUN_TEST(test_check_double_simple_dollar_case_01);
+	RUN_TEST(test_expand_vars_with_quotes_cases);
+	RUN_TEST(test_check_double_simple_dollar_case_01);
 	RUN_TEST(test_check_double_simple_dollar_case_02);
 	return (UNITY_END());
 }
