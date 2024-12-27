@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/17 11:21:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:39:18 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@
 
 typedef enum e_type_token
 {
-	WORD = 0,           // Representa una palabra o comando genérico
-	REDIR_OUTPUT,       // Representa la redirección de salida '>'
-	REDIR_INPUT,        // Representa la redirección de entrada '<'
-	CONCAT_OUTPUT,      // Representa la redirección de concatenación '>>'
-	REDIR_ERR,
+	WORD = 0,           // Representa una palabra o comando genéricoREDIR_OUTPUT,       // Representa la redirección de salida '>'
+	REDIR_IN,        // Representa la redirección de entrada '<'
+	CONCAT_OUT,      // Representa la redirección de concatenación '>>'
+	REDIR_ERR_OUT,
+	REDIR_ERR_APPEND,
+	REDIR_APPEND,
+	REDIR_OUT,
 	BUILTINS,
 	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,     // Representa el final de la lista de tokens
@@ -116,14 +118,15 @@ typedef struct s_split_data
 // t_pipex         *first_pipe;    // Estructura del primer pipe
 
 #endif
-/*
-typedef struct s_pipex
+
+typedef struct s_pipe
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
 	//char			*path;
+	//int 			error;
 	int				pipe_input_fd;
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
-}				t_pipex;*/
+}				t_pipe;

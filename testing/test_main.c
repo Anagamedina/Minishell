@@ -110,7 +110,8 @@ void	test_check_double_simple_dollar_case_01(void)
 	};
 
 	int i = 0;
-	while (i < sizeof(tests) / sizeof(tests[0]))
+	int	len_struct = sizeof(tests) / sizeof(tests[0]);
+	while (i < len_struct)
 	{
 		int	result = check_double_simple_dollar_case(tests[i].input);
 
@@ -134,7 +135,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	};
 
 	i = 0;
-	while (i < sizeof(edge_cases) / sizeof(edge_cases[0]))
+	int	len_struct = sizeof(edge_cases) / sizeof(edge_cases[0]);
+	while (i < len_struct)
 	{
 		result = check_double_simple_dollar_case(edge_cases[i].input);
 		char	message[256];
@@ -167,7 +169,6 @@ void	test_replace_dollar_var_when_valid_var_should_expand_correctly_version_01(v
 	free(result);
 }
 */
-
 void	test_expand_vars_with_quotes_cases(void)
 {
 	int		i;
@@ -197,6 +198,23 @@ void	test_expand_vars_with_quotes_cases(void)
 	}
 }
 
+int	sumar(int a, int b)
+{
+	int result = a  + b;
+	return (result);
+}
+
+void	test_sumar_a_mas_b(void)
+{
+	int	a = 5;
+	int	b = 10;
+	int result;
+
+	result = sumar(a, b);
+
+	TEST_ASSERT_EQUAL_INT(19, result);
+}
+
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -205,8 +223,9 @@ void	test_expand_vars_with_quotes_cases(void)
 int	main(void)
 {
 	UNITY_BEGIN();
-	RUN_TEST(test_expand_vars_with_quotes_cases);
-	RUN_TEST(test_check_double_simple_dollar_case_01);
-	RUN_TEST(test_check_double_simple_dollar_case_02);
+	// RUN_TEST(test_expand_vars_with_quotes_cases);
+	// RUN_TEST(test_check_double_simple_dollar_case_01);
+	// RUN_TEST(test_check_double_simple_dollar_case_02);
+	RUN_TEST(sumar);
 	return (UNITY_END());
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 18:10:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/27 11:05:53 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 int	set_token_type(char *str)
 {
 	if (ft_strcmp(str, "<") == 0)
-		return (REDIR_INPUT);
+		return (REDIR_IN);
 	else if (ft_strcmp(str, ">") == 0)
-		return (REDIR_OUTPUT);
+		return (REDIR_OUT);
 	else if (ft_strcmp(str, ">>") == 0)
-		return (CONCAT_OUTPUT);
+		return (REDIR_APPEND);
 	//else if (strcmp(str, "<<") == 0)
 		//return (HEREDOC);
 	else if (strcmp(str, "2>") == 0)
-		return (REDIR_ERR);
+		return (REDIR_ERR_OUT);
+	else if (strcmp(str, "2>>") == 0)
+		return (REDIR_ERR_APPEND);
 	else if (ft_strcmp(str, "|") == 0)
 		return (PIPE);
 	else if (ft_strcmp(str, ";") == 0)
