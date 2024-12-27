@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/17 11:21:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/27 12:39:18 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,17 @@
 
 typedef enum e_type_token
 {
-	WORD = 0,           // Representa una palabra o comando genérico
-	PIPE,               // Representa el operador de tubería '|'
-	REDIR_OUTPUT,       // Representa la redirección de salida '>'
-	REDIR_INPUT,        // Representa la redirección de entrada '<'
-	CONCAT_OUTPUT,      // Representa la redirección de concatenación '>>'
+	WORD = 0,           // Representa una palabra o comando genéricoREDIR_OUTPUT,       // Representa la redirección de salida '>'
+	REDIR_IN,        // Representa la redirección de entrada '<'
+	CONCAT_OUT,      // Representa la redirección de concatenación '>>'
+	REDIR_ERR_OUT,
+	REDIR_ERR_APPEND,
+	REDIR_APPEND,
+	REDIR_OUT,
 	BUILTINS,
 	DELIMITER,			// Para manejar ';'
-	NULL_TYPE,          // Representa el final de la lista de tokens
+	NULL_TYPE,     // Representa el final de la lista de tokens
+	PIPE,                // Representa el operador de tubería '|'
 }					t_type_token;
 //	ECHO,               // Builtin: echo
 //	CD,                 // Builtin: cd
@@ -65,21 +68,30 @@ typedef struct s_env
     struct s_env    *next;           // Puntero al siguiente nodo
 }                   t_env;
 
+typedef struct	s_redir
+{
+	int 	fd_input;            // Descriptor de archivo de entrada
+	int 	fd_output;           // Descriptor de archivo de salida
+	int 	type;                // Tipo de redirección (por ejemplo, REDIR_INPUT, REDIR_OUTPUT)
+	char 	*filename;          // Nombre del archivo de redirección
+	struct s_redir *next;    // Puntero al siguiente nodo de redirección
+} t_redir;
+
+
 // "wc -l" sería el comando y sus parámetros:
 // cmd_args[0] = "wc"
 // cmd_args[1] = "-l"
 typedef struct s_cmd
 {
     char            *cmd;           // Nombre del comando, ej. "wc"
-    char            **cmd_args;     // Argumentos del comando
+    char            **cmd_args;     // Argumentos del comando (por ejemplo, ["echo", "hello"])
 	int 			count_args;		// Numero de argumentos del comando
     int             cmd_id;         // ID del comando para orden en pipeline
+	t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
     int             pipe[2];        // Descriptores para el pipe
     int             input_fd;       // Descriptor de archivo de entrada
     int             output_fd;      // Descriptor de archivo de salida
-    int             flag_input_redir; // Flag para redirección de entrada
-    int             flag_output_redir; // Flag para redirección de salida
-    struct s_cmd    *next;          // Puntero al siguiente comando	
+    struct s_cmd    *next;          // Puntero al siguiente comando
 }				t_cmd;
 
 typedef struct s_mini
@@ -106,14 +118,15 @@ typedef struct s_split_data
 // t_pipex         *first_pipe;    // Estructura del primer pipe
 
 #endif
-/*
-typedef struct s_pipex
+
+typedef struct s_pipe
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
 	//char			*path;
+	//int 			error;
 	int				pipe_input_fd;
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
-}				t_pipex;*/
+}				t_pipe;

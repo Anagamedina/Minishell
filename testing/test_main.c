@@ -116,8 +116,15 @@ void	test_check_double_simple_dollar_case_01(void)
 	};
 
 	int i = 0;
+<<<<<<< HEAD
 	int result;
 	int	len = sizeof(test_cases) / sizeof(test_cases[0]);
+=======
+	int	len_struct = sizeof(tests) / sizeof(tests[0]);
+	while (i < len_struct)
+	{
+		int	result = check_double_simple_dollar_case(tests[i].input);
+>>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 
 	while (i < len)
 	{
@@ -142,8 +149,13 @@ void	test_check_double_simple_dollar_case_02(void)
 	};
 
 	i = 0;
+<<<<<<< HEAD
 	int	len = sizeof(edge_cases) / sizeof(edge_cases[0]);
 	while (i < len)
+=======
+	int	len_struct = sizeof(edge_cases) / sizeof(edge_cases[0]);
+	while (i < len_struct)
+>>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 	{
 		result = check_double_simple_dollar_case(edge_cases[i].input);
 		char	message[256];
@@ -176,7 +188,6 @@ void	test_replace_dollar_var_when_valid_var_should_expand_correctly_version_01(v
 	free(result);
 }
 */
-
 void	test_expand_vars_with_quotes_cases(void)
 {
 	int		i;
@@ -207,12 +218,31 @@ void	test_expand_vars_with_quotes_cases(void)
 	}
 }
 
+<<<<<<< HEAD
 /**
  * @brief Prueba remove_quotes_str.
  * @example remove_quotes_str("'  \$hello world'", S_QUOTE) => "  \$hello world"
  * @see remove_quotes_str
  */
 
+=======
+int	sumar(int a, int b)
+{
+	int result = a  + b;
+	return (result);
+}
+
+void	test_sumar_a_mas_b(void)
+{
+	int	a = 5;
+	int	b = 10;
+	int result;
+
+	result = sumar(a, b);
+
+	TEST_ASSERT_EQUAL_INT(19, result);
+}
+>>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
@@ -259,7 +289,11 @@ int	main(void)
 	// RUN_TEST(test_expand_vars_with_quotes_cases);
 	// RUN_TEST(test_check_double_simple_dollar_case_01);
 	// RUN_TEST(test_check_double_simple_dollar_case_02);
+<<<<<<< HEAD
 
 	RUN_TEST(test_remove_quotes_str);
+=======
+	RUN_TEST(sumar);
+>>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 	return (UNITY_END());
 }
