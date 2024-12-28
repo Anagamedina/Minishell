@@ -161,5 +161,9 @@ int			process_token_is_word(const char *str);
 char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*ft_strjoin_array(char **split_word);
+//*************redis**************/
+int	is_type_of_operator(t_tokens *token);
+int check_repeat_redir(t_tokens *token);
+
 
 #endif
