@@ -1,12 +1,7 @@
-
 # include "unity.h"
 # include "testing.h"
-# include "../includes/minishell.h"
 
-
-// t_mini	*g_minishell;
-
-void	free_env_list(t_mini *minishell)
+void	free_env_list(void)
 {
 	if (g_minishell)
 	{
@@ -37,9 +32,10 @@ void	init_environment_testing(void)
 
 void	clean_environment_testing(void)
 {
-	free_env_list(g_minishell);
+	free_env_list();
 }
 
+// Función de prueba
 
 int	sumar_a_b(int a, int b)
 {

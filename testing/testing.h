@@ -6,7 +6,6 @@
 
 extern t_mini	*g_minishell;
 
-// Estructuras para casos de prueba
 typedef struct s_test_int
 {
     char    *input;     // Entrada del caso de prueba
@@ -22,9 +21,9 @@ typedef struct s_test_str
 // Funciones de configuración del entorno de testing
 void    init_environment_testing(void);  // Inicializa el entorno para pruebas
 void    clean_environment_testing(void); // Limpia el entorno de pruebas
-void    free_env_list(t_mini *minishell); // Libera recursos asociados al entorno
+void    free_env_list(void); // Libera recursos asociados al entorno
 
 // Funciones auxiliares de testing
-int     sumar_a_b(int a, int b); // Función de ejemplo para testear
+int     sumar_a_b(int a, int b);
 
-#endif /* TESTING_H */
+#endif

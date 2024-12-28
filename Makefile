@@ -63,7 +63,6 @@ SRC =	$(SRC_MINI)/init_struct.c \
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))
 
-
 LIBFT = $(LIBFT_DIR)/libft.a
 
 # ==================================== #
@@ -72,9 +71,8 @@ TEST_SRC =	testing/test_main.c \
 			testing/unity.c \
 			testing/set_up_functions.c
 
-# OBJ_TEST = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(OBJ_DIR)/testing/%.o, $(SRC))
-# OBJ_TEST = $(patsubst testing/%.c, $(OBJ_DIR)/testing/%.o, $(TEST_SRC)
-OBJ_TEST = $(patsubst testing/%.c, $(OBJ_DIR)/testing/%.o, $(notdir $(TEST_SRC)))
+OBJ_TEST = $(patsubst testing/%.c, $(OBJ_DIR)/testing/%.o, $(TEST_SRC))
+OBJ_TESTING = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))  # Sin main.c
 
 # ==================================== #
 
@@ -96,23 +94,10 @@ obj/testing/%.o: testing/%.c $(TESTING_H)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# test: $(OBJ) $(OBJ_TEST)
-# 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \
-# 	$(OBJ_TEST) $(OBJ_TEST) $(LIBFT) -lreadline
-
-# OBJ_TESTING = $(filter-out obj/minishell.o, $(OBJ))
-OBJ_TESTING = $(filter-out obj/minishell.o, $(OBJ))
-OBJ_TEST = $(patsubst testing/%.c, $(OBJ_DIR)/testing/%.o, $(notdir $(TEST_SRC)))
-
-
-# test: $(TEST_OBJ)
-# 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \
-# 	$(OBJ_TESTING) $(TEST_OBJ) $(LIBFT) -lreadline
 
 test: $(OBJ_TEST) $(OBJ_TESTING)
 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \
 	$(OBJ_TESTING) $(OBJ_TEST) $(LIBFT) -lreadline
-
 
 # ==================================== #
 

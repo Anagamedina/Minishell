@@ -52,6 +52,7 @@ target_link_libraries(minishell readline)
 
 add_executable(testing_shell
         testing/test_main.c
+        testing/set_up_functions.c
         testing/unity.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}

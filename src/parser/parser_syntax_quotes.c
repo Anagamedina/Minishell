@@ -65,14 +65,16 @@ char	*remove_quotes_str(char *str, char c)
 
 	i = 0;
 	new_len = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		// if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
-		if (str[i] != c && (check_special_c(str[i]) == TRUE))
+		if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
+		{
 			new_len++;
-		i++;
+			i++;
+		}
+		else
+			i++;
 	}
-
 	printf("new_len: %d\n", new_len);
 
 	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
@@ -83,15 +85,19 @@ char	*remove_quotes_str(char *str, char c)
 	while (str[i] != '\0')
 	{
 		// Copiar caracteres no escapados o no coincidentes
-		// if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
-		if (str[i] != c && (check_special_c(str[i]) == TRUE))
+		if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
 		{
 			new_str[j++] = str[i];
+			i++;
 		}
-		i++;
+		else
+			i++;
 	}
 	new_str[j] = '\0';
-	free(str);
+	printf("i: %d\n", i);
+	printf("j: %d\n", j);
+	printf("new_str: %s\n", new_str);
+//	free(str);
 	return (new_str);
 }
 

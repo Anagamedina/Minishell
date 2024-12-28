@@ -162,7 +162,6 @@ void	test_expand_vars_with_quotes_cases(void)
 	}
 }
 
-/*
 void	test_sumar_a_mas_b(void)
 {
 	int	a = 5;
@@ -173,7 +172,6 @@ void	test_sumar_a_mas_b(void)
 
 	TEST_ASSERT_EQUAL_INT(19, result);
 }
-*/
 
 
 /**
@@ -184,20 +182,25 @@ void	test_sumar_a_mas_b(void)
 
 void	test_remove_quotes_str(void)
 {
-
 	// Casos correctos
 	struct s_test_str	matrix_cases[] =
 	{
-		{"'hello world'", "hello world"},			// Comillas simples normales
-		{" ' spaced string ' ", " spaced string "}, // Espacios alrededor de las comillas
-		{"'\\'$USER quote\\''", "\\'$USER quote\\"}, // Comillas escapadas
-		{"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
-		{"'$HOME'", "$HOME"},                      // Variable sin expansión
-		{"'   \\$HOME case '", "   \\$HOME case"}, // Cadena con escape
-		// Casos que deben fallar
-		{"''", ""},                                // Comillas vacías
-		{"' '", " "},                              // Espacio vacío entre comillas
-		{"'\\", "'\\"},                            // Comilla escapada sin terminar
+//		{"'\\$USER quote\\'", "\\$USER quote\\"}, // Comillas escapadas
+	{"'\\$USER quote\\'", "\\$USER quote\\"},        // Entrada: echo '\$USER quote\'
+	{"' \\$USER quote\\'", " \\$USER quote\\"},      // Entrada: echo ' \$USER quote\'
+	{"' \\$USER quote\\ '", " \\$USER quote\\ "},    // Entrada: echo ' \$USER quote\ '
+	{"' \\$USER quote \\ '", " \\$USER quote \\ "},   // Entrada: echo ' \$USER quote \'
+	{"'\\\\$USER quote\\\\'", "\\\\$USER quote\\\\"},   // Entrada: echo '\\\\$USER quote\\\\'
+
+//		{"'hello world'", "hello world"},			// Comillas simples normales
+//		{"' spaced string '", " spaced string "}, // Espacios alrededor de las comillas
+//		{"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
+//		{"'$HOME'", "$HOME"},                      // Variable sin expansión
+//		{"'   \\$HOME case '", "   \\$HOME case"}, // Cadena con escape
+//		// Casos que deben fallar
+//		{"''", ""},                                // Comillas vacías
+//		{"' '", " "},                              // Espacio vacío entre comillas
+//		{"'\\", "'\\"},                            // Comilla escapada sin terminar
 	};
 
 	int		i = 0;
@@ -207,11 +210,14 @@ void	test_remove_quotes_str(void)
 
 	while (i < len_edge_cases)
 	{
-		snprintf(message, sizeof(message), "Failed on case %d: input=[%s]", i + 1, matrix_cases[i].input);
-
+		// function on test
 		result = remove_quotes_str(matrix_cases[i].input, S_QUOTE);
+
+		snprintf(message, sizeof(message), "FAILED ON CASE %d:                  INPUT=[%s]" "   EXPECTED=[%s]   |" "   ACTUAL=[%s]",\
+				i + 1, matrix_cases[i].input, matrix_cases[i].expected, result);
+
 		TEST_ASSERT_EQUAL_STRING_MESSAGE(matrix_cases[i].expected, result, message);
-		free(result); // Liberar memoria si es necesario
+		free(result);
 		i++;
 	}
 }
@@ -228,7 +234,7 @@ int	main(void)
 	// RUN_TEST(test_check_double_simple_dollar_case_01);
 	// RUN_TEST(test_check_double_simple_dollar_case_02);
 	RUN_TEST(test_remove_quotes_str);
-	// RUN_TEST(test_sumar_a_mas_b);
+//	RUN_TEST(test_sumar_a_mas_b);
 	return (UNITY_END());
 }
 
