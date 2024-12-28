@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/17 17:41:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:00:03 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ char		**ft_split_quote(char *str);
 //
 //************** parser_syntax_dollar.c ********************/
 
+int			check_special_c(char c);
 char		*remove_quotes_str(char *str, char c);
 
 //************** parser_syntax_quotes.c ********************/
@@ -140,6 +141,7 @@ int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
 int			check_double_simple_dollar_case(char *str);
+int			handle_no_expand_cases(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 
