@@ -3,56 +3,10 @@
 //
 
 # include "unity.h"
+# include "testing.h"
 # include "../includes/minishell.h"
 
 t_mini	*g_minishell;
-
-struct s_test_01
-{
-	char	*input;
-	int 	expected;
-}	t_test_01;
-
-struct s_test_02
-{
-	char	*input;
-	char	*expected;
-}	t_test_02;
-
-void	free_env_list(t_mini *minishell)
-{
-	if (g_minishell)
-	{
-		if (g_minishell->env)
-		{
-			t_list *current = g_minishell->env;
-			t_list *next;
-
-			while (current)
-			{
-				next = current->next;
-				free(current->content);
-				free(current);
-				current = next;
-			}
-		}
-		g_minishell->env = NULL;
-	}
-}
-
-void	init_environment_testing(void)
-{
-	extern char **environ;
-
-	g_minishell = init_mini_list(environ);
-	TEST_ASSERT_NOT_NULL(g_minishell);
-}
-
-void	clean_environment_testing(void)
-{
-	free_env_list(g_minishell);
-}
-
 
 /**
  * @brief Inicializa el entorno global antes de cada prueba.
@@ -86,7 +40,7 @@ void	tearDown(void)
 
 void	test_check_double_simple_dollar_case_01(void)
 {
-	struct s_test_01 test_cases[] = {
+	struct s_test_int test_cases[] = {
 			// Variable existente dentro de comillas simples
 			{"\"'$USER hello world'\"", TRUE},
 
@@ -116,15 +70,8 @@ void	test_check_double_simple_dollar_case_01(void)
 	};
 
 	int i = 0;
-<<<<<<< HEAD
 	int result;
 	int	len = sizeof(test_cases) / sizeof(test_cases[0]);
-=======
-	int	len_struct = sizeof(tests) / sizeof(tests[0]);
-	while (i < len_struct)
-	{
-		int	result = check_double_simple_dollar_case(tests[i].input);
->>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 
 	while (i < len)
 	{
@@ -139,7 +86,7 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	i;
 	int	result;
 
-	struct s_test_01	edge_cases[] = {
+	struct s_test_int	edge_cases[] = {
 
 	{"\"  '   $HOME case not work' \"", TRUE},
 	{"\"    $HOME case not work ' \"", TRUE},
@@ -149,13 +96,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	};
 
 	i = 0;
-<<<<<<< HEAD
 	int	len = sizeof(edge_cases) / sizeof(edge_cases[0]);
 	while (i < len)
-=======
-	int	len_struct = sizeof(edge_cases) / sizeof(edge_cases[0]);
-	while (i < len_struct)
->>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
 	{
 		result = check_double_simple_dollar_case(edge_cases[i].input);
 		char	message[256];
@@ -188,12 +130,13 @@ void	test_replace_dollar_var_when_valid_var_should_expand_correctly_version_01(v
 	free(result);
 }
 */
+
 void	test_expand_vars_with_quotes_cases(void)
 {
 	int		i;
 	char	*result;
 
-	struct s_test_02	matrix_cases[] =
+	struct s_test_str	matrix_cases[] =
 	{
 	// Entrada con comillas simples y variable válida
 	{"\"   '   $USER hello world'\"", "\"   '   daruuu hello world'\""},
@@ -212,48 +155,38 @@ void	test_expand_vars_with_quotes_cases(void)
 	while (i < len)
 	{
 		result = replace_dollar_variable_skip_s_quote(matrix_cases[i].input, g_minishell->env);
+
 		TEST_ASSERT_EQUAL_STRING(matrix_cases[i].expected, result);
 		free(result);
 		i++;
 	}
 }
 
-<<<<<<< HEAD
-/**
- * @brief Prueba remove_quotes_str.
- * @example remove_quotes_str("'  \$hello world'", S_QUOTE) => "  \$hello world"
- * @see remove_quotes_str
- */
-
-=======
-int	sumar(int a, int b)
-{
-	int result = a  + b;
-	return (result);
-}
-
+/*
 void	test_sumar_a_mas_b(void)
 {
 	int	a = 5;
 	int	b = 10;
 	int result;
 
-	result = sumar(a, b);
+	result = sumar_a_b(a, b);
 
 	TEST_ASSERT_EQUAL_INT(19, result);
 }
->>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
+*/
 
-/*
- * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
- * stack o pila: cuando declaramos variables locales.
+
+/**
+ * @brief Prueba remove_quotes_str.
+ * @example remove_quotes_str("'  \$hello world'", S_QUOTE) => "  \$hello world"
+ * @see remove_quotes_str
  */
 
 void	test_remove_quotes_str(void)
 {
 
 	// Casos correctos
-	struct s_test_02	matrix_cases[] =
+	struct s_test_str	matrix_cases[] =
 	{
 		{"'hello world'", "hello world"},			// Comillas simples normales
 		{" ' spaced string ' ", " spaced string "}, // Espacios alrededor de las comillas
@@ -283,17 +216,19 @@ void	test_remove_quotes_str(void)
 	}
 }
 
+/*
+ * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
+ * stack o pila: cuando declaramos variables locales.
+ */
+
 int	main(void)
 {
 	UNITY_BEGIN();
 	// RUN_TEST(test_expand_vars_with_quotes_cases);
 	// RUN_TEST(test_check_double_simple_dollar_case_01);
 	// RUN_TEST(test_check_double_simple_dollar_case_02);
-<<<<<<< HEAD
-
 	RUN_TEST(test_remove_quotes_str);
-=======
-	RUN_TEST(sumar);
->>>>>>> 8fac052752966a655bac747b29664de5c920c2c0
+	// RUN_TEST(test_sumar_a_mas_b);
 	return (UNITY_END());
 }
+

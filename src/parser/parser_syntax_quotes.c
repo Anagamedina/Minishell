@@ -67,7 +67,8 @@ char	*remove_quotes_str(char *str, char c)
 	new_len = 0;
 	while (str[i])
 	{
-		if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
+		// if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
+		if (str[i] != c && (check_special_c(str[i]) == TRUE))
 			new_len++;
 		i++;
 	}
@@ -82,7 +83,8 @@ char	*remove_quotes_str(char *str, char c)
 	while (str[i] != '\0')
 	{
 		// Copiar caracteres no escapados o no coincidentes
-		if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
+		// if (str[i] != c && (check_special_c(str[i]) == TRUE) || (i > 0 && str[i - 1] == S_QUOTE))
+		if (str[i] != c && (check_special_c(str[i]) == TRUE))
 		{
 			new_str[j++] = str[i];
 		}
