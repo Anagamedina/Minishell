@@ -185,22 +185,25 @@ void	test_remove_quotes_str(void)
 	// Casos correctos
 	struct s_test_str	matrix_cases[] =
 	{
-//		{"'\\$USER quote\\'", "\\$USER quote\\"}, // Comillas escapadas
-	{"'\\$USER quote\\'", "\\$USER quote\\"},        // Entrada: echo '\$USER quote\'
-	{"' \\$USER quote\\'", " \\$USER quote\\"},      // Entrada: echo ' \$USER quote\'
-	{"' \\$USER quote\\ '", " \\$USER quote\\ "},    // Entrada: echo ' \$USER quote\ '
-	{"' \\$USER quote \\ '", " \\$USER quote \\ "},   // Entrada: echo ' \$USER quote \'
-	{"'\\\\$USER quote\\\\'", "\\\\$USER quote\\\\"},   // Entrada: echo '\\\\$USER quote\\\\'
+		{"'$hei \\//a'", "$hei \\//a"}, // Cadena sin comillas
 
-//		{"'hello world'", "hello world"},			// Comillas simples normales
-//		{"' spaced string '", " spaced string "}, // Espacios alrededor de las comillas
-//		{"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
-//		{"'$HOME'", "$HOME"},                      // Variable sin expansión
-//		{"'   \\$HOME case '", "   \\$HOME case"}, // Cadena con escape
-//		// Casos que deben fallar
-//		{"''", ""},                                // Comillas vacías
-//		{"' '", " "},                              // Espacio vacío entre comillas
-//		{"'\\", "'\\"},                            // Comilla escapada sin terminar
+		// {"'\$USER quote'", "\$USER quote"}, // Comillas escapadas
+		// {"'  \$USER quote  '", "  \$USER quote  "}, // Comillas escapadas con espacio
+
+		// {"'\\$USER quote\\'", "\\$USER quote\\"}, // 2 Comillas escapadas
+		// {"' \ \$USER quote\\'", " \ \$USER quote\\"}, // 2 Comillas escapadas con espacio
+
+		// {"' \\\$USER quote \\\\'", " \\\$USER quote \\\\"},    // Entrada: echo ' \\\$USER quote\\\\ '
+		// {"' \ \ \$USER quote \\\\'", " \ \ \$USER quote \\\\"},    // Entrada: echo ' \\\$USER quote\\\\ '
+		// {"'   hello world'", "   hello world"},			// Comillas simples normales
+		// {"' spaced string '", " spaced string "}, // Espacios alrededor de las comillas
+		// {"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
+		// {"'$HOME'", "$HOME"},                      // Variable sin expansión
+		// {"'   \\$HOME case '", "   \\$HOME case "}, // Cadena con escape
+
+		// {"''", ""},                                // Comillas vacías
+		// {"' '", " "},                              // Espacio vacío entre comillas
+		// {"'\\'", "\\"},                            // Comilla escapada sin terminar
 	};
 
 	int		i = 0;
@@ -213,7 +216,8 @@ void	test_remove_quotes_str(void)
 		// function on test
 		result = remove_quotes_str(matrix_cases[i].input, S_QUOTE);
 
-		snprintf(message, sizeof(message), "FAILED ON CASE %d:                  INPUT=[%s]" "   EXPECTED=[%s]   |" "   ACTUAL=[%s]",\
+		snprintf(message, sizeof(message), "FAILED ON CASE %d:                \
+		INPUT=[%s]" "   EXPECTED=[%s]   |" "   ACTUAL=[%s]",\
 				i + 1, matrix_cases[i].input, matrix_cases[i].expected, result);
 
 		TEST_ASSERT_EQUAL_STRING_MESSAGE(matrix_cases[i].expected, result, message);

@@ -27,35 +27,11 @@ int	handle_special_quotes(t_tokens *token) // " '
 	return (FALSE);
 }
 
-/*
-char	*remove_quotes_str(char *str, char c)
-{
-	int		i;
-	int		j;
-	int		new_len;
-	char	*new_str;
-
-	i = 0;
-	new_len = 0;
-	while (str[i])
-		new_len += (str[i++] != c);
-	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
-	if (new_str == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != c)
-			new_str[j++] = str[i];
-		i++;
-	}
-	new_str[j] = '\0';
-	free(str);
-	return (new_str);
-}*/
 
 // TODO: Revisar esta función y terminarla
+/**
+ * 
+ */
 char	*remove_quotes_str(char *str, char c)
 {
 	int		i;
@@ -75,7 +51,7 @@ char	*remove_quotes_str(char *str, char c)
 		else
 			i++;
 	}
-	printf("new_len: %d\n", new_len);
+	// printf("new_len: %d\n", new_len);
 
 	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
 	if (new_str == NULL)
@@ -94,10 +70,6 @@ char	*remove_quotes_str(char *str, char c)
 			i++;
 	}
 	new_str[j] = '\0';
-	printf("i: %d\n", i);
-	printf("j: %d\n", j);
-	printf("new_str: %s\n", new_str);
-//	free(str);
 	return (new_str);
 }
 
