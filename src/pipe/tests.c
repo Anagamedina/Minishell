@@ -1,6 +1,6 @@
 
-#include "../../includes/minishell.h"
 
+#include "../../includes/minishell.h"
 
 void print_paths(char **paths)
 {

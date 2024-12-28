@@ -168,4 +168,21 @@ int	is_type_of_operator(t_tokens *token);
 int check_repeat_redir(t_tokens *token);
 
 
+//************pipes*************/
+t_cmd   	*cmd_new(char *str, char **paths);
+//t_cmd		*create_cmd_list(t_pipex *pipex);
+char 		**get_path(char **env);
+//t_pipex		init_pipex(int argc, char **argv, char **env);
+int 		main(int argc, char **argv, char **env);
+//void 		execute_child(t_pipex *pipex, t_cmd *cmd, int *pipe_fd);
+//void 		handle_commands(t_pipex *pipex);
+void 		print_paths(char **paths);
+char 		*get_cmd_path(char *cmd, char **paths);
+void 		free_cmd(t_cmd *cmd);
+void 		free_cmd_list(t_cmd *cmd_list);
+//void 		free_paths(t_pipex pipex);
+//void 		free_pipex(t_pipex pipex);
+void		free_split_result(char **result);
+
+
 #endif

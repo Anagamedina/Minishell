@@ -1,7 +1,5 @@
-/****************** Main function  *********************/
 
 #include "../../includes/minishell.h"
-
 //  CREAR NODOS DE CADA COMANDO
 //str  =  "ls -l"
 // new->cmd_args[0]  = "ls",
@@ -88,7 +86,8 @@ t_cmd	*create_cmd_list(t_input *input)
 //	return (1);
 //}
 //
-// INIT STRUCT 
+// INIT STRUCT
+//TODO
 t_input	init_input(int argc, char **argv, char **env)
 {
 	t_input	input;

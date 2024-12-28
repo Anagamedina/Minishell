@@ -22,6 +22,7 @@ SRC_INPUT= $(SRC_DIR)/input
 SRC_PARSER= $(SRC_DIR)/parser
 SRC_REDIR= $(SRC_DIR)/redir
 SRC_TOKEN = $(SRC_DIR)/tokenize
+SRC_PIPE = $(SRC_DIR)/pipe
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
@@ -55,9 +56,13 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_syntax_expand.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
-		$(SRC_REDIR)/input_redir.c \
 		$(SRC_REDIR)/redir_syntax.c \
-		$(SRC_REDIR)/redir_file.c
+		$(SRC_REDIR)/redir_file.c \
+		$(SRC_PIPE)/free_errors.c \
+		$(SRC_PIPE)/get_inputc \
+		$(SRC_PIPE)/paths.c \
+		$(SRC_PIPE)/tests.c
+
 #		$(SRC_REDIR)/heredoc.c
 
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c

@@ -121,12 +121,41 @@ typedef struct s_pipe
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
-	//char			*path;
+	char			**path;             //array de rutas de posibles ubi de comandos
 	//int 			error;
+	//char			**env;
+	//char			**argvs;  			//argumentos del programa
 	int				pipe_input_fd;
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
 }				t_pipe;
 
- #endif
+#endif
+
+
+/**
+* typedef struct s_cmd
+{
+	//"wc -l" seria wc comado -l seria parametros
+	//	cmd_args[1][0] = "wc"
+	//	cmd_args[1][1] = "-l"
+	char			**cmd_args;  //arrays de args (incluye el comando y sus parametros )
+	int				cmd_id;   // numero del comando para control
+	int				pipe[2];  //pipe[0] = infile	pipe[1] = outfile
+	int				input_fd;  //entrada
+	int				output_fd; //salida
+	struct s_cmd	*next;  // puntero al siguiente comando
+}				t_cmd;
+
+typedef struct s_pipex  //argumentos del programax
+{
+	t_cmd			*first_cmd;  //primer comando de la lista enlazada
+	char			**path;     // array de rutas de posibles ubi de comandos
+	int				cmd_count; //numero total de comandos
+	char			**argvs;  //argumentos del programa:
+	char			**env;   //varible de entorno
+	int				input_fd;
+	int				output_fd;
+}				t_pipex;
+*/

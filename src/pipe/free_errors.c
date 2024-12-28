@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
 
+#include "../../includes/minishell.h"
 void	free_cmd(t_cmd *cmd)
 {
 	if (cmd)
