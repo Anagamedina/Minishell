@@ -11,9 +11,9 @@
 int	is_type_of_operator(t_tokens *token)
 {
 	return (token->type_token == PIPE || \
-		token->type_token == REDIR_INPUT || \
-		token->type_token == REDIR_OUTPUT || \
-		token->type_token == CONCAT_OUTPUT);
+		token->type_token == REDIR_IN || \
+		token->type_token == REDIR_OUT|| \
+		token->type_token == REDIR_APPEND);
 }
 
 /**
@@ -33,8 +33,8 @@ t_cmd	*init_command(void)
 	new_cmd->cmd_id = 0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
-	new_cmd->flag_input_redir = 0;
-	new_cmd->flag_output_redir = 0;
+	//new_cmd->flag_input_redir = 0;
+	//new_cmd->flag_output_redir = 0;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

@@ -75,7 +75,7 @@ typedef struct	s_redir
 	int 	type;                // Tipo de redirección (por ejemplo, REDIR_INPUT, REDIR_OUTPUT)
 	char 	*filename;          // Nombre del archivo de redirección
 	struct s_redir *next;    // Puntero al siguiente nodo de redirección
-} t_redir;
+} 			t_redir;
 
 
 // "wc -l" sería el comando y sus parámetros:
@@ -87,7 +87,7 @@ typedef struct s_cmd
     char            **cmd_args;     // Argumentos del comando (por ejemplo, ["echo", "hello"])
 	int 			count_args;		// Numero de argumentos del comando
     int             cmd_id;         // ID del comando para orden en pipeline
-	t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
+	struct t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
     int             pipe[2];        // Descriptores para el pipe
     int             input_fd;       // Descriptor de archivo de entrada
     int             output_fd;      // Descriptor de archivo de salida
@@ -119,7 +119,7 @@ typedef struct s_split_data
 
 #endif
 
-typedef struct s_pipe
+/*typedef struct s_pipe
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
@@ -129,4 +129,4 @@ typedef struct s_pipe
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
-}				t_pipe;
+}				t_pipe;*/
