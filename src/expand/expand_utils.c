@@ -86,7 +86,7 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 	char	*var_value;
 	char	*tmp;
 	size_t	i;
-	size_t	len_str;
+	//size_t	len_str;
 
 	if (!token_rm_d_quote || !env_list)
 		return (NULL);
@@ -95,7 +95,7 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 	if (result == NULL)
 		return (NULL);
 
-	len_str = (int) ft_strlen(token_rm_d_quote);
+	//len_str = (int) ft_strlen(token_rm_d_quote);
 
 	i = 0;
 	while (token_rm_d_quote[i] != '\0')
@@ -154,7 +154,7 @@ static char	*get_size_split_and_malloc(char **split_word)
 		i++;
 	}
 	merged_token = NULL;
-	merged_token = (char *)malloc(sizeof(char) * (i + 1));
+	merged_token = (char *)malloc(sizeof(char) * (new_len + 1));
 	if (merged_token == NULL)
 		return (NULL);
 	merged_token[i] = '\0';
