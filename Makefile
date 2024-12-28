@@ -55,8 +55,8 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
 		$(SRC_REDIR)/input_redir.c \
-		$(SRC_REDIR)/output_redir.c \
-		$(SRC_REDIR)/redir_utils.c
+		$(SRC_REDIR)/redir_syntax.c \
+		$(SRC_REDIR)/redir_file.c
 #		$(SRC_REDIR)/heredoc.c
 
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c

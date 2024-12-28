@@ -115,11 +115,9 @@ typedef struct s_split_data
 	int		wc;
 }		t_split_data;
 
-// t_pipex         *first_pipe;    // Estructura del primer pipe
 
-#endif
 
-/*typedef struct s_pipe
+typedef struct s_pipe
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
     t_env           *env_vars;          // Lista de variables de entorno
@@ -129,4 +127,6 @@ typedef struct s_split_data
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
 
-}				t_pipe;*/
+}				t_pipe;
+
+ #endif
