@@ -25,7 +25,7 @@ typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 
 //**************ENV************/
-t_list		*init_env_list(char **envp);
+t_env * init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
 void		print_env_list(t_list *env_list);
 
@@ -53,8 +53,8 @@ t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);
 t_cmd		*create_new_command(t_tokens *current_token, int i);
 t_list		*add_tokens_to_linked_list_commands(t_list *token_list);
-void		contar_numero_argumentos_de_comandos(t_list *token_list, t_cmd *cmd);
-void		agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list);
+void		count_args(t_list *token_list, t_cmd *cmd);
+void		add_args(t_cmd **cmd, t_list *token_list);
 
 //************** ERRORS_COMMAND.C ********/
 
@@ -163,6 +163,7 @@ int			process_token_is_word(const char *str);
 char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*ft_strjoin_array(char **split_word);
+
 //*************redis**************/
 int	is_type_of_operator(t_tokens *token);
 int check_repeat_redir(t_tokens *token);

@@ -1,4 +1,5 @@
 
+
 #include "../../includes/minishell.h"
 //  CREAR NODOS DE CADA COMANDO
 //str  =  "ls -l"
@@ -40,11 +41,6 @@ t_cmd	*create_cmd_list(t_input *input)
 	int		i;
 
 	i = 0;
-//	while (input->argvs[i])
-//	{
-//		printf("%s\n", input->argvs[i]);
-//		i ++;
-//	}
 	first = cmd_new(input->argvs[2], input->path);
 	if (!first)
 		return (NULL);

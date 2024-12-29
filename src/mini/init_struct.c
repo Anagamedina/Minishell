@@ -23,6 +23,22 @@ t_mini	*init_mini_list(char **envp)
     return (minishell);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void	print_mini(t_mini *mini)
 {
     if (!mini)

@@ -1,4 +1,5 @@
 
+
 #include "../../includes/minishell.h"
 //paths[0] = "/usr/local/bin"
 //full_path = "/usr/local/bin/"

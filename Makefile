@@ -22,7 +22,7 @@ SRC_INPUT= $(SRC_DIR)/input
 SRC_PARSER= $(SRC_DIR)/parser
 SRC_REDIR= $(SRC_DIR)/redir
 SRC_TOKEN = $(SRC_DIR)/tokenize
-SRC_PIPE = $(SRC_DIR)/pipe
+SRC_EXECUTE = $(SRC_DIR)/execute
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
@@ -42,8 +42,12 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_TOKEN)/token_utils.c \
 		$(SRC_TOKEN)/token_free.c \
 		$(SRC_TOKEN)/token_list.c \
-		$(SRC_CMD)/init_commands.c \
-		$(SRC_CMD)/errors_commands.c \
+		$(SRC_CMD)/cmd_init.c \
+		$(SRC_CMD)/cmd_args.c \
+		$(SRC_CMD)/cmd_free.c \
+		$(SRC_CMD)/cmd_builtins.c \
+		$(SRC_CMD)/cmd_errors.c \
+		$(SRC_CMD)/print_cmd.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
@@ -58,10 +62,10 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXPAND)/expand_utils.c \
 		$(SRC_REDIR)/redir_syntax.c \
 		$(SRC_REDIR)/redir_file.c \
-		$(SRC_PIPE)/free_errors.c \
-		$(SRC_PIPE)/get_inputc \
-		$(SRC_PIPE)/paths.c \
-		$(SRC_PIPE)/tests.c
+		$(SRC_EXECUTE)/free_errors.c \
+		$(SRC_EXECUTE)/get_inputc \
+		$(SRC_EXECUTE)/paths.c \
+		$(SRC_EXECUTE)/tests.c
 
 #		$(SRC_REDIR)/heredoc.c
 

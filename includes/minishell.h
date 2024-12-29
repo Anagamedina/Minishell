@@ -34,12 +34,11 @@
 typedef enum e_type_token
 {
 	WORD = 0,           // Representa una palabra o comando genéricoREDIR_OUTPUT,       // Representa la redirección de salida '>'
-	REDIR_IN,        // Representa la redirección de entrada '<'
-	CONCAT_OUT,      // Representa la redirección de concatenación '>>'
-	REDIR_ERR_OUT,
-	REDIR_ERR_APPEND,
-	REDIR_APPEND,
-	REDIR_OUT,
+	REDIR_IN,    //<     Representa la redirección de entrada '<'
+	REDIR_ERR_OUT, //2>
+	REDIR_ERR_APPEND, //2>>
+	REDIR_APPEND, //>>
+	REDIR_OUT, //>
 	BUILTINS,
 	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,     // Representa el final de la lista de tokens
@@ -77,34 +76,7 @@ typedef struct	s_redir
 	struct s_redir *next;    // Puntero al siguiente nodo de redirección
 } 			t_redir;
 
-
-// "wc -l" sería el comando y sus parámetros:
-// cmd_args[0] = "wc"
-// cmd_args[1] = "-l"
-typedef struct s_cmd
-{
-    char            *cmd;           // Nombre del comando, ej. "wc"
-    char            **cmd_args;     // Argumentos del comando (por ejemplo, ["echo", "hello"])
-	int 			count_args;		// Numero de argumentos del comando
-    int             cmd_id;         // ID del comando para orden en pipeline
-	struct t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
-    int             pipe[2];        // Descriptores para el pipe
-    int             input_fd;       // Descriptor de archivo de entrada
-    int             output_fd;      // Descriptor de archivo de salida
-    struct s_cmd    *next;          // Puntero al siguiente comando
-}				t_cmd;
-
-typedef struct s_mini
-{
-    int             bash_lvl;       // Nivel de la shell
-    int             chars_in_line;  // Contador de caracteres en línea de entrada
-    t_list          *env;           // Variables de entorno
-    t_list          *token;         // Lista de tokens
-    t_list          *cmds;         // Lista de commands 
-    int             exit_status;    // Estado de salida del último comando ejecutado
-    // char            *prompt;        // Prompt actual (opcional) ???
-}                   t_mini;
-
+//tokens indivuales
 typedef struct s_split_data
 {
 	char	**out;
@@ -115,47 +87,46 @@ typedef struct s_split_data
 	int		wc;
 }		t_split_data;
 
+// "wc -l" sería el comando y sus parámetros:
+// cmd_args[0] = "wc"
+// cmd_args[1] = "-l"
+typedef struct s_cmd
+{
+	char            *cmd;           // Nombre del comando, ej. "wc"
+	char            **cmd_args;     // Argumentos del comando (por ejemplo, ["echo", "hello"])
+	int 			count_args;		// Numero de argumentos del comando
+	int             cmd_id;         // ID del comando para orden en pipeline
+	struct t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
+	int             pipe[2];        // Descriptores para el pipe
+	int             input_fd;       // Descriptor de archivo de entrada
+	int             output_fd;      // Descriptor de archivo de salida
+	struct s_cmd    *next;          // Puntero al siguiente comando
+}				t_cmd;
 
-
-typedef struct s_pipe
+typedef struct s_exec
 {
     t_cmd           *first_cmd;         // Primer comando en el pipeline
-    t_env           *env_vars;          // Lista de variables de entorno
-	char			**path;             //array de rutas de posibles ubi de comandos
-	//int 			error;
-	//char			**env;
-	//char			**argvs;  			//argumentos del programa
+    t_list 			*env_vars;          	// Lista de variables de entorno
+	char			**paths;             //array de rutas de posibles ubi de comandos
 	int				pipe_input_fd;
 	int				pipe_output_fd;
     int             cmd_count;          // Número de comandos en el pipeline
+	//int 			error;
+	//char			**env;
+	//char			**argvs;  			//argumentos del programa
 
-}				t_pipe;
+}				t_exec;
+
+
+typedef struct s_mini
+{
+	int             bash_lvl;       // Nivel de la shell
+	int             chars_in_line;  // Contador de caracteres en línea de entrada
+	t_list          *env;           // Variables de entorno
+	t_list          *token;         // Lista de tokens
+	t_list          *cmds;         // Lista de commands
+	int             exit_status;    // Estado de salida del último comando ejecutado
+	// char            *prompt;        // Prompt actual (opcional) ???
+}                   t_mini;
 
 #endif
-
-
-/**
-* typedef struct s_cmd
-{
-	//"wc -l" seria wc comado -l seria parametros
-	//	cmd_args[1][0] = "wc"
-	//	cmd_args[1][1] = "-l"
-	char			**cmd_args;  //arrays de args (incluye el comando y sus parametros )
-	int				cmd_id;   // numero del comando para control
-	int				pipe[2];  //pipe[0] = infile	pipe[1] = outfile
-	int				input_fd;  //entrada
-	int				output_fd; //salida
-	struct s_cmd	*next;  // puntero al siguiente comando
-}				t_cmd;
-
-typedef struct s_pipex  //argumentos del programax
-{
-	t_cmd			*first_cmd;  //primer comando de la lista enlazada
-	char			**path;     // array de rutas de posibles ubi de comandos
-	int				cmd_count; //numero total de comandos
-	char			**argvs;  //argumentos del programa:
-	char			**env;   //varible de entorno
-	int				input_fd;
-	int				output_fd;
-}				t_pipex;
-*/
