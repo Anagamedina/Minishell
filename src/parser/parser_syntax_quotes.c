@@ -32,6 +32,7 @@ int	handle_special_quotes(t_tokens *token) // " '
 /**
  * 
  */
+
 char	*remove_quotes_str(char *str, char c)
 {
 	int		i;
@@ -43,28 +44,43 @@ char	*remove_quotes_str(char *str, char c)
 	new_len = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
+		if (str[i] != c && str[i] == '\\' && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
 		{
-			new_len++;
-			i++;
+			new_len ++;
+			i ++;
+		}
+		else if (str[i] != c && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
+		{
+			new_len ++;
+			i ++;
 		}
 		else
 			i++;
 	}
-	// printf("new_len: %d\n", new_len);
+	printf("new_len: %d\n", new_len);
 
 	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
+
 	if (new_str == NULL)
 		return (NULL);
+
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
 	{
-		// Copiar caracteres no escapados o no coincidentes
-		if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
+		// if (str[i] != c && str[i] == '\\' && (str[i] >= 32 && str[i] <= 126))
+		if (str[i] != c && str[i] == '\\' && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
 		{
-			new_str[j++] = str[i];
+			new_str[j] = '\\';
 			i++;
+			j++;
+		}
+		else if (str[i] != c && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
+		// if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
+		{
+			new_str[j] = str[i];
+			i++;
+			j++;
 		}
 		else
 			i++;
