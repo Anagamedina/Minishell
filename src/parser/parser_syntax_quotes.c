@@ -44,18 +44,15 @@ char	*remove_quotes_str(char *str, char c)
 	new_len = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] != c && str[i] == '\\' && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
-		{
-			new_len ++;
-			i ++;
-		}
-		else if (str[i] != c && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
+		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
 		{
 			new_len ++;
 			i ++;
 		}
 		else
+		{
 			i++;
+		}
 	}
 	printf("new_len: %d\n", new_len);
 
@@ -68,15 +65,7 @@ char	*remove_quotes_str(char *str, char c)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		// if (str[i] != c && str[i] == '\\' && (str[i] >= 32 && str[i] <= 126))
-		if (str[i] != c && str[i] == '\\' && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
-		{
-			new_str[j] = '\\';
-			i++;
-			j++;
-		}
-		else if (str[i] != c && (check_special_c(str[i]) == TRUE) && (str[i] >= 32 && str[i] <= 126))
-		// if (str[i] != c && (str[i] >= 32 && str[i] <= 126))
+		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
 		{
 			new_str[j] = str[i];
 			i++;
