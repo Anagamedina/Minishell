@@ -69,7 +69,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 TEST_SRC =	testing/test_main.c \
 			testing/unity.c \
-			testing/set_up_functions.c
+			testing/setup_testing.c \
+			testing/test_remove_quotes.c
 
 OBJ_TEST = $(patsubst testing/%.c, $(OBJ_DIR)/testing/%.o, $(TEST_SRC))
 OBJ_TESTING = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))  # Sin main.c

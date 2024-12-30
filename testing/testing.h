@@ -26,4 +26,12 @@ void    free_env_list(void); // Libera recursos asociados al entorno
 // Funciones auxiliares de testing
 int     sumar_a_b(int a, int b);
 
+// Functions to test remove_quotes_str
+void    test_01_remove_quotes_literals(void);
+void	test_02_remove_quotes_general(void);
+void	test_03_remove_quotes_backslash(void);
+void	test_04_remove_quotes_spaces(void);
+void	test_05_remove_quotes_no_expand(void);
+void	test_06_remove_quotes_empty_cases(void);
+
 #endif

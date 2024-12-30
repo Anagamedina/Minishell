@@ -1,5 +1,4 @@
 # version 3.28 -> clion && version 3.22.1 -> vscode
-
 # cmake_minimum_required(VERSION 3.28)
 
 project(minishell C)
@@ -52,8 +51,9 @@ target_link_libraries(minishell readline)
 
 add_executable(testing_shell
         testing/test_main.c
-        testing/set_up_functions.c
         testing/unity.c
+        testing/setup_testing.c
+        testing/test_remove_quotes.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}

@@ -6,9 +6,10 @@ int	check_special_c(char c)
 	if (c == '=' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
 		|| c == '}' || c == '[' || c == ']' || c == '!' || c == '~' || c == '?'
 		|| c == '%' || c == '^' || c == '=' || c == '*' || c == '/' || c == '$'
-		|| c == ';')
+		|| c == ';' || c == ':' || c == '|' || c == '.' || c == '_' || c == ',')
 		return (TRUE);
 	return (FALSE);
+//	|| c == ';' || c == ':' || c == '|' || c == '<' || c == '>' || c == '\\')
 }
 
 
@@ -19,14 +20,9 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	tmp = NULL;
 	if (handle_single_quote(token))
 	{
-		// if (!handle_no_expand_cases(token))
-		// 	expand_dollar(token, env_list);
-
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
-		
-		printf("token->str: [%s]\n", token->str);
-
+		free(tmp);
 		return ;
 	}
 	if (handle_special_quotes(token))

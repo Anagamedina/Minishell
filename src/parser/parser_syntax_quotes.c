@@ -40,24 +40,22 @@ char	*remove_quotes_str(char *str, char c)
 	int		new_len;
 	char	*new_str;
 
+//		if (str[i] != c && ((str[i] >= 31 && str[i] <= 126) || (unsigned char)str[i] >= 128))
+//		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126) || (unsigned char)str[i] >= 128) || (check_special_c(str[i]) == TRUE))
 	i = 0;
 	new_len = 0;
 	while (str[i] != '\0')
 	{
-		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
+		if ((str[i] != c && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
 		{
 			new_len ++;
 			i ++;
 		}
 		else
-		{
 			i++;
-		}
 	}
-	printf("new_len: %d\n", new_len);
 
-	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
-
+	new_str = (char *) malloc(sizeof(char) * (new_len + 1));
 	if (new_str == NULL)
 		return (NULL);
 
@@ -72,7 +70,7 @@ char	*remove_quotes_str(char *str, char c)
 			j++;
 		}
 		else
-			i++;
+			i ++;
 	}
 	new_str[j] = '\0';
 	return (new_str);
