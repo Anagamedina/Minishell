@@ -24,6 +24,8 @@ typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 
+typedef struct s_exec t_exec;
+
 //**************ENV************/
 t_list 		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
@@ -179,5 +181,6 @@ char 		*get_cmd_path(char *cmd, char **paths);
 void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
+t_exec 		*init_exec(char **envp);
 
 #endif

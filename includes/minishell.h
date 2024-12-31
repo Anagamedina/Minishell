@@ -61,9 +61,9 @@ typedef struct s_tokens
 
 typedef struct s_env
 {
-    char            *key;            // Clave de la variable de entorno
-    char            *value;          // Valor de la variable de entorno
-    char            *full_var;       // Cadena completa "key=value" (opcional) ??
+    char            *key;
+    char            *value;
+    char            *full_var;
     struct s_env    *next;           // Puntero al siguiente nodo
 }                   t_env;
 
@@ -97,27 +97,24 @@ typedef struct s_cmd
 	int 			count_args;
 	int             cmd_id;
 	int     		is_builtin;
-	struct t_redir 		*redir_list;
-	int             pipe[2];        // Descriptores para el pipe
-	int             input_fd;       // Descriptor de archivo de entrada
-	int             output_fd;      // Descriptor de archivo de salida
+	int             pipe[2];
+	int            	input_fd;
+	int             output_fd;
 	//int 			exit_status;
+	struct t_redir 	*redir_list;
 	struct s_cmd    *next;
 }				t_cmd;
 
 typedef struct s_exec
 {
-    t_list           *first_cmd;         // Primer comando en el pipeline
-    t_list 			*env_vars;          	// Lista de variables de entorno
-	char			**paths;             //array de rutas de posibles ubi de comandos
+	t_list           *first_cmd;
+	char 			**env_vars;
+	char			**paths;
 	int				pipe_input_fd;
 	int				pipe_output_fd;
-    int             cmd_count;          // Número de comandos en el pipeline
-	//int 			error;
-	//char			**env;
-	//char			**argvs;  			//argumentos del programa
+	int             cmd_count;
 
-}				t_exec;
+}		t_exec;
 
 
 typedef struct s_mini
@@ -128,7 +125,7 @@ typedef struct s_mini
 	t_list          *token;         // Lista de tokens
 	//t_list          *cmd;
 	int             exit_code;
-	struct s_exec 	*exec;
+//	struct s_exec 	*exec;
 }                   t_mini;
 
 #endif
