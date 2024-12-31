@@ -132,7 +132,7 @@ char		*remove_quotes_str(char *str, char c);
 int			handle_single_quote(t_tokens *token);
 int			handle_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
-char		*remove_d_quote_s_quotes_str(char *str);
+char		*remove_d_quote_and_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
 

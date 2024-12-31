@@ -12,12 +12,23 @@ int	check_special_c(char c)
 //	|| c == ';' || c == ':' || c == '|' || c == '<' || c == '>' || c == '\\')
 }
 
-
 void	handle_tokens(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
 
 	tmp = NULL;
+
+	/**
+	 * Caso Comillas Simples:
+	 * @example
+	 * Input: "\'example_token\'";
+	 * Output: "example_token";
+	 *
+	 * Si el token está rodeado por comillas simples ('), estas se eliminan.
+	 * Llamada a handle_single_quote para verificar.
+	 * Uso de remove_quotes_str para eliminar las comillas simples del token.
+	 */
+
 	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
@@ -25,6 +36,20 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		free(tmp);
 		return ;
 	}
+
+	/**
+	 * Caso Comillas Especiales:
+	 * @example
+	 * Input: "\"  'test $USER' \""
+	 *
+	 * Output: "  'test daruuu '"
+	 *
+	 * Si el token está rodeado por comillas dobles (") con comillas simples (') en el interior,
+	  y contiene un signo de dólar ($), se manejan los casos relacionados con variables de entorno.
+
+	 * Call a handle_special_quotes para verificar el patrón de comillas.
+	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
+	 */
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
@@ -33,21 +58,29 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 			return ;
 		}
 	}
+	/**
+	 * Caso Comillas Dobles:
+	 * @example
+	 * Input: "\"$HOME/projects\""
+	 * Output: "/home/daruu/projects"
+	 *
+	 * Si el token está rodeado únicamente por comillas dobles ("), se manejan los casos relacionados con la expansión de variables de entorno ($).
+	 * Llamada a handle_double_quotes para verificar.
+	 * Se llama a handle_dollar_cases para manejar variables de entorno.
+
+	 */
 	if (handle_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list);
 		return ;
-/*
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-		{
-		}
-*/
 	}
+/*
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
 	{
 		handle_dollar_cases(token, env_list);
 		return ;
 	}
+*/
 }
 
 void	parser_tokens(t_mini *mini)

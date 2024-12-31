@@ -166,8 +166,7 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 	char 		*message[256];
 
 	struct s_test_int	basic_cases[] = {
-			{"\"$\'USER\'\"", 1},                          // Caso 1: vacío
-//			{"\"\'$hello\'\"", 1},                // Caso 2: espacios
+	{"\"$\'USER\'\"", 1},		// Caso 1: vacío
 	};
 
 	i = 0;
@@ -177,7 +176,7 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 	{
 		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
 
-		int result = check_dollar_w(token->str);
+		int result = check_dollar_with_space_single(token->str);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "

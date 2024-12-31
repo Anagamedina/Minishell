@@ -1,17 +1,12 @@
 
 #include "../../includes/minishell.h"
 
-int	handle_double_quotes(t_tokens *token)
-{
-	if (!token || !token->str)
-		return (FALSE);
-
-	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
-	{
-		return (TRUE);
-	}
-	return (FALSE);
-}
+/**
+ * Checks if the string in the token starts and ends with single quotes ('').
+ *
+ * @param token: The token structure containing the string to be checked.
+ * @return TRUE (1) or FALSE (0) otherwise.
+ */
 
 int	handle_single_quote(t_tokens *token)
 {
@@ -20,22 +15,64 @@ int	handle_single_quote(t_tokens *token)
 	return (FALSE);
 }
 
-int	handle_special_quotes(t_tokens *token) // " ' ' "
+/**
+ * Checks if the string starts and ends with double quotes ("")
+ *
+ * and contains exactly two single quotes ('') within the double quotes.
+ * Spaces between quotes are ignored.
+ *
+ * @param token: The token structure containing the string to be checked.
+ * @return TRUE (1) or FALSE (0) otherwise.
+ */
+
+int	handle_special_quotes(t_tokens *token)
 {
-	if (token->str[0] == D_QUOTE \
-		&& token->str[token->length - 1] == D_QUOTE \
-		&& token->str[1] == S_QUOTE \
-		&& token->str[token->length - 2] == S_QUOTE)
+	int	i;
+	int	s_quote_count;
+
+	if (token->str[0] != D_QUOTE || token->str[token->length - 1] != D_QUOTE)
+		return (FALSE);
+	i = 1;
+	s_quote_count = 0;
+	while (i < token->length - 1)
 	{
-		return (TRUE);
+		while (token->str[i] == SPACE)
+			i++;
+		if (token->str[i] == S_QUOTE)
+			s_quote_count ++;
+		i++;
 	}
+	if (s_quote_count == 2)
+		return (TRUE);
+	return (FALSE);
+}
+
+/**
+ * Checks if the string in the token starts and ends with double quotes ("").
+ *
+ * @param token: The token structure containing the string to be checked.
+ * @return TRUE (1) or FALSE (0) otherwise.
+ */
+
+int	handle_double_quotes(t_tokens *token)
+{
+	if (!token || !token->str)
+		return (FALSE);
+
+	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
+		return (TRUE);
 	return (FALSE);
 }
 
 
-// TODO: Revisar esta función y terminarla
 /**
- * 
+ * char *remove_quotes_str(char *str, char c)
+ * -----------------------------------------
+ * Removes all occurrences of the specified quote character (c) from the string.
+ *
+ * @param str: The input string.
+ * @param c: The quote character to be removed (e.g., '"' or '\'').
+ * @return A new string with the quotes removed. NULL if memory allocation fails.
  */
 
 char	*remove_quotes_str(char *str, char c)
@@ -46,7 +83,6 @@ char	*remove_quotes_str(char *str, char c)
 	char	*new_str;
 
 //		if (str[i] != c && ((str[i] >= 31 && str[i] <= 126) || (unsigned char)str[i] >= 128))
-//		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126) || (unsigned char)str[i] >= 128) || (check_special_c(str[i]) == TRUE))
 	i = 0;
 	new_len = 0;
 	while (str[i] != '\0')
@@ -81,7 +117,17 @@ char	*remove_quotes_str(char *str, char c)
 	return (new_str);
 }
 
-char	*remove_d_quote_s_quotes_str(char *str)
+/**
+ * char *remove_d_quote_and_s_quotes_str(char *str)
+ * -----------------------------------------------
+ * Removes all occurrences of both double quotes (") and single quotes (')
+ * from the input string.
+ *
+ * @param str: The input string.
+ * @return A new string with both types of quotes removed. NULL if memory allocation fails.
+ */
+
+char	*remove_d_quote_and_s_quotes_str(char *str)
 {
 	char	*rm_d_quote;
 	char	*rm_s_quote;

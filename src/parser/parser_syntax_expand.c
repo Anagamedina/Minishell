@@ -235,37 +235,64 @@ int	check_double_simple_dollar_case(char *str)
 
 /************ MAIN FUNCTION *************/
 
+/**
+ *
+ */
+
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
+	char	*res;
 
 	tmp = NULL;
 
-	/*
-	Caso "'$...'" -> expandir con comillas simples
-	echo "'$USER and test works'"
-	echo " $USER and test works'"
-	*/
+	/**
+	 * Case: "'$...'"
+	 * Description: Expands variables inside double quotes while preserving single quotes.
+	 * @example:
+	 * Input: "'$USER and test works'"
+	 * Output: 'daruuu and test works' (assuming $USER = daruuu).
+	 * Steps:
+	 * Remove outer double quotes using remove_quotes_str.
+	 * Expand variables, skipping content inside single quotes using replace_dollar_variable_skip_s_quote.
+	 */
 	if (check_double_simple_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);
 
-		char	*res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
 		free(tmp);
-
 		return ;
 	}
 
-	// Caso "$ '...'" -> espacio después del dólar
+	/**
+	 * Case: "$ '...'"
+	 * @description: Handles space immediately following $.
+	 * @example:
+	 * Input: "$ 'some string'"
+	 * Output: $ 'some string' (unchanged).
+	 * Steps:
+	 * Detected by check_dollar_with_space_single.
+	 * Managed by handle_dollar_with_space_single.
+	 */
 	if (check_dollar_with_space_single(token->str))
 	{
 		handle_dollar_with_space_single(token);
 		return ;
 	}
 
-	//	"$'...'" ----> imprime
+	/**
+	 * Case: "$'...'"
+	 * @description: Processes $ followed directly by single quotes.
+	 * @example:
+	 * Input: "$'simple string'"
+	 * Output: simple string.
+	 * Steps:
+	 * Remove outer double quotes using remove_quotes_str.
+	 * Copy the modified string back to token->str.
+	 */
 	if (check_doble_dollar_single(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
@@ -274,12 +301,41 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		return ;
 	}
 
-	//	"$USER"
-	if (check_dollar_simple(token->str)) // Maneja $'...'
+	/**
+	 * Case: "$USER"
+	 * Description: Expands a simple environment variable.
+	 * @example:
+	 * Input: "$USER"
+	 * Output: daruuu (assuming $USER = daruuu).
+	 * Steps:
+	 * Detected by check_dollar_simple.
+	 * Managed by handle_single_quotes_after_dollar
+	 */
+	if (check_dollar_simple(token->str))
 	{
 		handle_single_quotes_after_dollar(token);
 	}
-	free(tmp);
-	if (!handle_no_expand_cases(token))
+	/**
+	 * Case: No expansion required
+	 * Description: Handles tokens that should not trigger variable expansion.
+	 * @example:
+	 * Input: "'string'" or "\"escaped\"".
+	 * Output: Remains unchanged.
+	 * Steps:
+	 * Managed by handle_no_expand_cases
+	 */
+	if (handle_no_expand_cases(token) == FALSE)
+	{
+		/**
+		 * Default Case: General dollar expansion
+		 * Description: Expands variables based on env_list if none of the above cases are matched.
+		 * @example:
+		 * Input: "$HOME/$USER"
+		 * Output: /home/daruu/daruu (assuming $HOME=/home/daruu and $USER=daruu).
+		 * Steps:
+		 * Managed by expand_dollar.
+		 */
 		expand_dollar(token, env_list);
+		return ;
+	}
 }
