@@ -182,16 +182,22 @@ int	main(void)
 {
 	UNITY_BEGIN();
 
-	/*RUN_TEST(test_expand_vars_with_quotes_cases);
+	/*
+	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
-	RUN_TEST(test_check_double_simple_dollar_case_02);*/
-//	RUN_TEST(test_01_remove_quotes_literals);
+	RUN_TEST(test_check_double_simple_dollar_case_02);
+	RUN_TEST(test_01_remove_quotes_literals);
 	RUN_TEST(test_02_remove_quotes_general);
-//	RUN_TEST(test_03_remove_quotes_backslash);
-//	RUN_TEST(test_04_remove_quotes_spaces);
-//	RUN_TEST(test_05_remove_quotes_no_expand);
-//	RUN_TEST(test_06_remove_quotes_empty_cases);
-//	RUN_TEST(test_sumar_a_mas_b);
+	RUN_TEST(test_03_remove_quotes_backslash);
+	RUN_TEST(test_04_remove_quotes_spaces);
+	RUN_TEST(test_05_remove_quotes_no_expand);
+	RUN_TEST(test_06_remove_quotes_empty_cases);
+	RUN_TEST(test_sumar_a_mas_b);
+	 */
+
+//	RUN_TEST(test01_double_quotes_keyboard_basic);
+
+	RUN_TEST(test01_check_double_simple_dollar_case_int);
 	return (UNITY_END());
 }
 

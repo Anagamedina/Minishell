@@ -135,6 +135,8 @@ int			handle_special_quotes(t_tokens *token);
 char		*remove_d_quote_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
+
+int			check_dollar_with_space_single(const char *str);
 void		handle_dollar_cases(t_tokens *token, t_list *env_list);
 //int			check_doble_dollar_single(const char *str);
 int			check_backslash_before_dollar(const char *str);

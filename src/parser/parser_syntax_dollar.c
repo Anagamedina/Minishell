@@ -35,11 +35,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 	if (handle_double_quotes(token))
 	{
+		handle_dollar_cases(token, env_list);
+		return ;
+/*
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		{
-			handle_dollar_cases(token, env_list);
-			return ;
 		}
+*/
 	}
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
 	{

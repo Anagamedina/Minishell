@@ -1,5 +1,5 @@
-# version 3.28 -> clion && version 3.22.1 -> vscode
 # cmake_minimum_required(VERSION 3.28)
+# version 3.28 -> clion && version 3.22.1 -> vscode
 
 project(minishell C)
 
@@ -54,6 +54,7 @@ add_executable(testing_shell
         testing/unity.c
         testing/setup_testing.c
         testing/test_remove_quotes.c
+        testing/test_double_quotes.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
