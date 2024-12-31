@@ -1,79 +1,81 @@
 
 #include "../../includes/minishell.h"
 
-/*
-t_exec *init_exec(void)
+
+/* Función que maneja la ejecución de los comandos builtins
+static void execute_builtin(t_cmd *cmd, t_mini *mini)
 {
-	t_exec *exec = NULL;
+	if (strcmp(cmd->cmd, "echo") == 0)
+		ft_echo(cmd);
+	else if (strcmp(cmd->cmd, "cd") == 0)
+		ft_cd(cmd, mini);
+	else if (strcmp(cmd->cmd, "pwd") == 0)
+		ft_pwd();
+	else if (strcmp(cmd->cmd, "export") == 0)
+		ft_export(cmd, mini);
+	else if (strcmp(cmd->cmd, "unset") == 0)
+		ft_unset(cmd, mini);
+	else if (strcmp(cmd->cmd, "env") == 0)
+		ft_env(mini);
+	else if (strcmp(cmd->cmd, "exit") == 0)
+		ft_exit(cmd);
+}*/
+/* Función que maneja la ejecución de comandos externos */
+static void execute_external(t_cmd *cmd, char **paths, t_mini *mini)
+{
+	char    *path;
+	char    **env;
+	int     i;
 
-	exec = malloc(sizeof(t_exec));
-	if (!exec)
-		return (NULL);
-
-	exec->path = NULL;
-	exec->env_vars = NULL;
-	exec->pipe_input_fd = -1;
-	exec->pipe_output_fd = -1;
-	exec->first_cmd = NULL;
-	exec->cmd_count = 0;
-	//exec->exit_status = 0;
-
-	//exec->error = 0;
-
-	return (exec);
+	i = 0;
+	env = init_env_list(mini->env);
+	while (paths[i])
+	{
+		path = ft_strjoin(paths[i], cmd->cmd);
+		if (access(path, X_OK) == 0)
+		{
+			execve(path, cmd->cmd_args, env);
+			free(path);
+			return;
+		}
+		free(path);
+		i++;
+	}
+	// Si llegamos aquí, significa que no encontramos el comando
+	ft_putstr_fd(cmd->cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	exit(127); // Error de comando no encontrado
 }
 
-t_list *init_exec_list(void)
+/* Función principal para ejecutar comandos */
+void exec_command(t_cmd *cmd, t_mini *mini)
 {
+	pid_t pid;
+	char **paths;
 
-}*/
-
-
-
-
-
-t_exec *init_exec(char **argv, char **env, int argc) {
-	t_exec *exec;
-
-	// Asignación de memoria para la estructura t_exec
-	exec = malloc(sizeof(t_exec));
-	if (!exec) {
-		perror("Error: malloc failed for t_exec");
-		return NULL;
+	paths = get_path(mini->env);
+	if (cmd->is_builtin)
+	{
+		printf("Es un builtin\n");
+		//execute_builtin(cmd, mini);
 	}
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("Fork failed");
+			exit(1);
+		}
+		if (pid == 0)
+		{
 
-	// Inicialización de la lista de variables de entorno (suponiendo que tienes una función init_env_list)
-	exec->env_vars = init_env_list(env);
-	if (!exec->env_vars) {
-		free(exec);
-		perror("Error: failed to initialize environment variables");
-		return NULL;
+			execute_external(cmd, paths, mini);
+		}
+		else
+		{
+			waitpid(pid, &cmd->exit_code, 0);
+			free(paths);
+		}
 	}
-
-	// Obtener las rutas de búsqueda para los comandos
-	exec->paths = get_path(env);
-	if (!exec->paths) {
-		free(exec);
-		perror("Error: failed to get paths from environment");
-		return NULL;
-	}
-
-	// Inicialización del contador de comandos
-	exec->cmd_count = argc - 1;
-
-	// Crear la lista de comandos (asumiendo que tienes una función create_cmd_list)
-	exec->first_cmd = create_cmd_list(argv, exec->paths, exec->cmd_count);
-	if (!exec->first_cmd) {
-		free(exec->env_vars);  // Asegúrate de liberar la lista de env si algo falla
-		free(exec->paths);     // Liberar las rutas obtenidas
-		free(exec);
-		perror("Error: failed to create command list");
-		return NULL;
-	}
-
-	// Inicializar los descriptores de archivos para el pipe
-	exec->pipe_input_fd = -1; // No hay pipe de entrada por defecto
-	exec->pipe_output_fd = -1; // No hay pipe de salida por defecto
-
-	return exec;
 }

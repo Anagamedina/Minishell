@@ -25,7 +25,7 @@ typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 
 //**************ENV************/
-t_env * init_env_list(char **envp);
+t_list 		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
 void		print_env_list(t_list *env_list);
 
@@ -46,24 +46,7 @@ char		*read_input(void);
 int			check_quotes_line(char *line);
 void		parser_tokens(t_mini *mini);
 
-//************** INIT_COMMAND.C ********/
 
-int			is_type_of_operator(t_tokens *token);
-t_cmd		*init_command(void);
-void		print_list_commands(t_list *cmd_list);
-t_cmd		*create_new_command(t_tokens *current_token, int i);
-t_list		*add_tokens_to_linked_list_commands(t_list *token_list);
-void		count_args(t_list *token_list, t_cmd *cmd);
-void		add_args(t_cmd **cmd, t_list *token_list);
-
-//************** ERRORS_COMMAND.C ********/
-
-void		free_command(t_cmd *cmd);
-void		free_command_list(t_cmd *cmd_list);
-// void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
-int			error_empty_token(t_tokens *token, t_list *cmd_list);
-int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
-int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 
 //**************BUILTINS-1********/
 
@@ -112,7 +95,6 @@ int			copy_word(t_split_data *data);
 //************** TOKEN_TYPE.c ********************/
 
 int			set_token_type(char *str);
-int			is_builtin_command(const char *str);
 void		update_words_to_builtin(t_list *tokens_list);
 void		identify_commands(t_list *tokens_list);
 
@@ -164,26 +146,38 @@ char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*ft_strjoin_array(char **split_word);
 
+
+//************** INIT_COMMAND.C ********/
+
+int			is_type_of_operator(t_tokens *token);
+int			is_builtin_command(const char *cmd);
+t_cmd		*init_command(void);
+void		print_list_commands(t_list *cmd_list);
+t_cmd 		*create_new_command(t_tokens *current_token, char **paths, int cmd_id);
+t_list		*create_cmd_list(t_list *token_list, char **paths);
+void		count_args(t_list *token_list, t_cmd *cmd);
+void		add_args(t_cmd **cmd, t_list *token_list);
+int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec_pipe);
+
+//************** ERRORS_COMMAND.C ********/
+
+void		free_command(t_cmd *cmd);
+// void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
+int			error_empty_token(t_tokens *token, t_list *cmd_list);
+int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
+int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
+
+
 //*************redis**************/
-int	is_type_of_operator(t_tokens *token);
-int check_repeat_redir(t_tokens *token);
 
-
-//************pipes*************/
+int 		check_repeat_redir(t_tokens *token);
 t_cmd   	*cmd_new(char *str, char **paths);
-//t_cmd		*create_cmd_list(t_pipex *pipex);
 char 		**get_path(char **env);
-//t_pipex		init_pipex(int argc, char **argv, char **env);
 int 		main(int argc, char **argv, char **env);
-//void 		execute_child(t_pipex *pipex, t_cmd *cmd, int *pipe_fd);
-//void 		handle_commands(t_pipex *pipex);
 void 		print_paths(char **paths);
 char 		*get_cmd_path(char *cmd, char **paths);
 void 		free_cmd(t_cmd *cmd);
-void 		free_cmd_list(t_cmd *cmd_list);
-//void 		free_paths(t_pipex pipex);
-//void 		free_pipex(t_pipex pipex);
+void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
-
 
 #endif

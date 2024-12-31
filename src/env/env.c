@@ -42,7 +42,7 @@ t_env	*init_empty_env_node(void)
 	return (new_env);
 }
 
-t_env * init_env_list(char **envp)
+t_list	*init_env_list(char **envp)
 {
     t_list *env_list = NULL;
     t_env *new_env;

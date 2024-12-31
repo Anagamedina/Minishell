@@ -38,11 +38,17 @@ int	main(int argc, char **argv, char **envp)
 		}
 		minishell->token = generate_token_list(input);
 		if (minishell->token == NULL)
+		{
+			printf("Error al generar la lista de tokens.\n");
 			continue ;
+		}
 		parser_tokens(minishell);
+		printf("Lista de tokens:\n");
 		print_list_token_str(minishell->token);
-		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
-		print_list_commands(minishell->cmds);
+		// Crear la lista de comandos
+		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
+		printf("Lista de comandos:\n");
+		print_list_commands(minishell->exec->first_cmd);
 		print_list_token(minishell->token);
 		 //cases_builtins(minishell);
 	}

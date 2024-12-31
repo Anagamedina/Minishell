@@ -114,3 +114,27 @@ void	agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list)
 	}
 	(*cmd)->cmd_args[j] = NULL;
 }*/
+/*t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
+{
+	t_cmd 	*new_cmd;
+	char 	*cmd_path;
+
+	new_cmd = init_command();
+	if (!new_cmd)
+		return (NULL);
+	new_cmd->cmd = ft_strdup(current_token->str);
+	if (!new_cmd->cmd)
+	{
+		free_command(new_cmd);
+		return (NULL);
+	}
+	cmd_path = get_cmd_path(new_cmd->cmd, paths);
+	if (!cmd_path)
+	{
+		free_command(new_cmd);
+		return (NULL);
+	}
+	new_cmd->cmd = cmd_path; // Almacenamos la ruta completa del comando
+	new_cmd->cmd_id = cmd_id;
+	return (new_cmd);
+}*/

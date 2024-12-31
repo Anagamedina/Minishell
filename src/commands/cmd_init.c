@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 
 
@@ -16,78 +16,137 @@ t_cmd *init_command(void)
 	new_cmd->cmd_args = NULL;
 	new_cmd->count_args = -1;
 	new_cmd->cmd_id = 0;
+	//new_cmd->redir_list = NULL;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
 
-/**
- * Crea un nuevo comando a partir del token actual, asignando un id único al comando.
- */
-t_cmd *create_new_command(t_tokens *current_token, int i)
-{
-	t_cmd *new;
 
-	new = init_command();
-	if (!new)
+t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
+{
+	t_cmd *new_cmd;
+	char *cmd_path;
+
+	// Inicializar el comando
+	new_cmd = init_command();
+	if (!new_cmd)
+		return (NULL);
+
+	// Guardar el nombre del comando
+	new_cmd->cmd = ft_strdup(current_token->str);
+	if (!new_cmd->cmd)
 	{
-		perror("Error: malloc failed creating new_command");
-		free(new);
+		free_command(new_cmd);
 		return (NULL);
 	}
-	new->cmd = ft_strdup(current_token->str);
-	if (!new->cmd)
+
+	// Asignar ID al comando
+	new_cmd->cmd_id = cmd_id;
+
+	// Si es un built-in, no necesita más procesamiento
+	if (current_token->type_token == BUILTINS)
+		return (new_cmd);
+
+	// Si es un comando externo, obtener su ruta
+	if (current_token->type_token == WORD)
 	{
-		free_command(new);
-		return (NULL);
+		cmd_path = get_cmd_path(new_cmd->cmd, paths);
+		if (!cmd_path)
+		{
+			fprintf(stderr, "Error: Comando no encontrado: %s\n", new_cmd->cmd);
+			free_command(new_cmd);
+			return (NULL);
+		}
+
+		// Reemplazar el comando con su ruta absoluta
+		free(new_cmd->cmd);
+		new_cmd->cmd = cmd_path;
 	}
-	new->cmd_id = i;
-	return (new);
+
+	return (new_cmd);
 }
 
 //una funcion que coja las paths como parametros para añadirlo en la linked list de comandos
-
-
-
-
-/**
- * Recorre la lista de tokens y agrega los comandos a una lista enlazada,
- * asignando identificadores y argumentos a cada uno.
- */
-t_list *add_tokens_to_linked_list_commands(t_list *token_list)
+t_list *create_cmd_list(t_list *token_list, char **paths)
 {
-	t_list *commands_list;
+	t_list *commands_list = NULL;
 	t_list *new_node;
 	t_cmd *new_cmd;
 	t_tokens *token;
-	t_list *current;
-	int cmd_id;
+	t_list *current = token_list;
+	int cmd_id = 1;
 
-	commands_list = NULL;
-	cmd_id = 1;
-	current = token_list;
+	if (!token_list)
+		return NULL;
+
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		if (!error_empty_token(token, commands_list))
-			return (NULL);
-		if (token->type_token == BUILTINS)
-		{
-			new_cmd = create_new_command(token, cmd_id);
-			if (!error_cmd_creation(new_cmd, commands_list))
-				return (NULL);
-			new_node = ft_lstnew(new_cmd);
-			if (!error_node_creation(new_node, new_cmd, commands_list))
-				return (NULL);
 
-			// Objetivo: Para cada comando contar el número de argumentos
-			count_args(current, new_cmd);
-			add_args(&new_cmd, current);
+		// Si el token es un comando
+		if (token->type_token == BUILTINS || token->type_token == WORD)
+		{
+			new_cmd = create_new_command(token, paths, cmd_id);
+			if (!new_cmd)
+			{
+				fprintf(stderr, "Error: Falló la creación del comando.\n");
+				free_cmd_list(commands_list);
+				return NULL;
+			}
+
+			new_node = ft_lstnew(new_cmd);
+			if (!new_node)
+			{
+				fprintf(stderr, "Error: No se pudo crear el nodo del comando.\n");
+				free_command(new_cmd);
+				free_cmd_list(commands_list);
+				return NULL;
+			}
+
 			ft_lstadd_back(&commands_list, new_node);
 			cmd_id++;
 		}
 		current = current->next;
 	}
-	return (commands_list);
+
+	return commands_list;
+}
+
+
+int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec_pipe)
+{
+	(void)exec_pipe;
+	t_list *current = token_list;
+	t_list *cmd_node;
+	t_cmd *cmd;
+	t_tokens *token;
+
+	while (current)
+	{
+		token = (t_tokens *)current->content;
+
+		if (token->type_token == WORD || token->type_token == BUILTINS)
+		{
+			// Encontrar el nodo correspondiente al comando
+			cmd_node = commands_list;
+			while (cmd_node)
+			{
+				cmd = (t_cmd *)cmd_node->content;
+				if (strcmp(cmd->cmd, token->str) == 0)
+				{
+					count_args(current, cmd);
+					add_args(&cmd, current);
+					// cmd->redir_list = parse_redirections(&current);
+					//if (handle_redirections_and_pipes(cmd, current, exec_pipe) == -1)
+						//return -1; // Error al manejar redirecciones o pipes
+					break;
+				}
+				cmd_node = cmd_node->next;
+			}
+		}
+		current = current->next;
+	}
+	return 0;
 }

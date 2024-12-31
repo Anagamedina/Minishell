@@ -2,14 +2,6 @@
 
 #include "../../includes/minishell.h"
 
-int	is_builtin_command(const char *str)
-{
-	return (strcmp(str, ECHO) == 0 || strcmp(str, EXPORT) == 0 || \
-		strcmp(str, UNSET) == 0 || strcmp(str, ENV) == 0 || \
-		strcmp(str, CD) == 0 || strcmp(str, PWD) == 0 || \
-		strcmp(str, EXIT) == 0);
-}
-
 // Recorre la lista de tokens y actualiza el tipo de token de las palabras que son comandos internos (builtins).
 void update_words_to_builtin(t_list *tokens_list)
 {

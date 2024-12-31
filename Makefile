@@ -60,15 +60,16 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_syntax_expand.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
-		$(SRC_REDIR)/redir_syntax.c \
-		$(SRC_REDIR)/redir_file.c \
 		$(SRC_EXECUTE)/free_errors.c \
-		$(SRC_EXECUTE)/get_inputc \
 		$(SRC_EXECUTE)/paths.c \
+		$(SRC_EXECUTE)/exce_init.c \
+		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/tests.c
 
 #		$(SRC_REDIR)/heredoc.c
-
+#		$(SRC_EXECUTE)/get_inputc \
+#		$(SRC_REDIR)/redir_syntax.c \
+#		$(SRC_REDIR)/redir_file.c
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))
 
