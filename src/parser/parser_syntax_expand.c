@@ -192,6 +192,7 @@ int	check_double_simple_dollar_case(char *str)
 	int	len_str;
 	int	condition1;
 	int	condition2;
+	char	tmp;
 
 	condition1 = FALSE;
 	condition2 = FALSE;
@@ -203,16 +204,18 @@ int	check_double_simple_dollar_case(char *str)
 
 	while (i < len_str - 1)
 	{
+		tmp = str[i];
+		printf("curr char: [%c]\n", tmp);
 		if (str[i] == S_QUOTE)
 			condition1 = TRUE;
 
 		while (str[i] == ' ' && i < len_str - 1)
 			i ++;
 
-		if (str[i] == DOLLAR_SIGN && i + 1 < len_str \
+		//posible error here with case: echo " ' $USER  ' "
+		if (str[i] == DOLLAR_SIGN && (i + 1) < len_str - 1 \
 			&& str[i + 1] != ' ' && str[i + 1] != '\0')
 			condition2 = TRUE;
-//		if (condition1 && condition2 && str[len_str - 2] == S_QUOTE)
 		if (condition1 && condition2)
 			return (TRUE);
 		i ++;
@@ -239,6 +242,7 @@ int	check_double_simple_dollar_case(char *str)
  *
  */
 
+//	posible error here with case: echo " ' $USER  ' "
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;

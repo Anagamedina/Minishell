@@ -50,6 +50,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * Call a handle_special_quotes para verificar el patrón de comillas.
 	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
 	 */
+
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
