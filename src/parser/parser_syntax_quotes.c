@@ -34,7 +34,7 @@ int	handle_special_quotes(t_tokens *token)
 		return (FALSE);
 	i = 1;
 	s_quote_count = 0;
-	while (i < token->length - 1)
+	while (i < (int)token->length - 1)
 	{
 		while (token->str[i] == SPACE)
 			i++;

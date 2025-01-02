@@ -73,9 +73,11 @@ void	test01_check_double_simple_dollar_case_int(void)
 	char 	*message[256];
 
 	struct s_test_int	keyboard_basic[] = {
-			{"\"\' $USER \' \"", 1},                          // Caso 1: vacío
-//			{"\"\'    $USER   \'\"", 1},                          // Caso 1: vacío
-//			{"\"\'$hello\'\"", 1},                // Caso 2: espacios
+			{"\"\'$HOME\'\"", 1},                          // Caso 1: vacío
+			{"\" \'$HOME\'\"", 1},                          // Caso 1: vacío
+			{"\" \' $HOME\'\"", 1},                // Caso 2: espacios
+			{"\" \' $HOME \'\"", 1},                // Caso 2: espacios
+			{"\" \' $HOME \' \"", 1},                // Caso 2: espacios
 	};
 
 	i = 0;
@@ -101,8 +103,191 @@ void	test01_check_double_simple_dollar_case_int(void)
 		i++;
 	}
 }
-/*
 
+/**
+ * @brief Test cases for handling double quotes in the minishell project.
+ *
+ * This file contains various test cases to ensure that the minishell
+ * correctly handles inputs with double quotes. The tests cover different
+ * scenarios such as nested quotes, escaped quotes, and quotes within
+ * commands.
+ *
+ * @author dasalaza
+ * @date 2023-10-05
+ */
+
+void	test02_remove_quotes_str_valid_basic(void)
+{
+	int			i;
+	int			len;
+	char		*message[256];
+	char		*result;
+	t_tokens	*curr_token;
+
+	struct s_test_str valid_input[] = {
+		{"\"\'hello\'\"", "'hello'"},
+		// {"\"\'1234567890\'\"", "'1234567890'"},
+		// {"\"qwert  ypoiu \"", "qwert  ypoiu "},
+		// {"\"asdfghjkl\"", "asdfghjkl"},
+		// {"\"zxcvbnm\"", "zxcvbnm"},
+		// {"\"1234abcd5678\"", "1234abcd5678"},
+	};
+
+	i = 0;
+	len = sizeof(valid_input) / sizeof(valid_input[0]);
+
+	while (i < len)
+	{
+		curr_token = init_token(valid_input[i].input, set_token_type(valid_input[i].input));
+
+		// call to test function
+		result = remove_quotes_str(curr_token->str, D_QUOTE);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%s]" "  |  "
+				 "ACTUAL=[%s]",
+				 i + 1,
+				 valid_input[i].input,
+				 valid_input[i].expected,
+				 result);
+		TEST_ASSERT_EQUAL_MESSAGE(valid_input[i].expected, result, message);
+		curr_token->str = NULL;
+		i ++;
+	}
+}
+
+void	test02_remove_quotes_str_valid_special_chars(void)
+{
+	int			i;
+	int			len;
+	char		*message[256];
+	char		*result;
+	t_tokens	*curr_token;
+
+	struct s_test_str valid_special_chars[] = {
+		{"\"@#$%^&*()\"", "@#$%^&*()"},
+		{"\"{}[]|\\:;'\"", "{}[]|\\:;'"},
+		{"\"escaped\\\"quote\"", "escaped\\\"quote"},
+	};
+
+	i = 0;
+	len = sizeof(valid_special_chars) / sizeof(valid_special_chars[0]);
+
+	while (i < len)
+	{
+		curr_token = init_token(valid_special_chars[i].input, set_token_type(valid_special_chars[i].input));
+
+		result = remove_quotes_str(curr_token->str, D_QUOTE);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%d]" " | "
+				 "ACTUAL=[%d]",
+				 i + 1,
+				 valid_special_chars[i].input,
+				 valid_special_chars[i].expected,
+				 result);
+		TEST_ASSERT_EQUAL_MESSAGE(valid_special_chars[i].expected, result, message);
+		curr_token->str = NULL;
+		i ++;
+	}
+}
+
+void	test02_remove_quotes_str_valid_format(void)
+{
+	int			i;
+	int			len;
+	char		*message[256];
+	char		*result;
+	t_tokens	*curr_token;
+
+	struct s_test_str valid_format[] = {
+		{"\"line\nbreak\"", "line\nbreak"},
+		{"\"tab\tcharacter\"", "tab\tcharacter"},
+	};
+
+	i = 0;
+	len = sizeof(valid_format) / sizeof(valid_format[0]);
+
+	while (i < len)
+	{
+		curr_token = init_token(valid_format[i].input, set_token_type(valid_format[i].input));
+
+		result = remove_quotes_str(curr_token->str, D_QUOTE);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%d]" " | "
+				 "ACTUAL=[%d]",
+				 i + 1,
+				 valid_format[i].input,
+				 valid_format[i].expected,
+				 result);
+		TEST_ASSERT_EQUAL_MESSAGE(valid_format[i].expected, result, message);
+		curr_token->str = NULL;
+		i ++;
+	}
+}
+
+void	test02_remove_quotes_str_invalid_quotes(void)
+{
+	int			i;
+	int			len;
+	char		*message[256];
+	char		*result;
+	t_tokens	*curr_token;
+
+	struct s_test_str invalid_quotes[] = {
+    {"\"missing-end-quote", 0},                  
+    {"missing-start-quote\"", 0},                
+    {"\"nested \"quote\" inside\"", 0},          
+    {" before \"inside\" after ", 0},           
+	};
+
+	i = 0;
+	len = sizeof(invalid_quotes) / sizeof(invalid_quotes[0]);
+
+	while (i < len)
+	{
+		curr_token = init_token(invalid_quotes[i].input, set_token_type(invalid_quotes[i].input));
+
+		result = remove_quotes_str(curr_token->str, D_QUOTE);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%d]" " | "
+				 "ACTUAL=[%d]",
+				 i + 1,
+				 invalid_quotes[i].input,
+				 invalid_quotes[i].expected,
+				 result);
+		TEST_ASSERT_EQUAL_MESSAGE(invalid_quotes[i].expected, result, message);
+		curr_token->str = NULL;
+		i ++;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 void	test01_handle_dollar_case_with_double_quotes(void)
 {
 	int		i;
@@ -194,7 +379,8 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 
 }
 
+/*
 void	test_d_quotes_quantity_of_d_quotes(void)
 {
-
 }
+*/

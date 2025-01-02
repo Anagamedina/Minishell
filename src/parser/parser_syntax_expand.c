@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
-/*   Updated: 2024/12/27 15:17:24 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/02 10:19:02 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,15 +202,17 @@ int	check_double_simple_dollar_case(char *str)
 		return (FALSE);
 	i = 1;
 
+	printf("len - 1: [%c]\n", str[len_str - 1]);
+
 	while (i < len_str - 1)
 	{
 		tmp = str[i];
-		printf("curr char: [%c]\n", tmp);
-		if (str[i] == S_QUOTE)
-			condition1 = TRUE;
+		printf("curr i: [%d] char:[%c]\n", i, tmp);
 
 		while (str[i] == ' ' && i < len_str - 1)
 			i ++;
+		if (str[i] == S_QUOTE)
+			condition1 = TRUE;
 
 		//posible error here with case: echo " ' $USER  ' "
 		if (str[i] == DOLLAR_SIGN && (i + 1) < len_str - 1 \
@@ -242,7 +244,7 @@ int	check_double_simple_dollar_case(char *str)
  *
  */
 
-//	posible error here with case: echo " ' $USER  ' "
+//	TODO: posible error here with case: echo " ' $USER  ' "
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
@@ -262,7 +264,9 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 */
 	if (check_double_simple_dollar_case(token->str))
 	{
+		// test this function
 		tmp = remove_quotes_str(token->str, D_QUOTE);
+		
 		token->str = ft_strdup(tmp);
 
 		res = replace_dollar_variable_skip_s_quote(token->str, env_list);

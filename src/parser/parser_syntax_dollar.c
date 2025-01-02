@@ -19,7 +19,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	tmp = NULL;
 
 	/**
-	 * Caso Comillas Simples:
+	 * Case single quotes:
 	 * @example
 	 * Input: "\'example_token\'";
 	 * Output: "example_token";
@@ -75,13 +75,6 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		handle_dollar_cases(token, env_list);
 		return ;
 	}
-/*
-	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-	{
-		handle_dollar_cases(token, env_list);
-		return ;
-	}
-*/
 }
 
 void	parser_tokens(t_mini *mini)

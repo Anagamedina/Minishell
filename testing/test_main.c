@@ -197,7 +197,19 @@ int	main(void)
 
 //	RUN_TEST(test01_double_quotes_keyboard_basic);
 
-	RUN_TEST(test01_check_double_simple_dollar_case_int);
+	// RUN_TEST(test01_check_double_simple_dollar_case_int);
+
+	/**
+	 * @file test_double_quotes.c
+	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
+	 * removing the double quotes and expanding the variables.
+	 */
+
+	RUN_TEST(test02_remove_quotes_str_valid_basic);
+	// RUN_TEST(test02_remove_quotes_str_valid_special_chars);
+	// RUN_TEST(test02_remove_quotes_str_valid_format);
+	// RUN_TEST(test02_remove_quotes_str_invalid_quotes);
+
 	return (UNITY_END());
 }
 

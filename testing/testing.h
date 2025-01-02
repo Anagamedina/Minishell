@@ -56,4 +56,9 @@ void	test01_double_quotes_keyboard_basic(void);
 void	test01_check_double_simple_dollar_case_int(void);
 
 
+void	test02_remove_quotes_str_valid_basic(void);
+void	test02_remove_quotes_str_valid_special_chars(void);
+void	test02_remove_quotes_str_valid_format(void);
+void	test02_remove_quotes_str_invalid_quotes(void);
+
 #endif
