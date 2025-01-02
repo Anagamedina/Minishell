@@ -269,6 +269,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		token->str = ft_strdup(tmp);
 		printf("after remove_quotes_str: token->str: [%s]\n", token->str);
 
+//		TODO: testing of this function is needed
 		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
 		free(tmp);
