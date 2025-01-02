@@ -25,15 +25,9 @@
 # include <readline/history.h>
 # include "macros.h"
 
-//bonus libft
-//echo -n abcd
-//cat
-//-n
-//abcd
-
 typedef enum e_type_token
 {
-	WORD = 0,           // Representa una palabra o comando genéricoREDIR_OUTPUT,       // Representa la redirección de salida '>'
+	WORD = 0,
 	REDIR_IN,    //<     Representa la redirección de entrada '<'
 	REDIR_ERR_OUT, //2>
 	REDIR_ERR_APPEND, //2>>
@@ -42,8 +36,10 @@ typedef enum e_type_token
 	BUILTINS,
 	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,     // Representa el final de la lista de tokens
-	PIPE,                // Representa el operador de tubería '|'
+	PIPE,
 }					t_type_token;
+
+
 //	ECHO,               // Builtin: echo
 //	CD,                 // Builtin: cd
 //	PWD,                // Builtin: pwd
@@ -51,12 +47,12 @@ typedef enum e_type_token
 
 typedef struct s_tokens
 {
-    char            *str;            // Contenido del token
-    t_type_token	type_token;      // Tipo del token
-    size_t          length;          // Longitud de 'str' (opcional)
-	int				id_token;			// Identificador del token
+    char            *str;
+    t_type_token	type_token;
+    size_t          length;
+	int				id_token;
     struct s_tokens *next;
-    struct s_tokens *prev;           // Puntero opcional al token anterior
+    struct s_tokens *prev;
 }                   t_tokens;
 
 typedef struct s_env
@@ -64,16 +60,16 @@ typedef struct s_env
     char            *key;
     char            *value;
     char            *full_var;
-    struct s_env    *next;           // Puntero al siguiente nodo
+    struct s_env    *next;
 }                   t_env;
 
 typedef struct	s_redir
 {
-	int 	fd_input;            // Descriptor de archivo de entrada
-	int 	fd_output;           // Descriptor de archivo de salida
-	int 	type;                // Tipo de redirección (por ejemplo, REDIR_INPUT, REDIR_OUTPUT)
-	char 	*filename;          // Nombre del archivo de redirección
-	struct s_redir *next;    // Puntero al siguiente nodo de redirección
+	int 	fd_input;
+	int 	fd_output;
+	int 	type;
+	char 	*filename;
+	struct s_redir *next;
 } 			t_redir;
 
 //tokens indivuales
@@ -87,9 +83,7 @@ typedef struct s_split_data
 	int		wc;
 }		t_split_data;
 
-// "wc -l" sería el comando y sus parámetros:
-// cmd_args[0] = "wc"
-// cmd_args[1] = "-l"
+
 typedef struct s_cmd
 {
 	char            *cmd;
@@ -122,10 +116,10 @@ typedef struct s_mini
 	int             bash_lvl;
 	int             chars_in_line;
 	t_list          *env;
-	t_list          *token;         // Lista de tokens
-	//t_list          *cmd;
-	int             exit_code;
-//	struct s_exec 	*exec;
+	t_list          *token;
+	t_list          *cmd;
+	int             exit_status;
+	t_exec			*exec;
 }                   t_mini;
 
 #endif

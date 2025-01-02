@@ -69,6 +69,7 @@ t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
 }
 
 //una funcion que coja las paths como parametros para añadirlo en la linked list de comandos
+//llamar a Identificar_comandos!
 t_list *create_cmd_list(t_list *token_list, char **paths)
 {
 	t_list *commands_list = NULL;
@@ -114,7 +115,7 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	return commands_list;
 }
 
-
+//pensar si usar t_mini y pasarle la linked list de comandos
 int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec_pipe)
 {
 	(void)exec_pipe;
@@ -126,7 +127,7 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-
+//cmd y builtins
 		if (token->type_token == WORD || token->type_token == BUILTINS)
 		{
 			// Encontrar el nodo correspondiente al comando
