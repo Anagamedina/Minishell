@@ -204,11 +204,17 @@ int	main(void)
 	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
 	 * removing the double quotes and expanding the variables.
 	 */
-
+/*
 	RUN_TEST(test02_remove_quotes_str_valid_basic);
-	// RUN_TEST(test02_remove_quotes_str_valid_special_chars);
-	// RUN_TEST(test02_remove_quotes_str_valid_format);
-	// RUN_TEST(test02_remove_quotes_str_invalid_quotes);
+	RUN_TEST(test02_remove_quotes_str_valid_special_chars);
+	RUN_TEST(test02_remove_quotes_str_valid_format);
+	RUN_TEST(test02_remove_quotes_str_invalid_quotes);
+*/
+	/**
+	 * @file test_double_quotes.c
+	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
+	 * removing the double quotes and expanding the variables.
+	 */
 
 	return (UNITY_END());
 }

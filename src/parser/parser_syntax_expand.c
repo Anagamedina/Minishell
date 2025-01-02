@@ -244,7 +244,6 @@ int	check_double_simple_dollar_case(char *str)
  *
  */
 
-//	TODO: posible error here with case: echo " ' $USER  ' "
 void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 {
 	char	*tmp;
@@ -264,10 +263,11 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 */
 	if (check_double_simple_dollar_case(token->str))
 	{
-		// test this function
+		// all cases of this funciont are correct
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		
 		token->str = ft_strdup(tmp);
+		printf("after remove_quotes_str: token->str: [%s]\n", token->str);
 
 		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);

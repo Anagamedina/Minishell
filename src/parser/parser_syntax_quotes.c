@@ -82,7 +82,6 @@ char	*remove_quotes_str(char *str, char c)
 	int		new_len;
 	char	*new_str;
 
-//		if (str[i] != c && ((str[i] >= 31 && str[i] <= 126) || (unsigned char)str[i] >= 128))
 	i = 0;
 	new_len = 0;
 	while (str[i] != '\0')

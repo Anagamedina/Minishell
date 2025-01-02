@@ -89,6 +89,8 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 	size_t	i;
 	//size_t	len_str;
 
+	printf("token_rm_d_quote: [%s]\n", token_rm_d_quote);
+
 	if (!token_rm_d_quote || !env_list)
 		return (NULL);
 

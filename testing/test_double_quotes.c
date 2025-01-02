@@ -15,7 +15,7 @@ void	test01_double_quotes_keyboard_basic(void)
 	int		i;
 	int		len;
 	t_tokens	*token;
-	char 	*message[256];
+	char 	message[256];
 
 	struct s_test_int	keyboard_basic[] = {
 			{"\"\"", 1},
@@ -70,7 +70,7 @@ void	test01_check_double_simple_dollar_case_int(void)
 	int		i;
 	int		len;
 	t_tokens	*token;
-	char 	*message[256];
+	char 	message[256];
 
 	struct s_test_int	keyboard_basic[] = {
 			{"\"\'$HOME\'\"", 1},                          // Caso 1: vacío
@@ -120,17 +120,17 @@ void	test02_remove_quotes_str_valid_basic(void)
 {
 	int			i;
 	int			len;
-	char		*message[256];
+	char		message[256];
 	char		*result;
 	t_tokens	*curr_token;
 
 	struct s_test_str valid_input[] = {
-		{"\"\'hello\'\"", "'hello'"},
-		// {"\"\'1234567890\'\"", "'1234567890'"},
-		// {"\"qwert  ypoiu \"", "qwert  ypoiu "},
-		// {"\"asdfghjkl\"", "asdfghjkl"},
-		// {"\"zxcvbnm\"", "zxcvbnm"},
-		// {"\"1234abcd5678\"", "1234abcd5678"},
+		{"\"\'abc hello\'\"", "'abc hello'"},
+		{"\"\'1234567890\'\"", "'1234567890'"},
+		{"\"qwert  ypoiu \"", "qwert  ypoiu "},
+		{"\"asdfghjkl\"", "asdfghjkl"},
+		{"\"zxcvbnm\"", "zxcvbnm"},
+		{"\"1234abcd5678\"", "1234abcd5678"},
 	};
 
 	i = 0;
@@ -143,16 +143,7 @@ void	test02_remove_quotes_str_valid_basic(void)
 		// call to test function
 		result = remove_quotes_str(curr_token->str, D_QUOTE);
 
-		snprintf((char *) message, sizeof(message),
-				 "FAILED ON CASE (%d):" " INPUT=[%s] "
-				 "EXPECTED=[%s]" "  |  "
-				 "ACTUAL=[%s]",
-				 i + 1,
-				 valid_input[i].input,
-				 valid_input[i].expected,
-				 result);
-		TEST_ASSERT_EQUAL_MESSAGE(valid_input[i].expected, result, message);
-		curr_token->str = NULL;
+		TEST_ASSERT_EQUAL_STRING(valid_input[i].expected, result);
 		i ++;
 	}
 }
@@ -161,14 +152,14 @@ void	test02_remove_quotes_str_valid_special_chars(void)
 {
 	int			i;
 	int			len;
-	char		*message[256];
+	char		message[256];
 	char		*result;
 	t_tokens	*curr_token;
 
 	struct s_test_str valid_special_chars[] = {
-		{"\"@#$%^&*()\"", "@#$%^&*()"},
-		{"\"{}[]|\\:;'\"", "{}[]|\\:;'"},
-		{"\"escaped\\\"quote\"", "escaped\\\"quote"},
+		{"\"\'@#$%^&*()\'\"", "\'@#$%^&*()\'"},
+		{"\"\''{}[]|\\:';\'\"", "\''{}[]|\\:';\'"},
+		{"\"  \'  escaped_quote\'\"", "  \'  escaped_quote\'"},
 	};
 
 	i = 0;
@@ -180,31 +171,23 @@ void	test02_remove_quotes_str_valid_special_chars(void)
 
 		result = remove_quotes_str(curr_token->str, D_QUOTE);
 
-		snprintf((char *) message, sizeof(message),
-				 "FAILED ON CASE (%d):" " INPUT=[%s] "
-				 "EXPECTED=[%d]" " | "
-				 "ACTUAL=[%d]",
-				 i + 1,
-				 valid_special_chars[i].input,
-				 valid_special_chars[i].expected,
-				 result);
-		TEST_ASSERT_EQUAL_MESSAGE(valid_special_chars[i].expected, result, message);
-		curr_token->str = NULL;
+		TEST_ASSERT_EQUAL_STRING(valid_special_chars[i].expected, result);
 		i ++;
 	}
 }
 
+//posible caso de error: echo "'line\nbreak'"
 void	test02_remove_quotes_str_valid_format(void)
 {
 	int			i;
 	int			len;
-	char		*message[256];
+	char		message[256];
 	char		*result;
 	t_tokens	*curr_token;
 
 	struct s_test_str valid_format[] = {
-		{"\"line\nbreak\"", "line\nbreak"},
-		{"\"tab\tcharacter\"", "tab\tcharacter"},
+		{"\"  \'line_%_break  \'  \"", "  \'line_%_break  \'  "},
+		{"\"\'tab\\tcharacter\'\"", "\'tab\\tcharacter\'"},
 	};
 
 	i = 0;
@@ -216,15 +199,15 @@ void	test02_remove_quotes_str_valid_format(void)
 
 		result = remove_quotes_str(curr_token->str, D_QUOTE);
 
-		snprintf((char *) message, sizeof(message),
+		snprintf(message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
-				 "EXPECTED=[%d]" " | "
-				 "ACTUAL=[%d]",
+				 "EXPECTED=[%s]" " | "
+				 "ACTUAL=[%s]",
 				 i + 1,
 				 valid_format[i].input,
 				 valid_format[i].expected,
 				 result);
-		TEST_ASSERT_EQUAL_MESSAGE(valid_format[i].expected, result, message);
+		TEST_ASSERT_EQUAL_STRING_MESSAGE(valid_format[i].expected, result, message);
 		curr_token->str = NULL;
 		i ++;
 	}
@@ -234,12 +217,12 @@ void	test02_remove_quotes_str_invalid_quotes(void)
 {
 	int			i;
 	int			len;
-	char		*message[256];
+	char		message[256];
 	char		*result;
 	t_tokens	*curr_token;
 
 	struct s_test_str invalid_quotes[] = {
-    {"\"missing-end-quote", 0},                  
+    {"\"\'missing-end-quote\"\'", 0},
     {"missing-start-quote\"", 0},                
     {"\"nested \"quote\" inside\"", 0},          
     {" before \"inside\" after ", 0},           
@@ -254,15 +237,15 @@ void	test02_remove_quotes_str_invalid_quotes(void)
 
 		result = remove_quotes_str(curr_token->str, D_QUOTE);
 
-		snprintf((char *) message, sizeof(message),
+		snprintf(message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
-				 "EXPECTED=[%d]" " | "
-				 "ACTUAL=[%d]",
+				 "EXPECTED=[%s]" " | "
+				 "ACTUAL=[%s]",
 				 i + 1,
 				 invalid_quotes[i].input,
 				 invalid_quotes[i].expected,
 				 result);
-		TEST_ASSERT_EQUAL_MESSAGE(invalid_quotes[i].expected, result, message);
+		TEST_ASSERT_EQUAL_STRING_MESSAGE(invalid_quotes[i].expected, result, message);
 		curr_token->str = NULL;
 		i ++;
 	}
