@@ -31,7 +31,7 @@ char	*read_input(void)
  * "hello!"
  * Verificar si empieza y termina con comillas dobles
 */
-int	check_quotes_line(char *line)
+int	check_quotes_line(const char *line)
 {
 	int i;
 	int double_quotes;
@@ -42,21 +42,16 @@ int	check_quotes_line(char *line)
 	double_quotes = 0;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '"')
-			double_quotes++;
+		if (line[i] == '\"')
+			double_quotes ++;
 		else if (line[i] == '\'')
-			single_quotes++;
+			single_quotes ++;
 		i++;
 	}
 	// Verificamos que ambos contadores de comillas sean pares
-	if (double_quotes % 2 != 0)
-		return (0);
-	if (single_quotes % 2 != 0)
-	{
-		//printf("Error: Unmatched single quotes in the input.\n");
-		return (2); //indica error pero se va a la funcion que ese llama
-	}
-	return (1);
+	if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
+		return (FALSE);
+	return (TRUE);
 }
 
 

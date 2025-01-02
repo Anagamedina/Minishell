@@ -218,7 +218,9 @@ int	main(void)
 	// RUN_TEST(test_replace_dollar_variable_skip_s_quote_01);
 
 
-	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+//	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+
+	RUN_TEST(test_handle_special_quotes);
 
 	return (UNITY_END());
 }

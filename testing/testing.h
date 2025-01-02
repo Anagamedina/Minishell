@@ -45,7 +45,7 @@ void	test_06_remove_quotes_empty_cases(void);
 
 /**
  * Test the detection of the pattern: [" hello "abcd" "]
- * @see handle_double_quotes
+ * @see has_even_double_quotes
  */
 void	test01_double_quotes_keyboard_basic(void);
 
@@ -67,5 +67,8 @@ void	test_replace_dollar_variable_skip_s_quote_01(void);
 
 void	test_check_dollar_with_space_in_s_quotes(void);
 
-void	test_check_doble_dollar_with_s_quotes(void);
+void	test_check_d_quote_dollar_s_quote(void);
+
+
+void	test_handle_special_quotes(void);
 #endif

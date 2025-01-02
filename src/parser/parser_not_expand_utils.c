@@ -2,10 +2,10 @@
 
 /**
  * check if the next character is a single quote like $'hello
- * echo "'$USER'"
+ * echo "$'USER'"
  */
-//$'..'
-int	check_doble_dollar_single(const char *str)
+
+int	check_d_quote_dollar_s_quote(const char *str)
 {
 	int	i;
 	int	len_str;
@@ -16,7 +16,8 @@ int	check_doble_dollar_single(const char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == S_QUOTE && str[len_str - 2] == S_QUOTE)
+			i ++;
+			if (str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
 				return (TRUE);
 		}
 		i++;

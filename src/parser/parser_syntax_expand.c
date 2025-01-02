@@ -106,7 +106,7 @@ int	handle_no_expand_cases(t_tokens *token)
 {
 	if (check_backslash_before_dollar(token->str))
 		return (handle_backslash_after_dollar(token));
-	if (check_doble_dollar_single(token->str)) //$'..'
+	if (check_d_quote_dollar_s_quote(token->str)) //$'..'
 		return (handle_single_quotes_after_dollar(token));// es la que cumple las \t
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
@@ -184,7 +184,7 @@ int	check_dollar_simple(char *str)
  * d_quote -> s_quote -> (string o $)
  */
 
-//	"        '  askjdfhjkashdf    $USER'"
+//	"        '$USER '"
 
 int	check_double_simple_dollar_case(char *str)
 {
@@ -202,12 +202,12 @@ int	check_double_simple_dollar_case(char *str)
 		return (FALSE);
 	i = 1;
 
-	printf("len - 1: [%c]\n", str[len_str - 1]);
+//	printf("len - 1: [%c]\n", str[len_str - 1]);
 
 	while (i < len_str - 1)
 	{
 		tmp = str[i];
-		printf("curr i: [%d] char:[%c]\n", i, tmp);
+//		printf("curr i: [%d] char:[%c]\n", i, tmp);
 
 		while (str[i] == ' ' && i < len_str - 1)
 			i ++;
@@ -257,15 +257,18 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Steps:
 	 * Remove outer double quotes using remove_quotes_str.
 	 * Expand variables, skip data inside single quotes
+	 * " ' $USER ' "
 	 */
 	if (check_double_simple_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		
 		token->str = ft_strdup(tmp);
+		printf("after remove_quotes_str: [%s]\n", token->str);
 
 		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
+		printf("after replace_dollar_variable : [%s]\n", token->str);
 		free(tmp);
 		return ;
 	}
@@ -275,6 +278,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Steps:
 	 * Detected by check_dollar_with_space_single.
 	 * Managed by handle_dollar_with_space_single.
+	 * "$ 'USER ' "
 	 */
 	if (check_dollar_with_space_single(token->str))
 	{
@@ -288,7 +292,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Remove outer double quotes using remove_quotes_str.
 	 * Copy the modified string back to token->str.
 	 */
-	if (check_doble_dollar_single(token->str))
+	if (check_d_quote_dollar_s_quote(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);

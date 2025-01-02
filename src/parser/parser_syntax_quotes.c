@@ -15,6 +15,34 @@ int	handle_single_quote(t_tokens *token)
 	return (FALSE);
 }
 
+int	has_dollar_between_double_and_single_quotes(const char *str)
+{
+	int i;
+	int condition01;
+	int condition02;
+	int len;
+
+	len = (int) ft_strlen(str);
+
+	condition01 = str[0] == D_QUOTE && str[len - 1] == D_QUOTE;
+	condition02 = FALSE;
+
+	i = 1;
+//	" $ '    '   "  --> FALSE
+	while (str[i] != '\0')
+	{
+		if (str[i] == DOLLAR_SIGN)
+			condition02 = TRUE;
+		if (str[i] == S_QUOTE && condition02)
+			return (FALSE);
+		i++;
+	}
+	if (condition01)
+		return (TRUE);
+	return (FALSE);
+
+}
+
 /**
  * Checks if the string starts and ends with double quotes ("")
  *
@@ -23,28 +51,38 @@ int	handle_single_quote(t_tokens *token)
  *
  * @param token: The token structure containing the string to be checked.
  * @return TRUE (1) or FALSE (0) otherwise.
+ * ---------------------------------------
+ * " ' string ' "
+ * asumimos que d_quote y s_quotes estan cerrados
  */
 
+//	TODO:
 int	handle_special_quotes(t_tokens *token)
 {
 	int	i;
-	int	s_quote_count;
+	int	has_dollar_between_d_quote_s_quote;
+	int	count_d_quotes;
 
 	if (token->str[0] != D_QUOTE || token->str[token->length - 1] != D_QUOTE)
 		return (FALSE);
+	count_d_quotes = 0;
+
 	i = 1;
-	s_quote_count = 0;
 	while (i < (int)token->length - 1)
 	{
-		while (token->str[i] == SPACE)
-			i++;
-		if (token->str[i] == S_QUOTE)
-			s_quote_count ++;
+		char c = token->str[i];
+		if (token->str[i] == DOLLAR_SIGN)
+			has_dollar_between_d_quote_s_quote = TRUE;
+		if (token->str[i] == S_QUOTE && has_dollar_between_d_quote_s_quote)
+			return (FALSE);
+		if (token->str[i] == D_QUOTE)
+			count_d_quotes ++;
+
 		i++;
 	}
-	if (s_quote_count == 2)
-		return (TRUE);
-	return (FALSE);
+	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
+		return (FALSE);
+	return (TRUE);
 }
 
 /**
@@ -54,7 +92,7 @@ int	handle_special_quotes(t_tokens *token)
  * @return TRUE (1) or FALSE (0) otherwise.
  */
 
-int	handle_double_quotes(t_tokens *token)
+int	has_even_double_quotes(t_tokens *token)
 {
 	if (!token || !token->str)
 		return (FALSE);
@@ -63,7 +101,6 @@ int	handle_double_quotes(t_tokens *token)
 		return (TRUE);
 	return (FALSE);
 }
-
 
 /**
  * char *remove_quotes_str(char *str, char c)

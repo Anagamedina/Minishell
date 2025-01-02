@@ -43,7 +43,7 @@ t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
 
 //*************INPUT***********/
 char		*read_input(void);
-int			check_quotes_line(char *line);
+int			check_quotes_line(const char *line);
 void		parser_tokens(t_mini *mini);
 
 //************** INIT_COMMAND.C ********/
@@ -130,7 +130,7 @@ char		*remove_quotes_str(char *str, char c);
 //************** parser_syntax_quotes.c ********************/
 
 int			handle_single_quote(t_tokens *token);
-int			handle_double_quotes(t_tokens *token);
+int			has_even_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
 char		*remove_d_quote_and_s_quotes_str(char *str);
 
@@ -138,7 +138,7 @@ char		*remove_d_quote_and_s_quotes_str(char *str);
 
 int			check_dollar_with_space_single(const char *str);
 void		handle_dollar_cases(t_tokens *token, t_list *env_list);
-//int			check_doble_dollar_single(const char *str);
+//int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
@@ -147,7 +147,7 @@ int			handle_no_expand_cases(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 
-int			check_doble_dollar_single(const char *str);
+int			check_d_quote_dollar_s_quote(const char *str);
 int			has_only_one_digit_after_dollar(const char *str);
 char		*convert_escape_sequences(const char *str);
 int			has_dollar_followed_by_digit(const char *str);

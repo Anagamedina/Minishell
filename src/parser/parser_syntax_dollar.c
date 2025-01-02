@@ -51,6 +51,8 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
 	 */
 
+//	echo "'$USER'"
+//	echo " ' $USER ' "
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
@@ -60,17 +62,22 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		}
 	}
 	/**
+	 *
 	 * Caso Comillas Dobles:
 	 * @example
 	 * Input: "\"$HOME/projects\""
 	 * Output: "/home/daruu/projects"
 	 *
 	 * Si el token está rodeado únicamente por comillas dobles ("), se manejan los casos relacionados con la expansión de variables de entorno ($).
-	 * Llamada a handle_double_quotes para verificar.
+	 * Llamada a has_even_double_quotes para verificar.
 	 * Se llama a handle_dollar_cases para manejar variables de entorno.
 
 	 */
-	if (handle_double_quotes(token))
+
+//	TODO: modificar para manejar comillas dobles par veces
+//	no pudne haber dolar entre d_quotes
+//	echo """        """
+	if (has_even_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list);
 		return ;

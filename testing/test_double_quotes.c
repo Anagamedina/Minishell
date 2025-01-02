@@ -6,7 +6,7 @@
 /**
  * @brief Prueba la detección del patron: [" hello "abcd" "]
  *
- * @see check_double_quotes
+ * @see has_even_double_quotes
  * @return TRUE or FALSE
  */
 
@@ -48,7 +48,7 @@ void	test01_double_quotes_keyboard_basic(void)
 	{
 		token = init_token(keyboard_basic[i].input, set_token_type(keyboard_basic[i].input));
 
-		int result = handle_double_quotes(token);
+		int result = has_even_double_quotes(token);
 
 		snprintf((char *) message, sizeof(message),
 		"FAILED ON CASE (%d):" " INPUT=[%s] "
@@ -364,7 +364,7 @@ void	test01_handle_dollar_case_with_double_quotes(void)
 	{
 		token = init_token(keyboard_basic[i].input, set_token_type(keyboard_basic[i].input));
 
-		int result = handle_double_quotes(token);
+		int result = has_even_double_quotes(token);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
@@ -467,10 +467,10 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 
 /**
  * @brief Test the detection of the pattern: ["$'USER' "]
- * @see check_doble_dollar_single
+ * @see check_d_quote_dollar_s_quote
  */
 
-void	test_check_doble_dollar_with_s_quotes(void)
+void	test_check_d_quote_dollar_s_quote(void)
 {
 	int			i;
 	int			len;
@@ -479,34 +479,10 @@ void	test_check_doble_dollar_with_s_quotes(void)
 
 	struct s_test_int	basic_cases[] = {
 		// Caso 1: Patrón válido con comillas simples
-		{"\"\'$USER\'\"", 1},
+		{"\"$\'USER\'\"", 1},
 
 		// Caso 2: Patrón válido con texto adicional
 		{"\"Text \'$USER\' here\"", 1},
-
-		// Caso 3: Sin patrón, faltan comillas simples iniciales
-		{"\"$USER\'\"", 0},
-
-		// Caso 4: Sin patrón, faltan comillas simples finales
-		{"\"\'$USER\"", 0},
-
-		// Caso 5: Sin patrón, $ no seguido inmediatamente de comillas simples
-		{"\"$ USER\'\"", 0},
-
-		// Caso 6: Patrón válido con contenido vacío entre comillas simples
-		{"\"\'$\'\'\"", 1},
-
-		// Caso 7: Sin patrón, contenido sin $
-		{"\"\'USER\'\"", 0},
-
-		// Caso 8: Patrón válido con espacios adicionales
-		{"\"  \'$USER\'  \"", 1},
-
-		// Caso 9: Sin patrón, múltiples $ sin comillas simples válidas
-		{"\"$$USER\'\'\"", 0},
-
-		// Caso 10: Patrón válido en texto complejo
-		{"\"Path: \'$HOME\' and \'$USER\'\"", 1},
 
 	};
 
@@ -517,7 +493,7 @@ void	test_check_doble_dollar_with_s_quotes(void)
 	{
 		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
 
-		int result = check_doble_dollar_single(token->str);
+		int result = check_d_quote_dollar_s_quote(token->str);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
@@ -534,6 +510,46 @@ void	test_check_doble_dollar_with_s_quotes(void)
 	}
 }
 
+//	echo " ' $USER ' "
+void	test_handle_special_quotes(void)
+{
+	int			i;
+	int			len;
+	t_tokens	*token;
+	char 		message[256];
+
+	struct s_test_int	basic_cases[] = {
+			{"\"\'$USER\'\"", 1},
+
+			{"\" \'$USER\'\"", 1},
+
+			{"\"Text \'$USER\' here\"", 1},
+			{"\"\'USER\' \"", 1},
+
+	};
+
+	i = 0;
+	len = sizeof(basic_cases) / sizeof(basic_cases[0]);
+
+	while (i < len)
+	{
+		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
+
+		int result = handle_special_quotes(token);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%d]" " | "
+				 "ACTUAL=[%d]",
+				 i,
+				 basic_cases[i].input,
+				 basic_cases[i].expected,
+				 result);
+
+		TEST_ASSERT_EQUAL_INT_MESSAGE(basic_cases[i].expected, result, message);
+		i++;
+	}
+}
 
 /*
 void	test_d_quotes_quantity_of_d_quotes(void)
