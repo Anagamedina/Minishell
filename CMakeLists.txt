@@ -46,8 +46,10 @@ add_executable(minishell
         ${PARSER_DIR}
         src/commands/cmd_builtins.c
         src/execute/exce_cmd.c
-        src/execute/paths.c
+        src/execute/exce_paths.c
         src/execute/exce_init.c
+        src/execute/get_input.c
+        src/execute/free_errors.c
 )
 # link with readline library
 target_link_libraries(minishell readline)

@@ -2,7 +2,7 @@
 
 #include "../../includes/minishell.h"
 
-void print_paths(char **paths)
+/*void print_paths(char **paths)
 {
 	int i = 0;
 	if(paths == NULL)
@@ -17,8 +17,6 @@ void print_paths(char **paths)
 	}
 }
 
-
-// Función para imprimir la estructura t_input
 void print_input(t_input *input)
 {
     t_cmd *current_cmd = input->first_cmd; // Iniciar en el primer comando
@@ -36,8 +34,7 @@ void print_input(t_input *input)
         printf("path[%d]: %s\n", i, input->path[i]);
         i++;
     }
-    
-    // Imprimir los comandos en la lista
+
     printf("Commands:\n");
     while (current_cmd != NULL)
     {
@@ -57,3 +54,4 @@ void print_input(t_input *input)
         current_cmd = current_cmd->next;
     }
 }
+*/

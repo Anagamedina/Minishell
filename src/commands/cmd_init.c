@@ -50,7 +50,7 @@ t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
 		return (new_cmd);
 
 	// Si es un comando externo, obtener su ruta
-	if (current_token->type_token == WORD)
+	if (current_token->type_token == CMD_EXTERNAL)
 	{
 		cmd_path = get_cmd_path(new_cmd->cmd, paths);
 		if (!cmd_path)
@@ -86,8 +86,8 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	{
 		token = (t_tokens *)current->content;
 
-		// Si el token es un comando
-		if (token->type_token == BUILTINS || token->type_token == WORD)
+		// Si el token es un cmd externo o Builtin
+		if (token->type_token == BUILTINS || token->type_token == CMD_EXTERNAL)
 		{
 			new_cmd = create_new_command(token, paths, cmd_id);
 			if (!new_cmd)
@@ -127,8 +127,7 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-//cmd y builtins
-		if (token->type_token == WORD || token->type_token == BUILTINS)
+		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			// Encontrar el nodo correspondiente al comando
 			cmd_node = commands_list;
@@ -145,6 +144,12 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec
 					break;
 				}
 				cmd_node = cmd_node->next;
+			}
+			if (!cmd_node)
+			{
+				// Si no encontraste el comando, puedes decidir cómo manejarlo. Por ejemplo:
+				fprintf(stderr, "Error: Comando '%s' no encontrado en la lista de comandos.\n", token->str);
+				return -1;
 			}
 		}
 		current = current->next;

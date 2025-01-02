@@ -34,6 +34,7 @@ typedef enum e_type_token
 	REDIR_APPEND, //>>
 	REDIR_OUT, //>
 	BUILTINS,
+	CMD_EXTERNAL,
 	DELIMITER,			// Para manejar ';'
 	NULL_TYPE,     // Representa el final de la lista de tokens
 	PIPE,

@@ -4,6 +4,9 @@
 //paths[0] = "/usr/local/bin"
 //full_path = "/usr/local/bin/"
 // cmd_path =  "/usr/local/bin/ls"
+/*Recibe el nombre del comando (cmd) y las rutas (paths)donde debe buscarlo.
+-Forma la ruta completa para el comando combinando la ruta del directorio con el comando.
+-Verifica si el archivo existe y es ejecutable usando funciones como access o stat.*/
 
 char	*get_cmd_path(char *cmd, char **paths)
 {
@@ -30,16 +33,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 	return (NULL);
 }
 
-t_cmd	*handle_cmd_error(t_cmd *new)
-{
-	perror("Error: Command not found here!!");
-	free_split_result(new->cmd_args);
-	free(new);
-	return (NULL);
-}
-
-
-// // Obtiene las rutas en PATH del entorno
+//char **paths = { "/usr/bin", "/bin", "/usr/local/bin", NULL };
 char	**get_path(char **env)
 {
 	char	**paths;

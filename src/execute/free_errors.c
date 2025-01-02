@@ -13,6 +13,17 @@
 
 
 #include "../../includes/minishell.h"
+
+
+t_cmd	*handle_cmd_error(t_cmd *new)
+{
+	perror("Error: Command not found here!!");
+	free_split_result(new->cmd_args);
+	free(new);
+	return (NULL);
+}
+
+
 /*void	free_cmd(t_cmd *cmd)
 {
 	if (cmd)

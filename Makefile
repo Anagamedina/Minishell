@@ -61,9 +61,10 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
 		$(SRC_EXECUTE)/free_errors.c \
-		$(SRC_EXECUTE)/paths.c \
+		$(SRC_EXECUTE)/exce_paths.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
+		$(SRC_EXECUTE)/get_input.c \
 		$(SRC_EXECUTE)/tests.c
 
 #		$(SRC_REDIR)/heredoc.c

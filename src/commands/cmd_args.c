@@ -1,13 +1,5 @@
 #include "minishell.h"
 
-int	is_builtin_command(const char *cmd)
-{
-	return (strcmp(cmd, ECHO) == 0 || strcmp(cmd, EXPORT) == 0 || \
-		strcmp(cmd, UNSET) == 0 || strcmp(cmd, ENV) == 0 || \
-		strcmp(cmd, CD) == 0 || strcmp(cmd, PWD) == 0 || \
-		strcmp(cmd, EXIT) == 0);
-}
-
 
 // Cuenta el número de tokens de tipo WORD en la lista
 // hasta encontrar un DELIMITER o BUILTIN.
@@ -22,7 +14,7 @@ void count_args(t_list *token_list, t_cmd *cmd)
 
 	current = token_list;
 	token = (t_tokens *)current->content;
-	if (token->type_token != BUILTINS && token->type_token != WORD)
+	if (token->type_token != BUILTINS && token->type_token != CMD_EXTERNAL)
 	{
 		cmd->count_args = 0;
 		return;
@@ -36,6 +28,8 @@ void count_args(t_list *token_list, t_cmd *cmd)
 		token = (t_tokens *)current->content;
 		if (token->type_token == DELIMITER)
 			break;
+		if (token->type_token == PIPE)
+			break;
 		if (token->type_token == WORD)
 		{
 			cmd->count_args++;
@@ -45,6 +39,11 @@ void count_args(t_list *token_list, t_cmd *cmd)
 }
 
 // Reserva memoria y rellena cmd->cmd_args con los tokens de tipo WORD de la lista.
+//Command name: echo
+//Args:
+//	argv[0] = [hola]
+//	argv[1] = [que]
+//	argv[2] = [tal]
 void add_args(t_cmd **cmd, t_list *token_list)
 {
 	t_list 		*current;

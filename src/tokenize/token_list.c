@@ -63,7 +63,45 @@ void	print_list_token(t_list *tokens_list)
 	}
 }
 
+
 void	print_list_token_str(t_list *tokens_list)
+{
+	t_list *current;
+	t_tokens *token;
+	int i;
+
+	current = tokens_list;
+	i = 1;
+	while (current != NULL)
+	{
+		token = (t_tokens *)current->content;
+		printf("TOKEN [%i] :\n", i);
+		printf("str: [%s]\n", token->str);
+
+		// Imprime el tipo del token
+		printf("type: [%i] ", token->type_token);
+		if (token->type_token == BUILTINS)
+			printf("(BUILTIN)");
+		else if (token->type_token == CMD_EXTERNAL)
+			printf("(EXTERNAL COMMAND)");
+		else if (token->type_token == WORD)
+			printf("(WORD)");
+		else if (token->type_token == PIPE)
+			printf("(PIPE)");
+		else if (token->type_token == REDIR_IN)
+			printf("(REDIR_IN)");
+		else if (token->type_token == REDIR_OUT)
+			printf("(REDIR_OUT)");
+		// Agrega más tipos según lo que hayas definido en tu enum.
+
+		printf("\n");
+		printf("len: [%zu]\n", token->length);
+		i++;
+		current = current->next;
+		printf("-------------------\n");
+	}
+}
+/*void	print_list_token_str(t_list *tokens_list)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -83,7 +121,7 @@ void	print_list_token_str(t_list *tokens_list)
 	}
 	printf("]");
 	printf("\n");
-}
+}*/
 
 /*
 int	check_lowercase_tokens(t_list *tokens_list)
@@ -156,7 +194,7 @@ t_list	*tokenize_list(char **tokens)
  * Returns the token list or NULL on error.
  */
 
-t_list	*generate_token_list(char *line)
+t_list	*generate_token_list(char *line, t_mini *mini)
 {
 	char	**tokens;
 	t_list	*tokens_list;
@@ -175,6 +213,9 @@ t_list	*generate_token_list(char *line)
 		ft_lstclear(&tokens_list, free);
 		return (NULL);
 	}
-	identify_commands(tokens_list);
+
+	// Llamar a la función para identificar comandos
+	printf("Llamando a identify_commands\n");
+	identify_commands(tokens_list ,  mini);
 	return (tokens_list);
 }

@@ -52,27 +52,45 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 }
 
-void	parser_tokens(t_mini *mini)
+
+void parser_tokens(t_mini *mini)
 {
-	t_list		*token_list;
-	t_list		*env_list;
-	t_tokens	*curr_token;
+	t_list *token_list;
+	t_list *env_list;
+	t_tokens *curr_token;
 
 	token_list = mini->token;
 	env_list = mini->env;
-	curr_token = (t_tokens *) token_list->content;
 
-	if ((curr_token->type_token == BUILTINS) && (token_list->next != NULL) \
-		&& (((t_tokens *)(token_list->next->content))->type_token == WORD))
+	// Itera a través de los tokens y asigna el tipo adecuado
+	while (token_list != NULL)
 	{
-		while (token_list->next != NULL)
+		curr_token = (t_tokens *)token_list->content;
+		//assign_token_type(curr_token, mini->exec);
+
+		// Si el primer token es un comando builtin y hay un siguiente token de tipo WORD
+		if ((curr_token->type_token == BUILTINS || curr_token->type_token == CMD_EXTERNAL) && (token_list->next != NULL))
 		{
 			curr_token = (t_tokens *)token_list->next->content;
 			if (curr_token->type_token == WORD)
-				handle_tokens((t_tokens *) curr_token, env_list);
-			else
-				break ;
-			token_list = token_list->next;
+			{
+				// Aquí manejamos los tokens de tipo WORD que siguen a los comandos BUILTINS
+				while (token_list->next != NULL)
+				{
+					curr_token = (t_tokens *)token_list->next->content;
+					if (curr_token->type_token == WORD)
+					{
+						handle_tokens(curr_token, env_list); // Función que maneja los tokens de tipo WORD
+					}
+					else
+					{
+						break; // Rompe el bucle si el token no es de tipo WORD
+					}
+					token_list = token_list->next;
+				}
+			}
 		}
+
+		token_list = token_list->next; // Avanza al siguiente token
 	}
 }
