@@ -61,4 +61,11 @@ void	test02_remove_quotes_str_valid_special_chars(void);
 void	test02_remove_quotes_str_valid_format(void);
 void	test02_remove_quotes_str_invalid_quotes(void);
 
+
+void	test_replace_dollar_variable_skip_s_quote_01(void);
+
+
+void	test_check_dollar_with_space_in_s_quotes(void);
+
+void	test_check_doble_dollar_with_s_quotes(void);
 #endif

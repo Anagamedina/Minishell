@@ -215,7 +215,10 @@ int	main(void)
 	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
 	 * removing the double quotes and expanding the variables.
 	 */
+	// RUN_TEST(test_replace_dollar_variable_skip_s_quote_01);
+
+
+	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
 
 	return (UNITY_END());
 }
-

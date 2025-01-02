@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/02 10:19:02 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/02 15:48:24 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,23 +253,17 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	/**
 	 * Case: "'$...'"
-	 * Description: Expands variables inside double quotes while preserving single quotes.
-	 * @example:
-	 * Input: "'$USER and test works'"
-	 * Output: 'daruuu and test works' (assuming $USER = daruuu).
+	 * Expands variables inside double quotes while preserving single quotes.
 	 * Steps:
 	 * Remove outer double quotes using remove_quotes_str.
-	 * Expand variables, skipping content inside single quotes using replace_dollar_variable_skip_s_quote.
+	 * Expand variables, skip data inside single quotes
 	 */
 	if (check_double_simple_dollar_case(token->str))
 	{
-		// all cases of this funciont are correct
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		
 		token->str = ft_strdup(tmp);
-		printf("after remove_quotes_str: token->str: [%s]\n", token->str);
 
-//		TODO: testing of this function is needed
 		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
 		token->str = ft_strdup(res);
 		free(tmp);
@@ -278,10 +272,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	/**
 	 * Case: "$ '...'"
-	 * @description: Handles space immediately following $.
-	 * @example:
-	 * Input: "$ 'some string'"
-	 * Output: $ 'some string' (unchanged).
 	 * Steps:
 	 * Detected by check_dollar_with_space_single.
 	 * Managed by handle_dollar_with_space_single.
@@ -294,10 +284,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	/**
 	 * Case: "$'...'"
-	 * @description: Processes $ followed directly by single quotes.
-	 * @example:
-	 * Input: "$'simple string'"
-	 * Output: simple string.
 	 * Steps:
 	 * Remove outer double quotes using remove_quotes_str.
 	 * Copy the modified string back to token->str.
@@ -312,10 +298,8 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	/**
 	 * Case: "$USER"
-	 * Description: Expands a simple environment variable.
-	 * @example:
-	 * Input: "$USER"
-	 * Output: daruuu (assuming $USER = daruuu).
+	 * @details: Expands a simple environment variable.
+	 * Input: "$USER" Output: daruuu (assuming $USER = daruuu).
 	 * Steps:
 	 * Detected by check_dollar_simple.
 	 * Managed by handle_single_quotes_after_dollar
@@ -326,9 +310,8 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	}
 	/**
 	 * Case: No expansion required
-	 * Description: Handles tokens that should not trigger variable expansion.
-	 * @example:
-	 * Input: "'string'" or "\"escaped\"".
+	 * @details: Handles tokens that should not trigger variable expansion.
+	 * @example: "'string'" or "\"escaped\"".
 	 * Output: Remains unchanged.
 	 * Steps:
 	 * Managed by handle_no_expand_cases

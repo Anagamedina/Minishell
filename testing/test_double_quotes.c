@@ -252,22 +252,78 @@ void	test02_remove_quotes_str_invalid_quotes(void)
 }
 
 
+/**
+ * @brief Test the detection of the pattern: [" hello '$USER' "]
+ * @see handle_double_cases
+ * In the first case we're testing the next function
+ * @see replace_dollar_variable_skip_s_quote 
+ */
 
+void	test_replace_dollar_variable_skip_s_quote_01(void)
+{
+	int			i;
+	int			len;
+	char		message[256];
+	char		*result;
 
+	struct s_test_str	test_cases[] =
+	{
+		{" \' $USER \' hei '2025' ", " ' dasalaza ' hei '2025' "}, 
 
+		// Caso 1: Variable dentro de comillas simples
+		{"   \'$USER\'  ", "   'dasalaza'  "}, 
 
+		// Caso 2: Variable fuera de comillas simples
+		{"   '$USER _ '  ", "   'dasalaza _ '  "},
 
+		{"  \'  $USER  \'  ", "  \'  dasalaza  \'  "},
 
+		// Caso 3: Combinación de texto, variable y comillas simples
+		{"\'User: '$USER' is here\'", "\'User: 'dasalaza' is here\'"},
 
+		{"  \'User: '$USER' is here  \'", "  \'User: 'dasalaza' is here  \'"},
 
+		// Caso 4: Variable inexistente dentro de comillas simples
+		{"\'$UNKNOWN\'", "\'\'"}, // Sin expansión por las comillas simples.
 
+		// Caso 5: Variable inexistente fuera de comillas simples
+		{"  \'$UNKNOWN\'  ", "  \'\'  "},
 
+		{"  \'  $UNKNOWN  \'  ", "  \'    \'  "},
 
+		// Caso 6: Variable parcialmente rodeada de comillas simples
+		{"\'$USER and $HOME\'", "\'dasalaza and /home/dasalaza\'"}, // Solo $HOME se expande.
 
+		// Caso 7: Texto mezclado con varias variables
+		{"Path: '$PATH' and User: $USER", \
+		"Path: '/home/dasalaza/bin:/home/dasalaza/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin' and User: dasalaza"},
 
+		// Caso 8: Variable vacía fuera de comillas simples
+		{"\'$EMPTY\'", "\'\'"}, // Variable definida pero vacía.
 
+		{" $USER \'$HOME\':)  ", " dasalaza \'/home/dasalaza\':)  "},
 
+	};
 
+	i = 0;
+	len = sizeof(test_cases) / sizeof(test_cases[0]);
+
+	while (i < len)
+	{
+		result = replace_dollar_variable_skip_s_quote(test_cases[i].input, g_minishell->env);
+
+		snprintf(message, sizeof(message),
+				 "FAILED ON CASE (%d):" "                    INPUT=[%s] "
+				 "EXPECTED=[%s]" " | "
+				 "ACTUAL=[%s]",
+				 i + 1,
+				 test_cases[i].input,
+				 test_cases[i].expected,
+				 result);
+		TEST_ASSERT_EQUAL_STRING_MESSAGE(test_cases[i].expected, result, message);
+		i ++;
+	}
+}
 
 
 /*
@@ -326,6 +382,11 @@ void	test01_handle_dollar_case_with_double_quotes(void)
 }
 */
 
+/**
+ * @brief Test the detection of the pattern: [" $ 'USER' "]
+ * @see check_dollar_with_space_single
+ */
+
 void	test_check_dollar_with_space_in_s_quotes(void)
 {
 	int			i;
@@ -334,9 +395,52 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 	char 		*message[256];
 
 	struct s_test_int	basic_cases[] = {
-	{"\"$\'USER\'\"", 1},		// Caso 1: vacío
-	};
 
+		// Caso 1: Patrón válido, comillas simples tras $ con espacios
+		{"\"$ \'USER\'\"", 1},
+
+		// Caso 2: Patrón válido, sin espacios entre $ y comillas simples
+		{"\"$\'USER\'\"", 1},
+
+		// Caso 3: Sin patrón, faltan comillas simples finales
+		{"\"$ \'USER\"", 0},
+
+		// Caso 4: Sin patrón, faltan comillas simples iniciales
+		{"\"$ USER\'\"", 0},
+
+		// Caso 5: Comillas simples vacías tras $
+		{"\"$ \'\'\"", 1},
+
+		// Caso 6: Patrón con múltiples espacios entre $ y comillas simples
+		{"\"$     \'USER\'\"", 1},
+
+		// Caso 7: Sin patrón, contenido sin comillas simples tras $
+		{"\"$ USER\"", 0},
+
+		// Caso 8: Patrón válido, comillas simples pero $ dentro de texto
+		{"\"TEXT $ \'USER\'\"", 1},
+
+		// Caso 9: Sin patrón, símbolo $ en texto pero no con comillas simples
+		{"\"TEXT $ USER\"", 0},
+
+		// Caso 10: Patrón válido, $ al inicio y seguido por comillas simples vacías
+		{"\"$ \'\'\"", 1},
+
+		// Caso 11: Sin patrón, comillas simples cerrando texto, pero sin $ válido
+		{"\"USER \'\'\"", 0},
+
+		// Caso 12: Patrón válido, $ con comillas simples cerradas en texto complejo
+		{"\"$  \'VAR NAME\' and $ \'OTHER\'\"", 1},
+
+		// Caso 13: Sin patrón, múltiples símbolos $ pero sin espacios y comillas simples
+		{"\"$$$ USER\"", 0},
+
+		// Caso 14: Patrón válido, $ con espacio pero seguido por comillas vacías
+		{"\"$    \'\'\"", 1},
+
+		// Caso 15: Sin patrón, $ en texto sin comillas simples ni espacio
+		{"\"$USER and $PATH\"", 0},
+	};
 	i = 0;
 	len = sizeof(basic_cases) / sizeof(basic_cases[0]);
 
@@ -355,12 +459,81 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 				 basic_cases[i].expected,
 				 result);
 
-		TEST_ASSERT_EQUAL_MESSAGE(basic_cases[i].expected, result, message);
+		TEST_ASSERT_EQUAL_INT_MESSAGE(basic_cases[i].expected, result, message);
 		token->str = NULL;
 		i++;
 	}
-
 }
+
+/**
+ * @brief Test the detection of the pattern: ["$'USER' "]
+ * @see check_doble_dollar_single
+ */
+
+void	test_check_doble_dollar_with_s_quotes(void)
+{
+	int			i;
+	int			len;
+	t_tokens	*token;
+	char 		*message[256];
+
+	struct s_test_int	basic_cases[] = {
+		// Caso 1: Patrón válido con comillas simples
+		{"\"\'$USER\'\"", 1},
+
+		// Caso 2: Patrón válido con texto adicional
+		{"\"Text \'$USER\' here\"", 1},
+
+		// Caso 3: Sin patrón, faltan comillas simples iniciales
+		{"\"$USER\'\"", 0},
+
+		// Caso 4: Sin patrón, faltan comillas simples finales
+		{"\"\'$USER\"", 0},
+
+		// Caso 5: Sin patrón, $ no seguido inmediatamente de comillas simples
+		{"\"$ USER\'\"", 0},
+
+		// Caso 6: Patrón válido con contenido vacío entre comillas simples
+		{"\"\'$\'\'\"", 1},
+
+		// Caso 7: Sin patrón, contenido sin $
+		{"\"\'USER\'\"", 0},
+
+		// Caso 8: Patrón válido con espacios adicionales
+		{"\"  \'$USER\'  \"", 1},
+
+		// Caso 9: Sin patrón, múltiples $ sin comillas simples válidas
+		{"\"$$USER\'\'\"", 0},
+
+		// Caso 10: Patrón válido en texto complejo
+		{"\"Path: \'$HOME\' and \'$USER\'\"", 1},
+
+	};
+
+	i = 0;
+	len = sizeof(basic_cases) / sizeof(basic_cases[0]);
+
+	while (i < len)
+	{
+		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
+
+		int result = check_doble_dollar_single(token->str);
+
+		snprintf((char *) message, sizeof(message),
+				 "FAILED ON CASE (%d):" " INPUT=[%s] "
+				 "EXPECTED=[%d]" " | "
+				 "ACTUAL=[%d]",
+				 i,
+				 basic_cases[i].input,
+				 basic_cases[i].expected,
+				 result);
+
+		TEST_ASSERT_EQUAL_INT_MESSAGE(basic_cases[i].expected, result, message);
+		token->str = NULL;
+		i++;
+	}
+}
+
 
 /*
 void	test_d_quotes_quantity_of_d_quotes(void)
