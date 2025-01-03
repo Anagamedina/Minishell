@@ -51,7 +51,7 @@ void	test01_double_quotes_keyboard_basic(void);
 
 
 /**
- * @see check_double_simple_dollar_case
+ * @see check_dquote_squote_dollar_case
  */
 void	test01_check_double_simple_dollar_case_int(void);
 

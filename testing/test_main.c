@@ -33,7 +33,7 @@ void	tearDown(void)
  *
  * Comprobar: d_quotes - s_quotes - dollar_sign
  *
- * @see check_double_simple_dollar_case
+ * @see check_dquote_squote_dollar_case
  */
 
 void	test_check_double_simple_dollar_case_01(void)
@@ -73,7 +73,7 @@ void	test_check_double_simple_dollar_case_01(void)
 
 	while (i < len)
 	{
-		result = check_double_simple_dollar_case(test_cases[i].input);
+		result = check_dquote_squote_dollar_case(test_cases[i].input);
 		TEST_ASSERT_EQUAL(test_cases[i].expected, result);
 		i++;
 	}
@@ -97,7 +97,7 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	len = sizeof(edge_cases) / sizeof(edge_cases[0]);
 	while (i < len)
 	{
-		result = check_double_simple_dollar_case(edge_cases[i].input);
+		result = check_dquote_squote_dollar_case(edge_cases[i].input);
 		char	message[256];
 
 		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, edge_cases[i].input);

@@ -126,6 +126,7 @@ char		**ft_split_quote(char *str);
 
 int			check_special_c(char c);
 char		*remove_quotes_str(char *str, char c);
+int			handle_special_balanced_dquotes(t_tokens *token);
 
 //************** parser_syntax_quotes.c ********************/
 
@@ -136,13 +137,13 @@ char		*remove_d_quote_and_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
 
-int			check_dollar_with_space_single(const char *str);
+int			check_dquote_dollar_and_squotes(const char *str);
 void		handle_dollar_cases(t_tokens *token, t_list *env_list);
 //int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list);
 int			has_string_before_dollar(const char *str);
-int			check_double_simple_dollar_case(char *str);
+int			check_dquote_squote_dollar_case(char *str);
 int			handle_no_expand_cases(t_tokens *token);
 
 //************** parser_not_expand.c ********************/

@@ -121,7 +121,7 @@ int	handle_no_expand_cases(t_tokens *token)
 
 // Caso "$ '...'" -> manejar espacio después del dólar
 
-int	check_dollar_with_space_single(const char *str)
+int	check_dquote_dollar_and_squotes(const char *str)
 {
 	int i;
 	int len_str;
@@ -180,14 +180,19 @@ int	check_dollar_simple(char *str)
 	return (0);
 }
 
-//	TODO: daruny(finish this function)
+
 /**
+ * TODO: daruny(finish this function)
  * d_quote -> s_quote -> (string o $)
+ *
+ * Case: "'$...'"
+ * this 3 cases are valid:
+ * " ' $USER ' "
+ * ""' $USER ' ""
+ * " " " ' $USER ' " " "
  */
 
-//	"        '$USER '"
-
-int	check_double_simple_dollar_case(char *str)
+int	check_dquote_squote_dollar_case(char *str)
 {
 	int	i;
 	int	len_str;
@@ -203,12 +208,9 @@ int	check_double_simple_dollar_case(char *str)
 		return (FALSE);
 	i = 1;
 
-//	printf("len - 1: [%c]\n", str[len_str - 1]);
-
 	while (i < len_str - 1)
 	{
 		tmp = str[i];
-//		printf("curr i: [%d] char:[%c]\n", i, tmp);
 
 		while (str[i] == ' ' && i < len_str - 1)
 			i ++;
@@ -225,19 +227,6 @@ int	check_double_simple_dollar_case(char *str)
 	}
 	return (FALSE);
 }
-
-/*
-		if (str[i] == S_QUOTE)
-		{
-			i++;
-			tmp = str[i];
-			while (str[i] == ' ' && i < len_str - 1)
-				i ++;
-		}
-		else
-		{
-		}
-*/
 
 /************ MAIN FUNCTION *************/
 
@@ -264,8 +253,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Remove outer double quotes using remove_quotes_str.
 	 * Expand variables, skip data inside single quotes
 	 */
-	// TODO: rename function
-	if (check_double_simple_dollar_case(token->str))
+	if (check_dquote_squote_dollar_case(token->str))
 	{
 		printf("original str: [%s]\n", token->str);
 
@@ -278,7 +266,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		printf("after replace_dollar_variable : [%s]\n", token->str);
 
 		free(tmp);
-
 		return ;
 	}
 
@@ -295,8 +282,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * can't have 2 consecutives dollar signs ($$) 
 	 */
 
-	// TODO: rename function
-	if (check_dollar_with_space_single(token->str))
+	if (check_dquote_dollar_and_squotes(token->str))
 	{
 		handle_dollar_with_space_single(token);
 		return ;

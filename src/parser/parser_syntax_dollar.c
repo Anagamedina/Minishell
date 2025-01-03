@@ -1,6 +1,8 @@
 
 #include "../../includes/minishell.h"
 
+int handle_special_balanced_dquotes(t_tokens *token);
+
 int	check_special_c(char c)
 {
 	if (c == '=' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
@@ -27,8 +29,9 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * Si el token está rodeado por comillas simples ('), estas se eliminan.
 	 * Llamada a handle_single_quote para verificar.
 	 * Uso de remove_quotes_str para eliminar las comillas simples del token.
+	 *
+	 * TODO: gestionar mas de una sola single quote en un string
 	 */
-
 	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
@@ -39,20 +42,18 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 
 	/**
 	 * Caso Comillas Especiales:
-	 * @example
-	 * Input: "\"  'test $USER' \""
 	 *
-	 * Output: "  'test daruuu '"
+	 * Case valid: echo "'$USER hello'"
+	 * Case valid: echo " '$USER hello ' "
+	 * Case valid: echo """'$USER'"""
 	 *
-	 * Si el token está rodeado por comillas dobles (") con comillas simples (') en el interior,
-	  y contiene un signo de dólar ($), se manejan los casos relacionados con variables de entorno.
-
-	 * Call a handle_special_quotes para verificar el patrón de comillas.
+	 * Case invalid: echo "" ' $USER ' ""
+	 *
+	 * gestion de comillas dobles impares(impares expanden las varibales)
+	 *
 	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
 	 */
 
-//	echo "'$USER'"
-//	echo " ' $USER ' "
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
@@ -60,7 +61,30 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 			handle_dollar_cases(token, env_list);
 			return ;
 		}
+		else
+		{
+			printf("entro en handle_special_quotes cuando es false y no hay $\n");
+//			TODO: falta implementar el caso donde no hay $ en el string
+			tmp = remove_quotes_str(token->str, D_QUOTE);
+			token->str = ft_strdup(tmp);
+			free(tmp);
+			return ;
+		}
 	}
+
+	/**
+	 * crear un caso para cuando las doble comillas son pares :
+	 * @example
+	 * echo " " '$USER ' " "
+	 * echo " "" " '$USER ' " "" "
+	 */
+	if (handle_special_balanced_dquotes(token))
+	{
+		printf("entro en handle_special_balanced_dquotes\n");
+
+	}
+
+
 	/**
 	 *
 	 * Caso Comillas Dobles:

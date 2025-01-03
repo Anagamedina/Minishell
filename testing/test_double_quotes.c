@@ -87,7 +87,7 @@ void	test01_check_double_simple_dollar_case_int(void)
 	{
 		token = init_token(keyboard_basic[i].input, set_token_type(keyboard_basic[i].input));
 
-		int result = check_double_simple_dollar_case(token->str);
+		int result = check_dquote_squote_dollar_case(token->str);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
@@ -384,7 +384,7 @@ void	test01_handle_dollar_case_with_double_quotes(void)
 
 /**
  * @brief Test the detection of the pattern: [" $ 'USER' "]
- * @see check_dollar_with_space_single
+ * @see check_dquote_dollar_and_squotes
  */
 
 void	test_check_dollar_with_space_in_s_quotes(void)
@@ -448,7 +448,7 @@ void	test_check_dollar_with_space_in_s_quotes(void)
 	{
 		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
 
-		int result = check_dollar_with_space_single(token->str);
+		int result = check_dquote_dollar_and_squotes(token->str);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "
