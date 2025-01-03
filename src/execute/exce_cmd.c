@@ -18,7 +18,6 @@ int is_cmd_external(t_mini *mini,  char *cmd)
 	char *cmd_path = get_cmd_path(cmd, mini->exec->paths);
 	printf("--------cmd_path: [%s]\n", ft_strdup(cmd_path));
 
-	// Si cmd_path no es NULL, significa que se encontro un comando externo
 	if (cmd_path != NULL)
 	{
 		free(cmd_path);
@@ -28,21 +27,32 @@ int is_cmd_external(t_mini *mini,  char *cmd)
 }
 
 
-/*void assign_token_type(t_tokens *token, t_exec *exec_info)
+void assign_token_type(t_tokens *token, t_mini *mini)
 {
-	// Verifica si es un comando interno (builtin)
-	if (is_builtin_command(token->str))
+	while (token != NULL)
 	{
-		token->type_token = BUILTINS;
-	}
-		// Si no es un comando interno, verifica si es un comando externo
-	else if (is_cmd_external(exec_info, token->str))  // Verifica si es un comando externo
-	{
-		token->type_token = CMD_EXTERNAL;
-	}
-	else
-	{
-		token->type_token = WORD;
+
+		if (token->type_token == WORD)
+		{
+			if (is_builtin_command(token->str))
+			{
+				token->type_token = BUILTINS;
+				printf("Asignado como BUILTINS: %s\n", token->str);
+			}
+			else if (is_cmd_external(mini, token->str))
+			{
+				token->type_token = CMD_EXTERNAL;
+				printf("Asignado como CMD_EXTERNAL: %s\n", token->str);
+			}
+			else
+			{
+				token->type_token = WORD;
+				printf("Asignado como WORD: %s\n", token->str);
+			}
+
+		}
+
+		token = token->next;
 	}
 
-}*/
+}

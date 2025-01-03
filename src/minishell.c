@@ -44,9 +44,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//identify_commands(minishell->token, minishell->exec->paths);
 		parser_tokens(minishell);
-		printf("Lista de tokens:\n");
 		//iprint_list_token(minishell->token);
-		// Crear la lista de comandos
+		printf("Lista de comandos:\n");
 		minishell->exec = init_exec(envp);
 
 		if (!minishell->exec)
@@ -54,10 +53,10 @@ int	main(int argc, char **argv, char **envp)
 			perror("Error al inicializar t_exec");
 			return 1;
 		}
-
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
-		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token, NULL);
+		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 		print_list_commands(minishell->exec->first_cmd);
+		printf("Lista de tokens:\n");
 		print_list_token_str(minishell->token);
 		 //cases_builtins(minishell);
 	}

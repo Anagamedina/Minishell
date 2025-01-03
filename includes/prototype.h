@@ -159,7 +159,7 @@ t_cmd 		*create_new_command(t_tokens *current_token, char **paths, int cmd_id);
 t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
-int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec_pipe);
+int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** ERRORS_COMMAND.C ********/
 
@@ -168,11 +168,6 @@ void		free_command(t_cmd *cmd);
 int			error_empty_token(t_tokens *token, t_list *cmd_list);
 int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
-
-
-//*************redis**************/
-
-int 		check_repeat_redir(t_tokens *token);
 t_cmd   	*cmd_new(char *str, char **paths);
 char 		**get_path(char **env);
 int 		main(int argc, char **argv, char **env);
@@ -184,6 +179,12 @@ void		free_split_result(char **result);
 t_exec 		*init_exec(char **envp);
 char 		**lst_to_arr(t_list *lst, char **envp);
 int 		is_cmd_external(t_mini *mini,  char *cmd);
-void 		assign_token_type(t_tokens *token, t_exec *exec_info);
-void 	update_after_pipe_to_builtin_or_external(t_list *tokens_list, t_mini *mini);
+void 		assign_token_type(t_tokens *token, t_mini *mini);
+//void 		update_after_pipe_to_builtin_or_external(t_list *tokens_list, t_mini *mini);
+void 		update_words_to_external(t_list *tokens_list, t_mini *mini);
+
+
+//*************redis**************/
+
+int 		check_repeat_redir(t_tokens *token);
 #endif

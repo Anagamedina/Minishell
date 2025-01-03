@@ -53,7 +53,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 }
 
 
-void parser_tokens(t_mini *mini)
+/*void parser_tokens(t_mini *mini)
 {
 	t_list *token_list;
 	t_list *env_list;
@@ -62,11 +62,10 @@ void parser_tokens(t_mini *mini)
 	token_list = mini->token;
 	env_list = mini->env;
 
-	// Itera a través de los tokens y asigna el tipo adecuado
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
-		//assign_token_type(curr_token, mini->exec);
+		assign_token_type(curr_token, mini);
 
 		// Si el primer token es un comando builtin y hay un siguiente token de tipo WORD
 		if ((curr_token->type_token == BUILTINS || curr_token->type_token == CMD_EXTERNAL) && (token_list->next != NULL))
@@ -80,17 +79,61 @@ void parser_tokens(t_mini *mini)
 					curr_token = (t_tokens *)token_list->next->content;
 					if (curr_token->type_token == WORD)
 					{
-						handle_tokens(curr_token, env_list); // Función que maneja los tokens de tipo WORD
+						handle_tokens(curr_token, env_list);
 					}
 					else
 					{
-						break; // Rompe el bucle si el token no es de tipo WORD
+						break;
 					}
 					token_list = token_list->next;
 				}
 			}
 		}
 
-		token_list = token_list->next; // Avanza al siguiente token
+		token_list = token_list->next;
+	}
+}
+*/
+
+void parser_tokens(t_mini *mini)
+{
+	t_list *token_list;
+	t_tokens *curr_token;
+
+	token_list = mini->token;
+
+	// Primera pasada: Clasificar tokens
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *)token_list->content;
+		assign_token_type(curr_token, mini);
+		token_list = token_list->next;
+	}
+
+	// Segunda pasada: Manejar relaciones entre tokens
+	token_list = mini->token;
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *)token_list->content;
+
+		if ((curr_token->type_token == BUILTINS || curr_token->type_token == CMD_EXTERNAL) &&
+			token_list->next != NULL)
+		{
+			t_list *next_node = token_list->next;
+			t_tokens *next_token = (t_tokens *)next_node->content;
+
+			// Manejar argumentos (tokens de tipo WORD) que siguen al comando
+			while (next_token->type_token == WORD)
+			{
+				handle_tokens(next_token, mini->env);
+				next_node = next_node->next;
+
+				if (next_node == NULL)
+					break;
+
+				next_token = (t_tokens *)next_node->content;
+			}
+		}
+		token_list = token_list->next;
 	}
 }

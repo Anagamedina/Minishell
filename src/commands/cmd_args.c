@@ -4,6 +4,7 @@
 // Cuenta el número de tokens de tipo WORD en la lista
 // hasta encontrar un DELIMITER o BUILTIN.
 // Pre: token_list apunta a un token de tipo BUILTIN.
+
 void count_args(t_list *token_list, t_cmd *cmd)
 {
 	t_list		*current;
@@ -12,31 +13,28 @@ void count_args(t_list *token_list, t_cmd *cmd)
 	if (!token_list || !cmd)
 		return;
 
-	current = token_list;
-	token = (t_tokens *)current->content;
-	if (token->type_token != BUILTINS && token->type_token != CMD_EXTERNAL)
-	{
-		cmd->count_args = 0;
-		return;
-	}
+	current = token_list->next; // Empieza después del comando actual
 	cmd->count_args = 0;
-	//current = token_list->next;
-	//current = token_list;
-	//token = (t_tokens *)current->content;
-	while(current)
+
+	while (current)
 	{
 		token = (t_tokens *)current->content;
-		if (token->type_token == DELIMITER)
+
+		// Detén la cuenta si encuentras otro comando o un delimitador
+		if (token->type_token == BUILTINS ||
+			token->type_token == CMD_EXTERNAL ||
+			token->type_token == DELIMITER ||
+			token->type_token == PIPE)
 			break;
-		if (token->type_token == PIPE)
-			break;
+
+		// Incrementa si es un argumento válido
 		if (token->type_token == WORD)
-		{
 			cmd->count_args++;
-		}
+
 		current = current->next;
 	}
 }
+
 
 // Reserva memoria y rellena cmd->cmd_args con los tokens de tipo WORD de la lista.
 //Command name: echo
@@ -80,7 +78,9 @@ void add_args(t_cmd **cmd, t_list *token_list)
 }
 
 
-/*void handle_cmd(t_list *token_list, t_cmd **cmd, char **paths, int cmd_id)
+
+
+/*void handle_cmd(t_mini *mini)
 {
     t_tokens *token = (t_tokens *)token_list->content;
 

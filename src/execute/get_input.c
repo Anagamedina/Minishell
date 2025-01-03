@@ -21,7 +21,7 @@ static void execute_builtin(t_cmd *cmd, t_mini *mini)
 }*/
 
 
-/*char **lst_to_arr(t_list *lst, char **envp)
+char **lst_to_arr(t_list *lst, char **envp)
 {
 	t_list *current = lst;
 	int count = 0;
@@ -74,7 +74,7 @@ static void execute_builtin(t_cmd *cmd, t_mini *mini)
 
 	return arr;
 }
-*/
+
 
 // OPEN INPUT FILE
 //int	open_files(t_input *input, char **argv, int argc)

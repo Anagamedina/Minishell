@@ -116,9 +116,8 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 }
 
 //pensar si usar t_mini y pasarle la linked list de comandos
-int add_details_to_cmd_list(t_list *commands_list, t_list *token_list, int *exec_pipe)
+int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 {
-	(void)exec_pipe;
 	t_list *current = token_list;
 	t_list *cmd_node;
 	t_cmd *cmd;

@@ -7,13 +7,12 @@ t_exec *init_exec(char **envp)
 {
 	t_exec *exec_info;
 
-	// Asignar memoria para la estructura t_exec
 	exec_info = malloc(sizeof(t_exec));
 	if (!exec_info)
 		return NULL;
 
 	exec_info->first_cmd = NULL;
-	//exec_info->env_vars = lst_to_arr(NULL, envp);
+	exec_info->env_vars = lst_to_arr(NULL, envp);
 	exec_info->pipe_input_fd = -1;
 	exec_info->pipe_output_fd = -1;
 	exec_info->cmd_count = 0;
@@ -43,7 +42,6 @@ t_exec *init_exec(char **envp)
 		free(path);
 		i++;
 	}
-	// Si llegamos aquí, significa que no encontramos el comando
 	ft_putstr_fd(cmd->cmd, STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	exit(127); // Error de comando no encontrado

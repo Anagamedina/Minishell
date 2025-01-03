@@ -214,8 +214,6 @@ t_list	*generate_token_list(char *line, t_mini *mini)
 		return (NULL);
 	}
 
-	// Llamar a la función para identificar comandos
-	printf("Llamando a identify_commands\n");
-	identify_commands(tokens_list ,  mini);
+	//identify_commands(tokens_list ,  mini);
 	return (tokens_list);
 }
