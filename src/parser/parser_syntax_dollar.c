@@ -52,49 +52,6 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 }
 
-
-/*void parser_tokens(t_mini *mini)
-{
-	t_list *token_list;
-	t_list *env_list;
-	t_tokens *curr_token;
-
-	token_list = mini->token;
-	env_list = mini->env;
-
-	while (token_list != NULL)
-	{
-		curr_token = (t_tokens *)token_list->content;
-		assign_token_type(curr_token, mini);
-
-		// Si el primer token es un comando builtin y hay un siguiente token de tipo WORD
-		if ((curr_token->type_token == BUILTINS || curr_token->type_token == CMD_EXTERNAL) && (token_list->next != NULL))
-		{
-			curr_token = (t_tokens *)token_list->next->content;
-			if (curr_token->type_token == WORD)
-			{
-				// Aquí manejamos los tokens de tipo WORD que siguen a los comandos BUILTINS
-				while (token_list->next != NULL)
-				{
-					curr_token = (t_tokens *)token_list->next->content;
-					if (curr_token->type_token == WORD)
-					{
-						handle_tokens(curr_token, env_list);
-					}
-					else
-					{
-						break;
-					}
-					token_list = token_list->next;
-				}
-			}
-		}
-
-		token_list = token_list->next;
-	}
-}
-*/
-
 void parser_tokens(t_mini *mini)
 {
 	t_list *token_list;

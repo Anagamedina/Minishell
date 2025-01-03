@@ -1,8 +1,23 @@
 
 #include "../../includes/minishell.h"
 
-//execve(cmd_path, cmd_args, exec_info->env_vars);
-
+static int	open_files(t_mini *mini, char **argv, int argc)
+{
+	mini->exec->pipe_input_fd = open(argv[1], O_RDONLY);
+	if (mini->exec->pipe_input_fd == -1)
+	{
+		perror("Error: Cannot open INPUT file");
+		return (0);
+	}
+	mini->exec->pipe_output_fd = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (mini->exec->pipe_output_fd == -1)
+	{
+		perror("Error: Cannot open OUTPUT file");
+		close(mini->exec->pipe_input_fd);
+		return (0);
+	}
+	return (1);
+}
 t_exec *init_exec(char **envp)
 {
 	t_exec *exec_info;
@@ -20,61 +35,3 @@ t_exec *init_exec(char **envp)
 
 	return exec_info;
 }
-
-
-/*static void execute_external(t_cmd *cmd, char **paths, t_mini *mini)
-{
-	char    *path;
-	char    **env;
-	int     i;
-
-	i = 0;
-	env = init_env_list(mini->env);
-	while (paths[i])
-	{
-		path = ft_strjoin(paths[i], cmd->cmd);
-		if (access(path, X_OK) == 0)
-		{
-			execve(path, cmd->cmd_args, env);
-			free(path);
-			return;
-		}
-		free(path);
-		i++;
-	}
-	ft_putstr_fd(cmd->cmd, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	exit(127); // Error de comando no encontrado
-}
-
-void exec_command(t_cmd *cmd, t_mini *mini)
-{
-	pid_t pid;
-	char **paths;
-
-	paths = get_path(mini->env);
-	if (cmd->is_builtin)
-	{
-		printf("Es un builtin\n");
-		//execute_builtin(cmd, mini);
-	}
-	else
-	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("Fork failed");
-			exit(1);
-		}
-		if (pid == 0)
-		{
-
-			execute_external(cmd, paths, mini);
-		}
-		else
-		{
-			waitpid(pid, &cmd->exit_code, 0);
-			free(paths);
-		}
-	}
-}*/

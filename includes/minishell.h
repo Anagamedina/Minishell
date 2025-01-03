@@ -90,6 +90,7 @@ typedef struct s_cmd
 	char            *cmd;
 	char            **cmd_args;
 	int 			count_args;
+	char 			**cmd_flags;
 	int             cmd_id;
 	int     		is_builtin;
 	int             pipe[2];

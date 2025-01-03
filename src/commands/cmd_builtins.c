@@ -2,6 +2,16 @@
 
 #include "../../includes/minishell.h"
 
+
+
+
+
+
+
+
+
+
+
 // Recorre la lista de tokens y actualiza el tipo de token de las palabras que son comandos
 // internos (builtins).
 /*void update_words_to_builtin(t_list *tokens_list)
@@ -23,7 +33,7 @@
 	}
 }*/
 
-void update_words_to_external(t_list *tokens_list, t_mini *mini)
+/*void update_words_to_external(t_list *tokens_list, t_mini *mini)
 {
 	t_list      *current;
 	t_tokens    *curr_token;
@@ -94,7 +104,7 @@ void update_after_pipe_to_builtin_or_external(t_list *tokens_list, t_mini *mini)
 		}
 		current = current->next;
 	}
-}
+}*/
 
 
 // Función principal que actualiza los tokens identificados como comandos internos (builtins) antes y después de los pipes.

@@ -182,7 +182,9 @@ int 		is_cmd_external(t_mini *mini,  char *cmd);
 void 		assign_token_type(t_tokens *token, t_mini *mini);
 //void 		update_after_pipe_to_builtin_or_external(t_list *tokens_list, t_mini *mini);
 void 		update_words_to_external(t_list *tokens_list, t_mini *mini);
-
+void		execute_commands(t_mini *mini);
+int			process_input(t_mini *mini, char *input);
+void		handle_commands(t_mini *mini);
 
 //*************redis**************/
 
