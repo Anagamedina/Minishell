@@ -26,12 +26,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * Input: "\'example_token\'";
 	 * Output: "example_token";
 	 *
-	 * Si el token está rodeado por comillas simples ('), estas se eliminan.
-	 * Llamada a handle_single_quote para verificar.
-	 * Uso de remove_quotes_str para eliminar las comillas simples del token.
+	 * remove comillas simples ('),
+	 * verificar con handle_single_quote
+	 * Utilizar remove_quotes_str para eliminar squotes.
 	 *
-	 * TODO: gestionar mas de una sola single quote en un string
+	 * TODO: gestionar mas de una sola single quote en un string ??
 	 */
+
 	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
@@ -73,10 +74,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 
 	/**
-	 * crear un caso para cuando las doble comillas son pares :
+	 * doble comillas son pares :
 	 * @example
 	 * echo " " '$USER ' " "
 	 * echo " "" " '$USER ' " "" "
+	 * echo "'helo $USER 0-9'"
 	 */
 	if (handle_special_balanced_dquotes(token))
 	{

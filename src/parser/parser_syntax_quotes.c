@@ -56,14 +56,14 @@ int	has_dollar_between_double_and_single_quotes(const char *str)
  * asumimos que d_quote y s_quotes estan cerrados
  */
 
-//	TODO:
-
+//	TODO: terminar de mejorar la función para contenplar empezar de derecha a izquierda
+// echo """ 'hello '"""
+// cuando sabe que el siguiente es un squote no entra al while y no verifica si hay un squote
 int	handle_special_quotes(t_tokens *token)
 {
 	int	i;
 	int	has_dollar;
 	int	count_d_quotes;
-	char	c;
 
 	if (!token || token->str[0] != D_QUOTE || token->str[token->length - 1] != D_QUOTE)
 		return (FALSE);
@@ -74,18 +74,20 @@ int	handle_special_quotes(t_tokens *token)
 	i = 0;
 	while (token->str[i] != '\0')
 	{
-		c = token->str[i];
-		if (c == D_QUOTE)
-			count_d_quotes++;
-		else if (c == DOLLAR_SIGN)
+		if (token->str[i] == D_QUOTE)
+			count_d_quotes ++;
+		else if (token->str[i] == DOLLAR_SIGN)
 			has_dollar = TRUE;
-		else if (c == S_QUOTE)
-			break;
-		i++;
+		else if (token->str[i] == S_QUOTE)
+		{
+			if (count_d_quotes % 2 != 0 && has_dollar == FALSE)
+				return (TRUE);
+		}
+		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
+		i ++;
 	}
+
 	// Verificación final: comillas dobles deben ser impares y no debe haber $
-	if (count_d_quotes % 2 != 0 && has_dollar == FALSE)
-		return (TRUE);
 	return (FALSE);
 }
 
@@ -101,7 +103,6 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 	int	i;
 	int	has_dollar;
 	int	count_d_quotes;
-	char	c;
 
 	if (!token || token->str[0] != D_QUOTE || token->str[token->length - 1] != D_QUOTE)
 		return (FALSE);
@@ -112,17 +113,16 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 	i = 0;
 	while (token->str[i] != '\0')
 	{
-		c = token->str[i];
-		if (c == D_QUOTE)
-			count_d_quotes++;
-		else if (c == DOLLAR_SIGN)
+		if (token->str[i] == D_QUOTE)
+			count_d_quotes ++;
+		if (token->str[i] == DOLLAR_SIGN)
 			has_dollar = TRUE;
-		else if (c == S_QUOTE)
+		if (token->str[i] == S_QUOTE)
 			break;
 		i++;
 	}
 //	Verificación final: comillas dobles deben ser pares y no debe haber $
-	if (count_d_quotes % 2 == 0 && has_dollar == TRUE)
+	if (count_d_quotes % 2 == 0 && has_dollar == FALSE)
 		return (TRUE);
 	return (FALSE);
 }

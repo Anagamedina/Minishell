@@ -511,6 +511,19 @@ void	test_check_d_quote_dollar_s_quote(void)
 }
 
 //	echo " ' $USER ' "
+/*
+	echo """""'hello $HOME '"""""
+	'hello /home/dasalaza '
+	dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """"""'hello $HOME '""""""
+hello $HOME 
+dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """""""' hello $HOME '"""""""
+' hello /home/dasalaza '
+dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """ ' hello ' $HOME """
+ ' hello ' /home/dasalaza 
+dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """ ' hello ' $HOME """ | cat -e
+ ' hello ' /home/dasalaza $
+*/
+// TODO: terminar de implementar los casos del squote al final 
 void	test_handle_special_quotes(void)
 {
 	int			i;
@@ -518,22 +531,29 @@ void	test_handle_special_quotes(void)
 	t_tokens	*token;
 	char 		message[256];
 
-	struct s_test_int	basic_cases[] = {
-			{"\"\'$USER\'\"", 1},
-
-			{"\" \'$USER\'\"", 1},
-
-			{"\"Text \'$USER\' here\"", 1},
-			{"\"\'USER\' \"", 1},
+	struct s_test_int	odd_dquotes_cases[] = {
+		{"\" \'hello \' \"", 1},                  // Incorrecto: falta """ al inicio
+		{"\"\"\"\'hello\'\"\"\"", 1},              // Correcto: comienza y termina con """ y contiene una comilla simple
+		{"\" \" \'hello\' \" \"", 0},                // Incorrecto: termina con "" en lugar de """
+		{"\"\"\"\'hello\'\"\"\"", 1},              // Correcto: comienza y termina con """ y contiene una comilla simple
+		{"\" \" \'hello\' \" \"", 0},              // Incorrecto: las comillas dobles son pares
+		{"\"\"\'hello\'\"\"", 0},                  // Incorrecto: faltan """ al inicio y al final
+		{"\"\"\"\'hello\'", 0},                    // Incorrecto: falta """ al final
+		{"\'hello\'\"\"\"", 0},                    // Incorrecto: falta """ al inicio
+		{"\"\"\" \'hello\' \"\"\"", 1},            // Correcto: sigue el patrón """ ' ' """
+		{"\"\"\" \'hello there\' \"\"\"", 1},      // Correcto: sigue el patrón con texto adicional dentro
+		{"\"\"\"\'hello\' $USER\"\"\"", 1},        // Incorrecto: contiene un `$`
+		{"\"\"\" \'hello\' world \"\"\"", 0},      // Incorrecto: contiene texto fuera del patrón permitido
+		{"\"\"\"\'\'\"\"\"", 1},                   // Correcto: sigue el patrón con comillas simples vacías
 
 	};
 
 	i = 0;
-	len = sizeof(basic_cases) / sizeof(basic_cases[0]);
+	len = sizeof(odd_dquotes_cases) / sizeof(odd_dquotes_cases[0]);
 
 	while (i < len)
 	{
-		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
+		token = init_token(odd_dquotes_cases[i].input, set_token_type(odd_dquotes_cases[i].input));
 
 		int result = handle_special_quotes(token);
 
@@ -542,11 +562,11 @@ void	test_handle_special_quotes(void)
 				 "EXPECTED=[%d]" " | "
 				 "ACTUAL=[%d]",
 				 i,
-				 basic_cases[i].input,
-				 basic_cases[i].expected,
+				 odd_dquotes_cases[i].input,
+				 odd_dquotes_cases[i].expected,
 				 result);
 
-		TEST_ASSERT_EQUAL_INT_MESSAGE(basic_cases[i].expected, result, message);
+		TEST_ASSERT_EQUAL_INT_MESSAGE(odd_dquotes_cases[i].expected, result, message);
 		i++;
 	}
 }
