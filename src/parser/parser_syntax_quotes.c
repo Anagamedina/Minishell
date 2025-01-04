@@ -82,6 +82,8 @@ int	handle_special_quotes(t_tokens *token)
 		{
 			if (count_d_quotes % 2 != 0 && has_dollar == FALSE)
 				return (TRUE);
+			else
+				return (FALSE);
 		}
 		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
 		i ++;
@@ -115,15 +117,19 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 	{
 		if (token->str[i] == D_QUOTE)
 			count_d_quotes ++;
-		if (token->str[i] == DOLLAR_SIGN)
+		else if (token->str[i] == DOLLAR_SIGN)
 			has_dollar = TRUE;
-		if (token->str[i] == S_QUOTE)
-			break;
-		i++;
+//		else if (token->str[i] == S_QUOTE)
+		else if (token->str[i] == S_QUOTE && (i == 0 || token->str[i - 1] != '\\'))
+		{
+			if (count_d_quotes % 2 == 0 && has_dollar == FALSE)
+				return (TRUE);
+			else
+				return (FALSE);
+		}
+//		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
+		i ++;
 	}
-//	Verificación final: comillas dobles deben ser pares y no debe haber $
-	if (count_d_quotes % 2 == 0 && has_dollar == FALSE)
-		return (TRUE);
 	return (FALSE);
 }
 /*

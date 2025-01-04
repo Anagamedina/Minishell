@@ -20,7 +20,8 @@
 # define FALSE 0
 
 # define SEMICOLON 59
-# define S_QUOTE '\''
+//# define S_QUOTE '\''
+# define S_QUOTE 39
 # define D_QUOTE '\"'
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
