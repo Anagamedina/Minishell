@@ -78,7 +78,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * @example
 	 * echo " " '$USER ' " "
 	 * echo " "" " '$USER ' " "" "
-	 * echo "'helo $USER 0-9'"
+	 * echo ""'helo $USER 0-9' ""
 	 */
 	if (handle_special_balanced_dquotes(token))
 	{

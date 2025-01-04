@@ -113,7 +113,7 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 	count_d_quotes = 0;
 
 	i = 0;
-	while (token->str[i] != '\0')
+	while (token->str[i] != '\0' && token->str[i] >= 31 && token->str[i] <= 126)
 	{
 		if (token->str[i] == D_QUOTE)
 			count_d_quotes ++;
@@ -122,15 +122,13 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 //		else if (token->str[i] == S_QUOTE)
 		else if (token->str[i] == S_QUOTE && (i == 0 || token->str[i - 1] != '\\'))
 		{
-			if (count_d_quotes % 2 == 0 && has_dollar == FALSE)
-				return (TRUE);
-			else
+			if (count_d_quotes % 2 != 0 && has_dollar == FALSE)
 				return (FALSE);
 		}
 //		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
 		i ++;
 	}
-	return (FALSE);
+	return (TRUE);
 }
 /*
 int	handle_special_quotes(t_tokens *token)

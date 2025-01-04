@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 23:12:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:07:10 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define FALSE 0
 
 # define SEMICOLON 59
-//# define S_QUOTE '\''
-# define S_QUOTE 39
+# define S_QUOTE '\''
+// # define S_QUOTE 39
 # define D_QUOTE '\"'
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
