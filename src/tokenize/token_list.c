@@ -194,7 +194,7 @@ t_list	*tokenize_list(char **tokens)
  * Returns the token list or NULL on error.
  */
 
-t_list	*generate_token_list(char *line, t_mini *mini)
+t_list	*generate_token_list(char *line)
 {
 	char	**tokens;
 	t_list	*tokens_list;
@@ -214,6 +214,5 @@ t_list	*generate_token_list(char *line, t_mini *mini)
 		return (NULL);
 	}
 
-	//identify_commands(tokens_list ,  mini);
 	return (tokens_list);
 }

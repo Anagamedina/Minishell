@@ -8,50 +8,30 @@ int	is_builtin_command(const char *cmd)
 		strcmp(cmd, EXIT) == 0);
 }
 
-int is_cmd_external(t_mini *mini,  char *cmd)
+int is_cmd_external(t_mini *mini, t_tokens *token)
 {
-	if (!mini->exec || !mini->exec->paths)
-		return 0;
+	char		*cmd_path;
 
-	char *cmd_path = get_cmd_path(cmd, mini->exec->paths);
-	printf("--------cmd_path: [%s]\n", ft_strdup(cmd_path));
+	if (!mini || !mini->token)
+		return FALSE;
+
+	// Verificar que las rutas estén disponibles
+	if (!mini->exec || !mini->exec->paths)
+		return FALSE;
+
+	// Buscar el path del comando
+	cmd_path = get_cmd_path(token, mini->exec->paths);
 
 	if (cmd_path != NULL)
 	{
-		free(cmd_path);
-		return 1;  // Es un comando externo
+		printf("--------cmd_path: [%s]\n", cmd_path);  // Imprimir el comando encontrado
+		free(cmd_path);  // Liberar memoria asignada por get_cmd_path
+		return (TRUE);  // Es un comando externo
 	}
-	return 0;
-}
-
-
-void assign_token_type(t_tokens *token, t_mini *mini)
-{
-	while (token != NULL)
+	else
 	{
-
-		if (token->type_token == WORD)
-		{
-			if (is_builtin_command(token->str))
-			{
-				token->type_token = BUILTINS;
-				printf("Asignado como BUILTINS: %s\n", token->str);
-			}
-			else if (is_cmd_external(mini, token->str))
-			{
-				token->type_token = CMD_EXTERNAL;
-				printf("Asignado como CMD_EXTERNAL: %s\n", token->str);
-			}
-			else
-			{
-				token->type_token = WORD;
-				printf("Asignado como WORD: %s\n", token->str);
-			}
-
-		}
-
-		token = token->next;
+		printf("--------cmd_path: [NULL]\n");
+		return (FALSE);
 	}
-
 }
 

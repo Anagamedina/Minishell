@@ -83,7 +83,7 @@ void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*tokenize_list(char **tokens);
-t_list		*generate_token_list(char *line, t_mini *mini);
+t_list *generate_token_list(char *line);
 
 //************** TOKEN_FREE.c ********************/
 
@@ -172,14 +172,14 @@ t_cmd   	*cmd_new(char *str, char **paths);
 char 		**get_path(char **env);
 int 		main(int argc, char **argv, char **env);
 void 		print_paths(char **paths);
-char 		*get_cmd_path(char *cmd, char **paths);
+char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(char **envp);
 char 		**lst_to_arr(t_list *lst, char **envp);
-int 		is_cmd_external(t_mini *mini,  char *cmd);
-void 		assign_token_type(t_tokens *token, t_mini *mini);
+int 		is_cmd_external(t_mini *mini, t_tokens *token);
+//int 		is_cmd_external(t_mini *mini,  char *cmd);
 //void 		update_after_pipe_to_builtin_or_external(t_list *tokens_list, t_mini *mini);
 void 		update_words_to_external(t_list *tokens_list, t_mini *mini);
 void		execute_commands(t_mini *mini);

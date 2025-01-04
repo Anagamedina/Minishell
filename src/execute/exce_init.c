@@ -18,14 +18,14 @@ static int	open_files(t_mini *mini, char **argv, int argc)
 	}
 	return (1);
 }
-t_exec *init_exec(char **envp)
+t_exec	*init_exec(char **envp)
 {
-	t_exec *exec_info;
+	t_exec	*exec_info;
 
 	exec_info = malloc(sizeof(t_exec));
 	if (!exec_info)
 		return NULL;
-
+	//exec_info->first_cmd = (t_list *) init_command();
 	exec_info->first_cmd = NULL;
 	exec_info->env_vars = lst_to_arr(NULL, envp);
 	exec_info->pipe_input_fd = -1;

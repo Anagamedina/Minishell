@@ -51,8 +51,9 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		return ;
 	}
 }
-
-void parser_tokens(t_mini *mini)
+//actualizando tokens de words a builtins o cmd externo
+//	actualizando type_token de las words de token list
+void	update_words_in_tokens(t_mini *mini)
 {
 	t_list *token_list;
 	t_tokens *curr_token;
@@ -63,9 +64,37 @@ void parser_tokens(t_mini *mini)
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
-		assign_token_type(curr_token, mini);
+
+		if (curr_token->type_token == WORD)
+		{
+			printf("Token WORD: %s\n", curr_token->str);
+			if (is_builtin_command(curr_token->str))
+			{
+				curr_token->type_token = BUILTINS;
+				printf("Asignado como BUILTINS: %s\n", curr_token->str);
+			}
+			else if (is_cmd_external(mini, curr_token))
+			{
+				curr_token->type_token = CMD_EXTERNAL;
+				printf("Asignado como CMD_EXTERNAL: %s\n", curr_token->str);
+			}
+			else
+			{
+				curr_token->type_token = WORD;
+				printf("Asignado como WORD: %s\n", curr_token->str);
+			}
+		}
 		token_list = token_list->next;
 	}
+}
+
+void	parser_tokens(t_mini *mini)
+{
+	t_list		*token_list;
+	t_tokens	*curr_token;
+
+	update_words_in_tokens(mini);
+	print_list_token(mini->token);
 
 	// Segunda pasada: Manejar relaciones entre tokens
 	token_list = mini->token;

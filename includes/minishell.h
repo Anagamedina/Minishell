@@ -103,7 +103,7 @@ typedef struct s_cmd
 
 typedef struct s_exec
 {
-	t_list           *first_cmd;
+	t_list          *first_cmd;
 	char 			**env_vars;
 	char			**paths;
 	int				pipe_input_fd;
@@ -119,7 +119,6 @@ typedef struct s_mini
 	int             chars_in_line;
 	t_list          *env;
 	t_list          *token;
-	t_list          *cmd;
 	int             exit_status;
 	t_exec			*exec;
 }                   t_mini;
