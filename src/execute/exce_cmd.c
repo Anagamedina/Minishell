@@ -70,7 +70,7 @@ static void	child_1(t_mini *mini, t_cmd *cmd, int *pipe_fd)
 	close(pipe_fd[0]);
 	dup2(mini->exec->pipe_input_fd, STDIN_FILENO);
 	close(mini->exec->pipe_input_fd);
-	execve(cmd->cmd_args[0], cmd->cmd_flags, mini->exec->env_vars);
+	execve(cmd->cmd_args[0], cmd->cmd_args, mini->exec->env_vars);
 	perror("execve failed");
 	exit(EXIT_FAILURE);
 }
@@ -82,7 +82,7 @@ static void	child_2(t_mini *mini, t_cmd *cmd, int *pipe_fd)
 	close(pipe_fd[0]);
 	dup2(mini->exec->pipe_output_fd, STDOUT_FILENO);
 	close(mini->exec->pipe_output_fd);
-	execve(cmd->next->cmd_args[0], cmd->next->cmd_flags, mini->exec->env_vars);
+	execve(cmd->next->cmd_args[0], cmd->next->cmd_args, mini->exec->env_vars);
 	perror("execve failed");
 	exit(EXIT_FAILURE);
 }

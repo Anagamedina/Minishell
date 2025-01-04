@@ -42,9 +42,9 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error al generar la lista de tokens.\n");
 			continue ;
 		}
+		minishell->exec = init_exec(envp);
 		parser_tokens(minishell);
 		printf("Lista de comandos:\n");
-		minishell->exec = init_exec(envp);
 
 		if (!minishell->exec)
 		{

@@ -14,7 +14,7 @@ t_cmd *init_command(void)
 		return (NULL);
 	new_cmd->cmd = NULL;
 	new_cmd->cmd_args = NULL;
-	new_cmd->cmd_flags = NULL;
+	new_cmd->cmd_split = NULL;
 	new_cmd->count_args = -1;
 	new_cmd->cmd_id = 0;
 	//new_cmd->redir_list = NULL;
@@ -28,61 +28,77 @@ t_cmd *init_command(void)
 // Esta función divide el comando en flags y los guarda en cmd_flags
 void process_flags(t_cmd *cmd, char *cmd_str)
 {
-	char **cmd_flags;
-	char **cmd_args;
-	int flags_count = 0;
+	char **cmd_split;
 
 	// Dividir el comando en tokens separados por espacios
-	cmd_flags = ft_split(cmd_str, ' ');
-	if (!cmd_flags)
+	cmd_split = ft_split(cmd_str, ' ');
+	if (!cmd_split)
 	{
-		perror("Error: ft_split failed");
+		perror("Error: ft_split cmd failed");
 		return;
 	}
 
-	cmd->cmd_flags = ft_calloc(1, sizeof(char *));  // Inicializa como NULL
-	if (!cmd->cmd_flags)
-	{
-		perror("Error al asignar memoria para cmd_flags");
-		free(cmd_flags);
-		return;
-	}
-	cmd->cmd_flags = cmd_args;
+	//cmd->cmd_flags = ft_calloc(1, sizeof(char *));
+	//if (!cmd->cmd_flags)
+	//{
+		//perror("Error al asignar memoria para cmd_flags");
+		//free(cmd_split);
+		//return;
+	//}
+	cmd->cmd_split = cmd_split;
 }
-t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
+
+static t_cmd *create_new_external_command(t_tokens *token, char **paths, int cmd_id)
 {
 	t_cmd *new_cmd;
 	char *cmd_path;
 
-	new_cmd = init_command();
+	if (!token || !paths)
+	{
+		fprintf(stderr, "Error: Argumentos inválidos en create_new_external_command.\n");
+		return NULL;
+	}
+	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return (NULL);
-
-	// Guardar el nombre del comando
-	new_cmd->cmd = ft_strdup(current_token->str);
-	if (!new_cmd->cmd)
 	{
-		free_command(new_cmd);
-		return (NULL);
+		perror("Error: malloc falló");
+		return NULL;
 	}
+	// Procesar los flags del comando
+	process_flags(new_cmd, token->str);
+	if (!new_cmd->cmd_split)
+	{
+		free(new_cmd);
+		return NULL;
+	}
+	cmd_path = get_cmd_path(new_cmd->cmd_split[0], paths);
+	if (cmd_path == NULL)
+		return (handle_cmd_error(new_cmd));
+	// Asignar el path resuelto
+	new_cmd->cmd = cmd_path;
+	// Inicializar otros campos de la estructura
 	new_cmd->cmd_id = cmd_id;
-	if (current_token->type_token == BUILTINS)
-		return (new_cmd);
-	if (current_token->type_token == CMD_EXTERNAL)
-	{
-		process_flags(new_cmd,new_cmd->cmd);
-		cmd_path = get_cmd_path(new_cmd->cmd, paths);
-		if (!cmd_path)
-		{
-			fprintf(stderr, "Error: Comando no encontrado: %s\n", new_cmd->cmd);
-			free_command(new_cmd);
-			return (NULL);
-		}
-		free(new_cmd->cmd);
-		new_cmd->cmd = cmd_path;
-	}
+	new_cmd->cmd_args = new_cmd->cmd_split; // Los argumentos ya están procesados
 
 	return (new_cmd);
+}
+
+static t_cmd *create_new_builtin_command(t_tokens *token, int cmd_id)
+{
+	t_cmd *new_cmd = malloc(sizeof(t_cmd));
+	if (!new_cmd)
+		return NULL;
+
+	new_cmd->cmd_id = cmd_id;
+	new_cmd->cmd = ft_strdup(token->str);
+	if (!new_cmd->cmd)
+	{
+		free(new_cmd);
+		return NULL;
+	}
+	new_cmd->cmd_args = NULL;
+	//new_cmd->redir_list = NULL;
+	return new_cmd;
 }
 
 //una funcion que coja las paths como parametros para añadirlo en la linked list de comandos
@@ -102,36 +118,46 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		printf("**********[%s]\n", token->str);
+		printf("Procesando token: '%s'\n", token->str);
+		printf("Tipo de token: %d\n", token->type_token);
 
-		// Si el token es un cmd externo o Builtin
-		if (token->type_token == BUILTINS || token->type_token == CMD_EXTERNAL)
+		// Crear nodo según el tipo de comando
+		if (token->type_token == CMD_EXTERNAL)
+			new_cmd = create_new_external_command(token, paths, cmd_id);
+		else if (token->type_token == BUILTINS)
+			new_cmd = create_new_builtin_command(token, cmd_id);
+		else
 		{
-			new_cmd = create_new_command(token, paths, cmd_id);
-			if (!new_cmd)
-			{
-				fprintf(stderr, "Error: Falló la creación del comando.\n");
-				free_cmd_list(commands_list);
-				return NULL;
-			}
-
-			new_node = ft_lstnew(new_cmd);
-			if (!new_node)
-			{
-				fprintf(stderr, "Error: No se pudo crear el nodo del comando.\n");
-				free_command(new_cmd);
-				free_cmd_list(commands_list);
-				return NULL;
-			}
-
-			ft_lstadd_back(&commands_list, new_node);
-			cmd_id++;
+			current = current->next;
+			continue;
 		}
+
+		if (!new_cmd)
+		{
+			fprintf(stderr, "Error: Falló la creación del comando '%s'.\n", token->str);
+			free_cmd_list(commands_list);
+			return NULL;
+		}
+
+		// Crear nodo de la lista enlazada
+		new_node = ft_lstnew(new_cmd);
+		if (!new_node)
+		{
+			fprintf(stderr, "Error: No se pudo crear el nodo del comando.\n");
+			free_command(new_cmd);
+			free_cmd_list(commands_list);
+			return NULL;
+		}
+
+		ft_lstadd_back(&commands_list, new_node);
+		cmd_id++;
 		current = current->next;
 	}
 
-	return commands_list;
+	return (commands_list);
 }
+
+
 
 //pensar si usar t_mini y pasarle la linked list de comandos
 int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
@@ -173,3 +199,41 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 	}
 	return 0;
 }
+
+
+
+/*t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
+{
+	t_cmd *new_cmd;
+	char *cmd_path;
+
+	new_cmd = init_command();
+	if (!new_cmd)
+		return (NULL);
+
+	// Guardar el nombre del comando
+	new_cmd->cmd = ft_strdup(current_token->str);
+	if (!new_cmd->cmd)
+	{
+		free_command(new_cmd);
+		return (NULL);
+	}
+	new_cmd->cmd_id = cmd_id;
+	if (current_token->type_token == BUILTINS)
+		return (new_cmd);
+	if (current_token->type_token == CMD_EXTERNAL)
+	{
+		process_flags(new_cmd,new_cmd->cmd);
+		cmd_path = get_cmd_path(new_cmd->cmd, paths);
+		if (!cmd_path)
+		{
+			fprintf(stderr, "Error: Comando externo '%s' no encontrado en PATH.\n", new_cmd->cmd);
+			free_command(new_cmd);
+			return (NULL);
+		}
+		free(new_cmd->cmd);
+		new_cmd->cmd = cmd_path;
+	}
+
+	return (new_cmd);
+}*/

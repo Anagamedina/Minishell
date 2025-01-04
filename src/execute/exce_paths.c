@@ -33,6 +33,8 @@ char	*get_cmd_path(char *cmd, char **paths)
 	return ft_strdup("Command not found");
 }
 
+
+
 //char **paths = { "/usr/bin", "/bin", "/usr/local/bin", NULL };
 char	**get_path(char **env)
 {
@@ -64,6 +66,3 @@ char	**get_path(char **env)
 	}
 	return (paths);
 }
-
-
- 

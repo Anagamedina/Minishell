@@ -36,14 +36,3 @@ int error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list)
 	}
 	return (TRUE);
 }
-
-// Maneja errores al crear un nuevo comando o nodo. Libera memoria de comandos y nodos creados previamente, limpia la lista y devuelve NULL.
-t_list *handle_error(t_list *cmds_list, t_list *new_cmd, t_list *new_node)
-{
-	if (new_cmd)
-		free_command((t_cmd *)new_cmd);
-	if (new_node)
-		free(new_node);
-	ft_lstclear(&cmds_list, (void (*)(void *)) free_command);
-	return (NULL);
-}

@@ -185,6 +185,9 @@ void 		update_words_to_external(t_list *tokens_list, t_mini *mini);
 void		execute_commands(t_mini *mini);
 int			process_input(t_mini *mini, char *input);
 void		handle_commands(t_mini *mini);
+void 		process_flags(t_cmd *cmd, char *cmd_str);
+t_cmd 		*init_command(void);
+t_cmd		*handle_cmd_error(t_cmd *new);
 
 //*************redis**************/
 
