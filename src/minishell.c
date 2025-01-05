@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **envp)
 
 		parser_tokens(minishell);
 		printf(" Lista de comandos:\n");
-		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
+		minishell->exec->first_cmd = create_cmd_list(minishell->token);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");

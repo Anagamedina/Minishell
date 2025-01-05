@@ -24,7 +24,7 @@ t_cmd *init_command(void)
 	return (new_cmd);
 }
 
-static t_cmd *create_new_builtin_command(t_tokens *token, int cmd_id)
+/*static t_cmd *create_new_builtin_command(t_tokens *token, int cmd_id)
 {
 	t_cmd *new_cmd = init_command();
 
@@ -40,10 +40,38 @@ static t_cmd *create_new_builtin_command(t_tokens *token, int cmd_id)
 	}
 	//new_cmd->is_builtin = 1; // Indicar que este comando es un builtin
 	return (new_cmd);
+}*/
+
+t_cmd *create_new_command(t_tokens *token, int cmd_id)
+{
+	t_cmd *new_cmd = init_command();
+
+	if (!new_cmd)
+		return NULL;
+
+	new_cmd->cmd_id = cmd_id;
+	new_cmd->cmd = ft_strdup(token->str);
+	if (!new_cmd->cmd)
+	{
+		free_command(new_cmd);
+		return NULL;
+	}
+
+	// Si es un builtin, podrías configurar alguna bandera o campo específico
+	if (token->type_token == BUILTINS)
+	{
+		new_cmd->is_builtin = 1; // Marcar como builtin
+	}
+	else
+	{
+		new_cmd->is_builtin = 0; // Es un comando externo
+	}
+
+	return new_cmd;
 }
 
 
-t_list *create_cmd_list(t_list *token_list, char **paths)
+t_list *create_cmd_list(t_list *token_list)
 {
 	t_list *commands_list = NULL;
 	t_list *new_node = NULL;
@@ -62,13 +90,9 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 		printf("Tipo de token: %d\n", token->type_token);
 
 		// Crear nodo según el tipo de comando
-		if (token->type_token == CMD_EXTERNAL)
+		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
-			new_cmd = create_new_builtin_command(token, cmd_id);
-		}
-		else if (token->type_token == BUILTINS)
-		{
-			new_cmd = create_new_builtin_command(token, cmd_id);
+			new_cmd = create_new_command(token, cmd_id);
 		}
 		else
 		{

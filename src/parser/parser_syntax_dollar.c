@@ -94,7 +94,7 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*curr_token;
 
 	update_words_in_tokens(mini);
-	print_list_token(mini->token);
+	//print_list_token(mini->token);
 
 	// Segunda pasada: Manejar relaciones entre tokens
 	token_list = mini->token;
