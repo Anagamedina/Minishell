@@ -14,7 +14,7 @@ void	print_list_commands(t_list *cmd_list)
 	int		i;
 
 	current = cmd_list;
-//	i = 0;
+	i = 0;
 	while (current != NULL)
 	{
 		cmd = (t_cmd *)current->content;

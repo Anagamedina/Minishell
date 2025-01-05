@@ -24,24 +24,6 @@ t_cmd *init_command(void)
 	return (new_cmd);
 }
 
-/*static t_cmd *create_new_builtin_command(t_tokens *token, int cmd_id)
-{
-	t_cmd *new_cmd = init_command();
-
-	if (!new_cmd)
-		return NULL;
-
-	new_cmd->cmd_id = cmd_id;
-	new_cmd->cmd = ft_strdup(token->str);
-	if (!new_cmd->cmd)
-	{
-		free_command(new_cmd);
-		return NULL;
-	}
-	//new_cmd->is_builtin = 1; // Indicar que este comando es un builtin
-	return (new_cmd);
-}*/
-
 t_cmd *create_new_command(t_tokens *token, int cmd_id)
 {
 	t_cmd *new_cmd = init_command();
@@ -57,7 +39,6 @@ t_cmd *create_new_command(t_tokens *token, int cmd_id)
 		return NULL;
 	}
 
-	// Si es un builtin, podrías configurar alguna bandera o campo específico
 	if (token->type_token == BUILTINS)
 	{
 		new_cmd->is_builtin = 1; // Marcar como builtin
