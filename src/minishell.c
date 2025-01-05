@@ -44,7 +44,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 
-		// TODO: problems here
 
 		// TODO: create in print exec
 		minishell->exec = init_exec(envp);
@@ -75,76 +74,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-/*int	process_input(t_mini *mini, char *input)
-{
-	mini->token = generate_token_list(input, mini);
-	if (!mini->token)
-	{
-		fprintf(stderr, "Error al generar la lista de tokens.\n");
-		return (0);
-	}
-
-	parser_tokens(mini);
-	mini->exec->first_cmd = create_cmd_list(mini->token, mini->exec->paths);
-	if (!mini->exec->first_cmd)
-	{
-		fprintf(stderr, "Error al crear la lista de comandos.\n");
-		//free_token_list(mini->token);
-		return (0);
-	}
-
-	if (add_details_to_cmd_list(mini->exec->first_cmd, mini->token) == -1)
-	{
-		fprintf(stderr, "Error al añadir detalles a la lista de comandos.\n");
-		free_cmd_list(mini->exec->first_cmd);
-		//free_token_list(mini->token);
-		return (0);
-	}
-
-	execute_commands(mini);
-	free_cmd_list(mini->exec->first_cmd);
-	//free_token_list(mini->token);
-	return (1);
-}
-
-
-
-
-
-
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_mini	*minishell;
-	char	*input;
-
-	minishell = init_mini_list(envp);
-	if (!minishell)
-	{
-		perror("Error al inicializar minishell");
-		return (EXIT_FAILURE);
-	}
-
-	while (1)
-	{
-		input = read_input();
-		if (!input || !check_quotes_line(input))
-		{
-			fprintf(stderr, "Error en el input o comillas mal balanceadas.\n");
-			free(input);
-			continue;
-		}
-
-		if (!process_input(minishell, input))
-		{
-			fprintf(stderr, "Error procesando el input.\n");
-			free(input);
-			continue;
-		}
-		free(input);
-	}
-	//cleanup_mini(minishell);
-	return (EXIT_SUCCESS);
-}
-*/

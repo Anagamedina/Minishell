@@ -15,18 +15,15 @@ int is_cmd_external(t_mini *mini, t_tokens *token)
 	if (!mini || !mini->token)
 		return FALSE;
 
-	// Verificar que las rutas estén disponibles
 	if (!mini->exec || !mini->exec->paths)
 		return FALSE;
 
-	// Buscar el path del comando
 	cmd_path = get_cmd_path(token, mini->exec->paths);
-
 	if (cmd_path != NULL)
 	{
-		printf("--------cmd_path: [%s]\n", cmd_path);  // Imprimir el comando encontrado
-		free(cmd_path);  // Liberar memoria asignada por get_cmd_path
-		return (TRUE);  // Es un comando externo
+		printf("--------cmd_path: [%s]\n", cmd_path);
+		free(cmd_path);
+		return (TRUE);
 	}
 	else
 	{

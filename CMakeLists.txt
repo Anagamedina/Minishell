@@ -51,6 +51,7 @@ add_executable(minishell
         src/execute/get_input.c
         src/execute/free_errors.c
         src/execute/exce_type.c
+        src/execute/tests.c
 )
 # link with readline library
 target_link_libraries(minishell readline)
