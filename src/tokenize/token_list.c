@@ -170,11 +170,14 @@ t_list	*generate_token_list(char *line)
 		return (NULL);
 	}
 	tokens_list = tokenize_list(tokens);
+
 	if (tokens_list == NULL)
 	{
 		ft_lstclear(&tokens_list, free);
 		return (NULL);
 	}
 	identify_commands(tokens_list);
+//	print_list_token_str(tokens_list);
+
 	return (tokens_list);
 }

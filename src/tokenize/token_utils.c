@@ -164,6 +164,7 @@ static void	skip_whitespace(const char *str, int *i)
 		(*i)++;
 }
 
+// TODO: correginr count_words :(
 static int	count_words(char *str)
 {
 	int	i;
@@ -173,6 +174,7 @@ static int	count_words(char *str)
 	wc = 0;
 	while (str[i])
 	{
+		char tmp = str[i];
 		skip_whitespace(str, &i);
 		if (str[i] == BACKSLASH || str[i] == D_QUOTE)
 			wc += skip_quotes(str, &i);
