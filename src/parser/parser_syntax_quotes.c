@@ -85,7 +85,7 @@ int	handle_special_quotes(t_tokens *token)
 			else
 				return (FALSE);
 		}
-		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
+//		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
 		i ++;
 	}
 

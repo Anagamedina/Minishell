@@ -164,6 +164,12 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);
+	int i = 0;
+	while (tokens[i] != NULL)
+	{
+		printf("[%d] [%s]\n", i, tokens[i]);
+		i ++;
+	}
 	if (tokens == NULL)
 	{
 		free(tokens);
