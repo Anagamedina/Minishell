@@ -21,14 +21,11 @@ int is_cmd_external(t_mini *mini, t_tokens *token)
 	cmd_path = get_cmd_path(token, mini->exec->paths);
 	if (cmd_path != NULL)
 	{
+		//mini->exec->first_cmd = cmd_path;
 		printf("--------cmd_path: [%s]\n", cmd_path);
-		free(cmd_path);
+		//free(cmd_path);
 		return (TRUE);
 	}
-	else
-	{
-		printf("--------cmd_path: [NULL]\n");
-		return (FALSE);
-	}
+	return (FALSE);
 }
 

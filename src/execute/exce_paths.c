@@ -8,16 +8,17 @@
 -Forma la ruta completa para el comando combinando la ruta del directorio con el comando.
 -Verifica si el archivo existe y es ejecutable usando funciones como access o stat.*/
 
-
+//TODO: corregir la ruta de solamente ls , pero no de los args con -la
 char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
 	char		*full_path;
 	int 		i;
 
-	// Retorna una copia del comando si es válido
+	printf("Intentando acceder al comando como ruta absoluta: %s\n", token->str);
 	if (access(token->str, X_OK) == 0)
 		return ft_strdup(token->str);
+	printf("comando: %s\n", token->str);
 
 	i = 0;
 	while (paths && paths[i])
@@ -28,6 +29,8 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 
 		if (access(cmd_path, X_OK) == 0)
 			return cmd_path;
+
+		printf("cmd_path: %s\n", cmd_path);
 
 		free(cmd_path);
 		i++;

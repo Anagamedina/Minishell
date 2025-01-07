@@ -24,7 +24,43 @@ t_cmd *init_command(void)
 	return (new_cmd);
 }
 
-t_cmd *create_new_command(t_tokens *token, int cmd_id)
+t_cmd *create_new_command(t_tokens *token, int cmd_id, char **paths)
+{
+	t_cmd *new_cmd = init_command();
+
+	if (!new_cmd)
+		return NULL;
+
+	new_cmd->cmd_id = cmd_id;
+	new_cmd->cmd = ft_strdup(token->str);
+	if (!new_cmd->cmd)
+	{
+		free_command(new_cmd);
+		return NULL;
+	}
+
+	if (token->type_token == BUILTINS)
+	{
+		new_cmd->is_builtin = 1; // Marcar como builtin
+	}
+	else if (token->type_token == CMD_EXTERNAL)
+	{
+		new_cmd->is_external = 1; // Marcar como comando externo
+
+		// Resolver la ruta del comando
+		new_cmd->cmd_path = get_cmd_path(token, paths);
+		if (!new_cmd->cmd_path)
+		{
+			fprintf(stderr, "Error: Comando externo '%s' no encontrado en las rutas proporcionadas.\n", token->str);
+			free_command(new_cmd);
+			return NULL;
+		}
+	}
+
+	return new_cmd;
+}
+
+/*t_cmd *create_new_command(t_tokens *token, int cmd_id)
 {
 	t_cmd *new_cmd = init_command();
 
@@ -45,14 +81,14 @@ t_cmd *create_new_command(t_tokens *token, int cmd_id)
 	}
 	else
 	{
-		new_cmd->is_builtin = 0; // Es un comando externo
+		new_cmd->is_external  = 1;
 	}
 
 	return new_cmd;
-}
+}*/
 
 
-t_list *create_cmd_list(t_list *token_list)
+t_list *create_cmd_list(t_list *token_list, char **paths)
 {
 	t_list *commands_list = NULL;
 	t_list *new_node = NULL;
@@ -73,7 +109,7 @@ t_list *create_cmd_list(t_list *token_list)
 		// Crear nodo según el tipo de comando
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
-			new_cmd = create_new_command(token, cmd_id);
+			new_cmd = create_new_command(token, cmd_id, paths);
 		}
 		else
 		{

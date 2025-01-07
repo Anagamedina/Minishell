@@ -54,19 +54,18 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
-		printf(" Lista de comandos:\n");
-		minishell->exec->first_cmd = create_cmd_list(minishell->token);
+		//printf(" Lista de comandos:\n");
+		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");
 			continue ;
 		}
-		print_list_token_str(minishell->token);
+		//print_list_token_str(minishell->token);
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
 		print_list_commands(minishell->exec->first_cmd);
-		printf("Lista de tokens:\n");
 		//execute_commands(minishell);
 		handle_commands(minishell);
 		free_cmd_list(minishell->exec->first_cmd);
