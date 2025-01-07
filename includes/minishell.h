@@ -113,7 +113,6 @@ typedef struct s_exec
 
 }		t_exec;
 
-
 typedef struct s_mini
 {
 	int             bash_lvl;

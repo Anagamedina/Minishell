@@ -55,7 +55,7 @@ void	handle_commands(t_mini *mini)
 			}
 			if (pid == 0) // Proceso hijo
 			{
-				execute_external(cmd, mini->exec->env_vars);
+				execute_external(cmd, lst_to_arr(mini->env));
 			}
 			wait(NULL); // Esperar al hijo
 		}

@@ -46,6 +46,9 @@ int	main(int argc, char **argv, char **envp)
 
 
 		// TODO: create in print exec
+		char **envp = lst_to_arr(minishell->env);
+
+
 		minishell->exec = init_exec(envp);
 		if (!minishell->exec)
 		{
@@ -54,7 +57,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
-		//printf(" Lista de comandos:\n");
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{

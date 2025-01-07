@@ -103,10 +103,7 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		printf("Procesando token: '%s'\n", token->str);
-		printf("Tipo de token: %d\n", token->type_token);
 
-		// Crear nodo según el tipo de comando
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			new_cmd = create_new_command(token, cmd_id, paths);
@@ -150,7 +147,6 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-		printf("Procesando token: '%s' de tipo: %d\n", token->str, token->type_token);
 
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
@@ -158,12 +154,9 @@ int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 			while (cmd_node)
 			{
 				cmd = (t_cmd *)cmd_node->content;
-				printf("Comparando con comando: '%s'\n", cmd->cmd);
 
-				//if (strcmp(cmd->cmd, token->str) == 0)
 				if (strcmp(cmd->cmd, token->str) == 0)
 				{
-					printf("Comando encontrado: '%s'\n", cmd->cmd);
 					count_args(current, cmd);
 					add_args(&cmd, current);
 					break;

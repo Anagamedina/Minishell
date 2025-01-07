@@ -25,8 +25,6 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		tmp = remove_quotes_str(token->str, S_QUOTE);
 		token->str = ft_strdup(tmp);
 		
-		printf("token->str: [%s]\n", token->str);
-
 		return ;
 	}
 	if (handle_special_quotes(token))
@@ -60,7 +58,6 @@ void	update_words_in_tokens(t_mini *mini)
 
 	token_list = mini->token;
 
-	// Primera pasada: Clasificar tokens
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
@@ -71,17 +68,14 @@ void	update_words_in_tokens(t_mini *mini)
 			if (is_builtin_command(curr_token->str))
 			{
 				curr_token->type_token = BUILTINS;
-				printf("Asignado como BUILTINS: %s\n", curr_token->str);
 			}
 			else if (is_cmd_external(mini, curr_token))
 			{
 				curr_token->type_token = CMD_EXTERNAL;
-				printf("Asignado como CMD_EXTERNAL: %s\n", curr_token->str);
 			}
 			else
 			{
 				curr_token->type_token = WORD;
-				printf("Asignado como WORD: %s\n", curr_token->str);
 			}
 		}
 		token_list = token_list->next;

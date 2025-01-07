@@ -176,7 +176,7 @@ void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(char **envp);
-char 		**lst_to_arr(t_list *lst, char **envp);
+char **lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
 void		execute_commands(t_mini *mini);
 void		handle_commands(t_mini *mini);
