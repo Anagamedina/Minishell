@@ -6,11 +6,12 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/03 12:38:10 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/08 11:00:27 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "prototype.h"
 
 char	*read_input(void)
 {
@@ -20,7 +21,6 @@ char	*read_input(void)
 	if (input && *input)
 	{
 		add_history(input);
-		//printf("line: %s\n", input);
 	}
 	return (input);
 }
@@ -42,9 +42,9 @@ int	check_quotes_line(const char *line)
 	double_quotes = 0;
 	while (line[i] != '\0')
 	{
-		if (line[i] == '\"')
+		if (line[i] == D_QUOTE)
 			double_quotes ++;
-		else if (line[i] == '\'')
+		else if (line[i] == S_QUOTE)
 			single_quotes ++;
 		i++;
 	}
@@ -54,4 +54,42 @@ int	check_quotes_line(const char *line)
 	return (TRUE);
 }
 
+/**	echo "" hello ""
+ * [0] = echo
+ * [1] = "" hello ""
+ * [2] = NULL
+ */
 
+void	check_final_dquote(const char *line, int *i)
+{
+	// (*i)++;
+	while (line[*i])
+		(*i)++;
+	if (line[*i] == D_QUOTE)
+		(*i)++;
+}
+
+void	get_size_words_with_pivote(const char *line)
+{
+	int i;
+	int double_quotes;
+	int single_quotes;
+
+	i = 0;
+	single_quotes = 0;
+	double_quotes = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == D_QUOTE)
+		{
+			// try to find the last dquote in the line
+			check_final_dquote(line, &i);
+
+		}
+		else if (line[i] == S_QUOTE)
+		{
+
+		}
+		i++;
+	}
+}

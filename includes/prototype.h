@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 16:00:03 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/08 10:50:16 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
 //*************INPUT***********/
 char		*read_input(void);
 int			check_quotes_line(const char *line);
+void		get_size_words_with_pivote(const char* line);
 void		parser_tokens(t_mini *mini);
 
 //************** INIT_COMMAND.C ********/
