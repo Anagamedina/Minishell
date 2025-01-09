@@ -10,9 +10,9 @@
 
 int	is_type_of_operator(t_tokens *token)
 {
-	return (token->type_token == PIPE || \
+	return (token->type_token == PIPE_CHAR || \
 		token->type_token == REDIR_IN || \
-		token->type_token == REDIR_OUT|| \
+		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND);
 }
 

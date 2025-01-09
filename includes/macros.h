@@ -27,6 +27,7 @@
 # define QUESTION_MARK '?'
 # define BACKSLASH '\\'
 # define SPACE ' '
+# define PIPE_CHAR '|'
 
 # define ECHO "echo"
 # define EXPORT "export"

@@ -56,8 +56,7 @@ int	has_dollar_between_double_and_single_quotes(const char *str)
  * asumimos que d_quote y s_quotes estan cerrados
  */
 
-//	TODO: terminar de mejorar la función para contenplar empezar de derecha a izquierda
-// echo """ 'hello '"""
+// echo " 'hello '"
 // cuando sabe que el siguiente es un squote no entra al while y no verifica si hay un squote
 int	handle_special_quotes(t_tokens *token)
 {
@@ -85,11 +84,8 @@ int	handle_special_quotes(t_tokens *token)
 			else
 				return (FALSE);
 		}
-//		printf("iteracion:(%d) | dquotes: [%d]\n", i, count_d_quotes);
 		i ++;
 	}
-
-	// Verificación final: comillas dobles deben ser impares y no debe haber $
 	return (FALSE);
 }
 

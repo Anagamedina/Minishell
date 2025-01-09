@@ -1,8 +1,6 @@
 
 #include "../../includes/minishell.h"
 
-int handle_special_balanced_dquotes(t_tokens *token);
-
 int	check_special_c(char c)
 {
 	if (c == '=' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
@@ -23,8 +21,8 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	/**
 	 * Case single quotes:
 	 * @example
-	 * Input: "\'example_token\'";
-	 * Output: "example_token";
+	 * Input: echo \'example_token\'
+	 * Output: example_token;
 	 *
 	 * remove comillas simples ('),
 	 * verificar con handle_single_quote
@@ -42,16 +40,14 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 
 	/**
-	 * Caso Comillas Especiales:
+	 * Case special quotes:
 	 *
 	 * Case valid: echo "'$USER hello'"
 	 * Case valid: echo " '$USER hello ' "
-	 * Case valid: echo """'$USER'"""
 	 *
 	 * Case invalid: echo "" ' $USER ' ""
 	 *
 	 * gestion de comillas dobles impares(impares expanden las varibales)
-	 *
 	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
 	 */
 
@@ -80,12 +76,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * echo " "" " '$USER ' " "" "
 	 * echo ""'helo $USER 0-9' ""
 	 */
+/*
 	if (handle_special_balanced_dquotes(token))
 	{
 		printf("entro en handle_special_balanced_dquotes\n");
 
 	}
-
+*/
 
 	/**
 	 *
@@ -102,7 +99,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 
 //	TODO: modificar para manejar comillas dobles par veces
 //	no pudne haber dolar entre d_quotes
-//	echo """        """
+//	echo "        "
 	if (has_even_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list);
@@ -110,6 +107,16 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	}
 }
 
+/**
+ * Parses and processes tokens for built-in commands followed by words.
+ *
+ * If the first token is of type `BUILTINS` and followed by `WORD` tokens,
+ * it processes each `WORD` token using `handle_tokens` until a non-`WORD`
+ *
+ * @param mini A pointer to `t_mini` containing:
+ *             - `token`: List of tokens to parse.
+ *             - `env`: Environment variable list for processing.
+ */
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;

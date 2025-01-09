@@ -40,8 +40,12 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell->token == NULL)
 			continue ;
 //		print_list_token(minishell->token);
+
+//		export "   " hello world '$USER' "abc"
 		parser_tokens(minishell);
-//		print_list_token_str(minishell->token);
+
+//		print_list_token(minishell->token);
+		print_list_token_str(minishell->token);
 		// minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		// print_list_commands(minishell->cmds);
 		// print_list_token(minishell->token);

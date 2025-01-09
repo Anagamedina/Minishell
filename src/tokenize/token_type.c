@@ -27,7 +27,7 @@ int	set_token_type(char *str)
 	else if (strcmp(str, "2>>") == 0)
 		return (REDIR_ERR_APPEND);
 	else if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
+		return (PIPE_CHAR);
 	else if (ft_strcmp(str, ";") == 0)
 		return (DELIMITER);
 	else if (str && ft_strlen(str) > 0)
@@ -118,7 +118,7 @@ void	update_after_pipe_to_builtin(t_list *tokens_list)
 	while (current)
 	{
 		curr_token = (t_tokens *)current->content;
-		if (curr_token->type_token == PIPE)
+		if (curr_token->type_token == PIPE_CHAR)
 			after_pipe = 1;
 		else if (after_pipe && curr_token->type_token == WORD)
 		{

@@ -126,7 +126,7 @@ char	**ft_split_quote(char *str)
 		j = i;
 		if (str[i] == BACKSLASH || str[i] == D_QUOTE)
 			skip_quotes(str, &i);
-		if (str[i] == SEMICOLON || str[i] == PIPE)
+		if (str[i] == SEMICOLON || str[i] == PIPE_CHAR)
 			i++;
 		else
 		{
@@ -142,20 +142,37 @@ char	**ft_split_quote(char *str)
 }
 */
 
+static	int	get_pareja_quote(int *i, const char *str, char c)
+{
+	(*i)++; // Saltar la primera comilla
+
+	while (str[*i])
+	{
+		if (str[*i] == c)
+		{
+			return (*i); // Encontramos la pareja
+		}
+		(*i)++;
+	}
+	return (-1);
+}
+
+//echo "hello "abc" "
 static int	skip_quotes(const char *str, int *i)
 {
-	char	quote;
+	char quote;
+	int pareja;
 
 	quote = str[*i];
-	(*i)++;
-	while (str[*i] && str[*i] != quote)
-		(*i)++;
-	if (str[*i] == quote)
+	pareja = get_pareja_quote(i, str, quote);
+
+	if (pareja == -1)
 	{
-		(*i)++;
-		return (TRUE);
+		printf("Error: Comillas sin cerrar\n");
+		return (FALSE);
 	}
-	return (FALSE);
+	*i = pareja + 1; // Saltar la pareja dle final
+	return (TRUE);
 }
 
 static void	skip_whitespace(const char *str, int *i)
@@ -164,36 +181,13 @@ static void	skip_whitespace(const char *str, int *i)
 		(*i)++;
 }
 
-// Valida y salta comillas correctamente emparejadas
-static int validate_and_skip_quotes(const char *str, int *i) {
-	char quote;
-	int j;
-
-	if (str[*i] == '\'' || str[*i] == '\"') {
-		quote = str[*i]; // Tipo de comilla
-		(*i)++;          // Saltamos la comilla inicial
-		j = *i;
-
-		// Recorremos hasta encontrar la comilla de cierre
-		while (str[j] && str[j] != quote) {
-			// Si encontramos una comilla diferente dentro, no la consideramos válida
-			if ((str[j] == '\'' || str[j] == '\"') && str[j] != quote)
-				return (FALSE);
-			j++;
-		}
-
-		// Si no hay una comilla de cierre, retornamos error
-		if (str[j] != quote)
-			return (FALSE);
-
-		// Saltamos la comilla de cierre
-		*i = j + 1;
+static int	is_whitespace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\v' || c == '\f')
 		return (TRUE);
-	}
-	return (FALSE); // No es una comilla
+	return (FALSE);
 }
 
-// TODO: correginr count_words :(
 /*
 static int	count_words(char *str)
 {
@@ -202,62 +196,71 @@ static int	count_words(char *str)
 
 	i = 0;
 	wc = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		char tmp = str[i];
 		skip_whitespace(str, &i);
-		if (str[i] == BACKSLASH || str[i] == D_QUOTE)
-			wc += skip_quotes(str, &i);
-		else if (str[i] == SEMICOLON || str[i] == PIPE)
+		if (str[i] == '\0')
+			break;
+//		if (str[i] == D_QUOTE || str[i] == BACKSLASH || str[i] == S_QUOTE)
+		if (str[i] == D_QUOTE || str[i] == S_QUOTE)
 		{
-			wc++;
-			i++;
+			if (skip_quotes(str, &i))
+			{
+				wc ++;
+			}
 		}
-		else if (str[i])
+		else if (str[i] == SEMICOLON || str[i] == PIPE_CHAR)
 		{
-			wc++;
-			while (str[i] && str[i] != ' ' && str[i] != '\t' \
-			&& str[i] != '\n' && str[i] != ';' && str[i] != '|')
-				i++;
+			wc ++;
+			i ++;
+		}
+		else
+		{
+			wc ++;
+//			TODO: ver si ispace is allowed library
+//			while (str[i] && !isspace(str[i]) && str[i] != SEMICOLON &&
+			while (str[i] && !is_whitespace(str[i]) && str[i] != SEMICOLON &&
+				   str[i] != PIPE_CHAR && str[i] != D_QUOTE && str[i] != BACKSLASH \
+				   && str[i] != S_QUOTE)
+			{
+				i ++;
+			}
 		}
 	}
 	return (wc);
 }
 */
 
-static int	count_words(char *str)
+static int count_words(char *str)
 {
-	int	i;
-	int	wc;
+	int i = 0;
+	int wc = 0;
 
-	i = 0;
-	wc = 0;
-	while (str[i])
-	{
-		skip_whitespace(str, &i); // Saltar espacios
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			// Usar validate_and_skip_quotes para validar y avanzar el índice
-			if (validate_and_skip_quotes(str, &i))
+	while (str[i] != '\0') {
+		skip_whitespace(str, &i);
+
+		if (str[i] == '\0')
+			break;
+
+		if (str[i] == D_QUOTE || str[i] == S_QUOTE) {
+			if (skip_quotes(str, &i))
 				wc++;
-			else
-				return (-1); // Error: comillas mal emparejadas
-		}
-		else if (str[i] == ';' || str[i] == '|')
-		{
+		} else if (str[i] == SEMICOLON || str[i] == PIPE_CHAR) {
 			wc++;
 			i++;
-		}
-		else if (str[i])
-		{
+		} else {
 			wc++;
-			while (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n' \
-				&& str[i] != ';' && str[i] != '|')
-				i++;
+			while (str[i] && !is_whitespace(str[i]) &&
+				   str[i] != SEMICOLON && str[i] != PIPE_CHAR &&
+				   str[i] != D_QUOTE && str[i] != S_QUOTE)
+			{
+				i ++;
+			}
 		}
 	}
 	return (wc);
 }
+
 
 static int	init_vars_split(t_split_data *data, char *str)
 {
@@ -266,19 +269,67 @@ static int	init_vars_split(t_split_data *data, char *str)
 	data->start = 0;
 	data->end = 0;
 	data->wc = count_words(str);
-	if (data->wc == -1) {
-		printf("Error: comillas no emparejadas.\n");
-		return (-1);
-	}
+	printf("wcs: [%d]\n", data->wc);
 	data->out = (char **)malloc(sizeof(char *) * (data->wc + 1));
 	if (!data->out)
 		return (-1);
 	return (0);
 }
 
+int	is_special_char(char c)
+{
+	if(c == SPACE || c == TAB || c == NEWLINE || c == SEMICOLON || c == PIPE_CHAR)
+		return (TRUE);
+	return (FALSE);
+}
+
 //**********MAIN FUNCTION***************/
 
-char	**ft_split_quote(char *str) {
+// echo "hello 'abc '" '  qwer' $USER
+// "hello 'abc '" '  qwer' $USER
+//	TODO: this case no work well: [   echo ' qwer' $USER   ]
+
+/*
+char	**ft_split_quote(char *str)
+{
+	t_split_data	data;
+
+	if (init_vars_split(&data, str) == -1)
+		return (NULL);
+
+	while (data.str[data.start] != '\0' && data.k < data.wc)
+	{
+		skip_whitespace(data.str, &data.start);
+		data.end = data.start;
+
+//		if (data.str[data.start] == BACKSLASH || data.str[data.start] == D_QUOTE)
+		if (data.str[data.start] == S_QUOTE || data.str[data.start] == D_QUOTE)
+		{
+			if (!skip_quotes(data.str, &data.end))
+			{
+				free_split_result_struct(data.out, data.k);
+				return (NULL);
+			}
+		}
+		else if (data.str[data.start] == SEMICOLON || data.str[data.start] == PIPE_CHAR)
+			data.end ++;
+		else
+		{
+			while (data.str[data.end] && !is_special_char(data.str[data.end]))
+				data.end ++;
+		}
+		if (data.end > data.start && copy_word(&data) == -1) {
+			free_split_result_struct(data.out, data.k);
+			return (NULL); // Salida anticipada en caso de error
+		}
+		data.start = data.end;
+	}
+	data.out[data.k] = NULL;
+	return (data.out);
+}
+*/
+
+char **ft_split_quote(char *str) {
 	t_split_data data;
 
 	if (init_vars_split(&data, str) == -1)
@@ -288,25 +339,27 @@ char	**ft_split_quote(char *str) {
 		skip_whitespace(data.str, &data.start);
 		data.end = data.start;
 
-		if (data.str[data.start] == '\'' || data.str[data.start] == '\"') {
-			if (!validate_and_skip_quotes(data.str, &data.end)) {
+		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE) {
+			if (!skip_quotes(data.str, &data.end)) {
 				free_split_result_struct(data.out, data.k);
-				return (NULL);
+				return (NULL); // Error por comillas sin cerrar
 			}
-		}
-		else if (data.str[data.start] == ';' || data.str[data.start] == '|') {
+		} else if (data.str[data.start] == SEMICOLON || data.str[data.start] == PIPE_CHAR) {
 			data.end++;
-		}
-		else {
-			while (data.str[data.end] && data.str[data.end] != ' ' && \
-                  data.str[data.end] != '\t' && data.str[data.end] != '\n' && \
-                  data.str[data.end] != ';' && data.str[data.end] != '|')
+		} else {
+			while (data.str[data.end] && !is_special_char(data.str[data.end])) {
+				// Verificar si estamos dentro de una variable/env seguida por comillas
+				if ((data.str[data.end] == '$' &&
+					 (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE))) {
+					break;
+				}
 				data.end++;
+			}
 		}
 
 		if (data.end > data.start && copy_word(&data) == -1) {
 			free_split_result_struct(data.out, data.k);
-			return (NULL);
+			return (NULL); // Salida anticipada en caso de error
 		}
 
 		data.start = data.end;
@@ -315,11 +368,16 @@ char	**ft_split_quote(char *str) {
 	return (data.out);
 }
 
-// Liberar memoria de los resultados del split
+
 /*
-void	free_split_result_struct(char **result, int k) {
-	for (int i = 0; i < k; i++)
-		free(result[i]);
-	free(result);
+else
+{
+while (data.str[data.end] && \
+			(data.str[data.end] != SPACE || \
+			data.str[data.end] != TAB || \
+			data.str[data.end] != NEWLINE || \
+			data.str[data.end] != SEMICOLON || \
+			data.str[data.end] != PIPE_CHAR))
+data.end ++;
 }
 */

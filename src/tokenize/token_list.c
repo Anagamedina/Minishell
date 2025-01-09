@@ -154,6 +154,7 @@ t_list	*tokenize_list(char **tokens)
  * Splits the input line into tokens, processes quotes,
  * and creates a linked list of tokens.
  * Returns the token list or NULL on error.
+ * echo ' qwer' $USER"    ana"
  */
 
 t_list	*generate_token_list(char *line)
@@ -164,17 +165,18 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens = NULL;
 	tokens = ft_split_quote(line);
+	if (tokens == NULL)
+	{
+		free(tokens);
+		return (NULL);
+	}
 	int i = 0;
 	while (tokens[i] != NULL)
 	{
 		printf("[%d] [%s]\n", i, tokens[i]);
 		i ++;
 	}
-	if (tokens == NULL)
-	{
-		free(tokens);
-		return (NULL);
-	}
+
 	tokens_list = tokenize_list(tokens);
 
 	if (tokens_list == NULL)
@@ -182,8 +184,8 @@ t_list	*generate_token_list(char *line)
 		ft_lstclear(&tokens_list, free);
 		return (NULL);
 	}
+
 	identify_commands(tokens_list);
-//	print_list_token_str(tokens_list);
 
 	return (tokens_list);
 }
