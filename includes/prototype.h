@@ -99,6 +99,7 @@ void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*tokenize_list(char **tokens);
+char		*clean_consecutive_quotes(char *line);
 t_list		*generate_token_list(char *line);
 
 //************** TOKEN_FREE.c ********************/

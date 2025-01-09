@@ -76,13 +76,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * echo " "" " '$USER ' " "" "
 	 * echo ""'helo $USER 0-9' ""
 	 */
-/*
 	if (handle_special_balanced_dquotes(token))
 	{
 		printf("entro en handle_special_balanced_dquotes\n");
 
 	}
-*/
 
 	/**
 	 *
@@ -104,6 +102,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	{
 		handle_dollar_cases(token, env_list);
 		return ;
+	}
+	else
+	{
+//		TODO: falta implementar el caso donde no solo hay que limpiar el string
+
 	}
 }
 

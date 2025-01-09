@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+char *clean_consecutive_quotes(char *line);
+
 /**
  * Initializes a new token node (`t_tokens`).
  *
@@ -149,6 +151,76 @@ t_list	*tokenize_list(char **tokens)
 	return (tokens_list);
 }
 
+
+char	*clean_consecutive_quotes(char *line)
+{
+	int		i;
+	int		j;
+	int		len;
+	int		consecutives_quotes_counter;
+	char	*new_line;
+	int		start_dquotes;
+	int		end_dquotes;
+
+	i = 0;
+	len = 0;
+	consecutives_quotes_counter = 0;
+	start_dquotes = FALSE;
+	end_dquotes = FALSE;
+
+	while (line[i] != '\0')
+	{
+		if ((line[i] == D_QUOTE && line[i + 1] != '\0' && line[i + 1] == D_QUOTE) || \
+			(line[i] == S_QUOTE && line[i + 1] != '\0' && line[i + 1] == S_QUOTE && start_dquotes == FALSE))
+			consecutives_quotes_counter ++;
+		if (line[i] == D_QUOTE && start_dquotes == FALSE)
+		{
+			start_dquotes = TRUE;
+			end_dquotes = FALSE;
+		}
+		else if (start_dquotes == TRUE && end_dquotes == FALSE && line[i] == D_QUOTE)
+		{
+			end_dquotes = TRUE;
+			start_dquotes = FALSE;
+		}
+		i ++;
+	}
+	len = (int)ft_strlen(line) - (consecutives_quotes_counter * 2);
+	new_line = malloc(sizeof (char) * (len + 1));
+	if (!new_line)
+		return (NULL);
+	i = 0;
+	j = 0;
+	start_dquotes = FALSE;
+	end_dquotes = FALSE;
+	while (line[i] != '\0')
+	{
+		if (line[i] == D_QUOTE && start_dquotes == FALSE)
+		{
+			start_dquotes = TRUE;
+			end_dquotes = FALSE;
+		}
+		else if (start_dquotes == TRUE && end_dquotes == FALSE && line[i] == D_QUOTE)
+		{
+			end_dquotes = TRUE;
+			start_dquotes = FALSE;
+		}
+		if ((line[i] == D_QUOTE && line[i + 1] != '\0' && line[i + 1] == D_QUOTE) || \
+			(line[i] == S_QUOTE && line[i + 1] != '\0' && line[i + 1] == S_QUOTE  && start_dquotes == FALSE))
+		{
+			i += 2;
+		}
+		else
+		{
+			new_line[j] = line[i];
+			i ++;
+			j ++;
+		}
+	}
+	new_line[j] = '\0';
+	return (new_line);
+}
+
 //**********MAIN FUNCTION**********************/
 /**
  * Splits the input line into tokens, processes quotes,
@@ -164,18 +236,35 @@ t_list	*generate_token_list(char *line)
 
 	tokens_list = NULL;
 	tokens = NULL;
-	tokens = ft_split_quote(line);
+
+	// TODO: clean each single quotes y double quotes
+	char *clean_line = clean_consecutive_quotes(line);
+//	printf("clean_line: [%s]\n", clean_line);
+
+//	tokens = ft_split_quote(line);
+	tokens = ft_split_quote(clean_line);
 	if (tokens == NULL)
 	{
 		free(tokens);
 		return (NULL);
 	}
+//	**************************************************************************
+//	IMPRIMIR TOKENS EN UN ARRAY 2D
+
+	printf("****** PRINTING TOKENS in ARRAY 2D ******\n");
 	int i = 0;
 	while (tokens[i] != NULL)
 	{
 		printf("[%d] [%s]\n", i, tokens[i]);
 		i ++;
 	}
+
+	/**
+	 * TODO: clean each token in array 2D
+	 * if tokenn has double single quotes consecutives, remove them
+	 */
+
+
 
 	tokens_list = tokenize_list(tokens);
 

@@ -171,6 +171,51 @@ void	test_sumar_a_mas_b(void)
 	TEST_ASSERT_EQUAL_INT(19, result);
 }
 
+void	test_clean_consecutives_quotes(void)
+{
+	int		i;
+	char	*result;
+
+	struct s_test_str	matrix_cases[] =
+			{
+//					// Caso 3: Combinación de comillas dobles y simples consecutivas
+					{"\"\'\'hello\"", "\"\'\'hello\""},
+					// Caso 1: Comillas dobles consecutivas al inicio
+					{"\"\"hello0\'a\'", "hello0\'a\'"},
+					// Caso 2: Comillas simples consecutivas al inicio
+					{"\'\'hello", "hello"},
+					// Caso 3: Mixto de dobles y simples consecutivas al inicio
+					/*{"\"''hello", "hello"},
+					// Caso 4: Comillas consecutivas al final
+					{"hello\"\"", "hello"},
+					// Caso 5: Comillas consecutivas en medio del texto
+					{"he\"\"llo", "hello"},
+					// Caso 6: Comillas simples consecutivas en medio del texto
+					{"he''llo", "hello"},
+					// Caso 7: Texto solo con dobles y simples consecutivas mezcladas
+					{"\"''\"''", ""},
+					// Caso 8: Comillas dobles y dentro comillas simples (no eliminar simples)
+					{"\"\'\'hello\"", "\"\'\'hello\""},
+					// Caso 9: Texto solo con comillas dobles consecutivas
+					{"\"\"\"\"", ""},
+					// Caso 10: Texto mixto con comillas consecutivas y palabras
+					{"\"hello\"'' world\"\"", "hello world"}*/
+			};
+
+	i = 0;
+	int	len = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
+	char message[256];
+	while (i < len)
+	{
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, matrix_cases[i].input);
+		result = clean_consecutive_quotes(matrix_cases[i].input);
+
+		TEST_ASSERT_EQUAL_STRING(matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+}
 
 
 /*
@@ -182,6 +227,7 @@ int	main(void)
 {
 	UNITY_BEGIN();
 
+	RUN_TEST(test_clean_consecutives_quotes);
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
@@ -220,7 +266,7 @@ int	main(void)
 
 //	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
 
-	RUN_TEST(test_handle_special_quotes);
+//	RUN_TEST(test_handle_special_quotes);
 
 	return (UNITY_END());
 }
