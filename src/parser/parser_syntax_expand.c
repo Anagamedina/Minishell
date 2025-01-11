@@ -116,7 +116,6 @@ int	handle_no_expand_cases(t_tokens *token)
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
 	return (0);
-
 }
 
 // Caso "$ '...'" -> manejar espacio después del dólar
@@ -131,7 +130,7 @@ int	check_dquote_dollar_and_squotes(const char *str)
 
 	while (str[i] != '\0')
 	{
-		if (str[i] == '$')
+		if (str[i] == DOLLAR_SIGN)
 		{
 			i++;
 			while (str[i] == ' ')
@@ -242,6 +241,25 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	tmp = NULL;
 
 	/**
+	 * Case: "$'...'"
+	 * Case: " $ '...'"
+	 * Case: " $ $ '...'"
+	 * Error case: " $$ '...'"
+	 *
+	 * Steps:
+	 * the dollar between d_quote and s_quote
+	 * only one d_quote (open and close)
+	 * can have spaces between d_quote and s_quote
+	 * can't have 2 consecutives dollar signs ($$)
+	 */
+
+	if (check_dquote_dollar_and_squotes(token->str))
+	{
+		handle_dollar_with_space_single(token);
+		return ;
+	}
+
+	/**
 	 * Case: "'$...'"
 	 * this 3 cases are valid:
 	 * " ' $USER ' "
@@ -266,25 +284,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		printf("after replace_dollar_variable : [%s]\n", token->str);
 
 		free(tmp);
-		return ;
-	}
-
-	/**
-	 * Case: "$'...'"
-	 * Case: " $ '...'"
-	 * Case: " $ $ '...'"
-	 * Error case: " $$ '...'"
-	 * 
-	 * Steps:
-	 * the dollar between d_quote and s_quote
-	 * only one d_quote (open and close) 
-	 * can have spaces between d_quote and s_quote
-	 * can't have 2 consecutives dollar signs ($$) 
-	 */
-
-	if (check_dquote_dollar_and_squotes(token->str))
-	{
-		handle_dollar_with_space_single(token);
 		return ;
 	}
 
@@ -328,7 +327,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Steps:
 	 * Managed by handle_no_expand_cases
 	 */
-	if (handle_no_expand_cases(token) == FALSE)
+	if (handle_no_expand_cases(token) == 0)
 	{
 		/**
 		 * Case: General dollar expansion

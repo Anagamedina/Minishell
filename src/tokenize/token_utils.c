@@ -160,8 +160,8 @@ static	int	get_pareja_quote(int *i, const char *str, char c)
 //echo "hello "abc" "
 static int	skip_quotes(const char *str, int *i)
 {
-	char quote;
-	int pareja;
+	char	quote;
+	int		pareja;
 
 	quote = str[*i];
 	pareja = get_pareja_quote(i, str, quote);
@@ -329,39 +329,48 @@ char	**ft_split_quote(char *str)
 }
 */
 
-char **ft_split_quote(char *str) {
+char	**ft_split_quote(char *str)
+{
 	t_split_data data;
 
 	if (init_vars_split(&data, str) == -1)
 		return (NULL);
 
-	while (data.str[data.start] != '\0' && data.k < data.wc) {
+	while (data.str[data.start] != '\0' && data.k < data.wc)
+	{
 		skip_whitespace(data.str, &data.start);
 		data.end = data.start;
 
-		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE) {
-			if (!skip_quotes(data.str, &data.end)) {
+		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE)
+		{
+			if (!skip_quotes(data.str, &data.end))
+			{
 				free_split_result_struct(data.out, data.k);
-				return (NULL); // Error por comillas sin cerrar
+				return (NULL); // Error comillas sin cerrar
 			}
-		} else if (data.str[data.start] == SEMICOLON || data.str[data.start] == PIPE_CHAR) {
+		}
+		else if (data.str[data.start] == SEMICOLON || data.str[data.start] == PIPE_CHAR)
+		{
 			data.end++;
-		} else {
-			while (data.str[data.end] && !is_special_char(data.str[data.end])) {
+		}
+		else
+		{
+			while (data.str[data.end] && !is_special_char(data.str[data.end]))
+			{
 				// Verificar si estamos dentro de una variable/env seguida por comillas
 				if ((data.str[data.end] == '$' &&
-					 (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE))) {
+					 (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE)))
+				{
 					break;
 				}
 				data.end++;
 			}
 		}
-
-		if (data.end > data.start && copy_word(&data) == -1) {
+		if (data.end > data.start && copy_word(&data) == -1)
+		{
 			free_split_result_struct(data.out, data.k);
 			return (NULL); // Salida anticipada en caso de error
 		}
-
 		data.start = data.end;
 	}
 	data.out[data.k] = NULL;

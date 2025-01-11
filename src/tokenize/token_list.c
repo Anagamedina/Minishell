@@ -133,7 +133,7 @@ t_list	*tokenize_list(char **tokens)
 	if (tokens == NULL)
 		return (NULL);
 	i = 0;
-	while (tokens[i] != NULL)
+while (tokens[i] != NULL)
 	{
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		new_token->id_token = i;
@@ -239,7 +239,7 @@ t_list	*generate_token_list(char *line)
 
 	// TODO: clean each single quotes y double quotes
 	char *clean_line = clean_consecutive_quotes(line);
-//	printf("clean_line: [%s]\n", clean_line);
+	printf("clean_line: [%s]\n", clean_line);
 
 //	tokens = ft_split_quote(line);
 	tokens = ft_split_quote(clean_line);
@@ -263,8 +263,6 @@ t_list	*generate_token_list(char *line)
 	 * TODO: clean each token in array 2D
 	 * if tokenn has double single quotes consecutives, remove them
 	 */
-
-
 
 	tokens_list = tokenize_list(tokens);
 

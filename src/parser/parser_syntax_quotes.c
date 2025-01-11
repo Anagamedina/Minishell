@@ -245,7 +245,7 @@ int	has_even_double_quotes(t_tokens *token)
  * @return A new string with the quotes removed. NULL if memory allocation fails.
  */
 
-char	*remove_quotes_str(char *str, char c)
+char	*remove_quotes_str(const char *str, char c)
 {
 	int		i;
 	int		j;

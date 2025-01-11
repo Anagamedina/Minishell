@@ -3,7 +3,7 @@
 
 int	check_special_c(char c)
 {
-	if (c == '=' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
+	if (c == '=' || c == ' ' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
 		|| c == '}' || c == '[' || c == ']' || c == '!' || c == '~' || c == '?'
 		|| c == '%' || c == '^' || c == '=' || c == '*' || c == '/' || c == '$'
 		|| c == ';' || c == ':' || c == '|' || c == '.' || c == '_' || c == ',')
@@ -76,11 +76,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * echo " "" " '$USER ' " "" "
 	 * echo ""'helo $USER 0-9' ""
 	 */
+/*
 	if (handle_special_balanced_dquotes(token))
 	{
 		printf("entro en handle_special_balanced_dquotes\n");
 
 	}
+*/
 
 	/**
 	 *
@@ -92,7 +94,6 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * Si el token está rodeado únicamente por comillas dobles ("), se manejan los casos relacionados con la expansión de variables de entorno ($).
 	 * Llamada a has_even_double_quotes para verificar.
 	 * Se llama a handle_dollar_cases para manejar variables de entorno.
-
 	 */
 
 //	TODO: modificar para manejar comillas dobles par veces
@@ -103,10 +104,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 		handle_dollar_cases(token, env_list);
 		return ;
 	}
-	else
-	{
-//		TODO: falta implementar el caso donde no solo hay que limpiar el string
 
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+		handle_dollar_cases(token, env_list);
+		return ;
 	}
 }
 

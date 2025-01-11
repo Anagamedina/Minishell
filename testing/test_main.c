@@ -84,8 +84,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	i;
 	int	result;
 
-	struct s_test_int	edge_cases[] = {
-
+	struct s_test_int	edge_cases[] =
+	{
 	{"\"  '   $HOME case not work' \"", TRUE},
 	{"\"    $HOME case not work ' \"", TRUE},
 	{"\"  '   $HOME case not work  \"", TRUE},

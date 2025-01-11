@@ -82,10 +82,12 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 
 	curr_token = token_list;
 	update_token_str = NULL;
+	printf("curr_token->str: [%s]\n", curr_token->str);
 	while (curr_token != NULL)
 	{
 		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
 		curr_token->str = ft_strdup(update_token_str);
+//		verificar si dollar + 1 != space
 		get_var_from_token(token_list, env_list);
 		curr_token = curr_token->next;
 	}

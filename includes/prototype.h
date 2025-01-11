@@ -127,7 +127,7 @@ char		**ft_split_quote(char *str);
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
-char		*remove_quotes_str(char *str, char c);
+char		*remove_quotes_str(const char *str, char c);
 int			handle_special_balanced_dquotes(t_tokens *token);
 
 //************** parser_syntax_quotes.c ********************/
