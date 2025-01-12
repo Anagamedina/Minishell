@@ -57,17 +57,35 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
 	char		**split_word;
+	int 		position_dollar;
 
 	curr_token = token_list;
 	while (curr_token != NULL)
 	{
 		if (curr_token->type_token == WORD)
 		{
+			// Verificar si el token contiene '$' y no está seguido de un espacio
+			position_dollar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
+			if (position_dollar != -1 && \
+			(position_dollar + 1 < (int)ft_strlen(curr_token->str)) && \
+				curr_token->str[position_dollar + 1] == SPACE)
+			{
+				break ;
+			}
+
+			// Dividir el token respetando las comillas
 			split_word = ft_split_quote(curr_token->str);
+			//TODO: add new case here :
+
 			if (split_word != NULL)
 			{
+				// Expandir variables dentro de los fragmentos divididos
 				process_split_words(split_word, env_list);
+
+				// Actualizar el contenido del token con los resultados procesados
 				update_token_str(curr_token, split_word);
+
+				// Liberar memoria usada por la división del token
 				free_split_result(split_word);
 			}
 		}
@@ -86,6 +104,7 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 	while (curr_token != NULL)
 	{
 		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
+		printf("removequotes: [%s]\n", update_token_str);
 		curr_token->str = ft_strdup(update_token_str);
 //		verificar si dollar + 1 != space
 		get_var_from_token(token_list, env_list);

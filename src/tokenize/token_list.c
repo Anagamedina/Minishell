@@ -133,7 +133,7 @@ t_list	*tokenize_list(char **tokens)
 	if (tokens == NULL)
 		return (NULL);
 	i = 0;
-while (tokens[i] != NULL)
+	while (tokens[i] != NULL)
 	{
 		new_token = init_token(tokens[i], set_token_type(tokens[i]));
 		new_token->id_token = i;
