@@ -45,6 +45,62 @@ void	process_split_words(char **split_word, t_list *env_list)
 	}
 }
 
+char	**ft_split_new_version(char *str)
+{
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	int wc = 0;
+
+//	contar palabras
+	while (str[i])
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+			i++;
+		if (str[i])
+			wc++;
+		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+			i++;
+	}
+
+	char **out = (char **) malloc(sizeof(char *) * (wc + 1));
+	i = 0;
+	int start_word = -1;
+	int end_word = 0;
+	int spaces_start = 0;
+	int spaces_end = 0;
+	int actual_word = 0;
+
+	while (str[i] != '\0')
+	{
+		while (str[i] && (str[i] == ' '))
+		{
+			spaces_start = 0;
+			i ++;
+		}
+		while (str[i] != '\0' && str[i] != ' ')
+		{
+			start_word ++;
+		}
+		while (str[i] && (str[i] == ' '))
+			spaces_end ++;
+
+//		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+//			i++;
+		j = i;
+//		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+//			i++;
+
+		if (i > j)
+		{
+			out[k] = (char *)malloc(sizeof(char) * ((i - j) + 1));
+			ft_strncpy(out[k++], &str[j], i - j);
+		}
+	}
+	out[k] = NULL;
+	return (out);
+}
+
 /**
  * EXTRAEEER!!! NAME DEPSUES DEL DOLLAR
  * echo "$hello"   hello

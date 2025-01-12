@@ -121,6 +121,7 @@ void		identify_commands(t_list *tokens_list);
 //************** TOKEN_UTILS.c ********************/
 
 char		**ft_split_quote(char *str);
+char		**ft_split_new_version(char *str);
 
 //************** PARSER.c ********************/
 //
