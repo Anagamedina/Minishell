@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/28 19:55:49 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/13 11:00:42 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 
 //		print_list_token(minishell->token);
 		print_list_token_str(minishell->token);
-		// minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
+		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		// print_list_commands(minishell->cmds);
 		// print_list_token(minishell->token);
 		 //cases_builtins(minishell);

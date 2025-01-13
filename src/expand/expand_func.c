@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/17 17:55:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:49:54by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,133 @@ void	update_token_str(t_tokens *token, char **split_word)
 	free(new_str);
 }
 
-void	process_split_words(char **split_word, t_list *env_list)
+char	*extract_var_name(char *str)
 {
-	int	i;
+	int		i;
+	int 	start;
+	char	*var_name;
 
 	i = 0;
-	while (split_word[i] != NULL)
+	start = 0;
+
+	while ( str[i] && str[i] == SPACE)
 	{
-		replace_dollar_variable(&split_word[i], env_list);
 		i ++;
+	}
+	if (str[i] == DOLLAR_SIGN)
+	{
+		start = i;
+	}
+	while (str[i] != '\0' && str[i] != SPACE)
+	{
+		i ++;
+	}
+	var_name = ft_substr(str, start, i);
+	return (var_name);
+}
+char	*get_and_reconstruct_token(char *split_word, char *var_value)
+{
+	int		i;
+	int 	end;
+	char	*update_token;
+	int		before_spaces;	
+	int		after_spaces;
+
+	i = 0;
+	end = 0;
+	before_spaces = 0;
+	after_spaces = 0;
+	update_token = NULL;
+
+	while (split_word[i] && split_word[i] == SPACE)
+		i ++;
+	before_spaces = i;
+	while (split_word[i] != '\0' && split_word[i] != SPACE)
+	{
+		i ++;
+	}
+	after_spaces = i;
+	while (split_word[i] != '\0' && split_word[i] == SPACE)
+		i ++;
+	end = i;
+	int len_var_value = ft_strlen(var_value);
+
+	int len_token = before_spaces + len_var_value + (end - after_spaces);
+
+	update_token = malloc(sizeof(char) * (len_token + 1));
+	if (update_token == NULL)
+		return (NULL);
+
+	i = 0;
+	while (i < len_token)
+	{
+		if (i < before_spaces)
+		{
+			update_token[i] = SPACE;
+		}
+		else if (i < (before_spaces + len_var_value))
+		{
+			update_token[i] = var_value[i - before_spaces];
+		}
+		else
+		{
+			update_token[i] = split_word[i - len_var_value];
+		}
+		i ++;
+	}
+	update_token[i] = '\0';
+	return (update_token);
+}
+
+void	process_split_words(char **split_word, t_list *env_list)
+{
+	// int	i;
+
+	// i = 0;
+	// while (split_word[i] != NULL)
+	// {
+	// 	replace_dollar_variable(&split_word[i], env_list);
+	// 	i ++;
+	// }
+
+	char	*var_value;
+	int		i;
+
+	
+	i = 0;
+	while ((*split_word)[i] != '\0')
+	{
+		printf("split_word[%d]: [%c]\n", i, (*split_word)[i]);
+		if ((*split_word)[i] == DOLLAR_SIGN)
+		{
+			// add new function here
+
+			char	*clean_var_name = extract_var_name(*split_word + i + 1);
+			printf("clean_var-name: [%s]\n", clean_var_name);
+
+
+			var_value = NULL;
+			var_value = find_value_in_env(env_list, clean_var_name);
+			printf("var_value: [%s]\n", var_value);
+
+			// free(*split_word);
+			// TODO: reconstruir el split_word con espacios  
+			if (var_value != NULL)
+			{
+				// *split_word = ft_strdup(var_value);
+				*split_word = get_and_reconstruct_token(*split_word[i], var_value);
+				printf("split_word: [%s]\n", *split_word);
+			}
+			else
+			{
+				*split_word = ft_strdup("");
+			}
+		}
+		else
+		{
+			i ++;
+			printf("i: [%d]\n", i);
+		}
 	}
 }
 
@@ -65,35 +183,35 @@ char	**ft_split_new_version(char *str)
 
 	char **out = (char **) malloc(sizeof(char *) * (wc + 1));
 	i = 0;
-	int start_word = -1;
-	int end_word = 0;
-	int spaces_start = 0;
-	int spaces_end = 0;
-	int actual_word = 0;
 
 	while (str[i] != '\0')
 	{
+		int start_word = 0;
+		int end_word = 0;
+		int spaces_before_start = 0;
+		int spaces_end = 0;
+		j = i;
 		while (str[i] && (str[i] == ' '))
 		{
-			spaces_start = 0;
+			spaces_before_start ++;
 			i ++;
 		}
+		start_word = i;
 		while (str[i] != '\0' && str[i] != ' ')
 		{
-			start_word ++;
+			i ++;
 		}
-		while (str[i] && (str[i] == ' '))
+		end_word = i;
+		while (str[i] && (str[i] == ' ') && str[i] != '\0')
+		{
 			spaces_end ++;
-
-//		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
-//			i++;
-		j = i;
-//		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
-//			i++;
+			i ++;
+		}
 
 		if (i > j)
 		{
-			out[k] = (char *)malloc(sizeof(char) * ((i - j) + 1));
+
+			out[k] = (char *)malloc(sizeof(char) * ((i) + 1));
 			ft_strncpy(out[k++], &str[j], i - j);
 		}
 	}
@@ -129,9 +247,17 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 				break ;
 			}
 
-			// Dividir el token respetando las comillas
-			split_word = ft_split_quote(curr_token->str);
 			//TODO: add new case here :
+			split_word = ft_split_new_version(curr_token->str);
+
+			int i = 0;
+
+			while (split_word[i] != NULL)
+			{
+				printf("split_word[%d]: [%s]\n", i, split_word[i]);
+				i ++;
+			}
+			
 
 			if (split_word != NULL)
 			{
