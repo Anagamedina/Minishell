@@ -288,38 +288,6 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	}
 
 	/**
-	 * Case: "$'...'"
-	 * Steps:
-	 * Remove outer double quotes using remove_quotes_str.
-	 * Copy the modified string back to token->str.
-	 */
-	/*
-	if (check_d_quote_dollar_s_quote(token->str))
-	{
-		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
-		free(tmp);
-		return ;
-	}
-	*/
-
-	/**
-	 * Case: "$'USER"
-	 * Case: "this is the paht: $PATH"
-	 * 
-	 * Steps:
-	 * Expands a simple environment variable.
-	 * Detected by check_dollar_simple.
-	 * Managed by handle_single_quotes_after_dollar
-	 */
-	/*
-	if (check_dollar_simple(token->str))
-	{
-		handle_single_quotes_after_dollar(token);
-	}
-	*/
-
-	/**
 	 * Case: No expansion required
 	 * @details: Handles tokens that should not trigger variable expansion.
 	 * @example: "'string'" or "\"escaped\"".

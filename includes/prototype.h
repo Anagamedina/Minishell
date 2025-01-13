@@ -163,6 +163,8 @@ void		expand_dollar(t_tokens *token_list, t_list *env_list);
 //************** expand_func.c ********************/
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
+char		*extract_var_name(const char *str);
+char		*get_and_reconstruct_token(const char *split_word, const char *var_value);
 
 //************** expand_utils.c ********************/
 char	*find_value_in_env(t_list *env_list, char *var_name_token);

@@ -136,8 +136,6 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 	free(var_value);
 }
 
-// especial case: "'$     '"
-// TODO: daruny finish this function
 char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list)
 {
 	char	*result;
@@ -145,9 +143,8 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 	char	*var_value;
 	char	*tmp;
 	size_t	i;
-	//size_t	len_str;
 
-	printf("token_rm_d_quote: [%s]\n", token_rm_d_quote);
+//	printf("token_rm_d_quote: [%s]\n", token_rm_d_quote);
 
 	if (!token_rm_d_quote || !env_list)
 		return (NULL);
@@ -161,11 +158,9 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 	i = 0;
 	while (token_rm_d_quote[i] != '\0')
 	{
-//		while (token_rm_d_quote[i] != DOLLAR_SIGN)
-//			i++;
 		if (token_rm_d_quote[i] == DOLLAR_SIGN)
 		{
-			i++;
+			i ++;
 			// start apunta al inico del nombre de la variable
 			int start = i;
 			// Bucle para calcular la longitud del nombre de la variable var name.
@@ -194,7 +189,7 @@ char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_l
 			tmp = result;
 			result = ft_strjoin_char(result, token_rm_d_quote[i]);
 			free(tmp);
-			i++;
+			i ++;
 		}
 	}
 	return (result);
@@ -205,20 +200,25 @@ static char	*get_size_split_and_malloc(char **split_word)
 	size_t	new_len;
 	int		i;
 	char	*merged_token;
+	size_t	len_split;
 
 	new_len = 0;
 	i = 0;
+	len_split = 0;
 	while (split_word[i] != NULL)
 	{
-		new_len += ft_strlen(split_word[i]);
-		new_len++;
+		new_len = ft_strlen(split_word[i]);
+		len_split += new_len;
+//		new_len ++;
+//		add this new condition
+//		if (split_word[i + 1] != NULL)
+//			new_len ++;
 		i++;
 	}
-	merged_token = NULL;
 	merged_token = (char *)malloc(sizeof(char) * (new_len + 1));
 	if (merged_token == NULL)
 		return (NULL);
-	merged_token[i] = '\0';
+//	merged_token[i] = '\0';
 	return (merged_token);
 }
 
@@ -227,7 +227,7 @@ void	add_space_if_needed(char **split, size_t i, char *merged, size_t *k)
 	if (split[i + 1] != NULL)
 	{
 		merged[*k] = SPACE;
-		(*k)++;
+		(*k) ++;
 	}
 }
 
@@ -244,8 +244,11 @@ char	*ft_strjoin_array(char **split_word)
 	k = 0;
 	while (split_word[i] != NULL)
 	{
+//		copy the word to the token array
 		copy_word_to_token(split_word[i], merged_token, &k);
-		add_space_if_needed(split_word, i, merged_token, &k);
+
+//		add spaces if needed
+//		add_space_if_needed(split_word, i, merged_token, &k);
 		i ++;
 	}
 	merged_token[k] = '\0';

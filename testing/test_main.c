@@ -217,7 +217,59 @@ void	test_clean_consecutives_quotes(void)
 	}
 }
 
+void	test_extract_var_name(void)
+{
+	struct s_test_str	t_matrix_cases[] =
+	{
+//			{"   $USER", "USER"},
+			{"      $HOME   ", "HOME"},
+			{"           $NON        ", "NON"},
+//			{"$USER$NON_EXISTENT_VAR", ""},
+	};
 
+	int		i = 0;
+	char	*result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = extract_var_name(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
+		TEST_ASSERT_EQUAL_STRING(t_matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+}
+
+/**
+ * @see get_and_
+ */
+void	test_get_and_reconstruct_token(void)
+{
+	struct s_test_str	t_matrix_cases[] =
+			{
+//			{"   $USER", "USER"},
+					{"  $USER    ", "  daruuu    "},
+//			{"$USER$NON_EXISTENT_VAR", ""},
+			};
+
+	int		i = 0;
+	char	*result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = get_and_reconstruct_token(t_matrix_cases[i].input, "daruuu");
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
+		TEST_ASSERT_EQUAL_STRING(t_matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+}
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -227,7 +279,9 @@ int	main(void)
 {
 	UNITY_BEGIN();
 
-	RUN_TEST(test_clean_consecutives_quotes);
+//	RUN_TEST(test_clean_consecutives_quotes);
+//	RUN_TEST(test_extract_var_name);
+	RUN_TEST(test_get_and_reconstruct_token);
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
