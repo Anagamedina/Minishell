@@ -59,37 +59,3 @@ int	check_quotes_line(const char *line)
  * [1] = "" hello ""
  * [2] = NULL
  */
-
-void	check_final_dquote(const char *line, int *i)
-{
-	// (*i)++;
-	while (line[*i])
-		(*i)++;
-	if (line[*i] == D_QUOTE)
-		(*i)++;
-}
-
-void	get_size_words_with_pivote(const char *line)
-{
-	int i;
-	int double_quotes;
-	int single_quotes;
-
-	i = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == D_QUOTE)
-		{
-			// try to find the last dquote in the line
-			check_final_dquote(line, &i);
-
-		}
-		else if (line[i] == S_QUOTE)
-		{
-
-		}
-		i++;
-	}
-}

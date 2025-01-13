@@ -57,36 +57,43 @@ char	*extract_var_name(char *str)
 	var_name = ft_substr(str, start, i);
 	return (var_name);
 }
-char	*get_and_reconstruct_token(char *split_word, char *var_value)
+
+/*char	*get_and_reconstruct_token(const char *split_word, char *var_value)
 {
 	int		i;
-	int 	end;
 	char	*update_token;
 	int		before_spaces;	
 	int		after_spaces;
 
 	i = 0;
-	end = 0;
 	before_spaces = 0;
 	after_spaces = 0;
 	update_token = NULL;
 
+	//count spaces before text
 	while (split_word[i] && split_word[i] == SPACE)
+	{
 		i ++;
-	before_spaces = i;
+		before_spaces ++;
+	}
+
+	//count spaces after text
 	while (split_word[i] != '\0' && split_word[i] != SPACE)
 	{
 		i ++;
 	}
-	after_spaces = i;
 	while (split_word[i] != '\0' && split_word[i] == SPACE)
+	{
 		i ++;
-	end = i;
-	int len_var_value = ft_strlen(var_value);
+		after_spaces ++;
+	}
 
-	int len_token = before_spaces + len_var_value + (end - after_spaces);
+	int len_var_value = (int) ft_strlen(var_value);
 
-	update_token = malloc(sizeof(char) * (len_token + 1));
+
+	int len_token = before_spaces + (len_var_value - 1)+ after_spaces;
+
+	update_token = ft_calloc((len_token + 1), sizeof(char) );
 	if (update_token == NULL)
 		return (NULL);
 
@@ -103,65 +110,124 @@ char	*get_and_reconstruct_token(char *split_word, char *var_value)
 		}
 		else
 		{
-			update_token[i] = split_word[i - len_var_value];
+			update_token[i] = SPACE;
 		}
 		i ++;
 	}
+	update_token[len_token] = '\0';
+	return (update_token);
+}*/
+
+char	*get_and_reconstruct_token(const char *split_word, const char *var_value)
+{
+	int		i;
+	int		before_spaces = 0;
+	int		after_spaces = 0;
+	int		len_var_value;
+	int		len_token;
+	char	*update_token;
+
+	// Contar espacios antes del contenido
+	i = 0;
+	while (split_word[i] && split_word[i] == SPACE)
+		before_spaces++, i++;
+
+	// Avanzar sobre el contenido no vacío
+	while (split_word[i] && split_word[i] != SPACE)
+		i++;
+
+	// Contar espacios después del contenido
+	while (split_word[i] && split_word[i] == SPACE)
+		after_spaces++, i++;
+
+	// Calcular la longitud total del nuevo token
+	len_var_value = ft_strlen(var_value);
+	len_token = before_spaces + len_var_value + after_spaces;
+
+	// Asignar memoria para el nuevo token
+	update_token = malloc(sizeof(char) * (len_token + 1));
+	if (!update_token)
+		return (NULL);
+
+	// Construir el nuevo token
+	i = 0;
+	int j = 0;
+
+	// Agregar espacios iniciales
+	while (j < before_spaces)
+		update_token[i++] = SPACE, j++;
+
+	// Agregar el valor de la variable
+	j = 0;
+	while (j < len_var_value)
+		update_token[i++] = var_value[j++];
+
+	// Agregar espacios finales
+	j = 0;
+	while (j < after_spaces - 1)
+		update_token[i++] = SPACE, j++;
+
+	// Finalizar cadena
 	update_token[i] = '\0';
+
 	return (update_token);
 }
 
+
 void	process_split_words(char **split_word, t_list *env_list)
 {
-	// int	i;
-
-	// i = 0;
-	// while (split_word[i] != NULL)
-	// {
-	// 	replace_dollar_variable(&split_word[i], env_list);
-	// 	i ++;
-	// }
-
 	char	*var_value;
+	char	*new_value;
+	char	*clean_var_name;
 	int		i;
 
-	
 	i = 0;
-	while ((*split_word)[i] != '\0')
+	while (split_word[i] != NULL)
 	{
-		printf("split_word[%d]: [%c]\n", i, (*split_word)[i]);
-		if ((*split_word)[i] == DOLLAR_SIGN)
-		{
-			// add new function here
+		printf("split_word[%d]: [%s]\n", i, split_word[i]);
 
-			char	*clean_var_name = extract_var_name(*split_word + i + 1);
+		// Verificar si contiene un '$'
+		if (ft_strchr(split_word[i], DOLLAR_SIGN))
+		{
+			// Extraer el nombre de la variable desde el '$'
+			clean_var_name = extract_var_name(split_word[i] + 1);
+			if (clean_var_name == NULL)
+			{
+				i++;
+				continue;
+			}
 			printf("clean_var-name: [%s]\n", clean_var_name);
 
-
-			var_value = NULL;
+			// Buscar el valor en las variables de entorno
 			var_value = find_value_in_env(env_list, clean_var_name);
-			printf("var_value: [%s]\n", var_value);
+			printf("var_value ===>: [%s]\n", var_value);
 
-			// free(*split_word);
-			// TODO: reconstruir el split_word con espacios  
+			// Reconstruir el token con el valor de la variable
 			if (var_value != NULL)
 			{
-				// *split_word = ft_strdup(var_value);
-				*split_word = get_and_reconstruct_token(*split_word[i], var_value);
-				printf("split_word: [%s]\n", *split_word);
+				new_value = get_and_reconstruct_token(split_word[i], var_value);
+				printf("new_value exist: [%s]\n", new_value);
 			}
 			else
 			{
-				*split_word = ft_strdup("");
+				new_value = get_and_reconstruct_token(split_word[i], "");
+				printf("new_value no exist: [%s]\n", new_value);
 			}
+
+			// Actualizar el token
+			if (new_value != NULL)
+			{
+				free(split_word[i]); // Liberar el antiguo valor
+				split_word[i] = ft_strdup(new_value); // Duplicar el nuevo valor
+				free(new_value); // Liberar la memoria de la reconstrucción
+			}
+
+			free(clean_var_name); // Liberar el nombre limpio
 		}
-		else
-		{
-			i ++;
-			printf("i: [%d]\n", i);
-		}
+		i++;
 	}
 }
+
 
 char	**ft_split_new_version(char *str)
 {
@@ -174,11 +240,11 @@ char	**ft_split_new_version(char *str)
 	while (str[i])
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
-			i++;
+			i ++;
 		if (str[i])
-			wc++;
+			wc ++;
 		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
-			i++;
+			i ++;
 	}
 
 	char **out = (char **) malloc(sizeof(char *) * (wc + 1));

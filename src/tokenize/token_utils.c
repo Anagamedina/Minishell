@@ -376,17 +376,3 @@ char	**ft_split_quote(char *str)
 	data.out[data.k] = NULL;
 	return (data.out);
 }
-
-
-/*
-else
-{
-while (data.str[data.end] && \
-			(data.str[data.end] != SPACE || \
-			data.str[data.end] != TAB || \
-			data.str[data.end] != NEWLINE || \
-			data.str[data.end] != SEMICOLON || \
-			data.str[data.end] != PIPE_CHAR))
-data.end ++;
-}
-*/
