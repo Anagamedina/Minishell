@@ -43,6 +43,7 @@ add_executable(minishell
         ${BUILTINS_DARUNY}
         ${EXPAND_DIR}
         ${PARSER_DIR}
+        libft/ft_strchr_c.c
 )
 # link with readline library
 target_link_libraries(minishell readline)
@@ -65,6 +66,7 @@ add_executable(testing_shell
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
         ${EXPAND_DIR}
+        testing/test_split.c
 )
 # link with readline library
 target_link_libraries(testing_shell readline)

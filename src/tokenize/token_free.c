@@ -74,6 +74,7 @@ void	free_split_result_struct(char **out, int k)
 	free(out);
 }
 
+/*
 int	copy_word(t_split_data *data)
 {
 	data->out[data->k] = (char *)malloc(sizeof(char) * \
@@ -86,3 +87,4 @@ int	copy_word(t_split_data *data)
 	data->k++;
 	return (0);
 }
+*/

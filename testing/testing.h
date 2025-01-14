@@ -71,4 +71,11 @@ void	test_check_d_quote_dollar_s_quote(void);
 
 
 void	test_handle_special_quotes(void);
+
+//	TESTING OF SPLIT FUNCTIONS
+
+void	test_count_words(void);
+void	test_find_matching_quote(void);
+
+
 #endif

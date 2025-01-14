@@ -17,17 +17,39 @@
  * Returns TRUE if a matching quote is found, otherwise -1.
  */
 
-static int	find_matching_quote(const char *str, int *i, char quote_char)
+/*
+static int	find_matching_quote(const char *str, const int *i, char quote_char)
 {
-	(*i) ++;
+	int index;
 
-	while (str[*i] != '\0')
+	index = (*i);
+
+	while (str[index] != '\0')
 	{
-		if (str[*i] == quote_char)
+		if (str[index] == quote_char)
 		{
-			return (*i);
+			return (index);
 		}
-		(*i) ++;
+		index ++;
+	}
+	return (-1);
+}
+*/
+
+//static int	find_matching_quote(const char *str, int start_index, char quote_char)
+int	find_matching_quote(const char *str, int start_index, char quote_char)
+{
+	int	i;
+
+	i = start_index + 1;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == quote_char)
+		{
+			return (i);
+		}
+		i ++;
 	}
 	return (-1);
 }
@@ -50,9 +72,10 @@ static int	skip_quotes(const char *str, int *i)
 	open_quote_position = str[*i];
 	printf("i: [%d] | open_quote_position: [%c]\n", *i, open_quote_position);
 
-	close_quote_position = find_matching_quote(str, i, open_quote_position);
+	close_quote_position = find_matching_quote(str, *i, open_quote_position);
 
 	printf("close_quote_position: [%d]\n", close_quote_position);
+	printf("i in skip_quotes(): [%d]\n", *i);
 
 	if (close_quote_position == -1)
 	{
@@ -61,11 +84,11 @@ static int	skip_quotes(const char *str, int *i)
 	}
 	*i = close_quote_position + 1; //  Move past the closing quote
 	printf("before exit function(skip_quotes): i: [%d]\n", *i);
-
 	return (TRUE);
 }
 
 /*
+ * ORIGINAL
 static int	skip_quotes(const char *str, int *index)
 {
     char opening_quote;
@@ -105,7 +128,8 @@ static int	is_whitespace(char c)
 	return (FALSE);
 }
 
-static int	count_words(char *str)
+//static int	count_words(char *str)
+int	count_words(char *str)
 {
 	int	i;
 	int	wc;
@@ -123,6 +147,8 @@ static int	count_words(char *str)
 		{
 			if (skip_quotes(str, &i) == TRUE)
 				wc ++;
+			else
+				break ;
 		}
 		else if (str[i] == SEMICOLON || str[i] == PIPE_CHAR)
 		{
@@ -164,12 +190,31 @@ int	is_special_char(char c)
 	return (FALSE);
 }
 
+int	copy_word(t_split_data *data)
+{
+	printf("copy_worddddd:\n");
+	data->out[data->k] = (char *)malloc(sizeof(char) * \
+		(data->end - data->start + 1));
+
+	if (data->out[data->k] == NULL)
+		return (-1);
+	printf("data->k: [%d]\n", data->k);
+
+	ft_strncpy(data->out[data->k], &data->str[data->start], \
+	data->end - data->start);
+	printf("data->out:data->k[%d]data->end - data->start[%d]\n", data->k, data->end - data->start);
+
+	data->out[data->k][data->end - data->start] = '\0';
+	data->k ++;
+	return (0);
+}
+
 //	**********MAIN FUNCTION***************/
 char	**ft_split_quote(char *str)
 {
 	t_split_data	data;
 
-	if (init_vars_split(&data, str) == -1)
+	if (init_vars_split(&data, str) == FALSE)
 		return (NULL);
 
 	while (data.str[data.start] != '\0' && data.k < data.wc)

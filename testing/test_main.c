@@ -270,6 +270,10 @@ void	test_get_and_reconstruct_token(void)
 		i++;
 	}
 }
+
+
+
+
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -281,7 +285,11 @@ int	main(void)
 
 //	RUN_TEST(test_clean_consecutives_quotes);
 //	RUN_TEST(test_extract_var_name);
-	RUN_TEST(test_get_and_reconstruct_token);
+//	RUN_TEST(test_get_and_reconstruct_token);
+//	RUN_TEST(test_count_words);
+	RUN_TEST(test_find_matching_quote);
+
+
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);

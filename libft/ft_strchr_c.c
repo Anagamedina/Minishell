@@ -2,7 +2,7 @@
 #include "libft.h"
 
 
-int	ft_strchr_c(char *s, char c)
+int	ft_strchr_c(const char *s, char c)
 {
 	int	index;
 
