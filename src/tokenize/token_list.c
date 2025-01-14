@@ -233,12 +233,12 @@ t_list	*generate_token_list(char *line)
 {
 	char	**tokens;
 	t_list	*tokens_list;
+	char	*clean_line;
 
 	tokens_list = NULL;
 	tokens = NULL;
 
-	// TODO: clean each single quotes y double quotes
-	char *clean_line = clean_consecutive_quotes(line);
+	clean_line = clean_consecutive_quotes(line);
 	printf("clean_line: [%s]\n", clean_line);
 
 //	tokens = ft_split_quote(line);

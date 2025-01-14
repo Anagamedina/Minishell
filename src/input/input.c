@@ -56,6 +56,8 @@ int	check_quotes_line(const char *line)
 
 /**	echo "" hello ""
  * [0] = echo
- * [1] = "" hello ""
- * [2] = NULL
+ * [1] = ""
+ * [2] = hello
+ * [3] = ""
+ * [4] = NULL
  */

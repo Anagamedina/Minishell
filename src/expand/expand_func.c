@@ -341,6 +341,7 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 				process_split_words(split_word, env_list);
 				i = 0;
 
+/*
 				printf("-------------------------\n");
 				while (split_word[i] != NULL)
 				{
@@ -348,6 +349,7 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 					i ++;
 				}
 				printf("-------------------------\n");
+*/
 
 				// Actualizar el contenido del token con los resultados procesados
 				update_token_str(curr_token, split_word);
