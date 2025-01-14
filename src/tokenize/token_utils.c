@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:20:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:01:12 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static int	find_matching_quote(const char *str, int *i, char quote_char)
 	return (-1);
 }
 
-//echo "hello "abc" "
 /**
  * Skips over quoted content in a string.
  *
@@ -43,14 +42,17 @@ static int	find_matching_quote(const char *str, int *i, char quote_char)
  * If no matching quote is found, it prints an error and returns FALSE.
  */
 
-/*
 static int	skip_quotes(const char *str, int *i)
 {
 	char	open_quote_position;
 	int		close_quote_position;
 
 	open_quote_position = str[*i];
+	printf("i: [%d] | open_quote_position: [%c]\n", *i, open_quote_position);
+
 	close_quote_position = find_matching_quote(str, i, open_quote_position);
+
+	printf("close_quote_position: [%d]\n", close_quote_position);
 
 	if (close_quote_position == -1)
 	{
@@ -58,41 +60,36 @@ static int	skip_quotes(const char *str, int *i)
 		return (FALSE);
 	}
 	*i = close_quote_position + 1; //  Move past the closing quote
+	printf("before exit function(skip_quotes): i: [%d]\n", *i);
+
 	return (TRUE);
 }
-*/
 
-static int skip_quotes(const char *str, int *index)
+/*
+static int	skip_quotes(const char *str, int *index)
 {
-	char opening_quote;
-	int start = *index;
+    char opening_quote;
 
-	opening_quote = str[*index];
-	(*index)++; // Saltar la comilla inicial
+    // Guardar el tipo de comilla (simple o doble)
+    opening_quote = str[*index];
+    (*index)++; // Saltar la comilla inicial
 
-	while (str[*index] != '\0')
-	{
-		// Manejar $ dentro de comillas como parte del contenido
-		if (str[*index] == '$' &&
-			(str[*index + 1] == opening_quote || isalnum(str[*index + 1])))
-		{
-			(*index)++;
-			continue;
-		}
+    // Avanzar hasta encontrar la comilla de cierre correspondiente
+    while (str[*index] != '\0')
+    {
+        // Si encontramos la comilla de cierre
+        if (str[*index] == opening_quote)
+        {
+            return (TRUE); // Éxito: pareja encontrada
+        }
+        (*index) ++; // Continuar buscando
+    }
 
-		// Si encontramos la comilla de cierre
-		if (str[*index] == opening_quote)
-		{
-			return (*index); // Comilla de cierre encontrada
-		}
-
-		(*index)++;
-	}
-
-	// Si salimos del bucle, no se encontró pareja
-	printf("Error: Unclosed quotes near index %d\n", start);
-	return (-1);
+    // Si no encontramos la comilla de cierre
+    printf("Error: Unclosed quote starting at index %d\n", *index);
+    return (FALSE);
 }
+*/
 
 
 static void	skip_whitespace(const char *str, int *i)
@@ -124,17 +121,17 @@ static int	count_words(char *str)
 
 		if (str[i] == D_QUOTE || str[i] == S_QUOTE)
 		{
-			if (skip_quotes(str, &i))
-				wc++;
+			if (skip_quotes(str, &i) == TRUE)
+				wc ++;
 		}
 		else if (str[i] == SEMICOLON || str[i] == PIPE_CHAR)
 		{
-			wc++;
-			i++;
+			wc ++;
+			i ++;
 		}
 		else
 		{
-			wc++;
+			wc ++;
 			while (str[i] && !is_whitespace(str[i]) &&
 				   str[i] != SEMICOLON && str[i] != PIPE_CHAR &&
 				   str[i] != D_QUOTE && str[i] != S_QUOTE)
@@ -156,8 +153,8 @@ static int	init_vars_split(t_split_data *data, char *str)
 	printf("wcs in init_vars_split(): [%d]\n", data->wc);
 	data->out = (char **) malloc(sizeof(char *) * (data->wc + 1));
 	if (!data->out)
-		return (-1);
-	return (0);
+		return (FALSE);
+	return (TRUE);
 }
 
 int	is_special_char(char c)
