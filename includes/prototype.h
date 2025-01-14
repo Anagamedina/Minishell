@@ -26,6 +26,8 @@ typedef struct s_split_data	t_split_data;
 
 typedef struct s_exec t_exec;
 
+typedef struct s_pipe t_pipe;
+
 //**************ENV************/
 t_list 		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
@@ -176,14 +178,15 @@ void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(char **envp);
-char **lst_to_arr(t_list *env_list);
+char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
 void		execute_commands(t_mini *mini);
-void		handle_commands(t_mini *mini);
+void		execute_external(t_cmd *cmd, char **envp);
 void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
-
+t_pipe		*init_pipe(void);
+void		handle_commands(t_mini *mini);
 //*************redis**************/
 
 int 		check_repeat_redir(t_tokens *token);

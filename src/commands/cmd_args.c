@@ -1,41 +1,7 @@
 #include "minishell.h"
 
 
-// Cuenta el número de tokens de tipo WORD en la lista
-// hasta encontrar un DELIMITER o BUILTIN.
-// Pre: token_list apunta a un token de tipo BUILTIN.
 
-/*void count_args(t_list *token_list, t_cmd *cmd)
-{
-	t_list		*current;
-	t_tokens	*token;
-
-	if (!token_list || !cmd)
-		return;
-
-	//current = token_list->next;
-	current = token_list;
-	cmd->count_args = 0;
-
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-
-		// Detén la cuenta si encuentras otro comando o un delimitador
-		if (token->type_token == BUILTINS ||
-			token->type_token == CMD_EXTERNAL ||
-			token->type_token == DELIMITER ||
-			token->type_token == PIPE)
-			break;
-
-		// Incrementa si es un argumento válido
-		if (token->type_token == WORD)
-			cmd->count_args++;
-
-		current = current->next;
-	}
-}
-*/
 void count_args(t_list *token_list, t_cmd *cmd)
 {
 	t_list      *current;
@@ -67,7 +33,7 @@ void count_args(t_list *token_list, t_cmd *cmd)
 			token->type_token == CMD_EXTERNAL ||
 			token->type_token == DELIMITER ||
 			token->type_token == PIPE)
-			break;
+			continue;
 
 		// Incrementa el contador si es un argumento válido
 		if (token->type_token == WORD)

@@ -43,9 +43,9 @@ void free_cmd_list(t_list *cmd_list)
 
 			// Si tienes otras estructuras o listas dentro de cmd, libéralas aquí
 			// Por ejemplo, redir_list si existe
-			if (cmd->redir_list) {
-				free(cmd->redir_list);  // Esto dependerá de cómo hayas gestionado la memoria en t_redir
-			}
+			//if (cmd->redir_list) {
+				//free(cmd->redir_list);  // Esto dependerá de cómo hayas gestionado la memoria en t_redir
+			//}
 
 			free(cmd);  // Libera el comando
 		}

@@ -1,6 +1,4 @@
-#include "minishell.h"
-
-
+#include "../../includes/minishell.h"
 
 /**
  * Inicializa una nueva estructura de comando con valores por defecto (NULL o -1).
@@ -16,6 +14,8 @@ t_cmd *init_command(void)
 	new_cmd->cmd_args = NULL;
 	new_cmd->count_args = -1;
 	new_cmd->cmd_id = 0;
+	new_cmd->pipes = NULL;
+
 	//new_cmd->redir_list = NULL;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
@@ -59,33 +59,6 @@ t_cmd *create_new_command(t_tokens *token, int cmd_id, char **paths)
 
 	return new_cmd;
 }
-
-/*t_cmd *create_new_command(t_tokens *token, int cmd_id)
-{
-	t_cmd *new_cmd = init_command();
-
-	if (!new_cmd)
-		return NULL;
-
-	new_cmd->cmd_id = cmd_id;
-	new_cmd->cmd = ft_strdup(token->str);
-	if (!new_cmd->cmd)
-	{
-		free_command(new_cmd);
-		return NULL;
-	}
-
-	if (token->type_token == BUILTINS)
-	{
-		new_cmd->is_builtin = 1; // Marcar como builtin
-	}
-	else
-	{
-		new_cmd->is_external  = 1;
-	}
-
-	return new_cmd;
-}*/
 
 
 t_list *create_cmd_list(t_list *token_list, char **paths)

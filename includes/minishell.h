@@ -46,6 +46,19 @@ typedef enum e_type_token
 //	PWD,                // Builtin: pwd
 //	EXPORT,             // Builtin: export
 
+typedef struct s_pipe
+{
+	int	pipe_fds[2];      // Pipe actual [lectura, escritura]
+	int	prev_pipe_fd;     // Descriptor de lectura del pipe anterior
+	int	in_fd;            // Descriptor de entrada (archivo o pipe)
+	int	out_fd;           // Descriptor de salida (archivo o pipe)
+	int	last_cmd;         // Indicador si es el último comando (1 si es último, 0 si no)
+	int	error_fd;         // Descriptor de salida de errores (redirección de errores)
+}					t_pipe;
+
+
+
+
 typedef struct s_tokens
 {
     char            *str;
@@ -94,11 +107,11 @@ typedef struct s_cmd
 	int             cmd_id;
 	int     		is_builtin;
 	int     		is_external;
-	int             pipe[2];
 	int            	input_fd;
 	int             output_fd;
 	//int 			exit_status;
-	struct t_redir 	*redir_list;
+	t_pipe   		*pipes;
+	//struct t_redir 	*redir_list;
 	struct s_cmd    *next;
 }				t_cmd;
 
