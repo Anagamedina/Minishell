@@ -36,7 +36,6 @@ static int	find_matching_quote(const char *str, const int *i, char quote_char)
 }
 */
 
-//static int	find_matching_quote(const char *str, int start_index, char quote_char)
 int	find_matching_quote(const char *str, int start_index, char quote_char)
 {
 	int	i;
@@ -56,7 +55,7 @@ int	find_matching_quote(const char *str, int start_index, char quote_char)
 
 /**
  * Skips over quoted content in a string.
- *
+ *	'asdf'
  * checks for a matching closing quote starting from the current
  * position `*index` in the string.
  * If a matching quote is found, it updates
@@ -87,6 +86,7 @@ static int	skip_quotes(const char *str, int *i)
 	return (TRUE);
 }
 
+
 /*
  * ORIGINAL
 static int	skip_quotes(const char *str, int *index)
@@ -113,7 +113,6 @@ static int	skip_quotes(const char *str, int *index)
     return (FALSE);
 }
 */
-
 
 static void	skip_whitespace(const char *str, int *i)
 {
@@ -185,7 +184,7 @@ static int	init_vars_split(t_split_data *data, char *str)
 
 int	is_special_char(char c)
 {
-	if(c == SPACE || c == TAB || c == NEWLINE || c == SEMICOLON || c == PIPE_CHAR)
+	if (c == SPACE || c == TAB || c == NEWLINE || c == SEMICOLON || c == PIPE_CHAR || c == S_QUOTE || c == D_QUOTE)
 		return (TRUE);
 	return (FALSE);
 }
@@ -205,14 +204,17 @@ int	copy_word(t_split_data *data)
 	printf("data->out:data->k[%d]data->end - data->start[%d]\n", data->k, data->end - data->start);
 
 	data->out[data->k][data->end - data->start] = '\0';
+	printf("Token copied: %s\n", data->out[data->k]);
 	data->k ++;
 	return (0);
 }
 
 //	**********MAIN FUNCTION***************/
+
+/*
 char	**ft_split_quote(char *str)
 {
-	t_split_data	data;
+	t_split_data data;
 
 	if (init_vars_split(&data, str) == FALSE)
 		return (NULL);
@@ -222,8 +224,67 @@ char	**ft_split_quote(char *str)
 		skip_whitespace(data.str, &data.start);
 		data.end = data.start;
 
+		if (data.str[data.start] == '\0')
+			break; // Salida si llegamos al final tras saltar espacios
+
+		// Manejo de palabras que empiezan con comillas
 		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE)
 		{
+			if (!skip_quotes(data.str, &data.end))
+			{
+				printf("Error: Unclosed quote at index %d\n", data.start);
+				free_split_result_struct(data.out, data.k);
+				return (NULL);
+			}
+		}
+		else
+		{
+			// Procesar palabras sin comillas
+			while (data.str[data.end] && !is_special_char(data.str[data.end]))
+			{
+				if ((data.str[data.end] == '$' &&
+					 (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE)))
+				{
+					break;
+				}
+				data.end++;
+			}
+		}
+
+		// Copiar palabra procesada al split
+		if (data.end > data.start && copy_word(&data) == -1)
+		{
+			free_split_result_struct(data.out, data.k);
+			return (NULL); // Salida anticipada en caso de error
+		}
+
+		// Avanzar al siguiente token
+		data.start = data.end;
+	}
+
+	data.out[data.k] = NULL; // Terminar el array con NULL
+	return (data.out);
+}
+*/
+
+char	**ft_split_quote(char *str)
+{
+	t_split_data	data;
+	int				quote_flag;
+
+	if (init_vars_split(&data, str) == FALSE)
+		return (NULL);
+
+	while (data.str[data.start] != '\0' && data.k < data.wc)
+	{
+		skip_whitespace(data.str, &data.start);
+		data.end = data.start;
+
+		quote_flag = FALSE; // flag para verificar si empezamos con comillas
+
+		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE)
+		{
+			quote_flag = TRUE;
 			if (!skip_quotes(data.str, &data.end))
 			{
 				free_split_result_struct(data.out, data.k);
@@ -231,18 +292,18 @@ char	**ft_split_quote(char *str)
 			}
 		}
 		else if (data.str[data.start] == SEMICOLON || data.str[data.start] == PIPE_CHAR)
-			data.end++;
+			data.end ++;
 		else
 		{
 			while (data.str[data.end] && !is_special_char(data.str[data.end]))
 			{
 				// Verificar si estamos dentro de una variable/env seguida por comillas
-				if ((data.str[data.end] == '$' &&
-					 (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE)))
+				// TODO: error posible aqui :(
+				if ((data.str[data.end] == '$' && (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE)))
 				{
 					break;
 				}
-				data.end++;
+				data.end ++;
 			}
 		}
 		if (data.end > data.start && copy_word(&data) == -1)
@@ -255,7 +316,28 @@ char	**ft_split_quote(char *str)
 	data.out[data.k] = NULL;
 	return (data.out);
 }
-
+		/*
+		else
+		{
+			while (data.str[data.end] && !is_special_char(data.str[data.end]))
+			{
+				// Verificar si estamos dentro de una variable/env seguida por comillas
+				// TODO: error posible aqui :(
+				if ((data.str[data.end] == '$' && (data.str[data.end + 1] == D_QUOTE || data.str[data.end + 1] == S_QUOTE)))
+				{
+					break;
+				}
+				data.end ++;
+			}
+		}
+		if (data.end > data.start && copy_word(&data) == -1)
+		{
+			free_split_result_struct(data.out, data.k);
+			return (NULL); // Salida anticipada en caso de error
+		}
+		data.start = data.end;
+	}
+	*/
 
 // echo "hello 'abc '" '  qwer' $USER
 // "hello 'abc '" '  qwer' $USER

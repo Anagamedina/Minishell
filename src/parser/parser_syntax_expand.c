@@ -70,6 +70,8 @@ static int	handle_string_before_dollar(t_tokens *token)
 	return (TRUE);
 }
 
+//  TODO: En el siguiente caso echo "$USER abcdh $HOME $1" falta eliminar $1.
+
 static int	handle_digit_and_more_after_dollar(t_tokens *token)
 {
 	char	*temp;
@@ -103,20 +105,28 @@ static int	check_dollar_special_quote(const char *str)
 }
 */
 
-int	handle_no_expand_cases(t_tokens *token)
+int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 {
-	if (check_backslash_before_dollar(token->str))
-		return (handle_backslash_after_dollar(token));
-	if (check_d_quote_dollar_s_quote(token->str)) //$'..'
-		return (handle_single_quotes_after_dollar(token));// es la que cumple las \t
-	if (has_only_one_digit_after_dollar(token->str))
-		return (handle_one_digit_after_dollar(token));
-	if (has_string_before_dollar(token->str))
-		return (handle_string_before_dollar(token));
-	if (has_dollar_followed_by_digit(token->str))
-		return (handle_digit_and_more_after_dollar(token));
-	return (0);
+	return (
+		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' && str[2] != '\0' && str[2] == ' ') || \
+		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
+
+/*
+int handle_dollar_with_space_single(t_tokens* token)
+{
+	char	*temp;
+
+	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
+	{
+		temp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(temp);
+		temp = NULL;
+	}
+	return (TRUE);
+}
+*/
+
 
 // Caso "$ '...'" -> manejar espacio después del dólar
 
@@ -143,7 +153,7 @@ int	check_dquote_dollar_and_squotes(const char *str)
 	return (FALSE);
 }
 
-static int	handle_dollar_with_space_single(t_tokens *token)
+int	handle_dollar_with_space_single(t_tokens *token)
 {
 	char	*temp;
 
@@ -309,4 +319,21 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 		expand_dollar(token, env_list);
 		return ;
 	}
+}
+
+int	handle_no_expand_cases(t_tokens *token)
+{
+	if (check_backslash_before_dollar(token->str))
+		return (handle_backslash_after_dollar(token));
+	if (check_d_quote_dollar_s_quote(token->str)) //$'..'
+		return (handle_single_quotes_after_dollar(token));// es la que cumple las \t
+	if (has_only_one_digit_after_dollar(token->str))
+		return (handle_one_digit_after_dollar(token));
+	if (has_string_before_dollar(token->str))
+		return (handle_string_before_dollar(token));
+	if (has_dollar_followed_by_digit(token->str))
+		return (handle_digit_and_more_after_dollar(token));
+	// if (has_dollar_with_only_spaces_or_only_dollar(token->str))
+		// return (handle_dollar_with_space_single(token));
+	return (0);
 }
