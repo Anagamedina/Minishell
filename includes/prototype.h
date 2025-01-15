@@ -122,7 +122,7 @@ void		identify_commands(t_list *tokens_list);
 
 char		**ft_split_quote(char *str);
 char		**ft_split_new_version(char *str);
-int			count_words(char *str);
+int			count_words(const char *str);
 int			find_matching_quote(const char *str, int start_index, char quote_char);
 
 //************** PARSER.c ********************/
