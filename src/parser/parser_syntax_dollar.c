@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 16:06:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/16 20:11:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
 	char	*tmp;
 
 	tmp = NULL;
-	printf("handle_tokens()\n");
-	printf("Current token: [%s]\n", token->str);
-	if (next_token)
-		printf("Next token: [%s]\n", next_token->str);
-
 
 	/**
 	 * Case single quotes:
@@ -122,6 +117,51 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
  *             - `env`: Environment variable list for processing.
  */
 
+/*
+void	process_token(t_tokens *curr_token, t_tokens *next_token, t_list *env_list)
+{
+	if (!next_token)
+	{
+		handle_tokens(next_token, env_list, NULL);
+		return ;
+	}
+	if (curr_token->type_token == WORD)
+	{
+		handle_tokens(curr_token, env_list, next_token);
+		return ;
+    }
+}
+*/
+
+void	parser_tokens(t_mini *mini)
+{
+	t_list		*token_list;
+	t_list		*env_list;
+	t_tokens	*curr_token;
+	t_tokens	*next_token;
+
+	token_list = mini->token;
+	env_list = mini->env;
+	if (token_list && \
+		((t_tokens *) token_list->content)->type_token == BUILTINS)
+		token_list = token_list->next;
+	// printf("token_list->content: [%s]\n", ((t_tokens *) token_list->content)->str);
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		if (token_list->next != NULL)
+			next_token = (t_tokens *) token_list->next->content;
+		else
+			next_token = NULL;
+		if (curr_token->type_token == WORD)
+			handle_tokens(curr_token, env_list, next_token);
+		else
+			break ;
+		token_list = token_list->next;
+	}
+}
+
+/*
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -169,6 +209,7 @@ void	parser_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
+*/
 
 /*
 void	parser_tokens(t_mini *mini)

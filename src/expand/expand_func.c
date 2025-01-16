@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expand_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/16 21:20:45 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_func.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -293,6 +305,64 @@ char	**ft_split_new_version(char *str)
 	return (out);
 }
 
+
+/*
+char	**ft_split_new_version(char *str)
+{
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	int wc = 0;
+
+//	contar palabras
+	while (str[i])
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
+			i ++;
+		if (str[i])
+			wc ++;
+		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
+			i ++;
+	}
+
+	char **out = (char **) malloc(sizeof(char *) * (wc + 1));
+	i = 0;
+
+	while (str[i] != '\0')
+	{
+		int start_word = 0;
+		int end_word = 0;
+		int spaces_before_start = 0;
+		int spaces_end = 0;
+		j = i;
+		while (str[i] && (str[i] == ' '))
+		{
+			spaces_before_start ++;
+			i ++;
+		}
+		start_word = i;
+		while (str[i] != '\0' && str[i] != ' ')
+		{
+			i ++;
+		}
+		end_word = i;
+		while (str[i] && (str[i] == ' ') && str[i] != '\0')
+		{
+			spaces_end ++;
+			i ++;
+		}
+
+		if (i > j)
+		{
+
+			out[k] = (char *)malloc(sizeof(char) * ((i) + 1));
+			ft_strncpy(out[k++], &str[j], i - j);
+		}
+	}
+	out[k] = NULL;
+	return (out);
+}
+*/
 /**
  * EXTRAEEER!!! NAME DEPSUES DEL DOLLAR
  * echo "$hello"   hello
@@ -317,9 +387,8 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 		{
 			// Verificar si el token contiene '$' y no está seguido de un espacio
 			position_dollar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
-			if (position_dollar != -1 && \
-			(position_dollar + 1 < (int)ft_strlen(curr_token->str)) && \
-				curr_token->str[position_dollar + 1] == SPACE)
+			if (position_dollar == -1 && \
+			(position_dollar + 1 < (int)ft_strlen(curr_token->str)) && curr_token->str[position_dollar + 1] == SPACE)
 			{
 				break ;
 			}

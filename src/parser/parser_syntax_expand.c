@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 15:30:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/16 21:11:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +380,7 @@ int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 		return (handle_string_before_dollar(token));
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
-	// if (has_dollar_with_only_spaces_or_only_dollar(token->str))
-		// return (handle_dollar_with_space_single(token));
+	/*if (has_dollar_with_only_spaces_or_only_dollar(token->str))
+		return (handle_dollar_with_space_single(token));*/
 	return (0);
 }
