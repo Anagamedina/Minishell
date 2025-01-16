@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/08 11:00:27 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/15 22:01:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include "prototype.h"
 
 char	*read_input(void)
 {
-	char *input;
+	char	*input;
 
-	input = readline("minishell> "); // Muestra el prompt y lee la entrada
+	input = readline("minishell> ");
 	if (input && *input)
 	{
 		add_history(input);
@@ -25,17 +24,15 @@ char	*read_input(void)
 	return (input);
 }
 
-/*
- * comprobar que si se encuentra el caracter "
- * ha de encontrar otro que es el que cierra "
- * "hello!"
- * Verificar si empieza y termina con comillas dobles
-*/
+/**
+ * @brief check if the input contains quotes and if the number of quotes is even
+ *
+ */
 int	check_quotes_line(const char *line)
 {
-	int i;
-	int double_quotes;
-	int single_quotes;
+	int	i;
+	int	double_quotes;
+	int	single_quotes;
 
 	i = 0;
 	single_quotes = 0;
@@ -48,16 +45,7 @@ int	check_quotes_line(const char *line)
 			single_quotes ++;
 		i++;
 	}
-	// Verificamos que ambos contadores de comillas sean pares
 	if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
 		return (FALSE);
 	return (TRUE);
 }
-
-/**	echo "" hello ""
- * [0] = echo
- * [1] = ""
- * [2] = hello
- * [3] = ""
- * [4] = NULL
- */

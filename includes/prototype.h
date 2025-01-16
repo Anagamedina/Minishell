@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/15 22:27:56 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -98,8 +110,8 @@ t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
-t_list		*tokenize_list(char **tokens);
-char		*clean_consecutive_quotes(char *line);
+t_list		*convert_tokens_to_list(char **tokens);
+char		*clean_consecutive_quotes(const char *line);
 t_list		*generate_token_list(char *line);
 
 //************** TOKEN_FREE.c ********************/
@@ -110,6 +122,7 @@ char		*ft_strcpy(char *dest, const char *src);
 void		free_split_result(char **out);
 void		free_split_result_struct(char **out, int k);
 int			copy_word(t_split_data *data);
+void		ft_free_array(char **array);
 
 //************** TOKEN_TYPE.c ********************/
 
