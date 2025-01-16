@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/16 15:30:46 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_syntax_expand.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
@@ -32,10 +44,43 @@ static int	handle_backslash_after_dollar(t_tokens *token)
 static int	handle_single_quotes_after_dollar(t_tokens *token)
 {
 	char	*temp;
+	char	*processed_str;
+
+	//seg fault
+	processed_str = remove_quotes_str(token->str, S_QUOTE);
+	// printf("**************processed: [%s]\n", processed_str);
+	if (!processed_str)
+	{
+		perror("Error: remove_quotes_str failed");
+		return (FALSE);
+	}
+	temp = convert_escape_sequences(processed_str);
+	// printf("**************temp: [%s]\n", temp);
+
+	// free(temp);
+	if (!temp)
+	{
+		perror("Error: convert_escape_sequences failed");
+		return (FALSE);
+	}
+	free(token->str);
+	token->str = ft_strdup(temp);
+	if (!token->str)
+	{
+		perror("Error: ft_strdup failed");
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+/*
+static int	handle_single_quotes_after_dollar(t_tokens *token)
+{
+	char	*temp;
 
 	temp = convert_escape_sequences(token->str + 1);
 	free(token->str);
-	token->str = ft_strdup(remove_quotes_str(temp, D_QUOTE));
+	token->str = ft_strdup(remove_quotes_str(temp, D_QUOTE));//doble???
 	if (!token->str)
 	{
 		perror("error: ft_strdup failed");
@@ -43,7 +88,7 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 	}
 	return (TRUE);
 }
-
+*/
 static int	handle_one_digit_after_dollar(t_tokens *token)
 {
 	token->str = ft_strdup("");
@@ -243,7 +288,7 @@ int	check_dquote_squote_dollar_case(char *str)
  *
  */
 
-void	handle_dollar_cases(t_tokens *token, t_list *env_list)
+void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {
 	char	*tmp;
 	char	*res;
@@ -305,7 +350,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	 * Steps:
 	 * Managed by handle_no_expand_cases
 	 */
-	if (handle_no_expand_cases(token) == 0)
+	if (handle_no_expand_cases(token, next_token) == 0)
 	{
 		/**
 		 * Case: General dollar expansion
@@ -321,12 +366,14 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 	}
 }
 
-int	handle_no_expand_cases(t_tokens *token)
+int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 {
 	if (check_backslash_before_dollar(token->str))
 		return (handle_backslash_after_dollar(token));
-	if (check_d_quote_dollar_s_quote(token->str)) //$'..'
-		return (handle_single_quotes_after_dollar(token));// es la que cumple las \t
+
+	if (check_dollar_and_next_token(&token->str, next_token)) //$'..'
+		return (handle_single_quotes_after_dollar(next_token));// es la que cumple las \t
+
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
 	if (has_string_before_dollar(token->str))

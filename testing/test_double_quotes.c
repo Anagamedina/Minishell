@@ -493,7 +493,7 @@ void	test_check_d_quote_dollar_s_quote(void)
 	{
 		token = init_token(basic_cases[i].input, set_token_type(basic_cases[i].input));
 
-		int result = check_d_quote_dollar_s_quote(token->str);
+		int result = check_dollar_and_next_token(&token->str, NULL);
 
 		snprintf((char *) message, sizeof(message),
 				 "FAILED ON CASE (%d):" " INPUT=[%s] "

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/16 00:26:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:38:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	print_list_token_str(t_list *tokens_list)
 		{
 			printf("%s", token->str);
 			if (current->next != NULL)
-				printf(" ");
+				printf("");
 		}
 		current = current->next;
 	}
@@ -452,18 +452,6 @@ t_list	*generate_token_list(char *line)
 		// free(token_array);
 		return (NULL);
 	}
-	tokens_list = convert_tokens_to_list(token_array);
-	if (tokens_list == NULL)
-	{
-		printf ("Error: Failed to generate token list\n");
-		/* ft_lstclear(&tokens_list, free);*/
-		return (NULL);
-	}
-	// ft_free_array(token_array);
-	identify_commands(tokens_list);
-	return (tokens_list);
-}
-	/*
 	printf("****** Tokens AFTER SPLIT ******\n");
 	int i = 0;
 	while (token_array[i] != NULL)
@@ -472,5 +460,17 @@ t_list	*generate_token_list(char *line)
 		i ++;
 	}
 	printf("--------------------------------\n");
-	*/
+
+	tokens_list = convert_tokens_to_list(token_array);
+	if (tokens_list == NULL)
+	{
+		printf ("Error: Failed to generate token list\n");
+		/* ft_lstclear(&tokens_list, free);*/
+		return (NULL);
+	}
+	print_list_token(tokens_list);
+	// ft_free_array(token_array);
+	identify_commands(tokens_list);
+	return (tokens_list);
+}
 

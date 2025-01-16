@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_syntax_dollar.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/16 16:06:18 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -12,11 +24,16 @@ int	check_special_c(char c)
 //	|| c == ';' || c == ':' || c == '|' || c == '<' || c == '>' || c == '\\')
 }
 
-void	handle_tokens(t_tokens *token, t_list *env_list)
+void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {
 	char	*tmp;
 
 	tmp = NULL;
+	printf("handle_tokens()\n");
+	printf("Current token: [%s]\n", token->str);
+	if (next_token)
+		printf("Next token: [%s]\n", next_token->str);
+
 
 	/**
 	 * Case single quotes:
@@ -55,7 +72,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		{
-			handle_dollar_cases(token, env_list);
+			handle_dollar_cases(token, env_list, next_token);
 			return ;
 		}
 		else
@@ -76,38 +93,20 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
 	 * echo " "" " '$USER ' " "" "
 	 * echo ""'helo $USER 0-9' ""
 	 */
-/*
-	if (handle_special_balanced_dquotes(token))
-	{
-		printf("entro en handle_special_balanced_dquotes\n");
 
-	}
-*/
-
-	/**
-	 *
-	 * Caso Comillas Dobles:
-	 * @example
-	 * Input: "\"$HOME/projects\""
-	 * Output: "/home/daruu/projects"
-	 *
-	 * Si el token está rodeado únicamente por comillas dobles ("), se manejan los casos relacionados con la expansión de variables de entorno ($).
-	 * Llamada a has_even_double_quotes para verificar.
-	 * Se llama a handle_dollar_cases para manejar variables de entorno.
-	 */
 
 //	TODO: modificar para manejar comillas dobles par veces
 //	no pudne haber dolar entre d_quotes
 //	echo "        "
 	if (has_even_double_quotes(token))
 	{
-		handle_dollar_cases(token, env_list);
+		handle_dollar_cases(token, env_list, next_token);
 		return ;
 	}
 
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
 	{
-		handle_dollar_cases(token, env_list);
+		handle_dollar_cases(token, env_list, next_token);
 		return ;
 	}
 }
@@ -122,27 +121,116 @@ void	handle_tokens(t_tokens *token, t_list *env_list)
  *             - `token`: List of tokens to parse.
  *             - `env`: Environment variable list for processing.
  */
+
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
 	t_list		*env_list;
 	t_tokens	*curr_token;
+	t_tokens	*next_token;
+
+	token_list = mini->token;
+	env_list = mini->env;
+
+	// Validar si la lista de tokens existe y no está vacía
+	if (!token_list)
+		return;
+
+	// Salta el primer token si es BUILTINS
+	if (token_list->content != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		printf("curr_token->str: [%s]\n", curr_token->str);
+		if (curr_token->type_token == BUILTINS)
+			token_list = token_list->next;
+	}
+	// Iterar sobre la lista de tokens
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		printf("token->str: [%s]\n", curr_token->str);
+		if (token_list->next == NULL)
+		{
+			handle_tokens(curr_token, env_list, NULL);
+		}
+		// Verificar si hay un siguiente token antes de acceder a él
+		else if (token_list->next != NULL)
+		{
+			next_token = (t_tokens *) token_list->next->content;
+			printf("next_token->str: [%s]\n", next_token->str);
+			// Procesar tokens si el actual es de tipo WORD
+			if (curr_token->type_token == WORD)
+			{
+				handle_tokens(curr_token, env_list, next_token);
+			}
+			else
+				break ;
+		}
+		token_list = token_list->next;
+	}
+}
+
+/*
+void	parser_tokens(t_mini *mini)
+{
+	t_list		*token_list;
+	t_list		*env_list;
+	t_tokens	*curr_token;
+	t_tokens	*next_token;
+
+	token_list = mini->token;
+	env_list = mini->env;
+
+	// Salta el primer token si es BUILTINS o CMD_EXTERNAL
+	if (token_list != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		if (curr_token->type_token == BUILTINS)
+			token_list = token_list->next;
+	}
+
+	while (token_list != NULL)//&& token_list->next != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		next_token = (t_tokens *) token_list->next->content;
+
+		if (curr_token->type_token == WORD)
+			handle_tokens(curr_token, env_list, next_token);
+		else
+			break;
+		token_list = token_list->next;
+	}
+}
+*/
+
+
+
+
+
+/*void	parser_tokens(t_mini *mini)
+{
+	t_list		*token_list;
+	t_list		*env_list;
+	t_tokens	*curr_token;
+	t_tokens	*next_token;
 
 	token_list = mini->token;
 	env_list = mini->env;
 	curr_token = (t_tokens *) token_list->content;
+	//next_token = (t_tokens *) token_list->next->content;
 
 	if ((curr_token->type_token == BUILTINS) && (token_list->next != NULL) \
 		&& (((t_tokens *)(token_list->next->content))->type_token == WORD))
 	{
 		while (token_list->next != NULL)
 		{
-			curr_token = (t_tokens *)token_list->next->content;
+			next_token = (t_tokens *) token_list->next->content;
+			//curr_token = (t_tokens *)token_list->content;
 			if (curr_token->type_token == WORD)
-				handle_tokens((t_tokens *) curr_token, env_list);
+				handle_tokens(curr_token, env_list, next_token);
 			else
 				break ;
 			token_list = token_list->next;
 		}
 	}
-}
+}*/

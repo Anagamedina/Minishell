@@ -6,7 +6,7 @@
 /*   By: daruuu <daruuu@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 22:53:40 by daruuu            #+#    #+#             */
-/*   Updated: 2025/01/15 18:53:55 by daruuu           ###   ########.fr       */
+/*   Updated: 2025/01/16 15:32:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static int	skip_quotes(const char *str, int *i)
 	int		close_quote_position;
 
 	open_quote_position = str[*i];
-	printf("i: [%d] | open_quote_position: [%c]\n", *i, open_quote_position);
+	// printf("i: [%d] | open_quote_position: [%c]\n", *i, open_quote_position);
 
 	close_quote_position = find_matching_quote(str, *i, open_quote_position);
 
-	printf("close_quote_position: [%d]\n", close_quote_position);
-	printf("i in skip_quotes(): [%d]\n", *i);
+	// printf("close_quote_position: [%d]\n", close_quote_position);
+	// printf("i in skip_quotes(): [%d]\n", *i);
 
 	if (close_quote_position == -1)
 	{
@@ -76,7 +76,7 @@ static int	skip_quotes(const char *str, int *i)
 		return (FALSE);
 	}
 	*i = close_quote_position + 1; //  Move past the closing quote
-	printf("before exit function(skip_quotes): i: [%d]\n", *i);
+	// printf("before exit function(skip_quotes): i: [%d]\n", *i);
 	return (TRUE);
 }
 
@@ -175,6 +175,8 @@ static int	init_vars_split(t_split_data *data, char *str)
 	return (TRUE);
 }
 
+
+//	echo "hello world"hello|
 int	is_special_char(char c)
 {
 	if (c == SPACE || c == TAB || c == NEWLINE || c == SEMICOLON || c == PIPE_CHAR || c == S_QUOTE || c == D_QUOTE)
@@ -184,25 +186,31 @@ int	is_special_char(char c)
 
 int	copy_word(t_split_data *data)
 {
-	printf("copy_worddddd:\n");
+	// printf("copy_worddddd:\n");
 	data->out[data->k] = (char *)malloc(sizeof(char) * \
 		(data->end - data->start + 1));
 
 	if (data->out[data->k] == NULL)
 		return (-1);
-	printf("data->k: [%d]\n", data->k);
+	// printf("data->k: [%d]\n", data->k);
 
 	ft_strncpy(data->out[data->k], &data->str[data->start], \
 	data->end - data->start);
 
 	data->out[data->k][data->end - data->start] = '\0';
-	printf("Token copied: [%s]\n", data->out[data->k]);
+	// printf("Token copied: [%s]\n", data->out[data->k]);
 	data->k ++;
 	return (0);
 }
 
 //	**********MAIN FUNCTION***************/
 
+/*
+ * split[k]: "echo"
+ * split[k]: " qwerty"
+ * split[k]: " hello"
+ *
+ */
 char	**ft_split_quote(char *str)
 {
 	t_split_data	data;
@@ -230,13 +238,15 @@ char	**ft_split_quote(char *str)
 			while (data.str[data.end] && !is_special_char(data.str[data.end]))
 			{
 				// Verificar si estamos dentro de una variable/env seguida por comillas
-				if ((data.str[data.end] == '$' \
-					&& (data.str[data.end + 1] == S_QUOTE)))
+				// echo "$'heloo' "
+				/*
+				if ((data.str[data.end] == '$' && (data.str[data.end + 1] == S_QUOTE)))
 				{
 					data.str[data.end] = ' ';
-					break;
+					break ;
 				}
-				data.end++;
+				*/
+				data.end ++;
 			}
 		}
 		if (data.end > data.start && copy_word(&data) == -1)

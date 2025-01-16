@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/16 15:07:16 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 /**
@@ -5,6 +17,28 @@
  * echo "$'USER'"
  */
 
+int	check_dollar_and_next_token(char** str, t_tokens* next_token)
+{
+	int	len_str;
+
+	if (next_token == NULL)
+		return (FALSE);
+	printf("next token: %s\n", next_token->str);
+	len_str = (int) ft_strlen(*str);
+	if (len_str == 1 && (*str)[0] == '$' && handle_single_quote(next_token) == TRUE)
+	{
+		free(*str);
+		*str = ft_strdup("");
+		if (!*str)
+		{
+			perror("Error: ft_strdup failed");
+			return (FALSE);
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
+/*
 int	check_d_quote_dollar_s_quote(const char *str)
 {
 	int	i;
@@ -24,6 +58,7 @@ int	check_d_quote_dollar_s_quote(const char *str)
 	}
 	return (0);
 }
+*/
 
 int	check_backslash_before_dollar(const char *str)
 {

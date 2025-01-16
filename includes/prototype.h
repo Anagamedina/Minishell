@@ -156,17 +156,17 @@ char		*remove_d_quote_and_s_quotes_str(char *str);
 //************** parser_syntax_expand.c ********************/
 
 int			check_dquote_dollar_and_squotes(const char *str);
-void		handle_dollar_cases(t_tokens *token, t_list *env_list);
+void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token);
 //int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
-void		handle_tokens(t_tokens *token, t_list *env_list);
+void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token);
 int			has_string_before_dollar(const char *str);
 int			check_dquote_squote_dollar_case(char *str);
-int			handle_no_expand_cases(t_tokens *token);
+int			handle_no_expand_cases(t_tokens *token, t_tokens* next_token);
 
 //************** parser_not_expand.c ********************/
 
-int			check_d_quote_dollar_s_quote(const char *str);
+int			check_dollar_and_next_token(char** str, t_tokens* next_token);
 int			has_only_one_digit_after_dollar(const char *str);
 char		*convert_escape_sequences(const char *str);
 int			has_dollar_followed_by_digit(const char *str);

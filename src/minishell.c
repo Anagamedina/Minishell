@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/15 21:35:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:38:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell->token == NULL)
 			continue ;
 		parser_tokens(minishell);
-		print_list_token_str(minishell->token);
-		minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
+		// print_list_token(minishell->token);
+		print_list_token(minishell->token);
+		// minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
 		// print_list_commands(minishell->cmds);
 		// print_list_token(minishell->token);
 		//cases_builtins(minishell);
