@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_init.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/17 10:37:12 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 /**
@@ -68,7 +80,7 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	t_cmd *new_cmd;
 	t_tokens *token;
 	t_list *current = token_list;
-	int cmd_id = 1;
+	int cmd_id = 0;
 
 	if (!token_list)
 		return NULL;

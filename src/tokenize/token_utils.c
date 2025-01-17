@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/16 18:20:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 16:50:37 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,8 @@ static int	count_words(char *str)
 	wc = 0;
 	while (str[i])
 	{
+		if (str[i] == '\0')
+			break;
 		skip_whitespace(str, &i);
 		if (str[i] == BACKSLASH || str[i] == D_QUOTE)
 			wc += skip_quotes(str, &i);
@@ -186,7 +188,12 @@ static int	count_words(char *str)
 			wc++;
 			while (str[i] && str[i] != ' ' && str[i] != '\t' \
 			&& str[i] != '\n' && str[i] != ';' && str[i] != '|')
+			{
+				if (str[i] == '\0')
+					break;
+
 				i++;
+			}
 		}
 	}
 	return (wc);

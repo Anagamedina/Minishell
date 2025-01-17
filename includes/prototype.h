@@ -177,7 +177,7 @@ char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
-t_exec 		*init_exec(char **envp);
+t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
 void		execute_commands(t_mini *mini);
@@ -186,7 +186,10 @@ void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
 t_pipe		*init_pipe(void);
-void		handle_commands(t_mini *mini);
+void		execute_commands(t_mini *mini);
+t_pipe 		*create_pipe(int is_last);
+int 		count_pipes(t_list *token_list);
+
 //*************redis**************/
 
 int 		check_repeat_redir(t_tokens *token);

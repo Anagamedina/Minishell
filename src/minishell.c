@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 17:59:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 11:58:32 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 		char **envp = lst_to_arr(minishell->env);
 
 
-		minishell->exec = init_exec(envp);
+			minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 
 		print_list_commands(minishell->exec->first_cmd);
 		//execute_commands(minishell);
-		handle_commands(minishell);
+		execute_commands(minishell);
 		free_cmd_list(minishell->exec->first_cmd);
 		 //cases_builtins(minishell);
 	}
