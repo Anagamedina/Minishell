@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/17 22:40:53 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 12/24/24.
 //
@@ -171,6 +183,7 @@ void	test_sumar_a_mas_b(void)
 	TEST_ASSERT_EQUAL_INT(19, result);
 }
 
+/*
 void	test_clean_consecutives_quotes(void)
 {
 	int		i;
@@ -199,7 +212,7 @@ void	test_clean_consecutives_quotes(void)
 					// Caso 9: Texto solo con comillas dobles consecutivas
 					{"\"\"\"\"", ""},
 					// Caso 10: Texto mixto con comillas consecutivas y palabras
-					{"\"hello\"'' world\"\"", "hello world"}*/
+					{"\"hello\"'' world\"\"", "hello world"}#1#
 			};
 
 	i = 0;
@@ -216,6 +229,7 @@ void	test_clean_consecutives_quotes(void)
 		i++;
 	}
 }
+*/
 
 void	test_extract_var_name(void)
 {
@@ -271,25 +285,61 @@ void	test_get_and_reconstruct_token(void)
 	}
 }
 
+void	test_has_string_before_dollar(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		{"hello$HOME", TRUE},       // Precedido por 'o'
+		{"var$USER", TRUE},         // Precedido por 'r'
+		{"my_var$PATH", TRUE},      // Precedido por 'r'
 
+		// Casos que retornan FALSE
+		{"", FALSE},                // Cadena vacía
+		{NULL, FALSE},              // Cadena nula
+		{"$HOME", FALSE},           // Nada antes del $
+		{"123$VAR", FALSE},         // Precedido por un número
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+		{"hello world", FALSE},     // No hay ningún $
+	};
 
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = has_string_before_dollar(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
+		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
+		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);
+		i++;
+	}
+}
 
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
  */
-
 int	main(void)
 {
 	UNITY_BEGIN();
 
-//	RUN_TEST(test_clean_consecutives_quotes);
-//	RUN_TEST(test_extract_var_name);
-//	RUN_TEST(test_get_and_reconstruct_token);
-//	RUN_TEST(test_count_words);
+	/*
+	RUN_TEST(test_clean_consecutives_quotes);
+	RUN_TEST(test_extract_var_name);
+	RUN_TEST(test_get_and_reconstruct_token);
+	RUN_TEST(test_count_words);
 	RUN_TEST(test_find_matching_quote);
+	*/
 
+	RUN_TEST(test_has_string_before_dollar);
 
+	return (UNITY_END());
+}
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
@@ -326,9 +376,7 @@ int	main(void)
 	// RUN_TEST(test_replace_dollar_variable_skip_s_quote_01);
 
 
-//	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+	// RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+	//
+	// RUN_TEST(test_handle_special_quotes);
 
-//	RUN_TEST(test_handle_special_quotes);
-
-	return (UNITY_END());
-}

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 15:07:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:08:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	has_dollar_followed_by_digit(const char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (ft_isdigit(str[i + 1]) == 1)
+			if (ft_isdigit(str[i + 1]) == TRUE)
 			{
 				return (TRUE);
 			}
@@ -172,24 +172,34 @@ char	*convert_escape_sequences(const char *str)
 	process_string(str, result);
 	return (result);
 }
+/**
+ * Checks if there is a valid alphabetical character
+ * (A-Z or a-z) immediately before the first
+ * occurrence of a dollar sign ('$') in the string.
+ *
+ * @example
+ * Input: "Hello$World"
+ * Output: TRUE (1)
+ *
+ * Input: "123$World"
+ * Output: FALSE (0)
+ *
+ * @return TRUE (1) if there is a valid letter before the dollar sign.
+ *         FALSE (0) otherwise.
+ */
+// TODO: condicion no correcta del todo
 
 int	has_string_before_dollar(const char *str)
 {
 	int	i;
-	int	j;
 
+	if (!str || str[0] == '\0')
+		return (FALSE);
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == DOLLAR_SIGN)
-		{
-			j = i - 1;
-			if ((str[j] >= 'A' && str[j] <= 'Z') || \
-			(str[j] >= 'a' && str[j] <= 'z'))
-			{
-				return (TRUE);
-			}
-		}
+		if (str[i] == DOLLAR_SIGN && i > 0 && ft_isalpha(str[i - 1]))
+			return (TRUE);
 		i++;
 	}
 	return (FALSE);

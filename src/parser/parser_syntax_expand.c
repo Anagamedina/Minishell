@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 21:11:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 22:49:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,63 @@ static int	handle_one_digit_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-static int	handle_string_before_dollar(t_tokens *token)
+/**
+ * Trims the token's string to only include
+ * the part before the first '$' character.
+ *
+ * @token The token containing the string to process.
+ *
+ * Steps:
+ * 1. Removes double quotes (`"`) from the string.
+ * 2. Extracts the substring before the first '$'.
+ * 3. Updates the token with the processed string.
+ *
+ * Example:
+ * Input: token->str = "\"Hello $World\"";
+ * Output: token->str = "Hello ".
+ *
+ * Returns:
+ * - TRUE (1) on success.
+ * - FALSE (0) if memory allocation fails.
+ */
+
+static int	handle_str_trim_before_dollar(t_tokens *token)
 {
 	char	*temp;
+	char	*substring_str;
+	char	*dollar_pos;
 
 	temp = remove_quotes_str(token->str, D_QUOTE);
-	token->str = ft_strdup(temp);
-	if (!token->str)
+	if (!temp)
 	{
-		perror("error: ft_strdup failed");
+		perror("error: remove_quotes_str failed");
 		return (FALSE);
 	}
-	free (temp);
-	temp = ft_substr(token->str, 0, \
-	ft_strchr(token->str, DOLLAR_SIGN) - token->str);
 	free(token->str);
 	token->str = ft_strdup(temp);
 	free(temp);
+
+	printf("token->str: [%s]\n", token->str);
+
+	dollar_pos = ft_strchr(token->str, DOLLAR_SIGN);
+	if (dollar_pos)
+	{
+		substring_str = ft_substr(token->str, 0, dollar_pos - token->str);
+		printf("substring_str: [%s]\n", substring_str);
+		if (!substring_str)
+		{
+			perror("Error: ft_substr failed");
+			free(token->str);
+			return (FALSE);
+		}
+		free(token->str);
+		token->str = ft_strdup(substring_str);
+		free(substring_str);
+	}
+	printf("token->str after trim: [%s]\n", token->str);
 	return (TRUE);
 }
+
 
 //  TODO: En el siguiente caso echo "$USER abcdh $HOME $1" falta eliminar $1.
 
@@ -376,8 +414,12 @@ int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
+	// remove this case to see whats happening
+	/*
 	if (has_string_before_dollar(token->str))
-		return (handle_string_before_dollar(token));
+		return (handle_str_trim_before_dollar(token));
+	*/
+	// caso a gestionar TODO: echo "$USER abcdh $HOME $1"
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
 	/*if (has_dollar_with_only_spaces_or_only_dollar(token->str))

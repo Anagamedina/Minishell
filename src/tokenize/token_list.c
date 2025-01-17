@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/16 15:38:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:56:58 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	print_list_token_str(t_list *tokens_list)
 		{
 			printf("%s", token->str);
 			if (current->next != NULL)
-				printf("");
+				printf(" ");
 		}
 		current = current->next;
 	}

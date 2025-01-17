@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 21:20:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 00:33:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ char	**ft_split_new_version(char *str)
 	int wc = 0;
 
 //	contar palabras
-	while (str[i])
+	while (str[i] != '\0')
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 			i ++;
@@ -265,7 +265,13 @@ char	**ft_split_new_version(char *str)
 			wc ++;
 		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
 			i ++;
+		/*
+		//	cada que encuentra un signo de dolar cuenta una palabra
+		if (str[i] == DOLLAR_SIGN)
+			i ++;
+		*/
 	}
+	printf("wc: [%d]\n", wc);
 
 	char **out = (char **) malloc(sizeof(char *) * (wc + 1));
 	i = 0;
@@ -430,6 +436,16 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 		curr_token = curr_token->next;
 	}
 }
+
+/**
+ * @brief Parses and processes tokens from the mini structure.
+ *
+ * Iterates through the token list, skipping the first token if it's a `BUILTINS` type.
+ * Processes each token of type `WORD` using `handle_tokens`, passing the current
+ * and next tokens for context. Stops if the current token is not a `WORD`.
+ *
+ * @param mini Pointer to the `t_mini` structure containing the token and environment lists.
+ */
 
 void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
