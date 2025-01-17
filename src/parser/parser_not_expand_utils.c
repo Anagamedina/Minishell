@@ -187,20 +187,4 @@ char	*convert_escape_sequences(const char *str)
  * @return TRUE (1) if there is a valid letter before the dollar sign.
  *         FALSE (0) otherwise.
  */
-// TODO: condicion no correcta del todo
 
-int	has_string_before_dollar(const char *str)
-{
-	int	i;
-
-	if (!str || str[0] == '\0')
-		return (FALSE);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == DOLLAR_SIGN && i > 0 && ft_isalpha(str[i - 1]))
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}

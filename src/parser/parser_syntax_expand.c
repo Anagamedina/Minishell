@@ -415,10 +415,6 @@ int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
 	// remove this case to see whats happening
-	/*
-	if (has_string_before_dollar(token->str))
-		return (handle_str_trim_before_dollar(token));
-	*/
 	// caso a gestionar TODO: echo "$USER abcdh $HOME $1"
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));

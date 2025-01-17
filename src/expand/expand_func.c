@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 00:33:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 23:07:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -447,6 +447,36 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
  * @param mini Pointer to the `t_mini` structure containing the token and environment lists.
  */
 
+/*
+int	has_string_before_dollar(const char *str)
+{
+	int	i;
+
+	if (!str || str[0] == '\0')
+		return (FALSE);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == DOLLAR_SIGN && i > 0 && ft_isalpha(str[i - 1]))
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}
+*/
+
+int	has_more_than_one_dollar_in_token(char* str)
+{
+	int	i;
+
+	i = 0;
+	return ();
+}
+
+	/*
+	if (has_string_before_dollar(token->str))
+		return (handle_str_trim_before_dollar(token));
+	*/
 void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
@@ -455,8 +485,14 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 	curr_token = token_list;
 	update_token_str = NULL;
 	printf("curr_token->str: [%s]\n", curr_token->str);
+
 	while (curr_token != NULL)
 	{
+	//	TODO: add new case here: if more than one dollar in string and no spaces return (TRUE)
+		if (has_more_than_one_dollar_in_token(curr_token->str))
+		{
+
+		}
 		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
 		printf("remove quotes: [%s]\n", update_token_str);
 		curr_token->str = ft_strdup(update_token_str);
