@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 23:07:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:12:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,13 +464,29 @@ int	has_string_before_dollar(const char *str)
 	return (FALSE);
 }
 */
-
-int	has_more_than_one_dollar_in_token(char* str)
+/**
+ *
+ * echo "$USER$USER$USER" abcd
+ * echo "$USER$_abc$123"
+ * @param str
+ * @return
+ */
+int	has_more_than_one_dollar_without_spaces_in_token(char* str)
 {
 	int	i;
+	int	count_dollar;
 
 	i = 0;
-	return ();
+	count_dollar = 0;
+	while (str[i] != '\0')
+	{
+		if (i >= 0 && str[i] == DOLLAR_SIGN)
+		{
+			count_dollar ++;
+		}
+		i ++;
+	}
+	return (TRUE);
 }
 
 	/*
@@ -489,7 +505,7 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 	while (curr_token != NULL)
 	{
 	//	TODO: add new case here: if more than one dollar in string and no spaces return (TRUE)
-		if (has_more_than_one_dollar_in_token(curr_token->str))
+		if (has_more_than_one_dollar_without_spaces_in_token(curr_token->str))
 		{
 
 		}

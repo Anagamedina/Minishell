@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 22:08:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/18 13:32:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,23 @@ int	has_only_one_digit_after_dollar(const char *str)
  * and additional characters.
  */
 
+//	TODO: agregar una validacion de que solamente cuando existe un dolar en el string return TRUE
+
 int	has_dollar_followed_by_digit(const char *str)
 {
 	int	i;
+	int	count_dollar;
 
 	i = 0;
+	count_dollar = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+			count_dollar ++;
+		i ++;
+	}
+	if (count_dollar > 1)
+		return (FALSE);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
