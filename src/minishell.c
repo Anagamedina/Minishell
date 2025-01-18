@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 11:58:32 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/18 14:12:27 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,19 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error al crear la lista de comandos.\n");
 			continue ;
 		}
-		//print_list_token_str(minishell->token);
+		printf("************************************\n");
+		print_list_token_str(minishell->token);
+		printf("************************************\n");
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
+
 
 		print_list_commands(minishell->exec->first_cmd);
 		//execute_commands(minishell);
 		execute_commands(minishell);
-		free_cmd_list(minishell->exec->first_cmd);
+		//free_cmd_list(minishell->exec->first_cmd);
 		 //cases_builtins(minishell);
+
 	}
 	return (0);
 }

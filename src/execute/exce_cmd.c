@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:12:29 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 16:36:20 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/18 20:10:23 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,48 @@
 
 void setup_pipes(t_pipe *pipe_info, int cmd_id, t_mini *mini)
 {
-	int total_cmds = ft_lstsize(mini->exec->first_cmd);
-	printf("Setup pipes: cmd_id = %d, total_cmds = %d\n", cmd_id, total_cmds);
+//	int	total_cmds = ft_lstsize(mini->exec->first_cmd);
+//	printf("Setup pipes: cmd_id = %d, total_cmds = %d\n", cmd_id, total_cmds);
 
-	// Si no es el primer comando, redirigir la entrada estándar
-	if (cmd_id > 0)
+	if (cmd_id > 0 && pipe_info->pipe_fds[0] != -1)
 	{
-		printf("Redirigiendo entrada desde pipe anterior\n");
-		if (dup2(pipe_info->in_fd, STDIN_FILENO) == -1)
+		if (dup2(pipe_info->pipe_fds[0], STDIN_FILENO) == -1)
 		{
 			perror("Error redirigiendo entrada desde el pipe anterior");
 			exit(EXIT_FAILURE);
 		}
+		close(pipe_info->pipe_fds[0]);
+//		printf("Redirigido STDIN desde pipe_info->in_fd: %d\n", pipe_info->in_fd);
 	}
 
-	// Si no es el último comando, redirigir la salida estándar
-	if (cmd_id < total_cmds - 1)
+	if (pipe_info->pipe_fds[1] != -1)
 	{
-		printf("Redirigiendo salida hacia el siguiente comando\n");
-		if (dup2(pipe_info->out_fd, STDOUT_FILENO) == -1)
+		if (dup2(pipe_info->pipe_fds[1], STDOUT_FILENO) == -1)
 		{
 			perror("Error redirigiendo salida hacia el siguiente comando");
 			exit(EXIT_FAILURE);
 		}
+		close(pipe_info->pipe_fds[1]);
+//		printf("Redirigido STDOUT hacia pipe_info->out_fd: %d\n", pipe_info->out_fd);
 	}
 }
 
+/**
+ * execute_external - Ejecuta un comando externo con la posibilidad de redirección de entrada/salida.
+ * @cmd: Puntero a la estructura que contiene el comando a ejecutar.
+ * @envp: Lista de variables de entorno para el proceso.
+ *
+ * Esta función se encarga de ejecutar un comando externo utilizando execve.
+ * Además, maneja la redirección de la entrada y la salida estandar para el proceso hijo.
+ */
+
 void execute_external(t_cmd *cmd, char **envp)
 {
-	printf("Ejecutando comando externo: %s\n", cmd->cmd_path);
-
-	if (cmd->input_fd != -1)
+	// Manejo de redirecciones específicas del comando (ej. <, >, >>)
+	if (cmd->input_fd != -1 && cmd->input_fd != STDIN_FILENO)
 	{
 		printf("Redirigiendo entrada al proceso hijo\n");
+
 		if (dup2(cmd->input_fd, STDIN_FILENO) == -1)
 		{
 			perror("Error redirigiendo entrada");
@@ -73,111 +82,119 @@ void execute_external(t_cmd *cmd, char **envp)
 		close(cmd->input_fd);
 	}
 
-	if (cmd->output_fd != -1)
+	if (cmd->output_fd != -1 && cmd->output_fd != STDOUT_FILENO)
 	{
-		printf("Redirigiendo salida al proceso hijo\n");
+		printf("cmd->output_fd: [%d]\n", cmd->output_fd);
+
 		if (dup2(cmd->output_fd, STDOUT_FILENO) == -1)
 		{
 			perror("Error redirigiendo salida");
 			exit(EXIT_FAILURE);
 		}
 		close(cmd->output_fd);
+
+		printf("STDOUT_FILENO: [%d]\n", STDOUT_FILENO);
 	}
 
-	if (cmd->is_external)
-	{
-		printf("Ejecutando con execve: %s\n", cmd->cmd_path);
-		execve(cmd->cmd_path, cmd->cmd_args, envp);
-		perror("Error ejecutando comando externo");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		printf("Comando builtin: %s\n", cmd->cmd);
-		exit(EXIT_SUCCESS);
-	}
+	// Ejecuta el comando externo utilizando execve
+	execve(cmd->cmd_path, cmd->cmd_args, envp);
+
+	// Si execve falla, muestra un mensaje de error y termina el proceso
+	perror("Error ejecutando comando externo con execve");
+	exit(EXIT_FAILURE);
 }
 
 void execute_commands(t_mini *mini)
 {
-	t_list	*t_list_exec_cmd;
-	t_cmd	*curr_cmd;
-	pid_t	pid;
-	int		pipe_fd[2];
-	int		input_fd = -1;
-	t_pipe	*pipe_info = init_pipe();
+	t_list *t_list_exec_cmd = mini->exec->first_cmd;
+	t_cmd  *curr_cmd;
+	pid_t  pid;
+//	int    pipe_fd[2];
+	int    input_fd = STDIN_FILENO;
+	t_pipe *pipe_info = init_pipe();
+	int    i = 0;
 
-	t_list_exec_cmd = mini->exec->first_cmd;
-	//curr_cmd = (t_cmd *)t_list_exec_cmd->content;
+	if (!pipe_info)
+	{
+		perror("Error inicializando pipe_info");
+		return;
+	}
 
 	while (t_list_exec_cmd)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
-		printf("command: [%s]\n", curr_cmd->cmd);
+		curr_cmd->cmd_id = i;
+		printf("id: [%d], command: [%s]\n", i, curr_cmd->cmd);
+		i++;
 
+		// Crear pipe solo si no es el último comando
 		if (t_list_exec_cmd->next)
 		{
-			if (pipe(pipe_fd) == -1)
+			if (pipe(pipe_info->pipe_fds) == -1)
 			{
 				perror("Error creando pipe");
 				exit(EXIT_FAILURE);
 			}
-			pipe_info->out_fd = pipe_fd[1];
-			curr_cmd->output_fd = pipe_fd[1];
+			// la salida del comanda de la izquierda a la entrada de la pipe
+			curr_cmd->output_fd = pipe_info->pipe_fds[0];
 		}
 		else
-			pipe_info->out_fd = -1;  // Si es el último comando, ya no tiene salida
-	//	pipe_fd[0] = curr_cmd->input_fd;
+		{
+			curr_cmd->input_fd = pipe_info->pipe_fds[1];
+			curr_cmd->output_fd = STDOUT_FILENO;
+		}
+
 		curr_cmd->input_fd = input_fd;
 		pid = fork();
-		printf("pid: %d\n", pid);
-		printf("Command path: %s\n", curr_cmd->cmd_path);
 
-		if (pid < 0) {
+		if (pid < 0)
+		{
 			perror("Error creando proceso hijo");
 			exit(EXIT_FAILURE);
 		}
 
 		if (pid == 0)
 		{
+			// Proceso hijo
 			printf("Proceso hijo ejecutándose\n");
 			printf("envp[0]: %s\n", lst_to_arr(mini->env)[0]);
 			setup_pipes(pipe_info, curr_cmd->cmd_id, mini);
+
+			// Marcar que los descriptores de pipes ya han sido manejados
+//			curr_cmd->input_fd = -1;
+//			curr_cmd->output_fd = -1;
+
 			execute_external(curr_cmd, lst_to_arr(mini->env));
-			close(curr_cmd->input_fd);
-			close(curr_cmd->output_fd);
+			perror("Error ejecutando el comando con execve");
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
-			if (curr_cmd->input_fd != -1)
+			// Proceso padre
+			if (curr_cmd->input_fd != STDIN_FILENO)
 			{
-				close(curr_cmd->input_fd);  // Cierra el descriptor de entrada del proceso anterior
+				close(curr_cmd->input_fd); // Cerrar el descriptor de entrada anterior
 			}
-			if (pipe_info->out_fd != -1) {
-				close(pipe_info->out_fd);  // Cierra el descriptor de salida del pipe
+			if (pipe_info->pipe_fds[1]!= -1)
+			{
+				close(pipe_info->pipe_fds[1]); // Cerrar el descriptor de escritura del pipe actual
 			}
-			input_fd = pipe_fd[0];  // Establece el nuevo input para el siguiente comando
-			waitpid(pid, NULL, 0);  // Espera al proceso hijo
+			input_fd = pipe_info->pipe_fds[0]; // El extremo de lectura del pipe se convierte en el nuevo input
+			pipe_info->pipe_fds[0] = input_fd; // Actualizar para el siguiente comando
+			waitpid(pid, NULL, 0); // Esperar al proceso hijo
 		}
 
-		t_list_exec_cmd = t_list_exec_cmd->next;  // Avanza al siguiente comando
+		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
+
+	// Cerrar el extremo de lectura del último pipe si es necesario
+	if (pipe_info->pipe_fds[0] != STDIN_FILENO)
+	{
+		close(pipe_info->pipe_fds[0]);
+	}
+
+	free(pipe_info); // Liberar la memoria asignada a pipe_info
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/17 17:12:03 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "../../includes/minishell.h"
@@ -17,7 +29,6 @@
 	}
 }
 */
-
 
 void	print_list_token(t_list *tokens_list)
 {
@@ -39,7 +50,6 @@ void	print_list_token(t_list *tokens_list)
 		printf("-------------------\n");
 	}
 }
-
 
 void	print_list_token_str(t_list *tokens_list)
 {

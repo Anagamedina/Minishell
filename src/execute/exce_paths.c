@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 12:13:14 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/17 17:48:05 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 -Forma la ruta completa para el comando combinando la ruta del directorio con el comando.
 -Verifica si el archivo existe y es ejecutable usando funciones como access o stat.*/
 
-/*char	*get_cmd_path(t_tokens *token, char **paths)
+char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
 	char		*full_path;
@@ -43,10 +43,10 @@
 	}
 	return (NULL);
 }
-*/
 
 
-char *get_cmd_path(t_tokens *token, char **paths)
+
+/*char *get_cmd_path(t_tokens *token, char **paths)
 {
 	char *cmd_path;
 	char *full_path;
@@ -76,8 +76,8 @@ char *get_cmd_path(t_tokens *token, char **paths)
 	}
 	return (NULL);
 }
-
-char **get_path(char **env)
+*/
+/*char **get_path(char **env)
 {
 	char **paths;
 	char *path_var;
@@ -109,8 +109,8 @@ char **get_path(char **env)
 	}
 	return (paths);
 }
+*/
 
-/*
 //char **paths = { "/usr/bin", "/bin", "/usr/local/bin", NULL };
 char	**get_path(char **env)
 {
@@ -141,4 +141,4 @@ char	**get_path(char **env)
 		}
 	}
 	return (paths);
-}*/
+}

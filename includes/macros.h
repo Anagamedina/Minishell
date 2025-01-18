@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/29 17:45:26 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/17 17:08:11 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macros.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 23:12:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:07:10 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +33,15 @@
 
 # define SEMICOLON 59
 # define S_QUOTE '\''
+// # define S_QUOTE 39
 # define D_QUOTE '\"'
 # define DOLLAR_SIGN '$'
 # define QUESTION_MARK '?'
 # define BACKSLASH '\\'
 # define SPACE ' '
+# define PIPE_CHAR '|'
+# define TAB '\t'
+# define NEWLINE '\n'
 
 # define ECHO "echo"
 # define EXPORT "export"

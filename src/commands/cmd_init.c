@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 10:37:12 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/18 13:54:14 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_cmd *create_new_command(t_tokens *token, int cmd_id, char **paths)
 	if (!new_cmd)
 		return NULL;
 
-	new_cmd->cmd_id = cmd_id;
 	new_cmd->cmd = ft_strdup(token->str);
 	if (!new_cmd->cmd)
 	{
@@ -80,21 +79,23 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	t_cmd *new_cmd;
 	t_tokens *token;
 	t_list *current = token_list;
-	int cmd_id = 0;
+	int		cmd_id;
 
 	if (!token_list)
 		return NULL;
 
-	while (current)
+	cmd_id = 0;
+	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;
+		printf("token->id_token: [%d]\n", token->id_token);
 
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			new_cmd = create_new_command(token, cmd_id, paths);
+			new_cmd->cmd_id = cmd_id;
 		}
-		else
-		{
+		else {
 			current = current->next;
 			continue;
 		}
@@ -116,7 +117,7 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 		}
 
 		ft_lstadd_back(&commands_list, new_node);
-		cmd_id++;
+		cmd_id ++;
 		current = current->next;
 	}
 	return commands_list;

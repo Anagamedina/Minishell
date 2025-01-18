@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 18:28:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/17 17:10:45 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,4 @@ void	free_split_result_struct(char **out, int k)
 	while (out[k] != NULL && i < k)
 		free(out[i]);
 	free(out);
-}
-
-int	copy_word(t_split_data *data)
-{
-	data->out[data->k] = (char *)malloc(sizeof(char) * \
-		(data->end - data->start + 1));
-	if (data->out[data->k] == NULL)
-		return (-1);
-	ft_strncpy(data->out[data->k], &data->str[data->start], \
-	data->end - data->start);
-	data->out[data->k][data->end - data->start] = '\0';
-	data->k++;
-	return (0);
 }

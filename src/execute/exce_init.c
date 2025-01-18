@@ -25,19 +25,14 @@ t_pipe	*init_pipe(void)
 		return (NULL);
 	}
 
-	// Crear el pipe actual
-	if (pipe(pipe_info->pipe_fds) == -1)
-	{
-		perror("Error creando pipe");
-		free(pipe_info);
-		return (NULL);
-	}
-
-	pipe_info->in_fd = -1;
-	pipe_info->out_fd = -1;
+	// Inicializar los descriptores de archivos
 	pipe_info->prev_pipe_fd = -1;         // No hay pipe previo
 	pipe_info->last_cmd = 0;
 	pipe_info->error_fd = STDERR_FILENO;  // Redirección de errores estándar
+
+	// Inicializar los descriptores del pipe actual a -1 (sin pipe creado aún)
+	pipe_info->pipe_fds[0] = -1;
+	pipe_info->pipe_fds[1] = -1;
 
 	return (pipe_info);
 }

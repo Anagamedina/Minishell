@@ -50,8 +50,6 @@ typedef struct s_pipe
 {
 	int	pipe_fds[2];      // Pipe actual [lectura, escritura]
 	int	prev_pipe_fd;     // Descriptor de lectura del pipe anterior
-	int	in_fd;            // Descriptor de entrada (archivo o pipe)
-	int	out_fd;           // Descriptor de salida (archivo o pipe)
 	int	last_cmd;         // Indicador si es el último comando (1 si es último, 0 si no)
 	int	error_fd;         // Descriptor de salida de errores (redirección de errores)
 }					t_pipe;
