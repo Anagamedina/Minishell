@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/17 18:56:58 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:08:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void	print_list_token(t_list *tokens_list)
 	}
 }
 
+/**
+ * Print only the tokens that are not built-in commands
+ *
+ * @param tokens_list Pointer to the head of the token list.
+ */
 void	print_list_token_str(t_list *tokens_list)
 {
 	t_list		*current;
@@ -115,11 +120,12 @@ int	check_lowercase_tokens(t_list *tokens_list)
 /**
  * Converts a 2D array of strings into a linked list of tokens (`t_list`).
  *
- * @param tokens 2D array of strings (NULL-terminated). Frees `tokens` internally.
+ * @param tokens 2D array of strings (NULL-terminated).
  * @return Pointer to the head of the token list, or NULL on allocation failure.
  *
- * @note Each token is initialized with `init_token` and linked using `ft_lstadd_back`.
- *       Errors free allocated memory with `ft_lstclear`.
+ * @note Each token is initialized with `init_token`
+ * and linked using `ft_lstadd_back`.
+ * Errors free allocated memory with `ft_lstclear`.
  */
 
 t_list	*convert_tokens_to_list(char **tokens)
@@ -160,35 +166,35 @@ t_list	*convert_tokens_to_list(char **tokens)
 
 int	count_consecutive_quotes(const char *line)
 {
-    int	i;
-    int	consecutive_quotes;
-    int	inside_quotes;
+	int	i;
+	int	consecutive_quotes;
+	int	inside_quotes;
 
-    i = 0;
-    consecutive_quotes = 0;
-    inside_quotes = FALSE;
-    while (line[i] != '\0')
-    {
-        if ((line[i] == D_QUOTE && line[i + 1] == D_QUOTE) || \
-            (line[i] == S_QUOTE && line[i + 1] == S_QUOTE && \
-            inside_quotes == FALSE))
-        {
-            consecutive_quotes++;
-            i ++;
-        }
-        else if (line[i] == D_QUOTE)
-            inside_quotes = !inside_quotes;
-        i++;
-    }
-    return (consecutive_quotes);
+	i = 0;
+	consecutive_quotes = 0;
+	inside_quotes = FALSE;
+	while (line[i] != '\0')
+	{
+		if ((line[i] == D_QUOTE && line[i + 1] == D_QUOTE) || \
+			(line[i] == S_QUOTE && line[i + 1] == S_QUOTE && \
+			inside_quotes == FALSE))
+		{
+			consecutive_quotes ++;
+			i ++;
+		}
+		else if (line[i] == D_QUOTE)
+			inside_quotes = !inside_quotes;
+		i++;
+	}
+	return (consecutive_quotes);
 }
 
 int	calculate_length_excluding_quotes(char *line)
 {
-    int	consecutive_quotes;
+	int	consecutive_quotes;
 
-    consecutive_quotes = count_consecutive_quotes(line);
-    return ((int) ft_strlen(line) - (consecutive_quotes * 2));
+	consecutive_quotes = count_consecutive_quotes(line);
+	return ((int) ft_strlen(line) - (consecutive_quotes * 2));
 }
 
 /*
@@ -229,28 +235,28 @@ int	calculate_length_excluding_quotes(char *line)
 
 int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 {
-    int	skipped;
+	int	skipped;
 
-    skipped = 0;
-    if ((line[*i] == D_QUOTE && line[*i + 1] == D_QUOTE) ||
-        (line[*i] == S_QUOTE && line[*i + 1] == S_QUOTE && \
-        *start_dquotes == FALSE))
-    {
-        *i += 2;
-        skipped = 1;
-    }
-    else if (line[*i] == D_QUOTE && *start_dquotes == FALSE)
-    {
-        *start_dquotes = TRUE;
-        *end_dquotes = FALSE;
-    }
-    else if (*start_dquotes == TRUE && \
-    	*end_dquotes == FALSE && line[*i] == D_QUOTE)
-    {
-        *end_dquotes = TRUE;
-        *start_dquotes = FALSE;
-    }
-    return (skipped);
+	skipped = 0;
+	if ((line[*i] == D_QUOTE && line[*i + 1] == D_QUOTE) || \
+		(line[*i] == S_QUOTE && line[*i + 1] == S_QUOTE && \
+		*start_dquotes == FALSE))
+	{
+		*i += 2;
+		skipped = 1;
+	}
+	else if (line[*i] == D_QUOTE && *start_dquotes == FALSE)
+	{
+		*start_dquotes = TRUE;
+		*end_dquotes = FALSE;
+	}
+	else if (*start_dquotes == TRUE && \
+		*end_dquotes == FALSE && line[*i] == D_QUOTE)
+	{
+		*end_dquotes = TRUE;
+		*start_dquotes = FALSE;
+	}
+	return (skipped);
 }
 
 
@@ -258,7 +264,7 @@ int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
  * Removes consecutive quotes (single and double) from a string.
  *
  * @param line The input string.
- * @return A new string without consecutive quotes, or NULL if memory allocation fails.
+ * @return A new string without consecutive quotes, or NULL if error memory.
  */
 
 char	*remove_consecutive_quotes(char *line)
@@ -435,6 +441,7 @@ t_list	*generate_token_list(char *line)
 	char	**token_array;
 	t_list	*tokens_list;
 	char	*processed_line;
+	int		i;
 
 	tokens_list = NULL;
 	token_array = NULL;
@@ -449,11 +456,10 @@ t_list	*generate_token_list(char *line)
 	if (token_array == NULL)
 	{
 		printf("Error: Tokenization failed\n");
-		// free(token_array);
 		return (NULL);
 	}
 	printf("****** Tokens AFTER SPLIT ******\n");
-	int i = 0;
+	i = 0;
 	while (token_array[i] != NULL)
 	{
 		printf("[%d] [%s]\n", i, token_array[i]);
@@ -465,11 +471,8 @@ t_list	*generate_token_list(char *line)
 	if (tokens_list == NULL)
 	{
 		printf ("Error: Failed to generate token list\n");
-		/* ft_lstclear(&tokens_list, free);*/
 		return (NULL);
 	}
-	print_list_token(tokens_list);
-	// ft_free_array(token_array);
 	identify_commands(tokens_list);
 	return (tokens_list);
 }

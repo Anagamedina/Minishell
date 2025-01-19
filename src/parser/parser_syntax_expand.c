@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 22:49:16 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_syntax_expand.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 11:26:47 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/03 11:08:29 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/20 00:21:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +34,14 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 	char	*temp;
 	char	*processed_str;
 
-	//seg fault
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
-	// printf("**************processed: [%s]\n", processed_str);
 	if (!processed_str)
 	{
 		perror("Error: remove_quotes_str failed");
 		return (FALSE);
 	}
 	temp = convert_escape_sequences(processed_str);
-	// printf("**************temp: [%s]\n", temp);
 
-	// free(temp);
 	if (!temp)
 	{
 		perror("Error: convert_escape_sequences failed");
@@ -191,7 +175,8 @@ static int	check_dollar_special_quote(const char *str)
 int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 {
 	return (
-		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' && str[2] != '\0' && str[2] == ' ') || \
+		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' \
+		&& str[2] != '\0' && str[2] == ' ') || \
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
 
@@ -323,27 +308,36 @@ int	check_dquote_squote_dollar_case(char *str)
 /************ MAIN FUNCTION *************/
 
 /**
+ * Expands dollar variables in a token based on specific cases.
  *
+ * @param token Current token to process.
+ * @param env_list List of environment variables.
+ * @param next_token Next token for contextual processing (if needed).
+ *
+ * Cases handled:
+ * 1. Mixed single and double quotes with `$`.
+ * 2. Variable expansion inside double quotes, skipping single quotes.
+ * 3. Tokens with no variable expansion required.
+ * 4. General dollar variable expansion.
  */
 
 void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {
-	char	*tmp;
-	char	*res;
+	char	*processed_str;
+	char	*expanded_str;
 
-	tmp = NULL;
+	processed_str = NULL;
+	expanded_str = NULL;
 
 	/**
-	 * Case: "$'...'"
-	 * Case: " $ '...'"
-	 * Case: " $ $ '...'"
-	 * Error case: " $$ '...'"
+	 * Handles cases with mixed d_quotes (") and s_quotes (') containing `$`.
 	 *
-	 * Steps:
-	 * the dollar between d_quote and s_quote
-	 * only one d_quote (open and close)
-	 * can have spaces between d_quote and s_quote
-	 * can't have 2 consecutives dollar signs ($$)
+	 * - Ensures only one valid pair of double quotes exists (open and close).
+	 * - Allows spaces between double and single quotes.
+	 * - Invalidates consecutive dollar signs (`$$`).
+	 * @example:
+	 * Input: `"$'string'"` or `" $ 'string'"`.
+	 * Output: Processed token without expanding variables inside single quotes.
 	 */
 
 	if (check_dquote_dollar_and_squotes(token->str))
@@ -353,72 +347,85 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	}
 
 	/**
-	 * Case: "'$...'"
-	 * this 3 cases are valid:
-	 * " ' $USER ' "
-	 * ""' $USER ' ""
-	 * " " " ' $USER ' " " "
-	 * 
-	 * Steps: 
-	 * Expands variables inside d_quotes while preserving single quotes.
-	 * Remove outer double quotes using remove_quotes_str.
-	 * Expand variables, skip data inside single quotes
+	 * Expands variables within double quotes, preserving single quotes.
+	 *
+	 * Key points:
+	 * - Removes outer double quotes before processing.
+	 * - Expands variables inside d_quotes while skipping single-quoted parts.
+	 * @example
+	 * Input: `"'$USER'"`.
+	 * Output: `"'daruu'"` (assuming `$USER=daruu`).
 	 */
+
 	if (check_dquote_squote_dollar_case(token->str))
 	{
 		printf("original str: [%s]\n", token->str);
 
-		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
+		processed_str = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(processed_str);
 		printf("after remove_quotes_str: [%s]\n", token->str);
 
-		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
-		token->str = ft_strdup(res);
+		expanded_str = \
+		replace_dollar_variable_skip_s_quote(token->str, env_list);
+		free(token->str);
+		token->str = ft_strdup(expanded_str);
 		printf("after replace_dollar_variable : [%s]\n", token->str);
 
-		free(tmp);
+		free(processed_str);
 		return ;
 	}
 
 	/**
-	 * Case: No expansion required
-	 * @details: Handles tokens that should not trigger variable expansion.
-	 * @example: "'string'" or "\"escaped\"".
-	 * Output: Remains unchanged.
-	 * Steps:
-	 * Managed by handle_no_expand_cases
+	 * Handles tokens that do not require variable expansion.
+	 * Key points:
+	 * - Leaves tokens unchanged when they contain no expandable variables.
+	 * - Typically for pure strings or escaped quotes.
+	 *
+	 * @example
+	 * Input: `'string'` or `\"escaped\"`.
+	 * Output: Unchanged token value.
 	 */
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
-		/**
-		 * Case: General dollar expansion
-		 * Expands variables based on env_list if none of the above cases are matched.
-		 * @example:
-		 * Input: "$HOME/$USER"
-		 * Output: /home/daruu/daruu (assuming $HOME=/home/daruu and $USER=daruu).
-		 * Steps:
-		 * Managed by expand_dollar.
-		 */
 		expand_dollar(token, env_list);
 		return ;
 	}
 }
 
+/**
+ * Handles tokens where dollar-based expansion is conditional or restricted.
+ *
+ * This function checks for specific patterns
+ * involving the `$` character in the token string
+ *
+ * @return
+ * - TRUE if a specific case is handled.
+ * - FALSE if no matching condition is found.
+ */
+
 int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 {
 	if (check_backslash_before_dollar(token->str))
+	{
 		return (handle_backslash_after_dollar(token));
+	}
 
-	if (check_dollar_and_next_token(&token->str, next_token)) //$'..'
-		return (handle_single_quotes_after_dollar(next_token));// es la que cumple las \t
+	if (check_dollar_and_next_token(&token->str, next_token))
+	{
+		return (handle_single_quotes_after_dollar(next_token));
+	}
 
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
-	// remove this case to see whats happening
-	// caso a gestionar TODO: echo "$USER abcdh $HOME $1"
+/*
+	 remove this case to see whats happening
+	 caso a gestionar TODO: echo "$USER abcdh $HOME $1"
+*/
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
-	/*if (has_dollar_with_only_spaces_or_only_dollar(token->str))
-		return (handle_dollar_with_space_single(token));*/
+	/*
+	 if (has_dollar_with_only_spaces_or_only_dollar(token->str))
+		return (handle_dollar_with_space_single(token));
+	 */
 	return (0);
 }

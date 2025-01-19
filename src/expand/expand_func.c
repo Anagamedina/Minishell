@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/18 13:12:55 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/19 23:41:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -466,12 +466,13 @@ int	has_string_before_dollar(const char *str)
 */
 /**
  *
- * echo "$USER$USER$USER" abcd
- * echo "$USER$_abc$123"
+ * @example: echo "$USER$HOME"	->	daruuu/home/daruuu
+ * @example: echo "$USER$_abc this_is_a_test"	->	daruuu this_is_a_test
  * @param str
  * @return
  */
-int	has_more_than_one_dollar_without_spaces_in_token(char* str)
+
+int	has_more_than_one_dollar_without_spaces_in_token(const char *str)
 {
 	int	i;
 	int	count_dollar;
@@ -480,19 +481,37 @@ int	has_more_than_one_dollar_without_spaces_in_token(char* str)
 	count_dollar = 0;
 	while (str[i] != '\0')
 	{
-		if (i >= 0 && str[i] == DOLLAR_SIGN)
+
+		if (str[i] == DOLLAR_SIGN)
 		{
 			count_dollar ++;
+			if (str[i + 1] == DOLLAR_SIGN)
+			{
+				return (FALSE);
+			}
 		}
 		i ++;
 	}
-	return (TRUE);
+	if (count_dollar > 1)
+		return (TRUE);
+	return (FALSE);
 }
 
 	/*
 	if (has_string_before_dollar(token->str))
 		return (handle_str_trim_before_dollar(token));
 	*/
+	/**
+	 * Performs general dollar variable expansion.
+	 * Key points:
+	 * - Expands all dollar variables in the token using the environment list.
+	 * - This is the fallback case when no special conditions are met.
+	 *
+	 * @example
+	 * Input: `"$HOME/$USER"`.
+	 * Output: `"/home/daruu/daruu"`
+	*/
+
 void	expand_dollar(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/17 22:40:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:52:30 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,43 @@ void	test_has_string_before_dollar(void)
 	while (i < len)
 	{
 		result = has_string_before_dollar(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
+		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
+		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);
+		i++;
+	}
+}
+
+
+void	test_has_more_than_one_dollar_without_spaces_in_token(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		{"hello$HOME", TRUE},       // Precedido por 'o'
+		{"var$USER", TRUE},         // Precedido por 'r'
+		{"my_var$PATH", TRUE},      // Precedido por 'r'
+		{"my_var$PATH$USER", TRUE},
+
+		// Casos que retornan FALSE
+		{"", FALSE},                // Cadena vacía
+		{NULL, FALSE},              // Cadena nula
+		{"$HOME", FALSE},           // Nada antes del $
+		{"123$VAR", FALSE},         // Precedido por un número
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+		{"hello world", FALSE},     // No hay ningún $
+	};
+
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = has_more_than_one_dollar_without_spaces_in_token(t_matrix_cases[i].input);
 
 		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
 		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");

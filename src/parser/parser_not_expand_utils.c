@@ -6,16 +6,21 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/18 13:32:55 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 00:13:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * check if the next character is a single quote like $'hello
- * echo "$'USER'"
- */
+	/**
+     * Case 2: Dollar sign followed by a single-quoted string.
+     * - Ensures `$` inside single quotes does not expand.
+     * - Delegates processing to handle_single_quotes_after_dollar.
+     *
+     * @example:
+     * Input: "echo $'hello'"
+     * Output: "$'hello'" (no expansion).
+	 */
 
 int	check_dollar_and_next_token(char** str, t_tokens* next_token)
 {
@@ -60,6 +65,16 @@ int	check_d_quote_dollar_s_quote(const char *str)
 }
 */
 
+/**
+ * Case 1: Backslash before dollar sign.
+ * - Skips expansion when `$` is escaped with `\`.
+ * - Delegates processing to handle_backslash_after_dollar.
+ *
+ * @example
+ * Input: "echo \\$USER"
+ * Output: "\\$USER" (unexpanded, backslash preserved).
+*/
+
 int	check_backslash_before_dollar(const char *str)
 {
 	int	i;
@@ -77,6 +92,16 @@ int	check_backslash_before_dollar(const char *str)
 	return (FALSE);
 }
 
+/**
+ * Case 3: Dollar sign followed by a single digit.
+ * - Handles cases where `$` is immediately followed by a digit.
+ * - Delegates processing to handle_one_digit_after_dollar.
+ *
+ * Example:
+ * Input: "echo $1"
+ * Output: "value_of_argument_1"(if positional parameter expansion is supported).
+ */
+
 int	has_only_one_digit_after_dollar(const char *str)
 {
 	int	len;
@@ -91,7 +116,16 @@ int	has_only_one_digit_after_dollar(const char *str)
  * and additional characters.
  */
 
-//	TODO: agregar una validacion de que solamente cuando existe un dolar en el string return TRUE
+/**
+ * Case 4: Dollar sign followed by a digit and more characters.
+ * - Handles patterns like `$1extra`.
+ * - Delegates processing to handle_digit_and_more_after_dollar.
+ *
+ * Example:
+ * Input: "echo $1abc"
+ * Output: "value_of_argument_1abc" (if expansion and concatenation are supported).
+ * TODO: agregar una validacion de que solamente cuando existe un dolar en el string return TRUE
+ */
 
 int	has_dollar_followed_by_digit(const char *str)
 {

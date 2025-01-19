@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 20:11:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/19 21:57:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,32 @@
 
 int	check_special_c(char c)
 {
-	if (c == '=' || c == ' ' || c == '@' || c == '#' || c == '-' || c == '+' || c == '{'
-		|| c == '}' || c == '[' || c == ']' || c == '!' || c == '~' || c == '?'
-		|| c == '%' || c == '^' || c == '=' || c == '*' || c == '/' || c == '$'
-		|| c == ';' || c == ':' || c == '|' || c == '.' || c == '_' || c == ',')
+	if (c == '=' || c == ' ' || c == '@' || c == '#' || c == '-' || c == '+' \
+		|| c == '{' || c == '}' || c == '[' || c == ']' || c == '!' \
+		|| c == '~' || c == '?' || c == '%' || c == '^' || c == '=' \
+		|| c == '*' || c == '/' || c == '$' || c == ';' || c == ':' \
+		|| c == '|' || c == '.' || c == '_' || c == ',')
+	{
 		return (TRUE);
+	}
 	return (FALSE);
-//	|| c == ';' || c == ':' || c == '|' || c == '<' || c == '>' || c == '\\')
 }
 
-void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
+void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 {
 	char	*tmp;
 
 	tmp = NULL;
 
 	/**
-	 * Case single quotes:
-	 * @example
-	 * Input: echo \'example_token\'
-	 * Output: example_token;
+     * Case: Single quotes
+     * - Removes single quotes from the token string.
+     * @example
+     * Input: echo 'example_token'
+     * Output: example_token
 	 *
-	 * remove comillas simples ('),
-	 * verificar con handle_single_quote
-	 * Utilizar remove_quotes_str para eliminar squotes.
-	 *
-	 * TODO: gestionar mas de una sola single quote en un string ??
+	 * TODO: gestionar mas de una sola single quote en un string
+	 * TODO: update name function: process_single_quotes
 	 */
 
 	if (handle_single_quote(token))
@@ -52,17 +52,13 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
 	}
 
 	/**
-	 * Case special quotes:
-	 *
-	 * Case valid: echo "'$USER hello'"
-	 * Case valid: echo " '$USER hello ' "
-	 *
-	 * Case invalid: echo "" ' $USER ' ""
-	 *
-	 * gestion de comillas dobles impares(impares expanden las varibales)
-	 * Si incluye un dólar ($), se llama a handle_dollar_cases.
-	 */
-
+     * Case: Special quotes (double quotes with variables)
+     * - Expands variables if `$` is present within uneven double quotes.
+     * @example
+     * Input: echo "'$USER hello'"
+     * Output: 'username hello'
+     * TODO: update name function: process_special_quotes
+     */
 	if (handle_special_quotes(token))
 	{
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
@@ -72,9 +68,10 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
 		}
 		else
 		{
-			printf("entro en handle_special_quotes cuando es false y no hay $\n");
-//			TODO: falta implementar el caso donde no hay $ en el string
+			// TODO: Handle double quotes without `$` properly.
+			//  TODO: falta implementar el caso donde no hay $ en el string
 			tmp = remove_quotes_str(token->str, D_QUOTE);
+			free(token->str);
 			token->str = ft_strdup(tmp);
 			free(tmp);
 			return ;
@@ -82,23 +79,21 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token)
 	}
 
 	/**
-	 * doble comillas son pares :
-	 * @example
-	 * echo " " '$USER ' " "
-	 * echo " "" " '$USER ' " "" "
-	 * echo ""'helo $USER 0-9' ""
-	 */
-
-
-//	TODO: modificar para manejar comillas dobles par veces
-//	no pudne haber dolar entre d_quotes
-//	echo "        "
+     * Case: Even double quotes
+     * - Handles cases where double quotes are even.
+     * @example
+     * Input: echo " '$USER ' "
+     */
 	if (has_even_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list, next_token);
 		return ;
 	}
 
+	/**
+     * Case: Variables outside quotes
+     * - Expands variables if `$` is present.
+     */
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
 	{
 		handle_dollar_cases(token, env_list, next_token);
@@ -145,7 +140,6 @@ void	parser_tokens(t_mini *mini)
 	if (token_list && \
 		((t_tokens *) token_list->content)->type_token == BUILTINS)
 		token_list = token_list->next;
-	// printf("token_list->content: [%s]\n", ((t_tokens *) token_list->content)->str);
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *) token_list->content;
@@ -243,10 +237,6 @@ void	parser_tokens(t_mini *mini)
 	}
 }
 */
-
-
-
-
 
 /*void	parser_tokens(t_mini *mini)
 {

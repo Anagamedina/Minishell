@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/15 22:27:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/19 16:48:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
 char		*extract_var_name(const char *str);
 char		*get_and_reconstruct_token(const char *split_word, const char *var_value);
+int			has_more_than_one_dollar_without_spaces_in_token(const char *str);
 
 //************** expand_utils.c ********************/
 char	*find_value_in_env(t_list *env_list, char *var_name_token);
