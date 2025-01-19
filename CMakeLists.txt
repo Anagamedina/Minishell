@@ -1,6 +1,4 @@
-# version 3.28 -> clion && version 3.22.1 -> vscode
-
-# cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.30)
 
 project(minishell C)
 

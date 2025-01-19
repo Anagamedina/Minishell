@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/18 13:54:14 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/19 12:06:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ t_cmd *init_command(void)
 	return (new_cmd);
 }
 
-t_cmd *create_new_command(t_tokens *token, int cmd_id, char **paths)
+t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 {
 	t_cmd *new_cmd = init_command();
 
+	cmd_id ++;
 	if (!new_cmd)
 		return NULL;
 
@@ -67,7 +68,6 @@ t_cmd *create_new_command(t_tokens *token, int cmd_id, char **paths)
 			return NULL;
 		}
 	}
-
 	return new_cmd;
 }
 
