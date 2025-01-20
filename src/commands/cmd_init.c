@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/19 12:06:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 10:06:56 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 	t_cmd *new_cmd = init_command();
 
 	cmd_id ++;
+	printf("cmd_id: [%d]\n", cmd_id);
 	if (!new_cmd)
 		return NULL;
 

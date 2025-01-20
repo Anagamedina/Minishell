@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/20 11:35:20 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -99,8 +111,7 @@ int			copy_word(t_split_data *data);
 //************** TOKEN_TYPE.c ********************/
 
 int			set_token_type(char *str);
-void		update_words_to_builtin(t_list *tokens_list);
-//void		identify_commands(t_list *tokens_list, char **paths);
+//void		update_words_to_builtin(t_list *tokens_list);
 void identify_commands(t_list *tokens_list, t_mini*exec_info);
 //************** TOKEN_UTILS.c ********************/
 
@@ -154,7 +165,7 @@ char		*ft_strjoin_array(char **split_word);
 //************** INIT_COMMAND.C ********/
 
 int			is_type_of_operator(t_tokens *token);
-int			is_builtin_command(const char *cmd);
+int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);
 t_cmd 		*create_new_command(t_tokens *current_token, int cmd_id, char **paths);
@@ -180,15 +191,15 @@ void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
-void		execute_commands(t_mini *mini);
+int		execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
 t_pipe		*init_pipe(void);
-void		execute_commands(t_mini *mini);
 t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);
+void		setup_pipes(t_pipe *pipe_info, int cmd_id);
 
 //*************redis**************/
 

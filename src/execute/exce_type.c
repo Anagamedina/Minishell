@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exce_type.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/20 10:22:59 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int	is_builtin_command(const char *cmd)
+int	is_builtin_command(char *cmd)
 {
 	return (strcmp(cmd, ECHO) == 0 || strcmp(cmd, EXPORT) == 0 || \
 		strcmp(cmd, UNSET) == 0 || strcmp(cmd, ENV) == 0 || \

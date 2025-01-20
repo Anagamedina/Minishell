@@ -63,7 +63,8 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/free_errors.c \
 		$(SRC_EXECUTE)/exce_paths.c \
 		$(SRC_EXECUTE)/exce_init.c \
-		$(SRC_EXECUTE)/exce_pipe.c \
+		$(SRC_EXECUTE)/exce_pipes.c \
+		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/get_input.c \
 		$(SRC_EXECUTE)/tests.c

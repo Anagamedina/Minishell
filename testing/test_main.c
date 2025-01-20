@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/20 10:29:19 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 12/24/24.
 //
@@ -226,7 +238,7 @@ void	test_remove_quotes_str(void)
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
  */
-
+/*
 int	main(void)
 {
 	UNITY_BEGIN();
@@ -237,4 +249,4 @@ int	main(void)
 //	RUN_TEST(test_sumar_a_mas_b);
 	return (UNITY_END());
 }
-
+*/

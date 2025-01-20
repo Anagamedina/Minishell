@@ -51,6 +51,10 @@ add_executable(minishell
         src/execute/exce_type.c
         src/execute/tests.c
         src/execute/exce_pipes.c
+        src/commands/cmd_init.c
+        src/execute/exce_pipes.c
+        src/execute/exce_cmd.c
+        testing/testing.h
 )
 # link with readline library
 target_link_libraries(minishell readline)

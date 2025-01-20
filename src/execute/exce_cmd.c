@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:12:29 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/19 11:48:38 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:36:35 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 //6_ otra funcion qeu mire que cada subcomando esta vacio por ejemplo si hay un pipe sin comandos antes o despues, y si hay un pipe vacio entre dos comandos se debe ignorar
 
 
-void	setup_pipes(t_pipe *pipe_info, int cmd_id, t_mini *mini)
+void	setup_pipes(t_pipe *pipe_info, int cmd_id)
 {
 
 	if (cmd_id % 2 == 1 && pipe_info->pipe_fds[0] != -1)
@@ -71,11 +71,12 @@ void execute_external(t_cmd *cmd, char **envp)
 
 	// Si execve falla, muestra un mensaje de error y termina el proceso
 	perror("Error ejecutando comando externo con execve");
-	exit(EXIT_FAILURE);
+	//exit(EXIT_FAILURE);
+	return;
 }
 
 
-void execute_commands(t_mini *mini)
+int execute_commands(t_mini *mini)
 {
 	t_list *t_list_exec_cmd = mini->exec->first_cmd;
 	t_cmd  *curr_cmd;
@@ -87,7 +88,8 @@ void execute_commands(t_mini *mini)
 	if (!pipe_info)
 	{
 		perror("Error inicializando pipe_info");
-		return;
+	//	return;
+		exit(EXIT_FAILURE);
 	}
 	int len_t_list_exec_cmd = ft_lstsize(t_list_exec_cmd);
 	printf("len t_list_exec_cmd: %d\n", len_t_list_exec_cmd);
@@ -127,7 +129,7 @@ void execute_commands(t_mini *mini)
 			printf("PID HIJO: %d\n", getpid());
 			if (len_t_list_exec_cmd >= 2)
 			{
-				setup_pipes(pipe_info, curr_cmd->cmd_id, mini);
+				setup_pipes(pipe_info, curr_cmd->cmd_id);
 			}
 
 			char **envp = lst_to_arr(mini->env);
@@ -142,6 +144,7 @@ void execute_commands(t_mini *mini)
 	close(pipe_info->pipe_fds[1]);
 
 	waitpid(-1, NULL, 0);
+	return 0;
 	// free(pipe_info); // Liberar la memoria asignada a pipe_info
 }
 
