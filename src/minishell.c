@@ -6,11 +6,29 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 12:08:10 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/20 13:22:05 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
+/*static void free_token_list(t_list *tokens) {
+	t_list *current = NULL;
+	t_tokens *token_data;
+
+	while (current->next != NULL)
+	{
+		token_data = (t_tokens *)tokens->content;
+		if (token_data->next) // Si hay siguiente token
+		{
+			free(token_data->str);// Libera la cadena asociada al token
+		}
+		free(token_data); // Libera el nodo actual
+		current = current->next; // Avanza al siguiente token
+	}
+}*/
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -36,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("Error al leer el input\n");
 			free(input);
-			continue ;
+			break ;
 		}
 		minishell->token = generate_token_list(input);
 
@@ -45,11 +63,6 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error al generar la lista de tokens.\n");
 			continue ;
 		}
-
-
-		// TODO: create in print exec
-		//char **envp = lst_to_arr(minishell->env);
-
 
 			minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
@@ -74,19 +87,20 @@ int	main(int argc, char **argv, char **envp)
 
 		print_list_commands(minishell->exec->first_cmd);
 		//execute_commands(minishell);
-		if (execute_commands(minishell) != 0)
+		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
 			//free_token_list(minishell->token);
-			//free_env_list(minishell->env);
-			//free(minishell);
+			free(minishell);
 			continue;
 		}
+		else
+			continue ;
+
 		//free_cmd_list(minishell->exec->first_cmd);
 		 //cases_builtins(minishell);
-
 	}
-	return (0); ;
+	return (0);
 }
 
 
