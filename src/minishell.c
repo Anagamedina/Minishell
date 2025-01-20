@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 11:37:32 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/20 12:08:10 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int	main(int argc, char **argv, char **envp)
 			free_cmd_list(minishell->exec->first_cmd);
 			//free_token_list(minishell->token);
 			//free_env_list(minishell->env);
-			free(minishell);
-			return (1);
+			//free(minishell);
+			continue;
 		}
 		//free_cmd_list(minishell->exec->first_cmd);
 		 //cases_builtins(minishell);
