@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/19 16:52:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:10:55 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,6 @@ void	test_clean_consecutives_quotes(void)
 					{"\"\"hello0\'a\'", "hello0\'a\'"},
 					// Caso 2: Comillas simples consecutivas al inicio
 					{"\'\'hello", "hello"},
-					// Caso 3: Mixto de dobles y simples consecutivas al inicio
-					/*{"\"''hello", "hello"},
 					// Caso 4: Comillas consecutivas al final
 					{"hello\"\"", "hello"},
 					// Caso 5: Comillas consecutivas en medio del texto
@@ -285,6 +283,7 @@ void	test_get_and_reconstruct_token(void)
 	}
 }
 
+/*
 void	test_has_string_before_dollar(void)
 {
 	struct s_test_int	t_matrix_cases[] =
@@ -319,8 +318,9 @@ void	test_has_string_before_dollar(void)
 		i++;
 	}
 }
+*/
 
-
+/*
 void	test_has_more_than_one_dollar_without_spaces_in_token(void)
 {
 	struct s_test_int	t_matrix_cases[] =
@@ -356,7 +356,51 @@ void	test_has_more_than_one_dollar_without_spaces_in_token(void)
 		i++;
 	}
 }
+*/
 
+/**
+ * @brief Prueba la detección de variables de entorno consecutivas.
+ * @see has_consecutives_dollars_in_token
+ * 
+ */
+
+void	test_has_consecutices_dollars_in_token(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		// {"hello$HOME", TRUE},       // Precedido por 'o'
+		// {"var$USER", TRUE},         // Precedido por 'r'
+		// {"my_var$PATH", TRUE},      // Precedido por 'r'
+		{"my_var$$PATH$USER", TRUE},
+
+		// Casos que retornan FALSE
+		{"", FALSE},                // Cadena vacía
+		{NULL, FALSE},              // Cadena nula
+		{"$HOME", FALSE},           // Nada antes del $
+		{"123$VAR", FALSE},         // Precedido por un número
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+		{"hello world", FALSE},     // No hay ningún $
+	};
+
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		t_tokens	*token = malloc(sizeof(t_tokens));
+		token->str = ft_strdup(t_matrix_cases[i].input);
+		result = has_consecutives_dollars_in_token(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
+		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
+		TEST_ASSERT_EQUAL_INT(token, result);
+		i++;
+	}
+}
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -371,12 +415,12 @@ int	main(void)
 	RUN_TEST(test_get_and_reconstruct_token);
 	RUN_TEST(test_count_words);
 	RUN_TEST(test_find_matching_quote);
+	RUN_TEST(test_has_string_before_dollar);
 	*/
 
-	RUN_TEST(test_has_string_before_dollar);
+	RUN_TEST(test_has_consecutices_dollars_in_token);
 
 	return (UNITY_END());
-}
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
@@ -417,3 +461,4 @@ int	main(void)
 	//
 	// RUN_TEST(test_handle_special_quotes);
 
+}

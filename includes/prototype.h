@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/19 16:48:26 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/13 12:20:24 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/20 16:37:15 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +151,7 @@ void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token);
 int			has_string_before_dollar(const char *str);
 int			check_dquote_squote_dollar_case(char *str);
 int			handle_no_expand_cases(t_tokens *token, t_tokens* next_token);
+int			has_consecutives_dollars_in_token(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 
@@ -183,7 +172,7 @@ char		*get_and_reconstruct_token(const char *split_word, const char *var_value);
 int			has_more_than_one_dollar_without_spaces_in_token(const char *str);
 
 //************** expand_utils.c ********************/
-char	*find_value_in_env(t_list *env_list, char *var_name_token);
+char		*find_value_in_env(t_list *env_list, char *var_name_token);
 int			process_token_is_word(const char *str);
 char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);

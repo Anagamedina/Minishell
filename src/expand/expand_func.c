@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_func.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 13:20:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/19 23:41:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:19:16 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*extract_var_name(const char *str)
 		i ++;
 	if (str[i] == DOLLAR_SIGN)
 		start = i + 1;
+		// posible nuevea implementacion dollar
 	while (str[i] != '\0' && str[i] != SPACE)
 		i ++;
 
@@ -523,11 +524,39 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 
 	while (curr_token != NULL)
 	{
+		/** 
+		 * echo "$$HOME"
+		 * TODO: add new case :
+		 * check variables without spaces in string return (TRUE)
+		 * if TRUE expand variables and print the dollars before the variable
+		 * 
+		 * @example: echo "    $HOME $USER" esta "mal"
+		 * token[0] = "    $HOME$USER"	(expandir variables)
+		 * token[1] = esta
+		 * token[2] = "mal"
+		 * 
+		*/
+		/*
+		if (has_consecutives_dollars_in_token(curr_token->str))
+		{
+			printf("has consecutives dollars in token ****\n");
+			update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
+			printf("remove quotes in: [%s]\n", update_token_str);
+			free(curr_token->str);
+			curr_token->str = ft_strdup(update_token_str);
+			// update_token_str = expand_consecutives_variables(curr_token->str);
+
+			//	expandir variables
+		}
+		*/
+		
+		//	echo "$USER$HOME"
 	//	TODO: add new case here: if more than one dollar in string and no spaces return (TRUE)
+		/*
 		if (has_more_than_one_dollar_without_spaces_in_token(curr_token->str))
 		{
 
-		}
+		}*/
 		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
 		printf("remove quotes: [%s]\n", update_token_str);
 		curr_token->str = ft_strdup(update_token_str);
@@ -549,3 +578,42 @@ void	copy_word_to_token(const char *word, char *merged_token, size_t *k)
 		i ++;
 	}
 }
+
+/*
+int	has_consecutives_dollars_in_token(t_tokens *token)
+{
+    int i = 0;
+    int count_dollar = 0;
+
+    if (!token || !token->str) // Verificación de NULL
+        return (FALSE);
+
+    // Salta comillas dobles iniciales, si existen
+    if (token->str[0] == D_QUOTE)
+        i = 1;
+
+    // Salta espacios iniciales
+    while (token->str[i] == SPACE)
+        i++;
+
+    while (token->str[i]) // Recorre el string completo
+    {
+        if (token->str[i] == DOLLAR_SIGN)
+        {
+            count_dollar++;
+            if (token->str[i + 1] == DOLLAR_SIGN) // Caso de dólares consecutivos
+                return (TRUE);
+
+            // Salta el nombre de la variable después del dólar
+            i++;
+            while (token->str[i] && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
+                i++;
+            continue; // Asegura que no se incremente dos veces `i` en este bloque
+        }
+        i++;
+    }
+
+    // Verifica si hubo más de un dólar, aunque no consecutivos
+    return (count_dollar > 1 ? TRUE : FALSE);
+}
+*/

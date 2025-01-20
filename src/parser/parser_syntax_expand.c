@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 00:21:25 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/20 18:28:45 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,11 +387,66 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	 */
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
+		//	TODO: add new case consecutves dollars 
+		// echo "$USER$USER$USER"
+		if (has_consecutives_dollars_in_token(token))
+		{
+			printf("has consecutives dollars in token ****\n");
+		}
+
 		expand_dollar(token, env_list);
 		return ;
 	}
 }
 
+
+// case valid: echo "   $USER$HOME   "
+// case invalid: echo "   $USER$HOME  "
+
+int	has_consecutives_dollars_in_token(t_tokens *token)
+{
+	int	i;
+	int	count_dollar;
+	
+	if (!token || !token->str)
+		return (FALSE);
+	
+	count_dollar = 0;
+	if (token->str[0] == D_QUOTE)
+		i = 1;
+	while (token->str[i] == SPACE)
+		i ++;
+	while (token->str[i] != '\0')
+	{
+		if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] != SPACE)
+		{
+			printf("i: [%d]\n", i);
+			count_dollar ++;
+			printf("count_dollar: [%d]\n", count_dollar);
+			while (token->str[i] && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
+				i ++;
+			if (token->str[i] == DOLLAR_SIGN)
+			{
+				continue ;
+			}
+		}
+		i ++;
+	}
+	if (count_dollar > 1)
+		return (TRUE);
+	return (FALSE);
+}
+
+/**
+ * @brief Expands consecutive variables in a token.
+ * expand consecutives vars in same token
+ */
+
+char	*expand_consecutives_variables(char *str) 
+{
+	
+	return (NULL);
+}
 /**
  * Handles tokens where dollar-based expansion is conditional or restricted.
  *
