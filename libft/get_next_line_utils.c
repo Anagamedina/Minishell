@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 10:53:13 by anamedin          #+#    #+#             */
-/*   Updated: 2024/07/25 11:53:36 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:01:04 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	*ft_free(char **ptr)
 	return (NULL);
 }
 
+/*
 int	ft_strchr_c(char *s, char c)
 {
 	int	index;
@@ -44,6 +45,7 @@ int	ft_strchr_c(char *s, char c)
 	}
 	return (-1);
 }
+*/
 
 char	*str_join(char *s1, char *s2)
 {

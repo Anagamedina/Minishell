@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 16:00:03 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/21 09:57:19 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
 
 //*************INPUT***********/
 char		*read_input(void);
-int			check_quotes_line(char *line);
+int			check_quotes_line(const char *line);
+void		get_size_words_with_pivote(const char* line);
 void		parser_tokens(t_mini *mini);
 
 //************** INIT_COMMAND.C ********/
@@ -97,7 +98,8 @@ t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
-t_list		*tokenize_list(char **tokens);
+t_list		*convert_tokens_to_list(char **tokens);
+char		*clean_consecutive_quotes(const char *line);
 t_list		*generate_token_list(char *line);
 
 //************** TOKEN_FREE.c ********************/
@@ -108,6 +110,7 @@ char		*ft_strcpy(char *dest, const char *src);
 void		free_split_result(char **out);
 void		free_split_result_struct(char **out, int k);
 int			copy_word(t_split_data *data);
+void		ft_free_array(char **array);
 
 //************** TOKEN_TYPE.c ********************/
 
@@ -119,33 +122,40 @@ void		identify_commands(t_list *tokens_list);
 //************** TOKEN_UTILS.c ********************/
 
 char		**ft_split_quote(char *str);
+char		**ft_split_new_version(char *str);
+int			count_words(const char *str);
+int			find_matching_quote(const char *str, int start_index, char quote_char);
 
 //************** PARSER.c ********************/
 //
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
-char		*remove_quotes_str(char *str, char c);
+char		*remove_quotes_str(const char *str, char c);
+int			handle_special_balanced_dquotes(t_tokens *token);
 
 //************** parser_syntax_quotes.c ********************/
 
 int			handle_single_quote(t_tokens *token);
-int			handle_double_quotes(t_tokens *token);
+int			has_even_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
-char		*remove_d_quote_s_quotes_str(char *str);
+char		*remove_d_quote_and_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
-void		handle_dollar_cases(t_tokens *token, t_list *env_list);
-//int			check_doble_dollar_single(const char *str);
+
+int			check_dquote_dollar_and_squotes(const char *str);
+void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token);
+//int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
-void		handle_tokens(t_tokens *token, t_list *env_list);
+void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token);
 int			has_string_before_dollar(const char *str);
-int			check_double_simple_dollar_case(char *str);
-int			handle_no_expand_cases(t_tokens *token);
+int			check_dquote_squote_dollar_case(char *str);
+int			handle_no_expand_cases(t_tokens *token, t_tokens* next_token);
+int			has_consecutives_env_variables_in_token(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 
-int			check_doble_dollar_single(const char *str);
+int			check_dollar_and_next_token(char** str, t_tokens* next_token);
 int			has_only_one_digit_after_dollar(const char *str);
 char		*convert_escape_sequences(const char *str);
 int			has_dollar_followed_by_digit(const char *str);
@@ -157,8 +167,12 @@ void		expand_dollar(t_tokens *token_list, t_list *env_list);
 //************** expand_func.c ********************/
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
+char		*extract_var_name(const char *str);
+char		*get_and_reconstruct_token(const char *split_word, const char *var_value);
+int			has_more_than_one_dollar_without_spaces_in_token(const char *str);
 
 //************** expand_utils.c ********************/
+char		*find_value_in_env(t_list *env_list, char *var_name_token);
 int			process_token_is_word(const char *str);
 char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 void		replace_dollar_variable(char **split_word, t_list *env_list);

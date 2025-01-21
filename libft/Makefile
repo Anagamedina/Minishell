@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
+#    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 18:38:08 by anamedin          #+#    #+#              #
-#    Updated: 2024/11/07 14:18:34 by anamedin         ###   ########.fr        #
+#    Updated: 2025/01/13 12:30:23 by  dasalaza        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS =  ft_bzero.c ft_calloc.c \
     ft_strncmp.c ft_strtrim.c ft_toupper.c \
 	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 	ft_isalnum.c ft_isalpha.c ft_isascii.c \
-    ft_isdigit.c ft_isprint.c
+    ft_isdigit.c ft_isprint.c ft_strchr_c.c
 
 SRC_BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c\
 			ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c\

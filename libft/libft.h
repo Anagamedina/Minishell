@@ -100,7 +100,7 @@ unsigned int	ft_unsignedint(unsigned int n);
 # endif
 
 char			*ft_free(char **ptr);
-int				ft_strchr_c(char *s, char c);
+int				ft_strchr_c(const char *s, char c);
 char			*initial_buffer(char *storage);
 
 /* ************************************************************************** */

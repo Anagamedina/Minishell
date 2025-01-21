@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 18:28:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:26:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*ft_strcpy(char *dest, const char *src)
 	dest[i] = '\0';
 	return (dest);
 }
+
 void	free_split_result(char **out)
 {
 	int	i;
@@ -74,15 +75,17 @@ void	free_split_result_struct(char **out, int k)
 	free(out);
 }
 
-int	copy_word(t_split_data *data)
+void	ft_free_array(char **array)
 {
-	data->out[data->k] = (char *)malloc(sizeof(char) * \
-		(data->end - data->start + 1));
-	if (data->out[data->k] == NULL)
-		return (-1);
-	ft_strncpy(data->out[data->k], &data->str[data->start], \
-	data->end - data->start);
-	data->out[data->k][data->end - data->start] = '\0';
-	data->k++;
-	return (0);
+	int	i;
+
+	i = 0;
+	if (!array)
+		return ;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i ++;
+	}
+	// free(array);
 }

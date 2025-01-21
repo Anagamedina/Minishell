@@ -1,10 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/21 12:40:59 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/21 11:49:25 by  dasalaza        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 12/24/24.
 //
 
-# include "unity.h"
-# include "testing.h"
-# include "../includes/minishell.h"
+#include "testing.h"
 
 t_mini	*g_minishell;
 
@@ -35,7 +57,7 @@ void	tearDown(void)
  *
  * Comprobar: d_quotes - s_quotes - dollar_sign
  *
- * @see check_double_simple_dollar_case
+ * @see check_dquote_squote_dollar_case
  */
 
 void	test_check_double_simple_dollar_case_01(void)
@@ -75,7 +97,7 @@ void	test_check_double_simple_dollar_case_01(void)
 
 	while (i < len)
 	{
-		result = check_double_simple_dollar_case(test_cases[i].input);
+		result = check_dquote_squote_dollar_case(test_cases[i].input);
 		TEST_ASSERT_EQUAL(test_cases[i].expected, result);
 		i++;
 	}
@@ -86,8 +108,8 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	i;
 	int	result;
 
-	struct s_test_int	edge_cases[] = {
-
+	struct s_test_int	edge_cases[] =
+	{
 	{"\"  '   $HOME case not work' \"", TRUE},
 	{"\"    $HOME case not work ' \"", TRUE},
 	{"\"  '   $HOME case not work  \"", TRUE},
@@ -99,7 +121,7 @@ void	test_check_double_simple_dollar_case_02(void)
 	int	len = sizeof(edge_cases) / sizeof(edge_cases[0]);
 	while (i < len)
 	{
-		result = check_double_simple_dollar_case(edge_cases[i].input);
+		result = check_dquote_squote_dollar_case(edge_cases[i].input);
 		char	message[256];
 
 		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, edge_cases[i].input);
@@ -173,52 +195,234 @@ void	test_sumar_a_mas_b(void)
 	TEST_ASSERT_EQUAL_INT(19, result);
 }
 
-
-/**
- * @brief Prueba remove_quotes_str.
- * @example remove_quotes_str("'  \$hello world'", S_QUOTE) => "  \$hello world"
- * @see remove_quotes_str
- */
-
-void	test_remove_quotes_str(void)
+/*
+void	test_clean_consecutives_quotes(void)
 {
-	// Casos correctos
-	struct s_test_str	matrix_cases[] =
-	{
-//		{"'\\$USER quote\\'", "\\$USER quote\\"}, // Comillas escapadas
-	{"'\\$USER quote\\'", "\\$USER quote\\"},        // Entrada: echo '\$USER quote\'
-	{"' \\$USER quote\\'", " \\$USER quote\\"},      // Entrada: echo ' \$USER quote\'
-	{"' \\$USER quote\\ '", " \\$USER quote\\ "},    // Entrada: echo ' \$USER quote\ '
-	{"' \\$USER quote \\ '", " \\$USER quote \\ "},   // Entrada: echo ' \$USER quote \'
-	{"'\\\\$USER quote\\\\'", "\\\\$USER quote\\\\"},   // Entrada: echo '\\\\$USER quote\\\\'
+	int		i;
+	char	*result;
 
-//		{"'hello world'", "hello world"},			// Comillas simples normales
-//		{"' spaced string '", " spaced string "}, // Espacios alrededor de las comillas
-//		{"'   multiple   spaces   '", "   multiple   spaces   "}, // Múltiples espacios
-//		{"'$HOME'", "$HOME"},                      // Variable sin expansión
-//		{"'   \\$HOME case '", "   \\$HOME case"}, // Cadena con escape
-//		// Casos que deben fallar
-//		{"''", ""},                                // Comillas vacías
-//		{"' '", " "},                              // Espacio vacío entre comillas
-//		{"'\\", "'\\"},                            // Comilla escapada sin terminar
+	struct s_test_str	matrix_cases[] =
+			{
+//					// Caso 3: Combinación de comillas dobles y simples consecutivas
+					{"\"\'\'hello\"", "\"\'\'hello\""},
+					// Caso 1: Comillas dobles consecutivas al inicio
+					{"\"\"hello0\'a\'", "hello0\'a\'"},
+					// Caso 2: Comillas simples consecutivas al inicio
+					{"\'\'hello", "hello"},
+					// Caso 4: Comillas consecutivas al final
+					{"hello\"\"", "hello"},
+					// Caso 5: Comillas consecutivas en medio del texto
+					{"he\"\"llo", "hello"},
+					// Caso 6: Comillas simples consecutivas en medio del texto
+					{"he''llo", "hello"},
+					// Caso 7: Texto solo con dobles y simples consecutivas mezcladas
+					{"\"''\"''", ""},
+					// Caso 8: Comillas dobles y dentro comillas simples (no eliminar simples)
+					{"\"\'\'hello\"", "\"\'\'hello\""},
+					// Caso 9: Texto solo con comillas dobles consecutivas
+					{"\"\"\"\"", ""},
+					// Caso 10: Texto mixto con comillas consecutivas y palabras
+					{"\"hello\"'' world\"\"", "hello world"}#1#
+			};
+
+	i = 0;
+	int	len = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
+	char message[256];
+	while (i < len)
+	{
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, matrix_cases[i].input);
+		result = clean_consecutive_quotes(matrix_cases[i].input);
+
+		TEST_ASSERT_EQUAL_STRING(matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+}
+
+void	test_extract_var_name(void)
+{
+	struct s_test_str	t_matrix_cases[] =
+	{
+//			{"   $USER", "USER"},
+			{"      $HOME   ", "HOME"},
+			{"           $NON        ", "NON"},
+//			{"$USER$NON_EXISTENT_VAR", ""},
 	};
 
 	int		i = 0;
-	int		len_edge_cases = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
 	char	*result;
 	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
 
-	while (i < len_edge_cases)
+	while (i < len)
 	{
-		// function on test
-		result = remove_quotes_str(matrix_cases[i].input, S_QUOTE);
+		result = extract_var_name(t_matrix_cases[i].input);
 
-		snprintf(message, sizeof(message), "FAILED ON CASE %d:                  INPUT=[%s]" "   EXPECTED=[%s]   |" "   ACTUAL=[%s]",\
-				i + 1, matrix_cases[i].input, matrix_cases[i].expected, result);
-
-		TEST_ASSERT_EQUAL_STRING_MESSAGE(matrix_cases[i].expected, result, message);
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
+		TEST_ASSERT_EQUAL_STRING(t_matrix_cases[i].expected, result);
 		free(result);
 		i++;
+	}
+}
+*/
+
+/**
+ * @see get_and_
+ */
+/*
+void	test_get_and_reconstruct_token(void)
+{
+	struct s_test_str	t_matrix_cases[] =
+			{
+//			{"   $USER", "USER"},
+					{"  $USER    ", "  daruuu    "},
+//			{"$USER$NON_EXISTENT_VAR", ""},
+			};
+
+	int		i = 0;
+	char	*result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = get_and_reconstruct_token(t_matrix_cases[i].input, "daruuu");
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
+		TEST_ASSERT_EQUAL_STRING(t_matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+}
+*/
+
+/*
+void	test_has_string_before_dollar(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		{"hello$HOME", TRUE},       // Precedido por 'o'
+		{"var$USER", TRUE},         // Precedido por 'r'
+		{"my_var$PATH", TRUE},      // Precedido por 'r'
+
+		// Casos que retornan FALSE
+		{"", FALSE},                // Cadena vacía
+		{NULL, FALSE},              // Cadena nula
+		{"$HOME", FALSE},           // Nada antes del $
+		{"123$VAR", FALSE},         // Precedido por un número
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+		{"hello world", FALSE},     // No hay ningún $
+	};
+
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = has_string_before_dollar(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
+		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
+		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);
+		i++;
+	}
+}
+*/
+
+/*
+void	test_has_more_than_one_dollar_without_spaces_in_token(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		{"hello$HOME", TRUE},       // Precedido por 'o'
+		{"var$USER", TRUE},         // Precedido por 'r'
+		{"my_var$PATH", TRUE},      // Precedido por 'r'
+		{"my_var$PATH$USER", TRUE},
+
+		// Casos que retornan FALSE
+		{"", FALSE},                // Cadena vacía
+		{NULL, FALSE},              // Cadena nula
+		{"$HOME", FALSE},           // Nada antes del $
+		{"123$VAR", FALSE},         // Precedido por un número
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+		{"hello world", FALSE},     // No hay ningún $
+	};
+
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = has_more_than_one_dollar_without_spaces_in_token(t_matrix_cases[i].input);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
+		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
+		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);
+		i++;
+	}
+}
+*/
+
+/**
+ * @brief Prueba la detección de variables de entorno consecutivas.
+ * @see has_consecutives_dollars_in_token
+ * 
+ */
+
+void	test_has_consecutices_dollars_in_token(void)
+{
+	struct s_test_int	t_matrix_cases[] =
+	{
+		// Casos que retornan TRUE
+		// {"hello$HOME", TRUE},       // Precedido por 'o'
+		// {"var$USER", TRUE},         // Precedido por 'r'
+		// {"my_var helllo $PATH", TRUE},      // Precedido por 'r'
+
+		{" abcd    $PATH$HOME", TRUE},
+		{"my_var$PATH$USER", TRUE},
+		{"$HOME abcd $USER", TRUE},
+		// {"123$VAR", TRUE},         // Precedido por un número
+		{"hello world", FALSE},     // No hay ningún $
+
+		// Casos que retornan FALSE
+		/*
+		{"", FALSE},                // Cadena vacía
+		{"!$HOME", FALSE},          // Precedido por un símbolo
+		{"var!$USER", FALSE},       // Precedido por símbolo '!'
+	*/
+	};
+
+	int		i = 0;
+	int		result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		t_tokens	*token = malloc(sizeof(t_tokens));
+		if (t_matrix_cases[i].input)
+		{
+			token->str = ft_strdup(t_matrix_cases[i].input);
+		}
+		else
+			token->str = NULL;
+		
+		result = has_consecutives_env_variables_in_token(token);
+
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input, t_matrix_cases[i].expected);
+		TEST_ASSERT_EQUAL_INT_MESSAGE(t_matrix_cases[i].expected, token, result);
+		free(token->str);
+		free(token);
+		i ++;
 	}
 }
 
@@ -226,15 +430,60 @@ void	test_remove_quotes_str(void)
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
  */
-
 int	main(void)
 {
 	UNITY_BEGIN();
-	// RUN_TEST(test_expand_vars_with_quotes_cases);
-	// RUN_TEST(test_check_double_simple_dollar_case_01);
-	// RUN_TEST(test_check_double_simple_dollar_case_02);
-	RUN_TEST(test_remove_quotes_str);
-//	RUN_TEST(test_sumar_a_mas_b);
+
+
+	RUN_TEST(test_has_consecutices_dollars_in_token);
+
 	return (UNITY_END());
 }
+	/*
+	RUN_TEST(test_clean_consecutives_quotes);
+	RUN_TEST(test_extract_var_name);
+	RUN_TEST(test_get_and_reconstruct_token);
+	RUN_TEST(test_count_words);
+	RUN_TEST(test_find_matching_quote);
+	RUN_TEST(test_has_string_before_dollar);
+	*/
+	/*
+	RUN_TEST(test_expand_vars_with_quotes_cases);
+	RUN_TEST(test_check_double_simple_dollar_case_01);
+	RUN_TEST(test_check_double_simple_dollar_case_02);
+	RUN_TEST(test_01_remove_quotes_literals);
+	RUN_TEST(test_02_remove_quotes_general);
+	RUN_TEST(test_03_remove_quotes_backslash);
+	RUN_TEST(test_04_remove_quotes_spaces);
+	RUN_TEST(test_05_remove_quotes_no_expand);
+	RUN_TEST(test_06_remove_quotes_empty_cases);
+	RUN_TEST(test_sumar_a_mas_b);
+	 */
 
+//	RUN_TEST(test01_double_quotes_keyboard_basic);
+
+	// RUN_TEST(test01_check_double_simple_dollar_case_int);
+
+	/**
+	 * @file test_double_quotes.c
+	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
+	 * removing the double quotes and expanding the variables.
+	 */
+/*
+	RUN_TEST(test02_remove_quotes_str_valid_basic);
+	RUN_TEST(test02_remove_quotes_str_valid_special_chars);
+	RUN_TEST(test02_remove_quotes_str_valid_format);
+	RUN_TEST(test02_remove_quotes_str_invalid_quotes);
+*/
+	/**
+	 * @file test_double_quotes.c
+	 * @brief Testing en la detección del patron: [" ' $VAR ' "]
+	 * removing the double quotes and expanding the variables.
+	 */
+	// RUN_TEST(test_replace_dollar_variable_skip_s_quote_01);
+
+	/*
+	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+	
+	RUN_TEST(test_handle_special_quotes);
+	*/

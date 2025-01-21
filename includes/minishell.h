@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 12:39:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:40:44 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,12 @@ typedef struct s_split_data
 	int		k;       // Índice del token actual en el array
 	int		wc;
 }		t_split_data;
+
+typedef struct pre_tokens
+{
+	int	*start;
+	int	*end;
+}		t_pre_tokens;
 
 // t_pipex         *first_pipe;    // Estructura del primer pipe
 

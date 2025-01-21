@@ -4,7 +4,7 @@
 
 //caso  -------> "$'..'" ---> no expande ni tabulacion solo imprime
 /*
-int	check_doble_dollar_single(const char *str)
+int	check_d_quote_dollar_s_quote(const char *str)
 {
 	int i;
 	int len_str;
@@ -57,7 +57,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list)
 
 	tmp = NULL;
 	//"$'...'" ----> imprime
-	if (check_doble_dollar_single(token->str))
+	if (check_d_quote_dollar_s_quote(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
 		token->str = ft_strdup(tmp);

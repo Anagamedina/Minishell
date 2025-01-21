@@ -1,11 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/20 00:13:04 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-/**
- * check if the next character is a single quote like $'hello
- * echo "'$USER'"
- */
-//$'..'
-int	check_doble_dollar_single(const char *str)
+	/**
+     * Case 2: Dollar sign followed by a single-quoted string.
+     * - Ensures `$` inside single quotes does not expand.
+     * - Delegates processing to handle_single_quotes_after_dollar.
+     *
+     * @example:
+     * Input: "echo $'hello'"
+     * Output: "$'hello'" (no expansion).
+	 */
+
+int	check_dollar_and_next_token(char** str, t_tokens* next_token)
+{
+	int	len_str;
+
+	if (next_token == NULL)
+		return (FALSE);
+	printf("next token: %s\n", next_token->str);
+	len_str = (int) ft_strlen(*str);
+	if (len_str == 1 && (*str)[0] == '$' && handle_single_quote(next_token) == TRUE)
+	{
+		free(*str);
+		*str = ft_strdup("");
+		if (!*str)
+		{
+			perror("Error: ft_strdup failed");
+			return (FALSE);
+		}
+		return (TRUE);
+	}
+	return (FALSE);
+}
+/*
+int	check_d_quote_dollar_s_quote(const char *str)
 {
 	int	i;
 	int	len_str;
@@ -16,13 +55,25 @@ int	check_doble_dollar_single(const char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == S_QUOTE && str[len_str - 2] == S_QUOTE)
+			i ++;
+			if (str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
 				return (TRUE);
 		}
 		i++;
 	}
 	return (0);
 }
+*/
+
+/**
+ * Case 1: Backslash before dollar sign.
+ * - Skips expansion when `$` is escaped with `\`.
+ * - Delegates processing to handle_backslash_after_dollar.
+ *
+ * @example
+ * Input: "echo \\$USER"
+ * Output: "\\$USER" (unexpanded, backslash preserved).
+*/
 
 int	check_backslash_before_dollar(const char *str)
 {
@@ -41,6 +92,16 @@ int	check_backslash_before_dollar(const char *str)
 	return (FALSE);
 }
 
+/**
+ * Case 3: Dollar sign followed by a single digit.
+ * - Handles cases where `$` is immediately followed by a digit.
+ * - Delegates processing to handle_one_digit_after_dollar.
+ *
+ * Example:
+ * Input: "echo $1"
+ * Output: "value_of_argument_1"(if positional parameter expansion is supported).
+ */
+
 int	has_only_one_digit_after_dollar(const char *str)
 {
 	int	len;
@@ -55,16 +116,37 @@ int	has_only_one_digit_after_dollar(const char *str)
  * and additional characters.
  */
 
+/**
+ * Case 4: Dollar sign followed by a digit and more characters.
+ * - Handles patterns like `$1extra`.
+ * - Delegates processing to handle_digit_and_more_after_dollar.
+ *
+ * Example:
+ * Input: "echo $1abc"
+ * Output: "value_of_argument_1abc" (if expansion and concatenation are supported).
+ * TODO: agregar una validacion de que solamente cuando existe un dolar en el string return TRUE
+ */
+
 int	has_dollar_followed_by_digit(const char *str)
 {
 	int	i;
+	int	count_dollar;
 
 	i = 0;
+	count_dollar = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+			count_dollar ++;
+		i ++;
+	}
+	if (count_dollar > 1)
+		return (FALSE);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')
 		{
-			if (ft_isdigit(str[i + 1]) == 1)
+			if (ft_isdigit(str[i + 1]) == TRUE)
 			{
 				return (TRUE);
 			}
@@ -136,25 +218,19 @@ char	*convert_escape_sequences(const char *str)
 	process_string(str, result);
 	return (result);
 }
+/**
+ * Checks if there is a valid alphabetical character
+ * (A-Z or a-z) immediately before the first
+ * occurrence of a dollar sign ('$') in the string.
+ *
+ * @example
+ * Input: "Hello$World"
+ * Output: TRUE (1)
+ *
+ * Input: "123$World"
+ * Output: FALSE (0)
+ *
+ * @return TRUE (1) if there is a valid letter before the dollar sign.
+ *         FALSE (0) otherwise.
+ */
 
-int	has_string_before_dollar(const char *str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == DOLLAR_SIGN)
-		{
-			j = i - 1;
-			if ((str[j] >= 'A' && str[j] <= 'Z') || \
-			(str[j] >= 'a' && str[j] <= 'z'))
-			{
-				return (TRUE);
-			}
-		}
-		i++;
-	}
-	return (FALSE);
-}

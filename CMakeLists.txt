@@ -1,7 +1,6 @@
+cmake_minimum_required(VERSION 3.22.1)
+
 # version 3.28 -> clion && version 3.22.1 -> vscode
-
-# cmake_minimum_required(VERSION 3.28)
-
 project(minishell C)
 
 set(CMAKE_C_STANDARD 99)
@@ -44,6 +43,7 @@ add_executable(minishell
         ${BUILTINS_DARUNY}
         ${EXPAND_DIR}
         ${PARSER_DIR}
+        libft/ft_strchr_c.c
 )
 # link with readline library
 target_link_libraries(minishell readline)
@@ -52,8 +52,10 @@ target_link_libraries(minishell readline)
 
 add_executable(testing_shell
         testing/test_main.c
-        testing/set_up_functions.c
         testing/unity.c
+        testing/setup_testing.c
+        testing/test_remove_quotes.c
+        testing/test_double_quotes.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
@@ -64,6 +66,7 @@ add_executable(testing_shell
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
         ${EXPAND_DIR}
+        testing/test_split.c
 )
 # link with readline library
 target_link_libraries(testing_shell readline)
