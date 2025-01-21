@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 18:28:45 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/21 11:42:55 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	handle_one_digit_after_dollar(t_tokens *token)
  * - FALSE (0) if memory allocation fails.
  */
 
-static int	handle_str_trim_before_dollar(t_tokens *token)
+int	handle_str_trim_before_dollar(t_tokens *token)
 {
 	char	*temp;
 	char	*substring_str;
@@ -389,7 +389,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	{
 		//	TODO: add new case consecutves dollars 
 		// echo "$USER$USER$USER"
-		if (has_consecutives_dollars_in_token(token))
+		if (has_consecutives_env_variables_in_token(token))
 		{
 			printf("has consecutives dollars in token ****\n");
 		}
@@ -399,11 +399,22 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	}
 }
 
+int	check_if_variable_is_valid(char *str, int *i)
+{
+	while (str[*i] != '\0' && (ft_isalpha(str[*i]) || str[*i] == '_'))
+		(*i)++;
+	if (str[*i] == DOLLAR_SIGN)
+		return (TRUE);
+	return (FALSE);
+}
 
-// case valid: echo "   $USER$HOME   "
-// case invalid: echo "   $USER$HOME  "
+/**
+ * @brief Checks if a token has consecutive dollar signs.
+ * case valid: echo "   $USER$HOME   "
+ * case invalid: echo "   $USER$HOME  "
+ */
 
-int	has_consecutives_dollars_in_token(t_tokens *token)
+int	has_consecutives_env_variables_in_token(t_tokens *token)
 {
 	int	i;
 	int	count_dollar;
@@ -412,26 +423,27 @@ int	has_consecutives_dollars_in_token(t_tokens *token)
 		return (FALSE);
 	
 	count_dollar = 0;
+	i = 0;
 	if (token->str[0] == D_QUOTE)
 		i = 1;
 	while (token->str[i] == SPACE)
 		i ++;
+
 	while (token->str[i] != '\0')
 	{
-		if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] != SPACE)
+		if (token->str[i] == DOLLAR_SIGN && \
+			token->str[i + 1] != SPACE)
 		{
-			printf("i: [%d]\n", i);
-			count_dollar ++;
-			printf("count_dollar: [%d]\n", count_dollar);
-			while (token->str[i] && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
-				i ++;
-			if (token->str[i] == DOLLAR_SIGN)
-			{
-				continue ;
-			}
+			i ++;
+			printf("token->str[%c],  i: [%d]\n", token->str[i], i);
+			if (check_if_variable_is_valid(token->str, &i) == TRUE)
+				count_dollar ++;
+			printf("token->str[%c],  i: [%d]\n", token->str[i], i);
 		}
-		i ++;
+		else
+			i ++;
 	}
+	printf("count_dollar: [%d]\n", count_dollar);
 	if (count_dollar > 1)
 		return (TRUE);
 	return (FALSE);
@@ -442,11 +454,11 @@ int	has_consecutives_dollars_in_token(t_tokens *token)
  * expand consecutives vars in same token
  */
 
-char	*expand_consecutives_variables(char *str) 
-{
+// char	*expand_consecutives_variables(char *str) 
+// {
 	
-	return (NULL);
-}
+// 	return (NULL);
+// }
 /**
  * Handles tokens where dollar-based expansion is conditional or restricted.
  *

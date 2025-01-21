@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 18:10:55 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/21 11:49:25 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 // Created by daruuu on 12/24/24.
 //
 
-# include "testing.h"
+#include "testing.h"
 
 t_mini	*g_minishell;
 
@@ -227,7 +227,6 @@ void	test_clean_consecutives_quotes(void)
 		i++;
 	}
 }
-*/
 
 void	test_extract_var_name(void)
 {
@@ -254,10 +253,12 @@ void	test_extract_var_name(void)
 		i++;
 	}
 }
+*/
 
 /**
  * @see get_and_
  */
+/*
 void	test_get_and_reconstruct_token(void)
 {
 	struct s_test_str	t_matrix_cases[] =
@@ -282,6 +283,7 @@ void	test_get_and_reconstruct_token(void)
 		i++;
 	}
 }
+*/
 
 /*
 void	test_has_string_before_dollar(void)
@@ -371,7 +373,8 @@ void	test_has_consecutices_dollars_in_token(void)
 		// Casos que retornan TRUE
 		// {"hello$HOME", TRUE},       // Precedido por 'o'
 		// {"var$USER", TRUE},         // Precedido por 'r'
-		// {"my_var$PATH", TRUE},      // Precedido por 'r'
+		// {"my_var helllo $PATH", TRUE},      // Precedido por 'r'
+		{"    $PATH$HOME", TRUE},      // Precedido por 'r'
 		{"my_var$$PATH$USER", TRUE},
 
 		// Casos que retornan FALSE
@@ -392,15 +395,24 @@ void	test_has_consecutices_dollars_in_token(void)
 	while (i < len)
 	{
 		t_tokens	*token = malloc(sizeof(t_tokens));
-		token->str = ft_strdup(t_matrix_cases[i].input);
-		result = has_consecutives_dollars_in_token(t_matrix_cases[i].input);
+		if (t_matrix_cases[i].input)
+		{
+			token->str = ft_strdup(t_matrix_cases[i].input);
+		}
+		else
+			token->str = NULL;
+		
+		result = has_consecutives_env_variables_in_token(token);
 
-		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1,
-		         t_matrix_cases[i].input ? t_matrix_cases[i].input : "NULL");
-		TEST_ASSERT_EQUAL_INT(token, result);
-		i++;
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, 
+			t_matrix_cases[i].input, t_matrix_cases[i].expected);
+		TEST_ASSERT_EQUAL_INT_MESSAGE(t_matrix_cases[i].expected, token, result);
+		free(token->str);
+		free(token);
+		i ++;
 	}
 }
+
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -409,6 +421,11 @@ int	main(void)
 {
 	UNITY_BEGIN();
 
+
+	RUN_TEST(test_has_consecutices_dollars_in_token);
+
+	return (UNITY_END());
+}
 	/*
 	RUN_TEST(test_clean_consecutives_quotes);
 	RUN_TEST(test_extract_var_name);
@@ -417,10 +434,6 @@ int	main(void)
 	RUN_TEST(test_find_matching_quote);
 	RUN_TEST(test_has_string_before_dollar);
 	*/
-
-	RUN_TEST(test_has_consecutices_dollars_in_token);
-
-	return (UNITY_END());
 	/*
 	RUN_TEST(test_expand_vars_with_quotes_cases);
 	RUN_TEST(test_check_double_simple_dollar_case_01);
@@ -456,9 +469,8 @@ int	main(void)
 	 */
 	// RUN_TEST(test_replace_dollar_variable_skip_s_quote_01);
 
-
-	// RUN_TEST(test_check_dollar_with_space_in_s_quotes);
-	//
-	// RUN_TEST(test_handle_special_quotes);
-
-}
+	/*
+	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
+	
+	RUN_TEST(test_handle_special_quotes);
+	*/
