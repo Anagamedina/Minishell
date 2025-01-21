@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 13:37:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:13:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,6 @@ int	check_dquote_squote_dollar_case(char *str)
 	int	len_str;
 	int	condition1;
 	int	condition2;
-	char	tmp;
 
 	condition1 = FALSE;
 	condition2 = FALSE;
@@ -299,7 +298,6 @@ int	check_dquote_squote_dollar_case(char *str)
 
 	while (i < len_str - 1)
 	{
-		tmp = str[i];
 
 		while (str[i] == ' ' && i < len_str - 1)
 			i ++;
@@ -408,6 +406,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 		if (has_consecutives_env_variables_in_token(token))
 		{
 			char *tmp = expand_consecutives_variables(token, env_list);
+			printf("tmp: [%s]\n", tmp);
 
 
 			printf("has consecutives dollars in token *************\n");
@@ -424,40 +423,57 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 {
 	int	i;
 	int	j;
-	int	len_token;
 	int	len;
+	char	*tmp = NULL;
+	char	*find_value;
+	char *result = ft_strdup("");
+
 	char	*token_updated;
 
 	i = 0;
 	j = 0;
 	len = 0;
-	len_token = (int) ft_strlen(token->str);
 	while (token->str[i] != '\0')
 	{
 		if (token->str[i] == DOLLAR_SIGN)
 		{
 			i ++;
 			j = i;
-			while (token->str[j] != '\0' && token->str[j] != DOLLAR_SIGN)
+			while (token->str[j] != '\0' && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
 				j ++;
 			printf("j: [%d]\n", j);
-			len = j - i + 1;
-			char *tmp = ft_substr(token->str, i, j - i);
+			len = j - i;
+			tmp = ft_substr(token->str, i, len);
 			printf("tmp: [%s]\n", tmp);
-		}
-		i ++;
-	}
-	// printf("token_updated: [%s]\n", token_updated);
-	return (NULL);
-}
 
-int	check_if_variable_is_valid(char *str, int *i)
-{
-	while (str[*i] != '\0' && (ft_isalpha(str[*i]) || str[*i] == '_' || str[*i] != D_QUOTE ) )
-		(*i)++;
-	if (str[*i] == DOLLAR_SIGN && str[*i])
-		return (TRUE);
-	return (FALSE);
+			find_value = find_value_in_env(env_list, tmp);
+			//free(tmp);
+			if (find_value)
+			{
+				printf("find_value: [%s]\n", find_value);
+                token_updated = ft_strjoin(result, find_value);
+				result = token_updated;
+			}
+
+			else
+			{
+				token_updated = ft_strjoin(result, "$");
+				// free(result);
+				result = ft_strjoin(token_updated, tmp);
+
+			}
+			i = j;
+		}
+		else
+		{
+			tmp = ft_substr(token->str, i, 1);
+            token_updated = ft_strjoin(result, tmp);
+			result = token_updated;
+			i++;
+
+		}
+	}
+	return (result);
 }
 
 /**
@@ -478,7 +494,6 @@ int	has_consecutives_env_variables_in_token(t_tokens *token)
 	i = 0;
 	if (token->str[0] == D_QUOTE)
 		i = 1;
-
 	while (token->str[i] != '\0')
 	{
 		while (token->str[i] == SPACE)
