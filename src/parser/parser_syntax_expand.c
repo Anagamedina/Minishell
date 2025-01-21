@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 16:36:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:02:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,10 +405,12 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 
 		if (has_consecutives_env_variables_in_token(token))
 		{
+			// TODO: remove double quotes and update token->str | token->len
 			char *tmp = expand_consecutives_variables(token, env_list);
-			printf("tmp: [%s]\n", tmp);
-
-
+			printf("after expanddddddd: [%s]\n", tmp);
+			// free(token->str);
+            // token->str = ft_strdup(tmp);
+            // free(tmp);
 			printf("has consecutives dollars in token *************\n");
 			return ;
 		}
@@ -436,6 +438,7 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	len = 0;
 	while (token->str[i] != '\0')
 	{
+	    tmp = NULL;
 		if (token->str[i] == DOLLAR_SIGN)
 		{
 			i ++;
@@ -445,7 +448,7 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 			printf("j: [%d]\n", j);
 			len = j - i;
 			tmp = ft_substr(token->str, i, len);
-			printf("tmp: [%s]\n", tmp);
+			printf("tmp variblee: [%s]\n", ft_strdup(tmp));
 
 			find_value = find_value_in_env(env_list, tmp);
 			//free(tmp);
@@ -458,16 +461,15 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 //expansio no esta hecha? haccemos algo imprime $USERafter
 			else
 			{
-				// token_updated = ft_strjoin(result, "$");
-				// free(result);
-				// result = ft_strjoin(token_updated, tmp);
-				break;
+				//token_updated = ft_strjoin(result, "$");
+				//free(result);
+				//result = ft_strjoin(token_updated, tmp);
+				 break;
 
 			}
 			i = j;
 		}
-		else
-			//si no es dollar sign
+		else//si no es dollar sign
 		{
 			tmp = ft_substr(token->str, i, 1);
             token_updated = ft_strjoin(result, tmp);
