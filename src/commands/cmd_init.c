@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/20 10:06:56 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/21 12:07:34 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd *init_command(void)
 	new_cmd->cmd_args = NULL;
 	new_cmd->count_args = -1;
 	new_cmd->cmd_id = 0;
-	new_cmd->pipes = NULL;
+	//new_cmd->pipes = NULL;
 
 	//new_cmd->redir_list = NULL;
 	new_cmd->input_fd = -1;

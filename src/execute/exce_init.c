@@ -13,7 +13,7 @@
 
 #include "../../includes/minishell.h"
 
-t_pipe	*init_pipe(void)
+/*t_pipe	*init_pipe(void)
 {
 	t_pipe	*pipe_info;
 
@@ -35,7 +35,7 @@ t_pipe	*init_pipe(void)
 	pipe_info->pipe_fds[1] = -1;
 
 	return (pipe_info);
-}
+}*/
 
 
 t_exec	*init_exec(t_list *env_list)

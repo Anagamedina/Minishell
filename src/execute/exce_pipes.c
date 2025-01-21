@@ -2,7 +2,7 @@
 
 
 
-t_pipe *create_pipe(int is_last)
+/*t_pipe *create_pipe(int is_last)
 {
 	t_pipe *pipe_info = malloc(sizeof(t_pipe));
 	if (!pipe_info)
@@ -49,7 +49,7 @@ int count_pipes(t_list *token_list)
 		current = current->next;
 	}
 	return pipe_count;
-}
+}*/
 
 
 

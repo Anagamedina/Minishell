@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/20 11:35:20 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/21 12:07:19 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_split_data	t_split_data;
 
 typedef struct s_exec t_exec;
 
-typedef struct s_pipe t_pipe;
+//typedef struct s_pipe t_pipe;
 
 //**************ENV************/
 t_list 		*init_env_list(char **envp);
@@ -196,10 +196,10 @@ void		execute_external(t_cmd *cmd, char **envp);
 void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
-t_pipe		*init_pipe(void);
-t_pipe 		*create_pipe(int is_last);
+//t_pipe		*init_pipe(void);
+//t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);
-void		setup_pipes(t_pipe *pipe_info, int cmd_id);
+//void		setup_pipes(t_pipe *pipe_info, int cmd_id);
 
 //*************redis**************/
 
