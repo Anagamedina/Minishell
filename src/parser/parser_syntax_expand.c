@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 16:13:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:36:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,6 +413,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 			return ;
 		}
 
+
 		expand_dollar(token, env_list);
 		return ;
 	}
@@ -454,17 +455,19 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
                 token_updated = ft_strjoin(result, find_value);
 				result = token_updated;
 			}
-
+//expansio no esta hecha? haccemos algo imprime $USERafter
 			else
 			{
-				token_updated = ft_strjoin(result, "$");
+				// token_updated = ft_strjoin(result, "$");
 				// free(result);
-				result = ft_strjoin(token_updated, tmp);
+				// result = ft_strjoin(token_updated, tmp);
+				break;
 
 			}
 			i = j;
 		}
 		else
+			//si no es dollar sign
 		{
 			tmp = ft_substr(token->str, i, 1);
             token_updated = ft_strjoin(result, tmp);
@@ -510,7 +513,7 @@ int	has_consecutives_env_variables_in_token(t_tokens *token)
 	}
 		// printf("token->str[%c],  i: [%d]\n", token->str[i], i);
 	printf("count_dollar: [%d]\n", count_dollar);
-	if (count_dollar > 1)
+	if (count_dollar >= 1)
 		return (TRUE);
 	return (FALSE);
 }
