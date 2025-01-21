@@ -6,19 +6,37 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/16 15:38:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:59:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+
+/*static void free_token_list(t_list *tokens) {
+	t_list *current = NULL;
+	t_tokens *token_data;
+
+	while (current->next != NULL)
+	{
+		token_data = (t_tokens *)tokens->content;
+		if (token_data->next) // Si hay siguiente token
+		{
+			free(token_data->str);// Libera la cadena asociada al token
+		}
+		free(token_data); // Libera el nodo actual
+		current = current->next; // Avanza al siguiente token
+	}
+}*/
+
+
 int	main(int argc, char **argv, char **envp)
 {
+	(void) argc;
+	(void) argv;
 	char	*input;
 	t_mini	*minishell;
 
-	(void) argc;
-	(void) argv;
 	minishell = init_mini_list(envp);
 
 	input = NULL;
@@ -32,20 +50,134 @@ int	main(int argc, char **argv, char **envp)
 		input = read_input();
 		if (!input || !check_quotes_line(input))
 		{
-			printf("Error: quotes are incorrect\n");
+			printf("Error al leer el input\n");
 			free(input);
-			continue ;
+			break ;
 		}
 		minishell->token = generate_token_list(input);
+
 		if (minishell->token == NULL)
+		{
+			printf("Error al generar la lista de tokens.\n");
 			continue ;
+		}
+
+			minishell->exec = init_exec(minishell->env);
+		if (!minishell->exec)
+		{
+			perror("Error al inicializar t_exec");
+			return 1;
+		}
+
 		parser_tokens(minishell);
+		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
+		if (!minishell->exec->first_cmd)
+		{
+			printf("Error al crear la lista de comandos.\n");
+			continue ;
+		}
+		printf("************************************\n");
 		print_list_token_str(minishell->token);
-		// print_list_token(minishell->token);
-		// minishell->cmds = add_tokens_to_linked_list_commands(minishell->token);
-		// print_list_commands(minishell->cmds);
-		// print_list_token(minishell->token);
-		//cases_builtins(minishell);
+		printf("************************************\n");
+
+		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
+
+
+		print_list_commands(minishell->exec->first_cmd);
+		//execute_commands(minishell);
+		if (execute_commands(minishell) != TRUE)
+		{
+			free_cmd_list(minishell->exec->first_cmd);
+			//free_token_list(minishell->token);
+			free(minishell);
+			continue;
+		}
+		else
+			continue ;
+
+		//free_cmd_list(minishell->exec->first_cmd);
+		 //cases_builtins(minishell);
 	}
 	return (0);
 }
+
+
+
+
+
+/*
+printf("PID PADRE: [%d]\n", getpid());
+int pipe_fd[2];
+if  (pipe(pipe_fd) == -1)
+{
+	perror("Pipe");
+	exit(EXIT_FAILURE);
+}
+
+int i = 0;
+while (i < 2)
+{
+	pid_t pid = fork();
+
+	if (pid < 0)
+	{
+		perror("Error creando proceso hijo");
+		exit(EXIT_FAILURE);
+	}
+
+	if (pid == 0)
+	{
+		// Proceso hijo
+		printf("Proceso hijo ejecutándose\n");
+		printf("PID HIJO: %d\n", getpid());
+		if (i == 0)
+		{
+			if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+			{
+				char message[256];
+				snprintf(message, sizeof(message), "Error redirigiendo salida hijo PID: %d", getpid());
+				perror(message);
+				exit(EXIT_FAILURE);
+			}
+			// Cerrar descriptores no necesarios
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			char *args[] = {"ls",  NULL};
+			if (execve("/usr/bin/ls", args, envp) == -1)
+			{
+				perror("Error mutando a ls");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else if (i == 1)
+		{
+			if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
+			{
+				char message[256];
+				snprintf(message, sizeof(message), "Error redirigiendo salida hijo PID: %d", getpid());
+				perror(message);
+				exit(EXIT_FAILURE);
+			}
+			// Cerrar descriptores no necesarios
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			char *args[] = {"wc",  NULL};
+			if (execve("/usr/bin/wc", args, envp) == -1)
+			{
+				perror("Error mutando a wc");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+	i++;
+}
+
+// Cerrar descriptores no necesarios en el proceso padre
+close(pipe_fd[0]);
+close(pipe_fd[1]);
+
+// Proceso padre
+waitpid(-1, NULL, 0);
+
+return 1;
+*/

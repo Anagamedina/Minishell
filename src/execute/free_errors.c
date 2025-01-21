@@ -10,9 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #include "../../includes/minishell.h"
 
-void	free_cmd(t_cmd *cmd)
+
+t_cmd	*handle_cmd_error(t_cmd *new)
+{
+	perror("Error: Command not found here!!");
+	free_split_result(new->cmd_args);
+	free(new);
+	return (NULL);
+}
+
+
+/*void	free_cmd(t_cmd *cmd)
 {
 	if (cmd)
 	{
@@ -34,17 +46,7 @@ void	free_split_result(char **result)
 	free(result);
 }
 
-void	free_cmd_list(t_cmd *cmd_list)
-{
-	t_cmd	*tmp;
 
-	while (cmd_list)
-	{
-		tmp = cmd_list;
-		cmd_list = cmd_list->next;
-		free_cmd(tmp);
-	}
-}
 
 void	free_paths(t_input input)
 {
@@ -69,3 +71,4 @@ void	free_input(t_input input)
 	if (input.path != NULL)
 		free_paths(input);
 }
+*/

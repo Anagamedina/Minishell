@@ -203,65 +203,71 @@ void	parser_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
-*/
-
-/*
-void	parser_tokens(t_mini *mini)
+//actualizando tokens de words a builtins o cmd externo
+//	actualizando type_token de las words de token list
+void	update_words_in_tokens(t_mini *mini)
 {
-	t_list		*token_list;
-	t_list		*env_list;
-	t_tokens	*curr_token;
-	t_tokens	*next_token;
+	t_list *token_list;
+	t_tokens *curr_token;
 
 	token_list = mini->token;
-	env_list = mini->env;
 
-	// Salta el primer token si es BUILTINS o CMD_EXTERNAL
-	if (token_list != NULL)
+	while (token_list != NULL)
 	{
-		curr_token = (t_tokens *) token_list->content;
-		if (curr_token->type_token == BUILTINS)
-			token_list = token_list->next;
-	}
-
-	while (token_list != NULL)//&& token_list->next != NULL)
-	{
-		curr_token = (t_tokens *) token_list->content;
-		next_token = (t_tokens *) token_list->next->content;
+		curr_token = (t_tokens *)token_list->content;
 
 		if (curr_token->type_token == WORD)
-			handle_tokens(curr_token, env_list, next_token);
-		else
-			break;
+		{
+			printf("Token WORD: %s\n", curr_token->str);
+			if (is_builtin_command(curr_token->str))
+			{
+				curr_token->type_token = BUILTINS;
+			}
+			else if (is_cmd_external(mini, curr_token))
+			{
+				curr_token->type_token = CMD_EXTERNAL;
+			}
+			else
+			{
+				curr_token->type_token = WORD;
+			}
+		}
 		token_list = token_list->next;
 	}
 }
-*/
 
-/*void	parser_tokens(t_mini *mini)
+void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
-	t_list		*env_list;
 	t_tokens	*curr_token;
-	t_tokens	*next_token;
 
+	update_words_in_tokens(mini);
+	//print_list_token(mini->token);
+
+	// Segunda pasada: Manejar relaciones entre tokens
 	token_list = mini->token;
-	env_list = mini->env;
-	curr_token = (t_tokens *) token_list->content;
-	//next_token = (t_tokens *) token_list->next->content;
-
-	if ((curr_token->type_token == BUILTINS) && (token_list->next != NULL) \
-		&& (((t_tokens *)(token_list->next->content))->type_token == WORD))
+	while (token_list != NULL)
 	{
-		while (token_list->next != NULL)
+		curr_token = (t_tokens *)token_list->content;
+
+		if ((curr_token->type_token == BUILTINS || curr_token->type_token == CMD_EXTERNAL) &&
+			token_list->next != NULL)
 		{
-			next_token = (t_tokens *) token_list->next->content;
-			//curr_token = (t_tokens *)token_list->content;
-			if (curr_token->type_token == WORD)
-				handle_tokens(curr_token, env_list, next_token);
-			else
-				break ;
-			token_list = token_list->next;
+			t_list *next_node = token_list->next;
+			t_tokens *next_token = (t_tokens *)next_node->content;
+
+			// Manejar argumentos (tokens de tipo WORD) que siguen al comando
+			while (next_token->type_token == WORD)
+			{
+				handle_tokens(next_token, mini->env);
+				next_node = next_node->next;
+
+				if (next_node == NULL)
+					break;
+
+				next_token = (t_tokens *)next_node->content;
+			}
 		}
+		token_list = token_list->next;
 	}
-}*/
+}

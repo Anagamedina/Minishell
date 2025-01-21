@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/19 21:08:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:23:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Initializes a new token node (`t_tokens`).
  *
- * @param str The string to store in the token->str.
+ * @param str The string to store in the token.
  * @param token_type The type of the token.
  * @return A pointer to the new token, or NULL if memory allocation fails.
  */

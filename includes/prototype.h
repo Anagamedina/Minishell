@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 09:57:19 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2024/12/27 16:00:03 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ typedef struct s_tokens		t_tokens;
 typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
+
+typedef struct s_exec t_exec;
+
+//typedef struct s_pipe t_pipe;
 
 //**************ENV************/
 t_list		*init_env_list(char **envp);
@@ -47,24 +51,7 @@ int			check_quotes_line(const char *line);
 void		get_size_words_with_pivote(const char* line);
 void		parser_tokens(t_mini *mini);
 
-//************** INIT_COMMAND.C ********/
 
-int			is_type_of_operator(t_tokens *token);
-t_cmd		*init_command(void);
-void		print_list_commands(t_list *cmd_list);
-t_cmd		*create_new_command(t_tokens *current_token, int i);
-t_list		*add_tokens_to_linked_list_commands(t_list *token_list);
-void		contar_numero_argumentos_de_comandos(t_list *token_list, t_cmd *cmd);
-void		agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list);
-
-//************** ERRORS_COMMAND.C ********/
-
-void		free_command(t_cmd *cmd);
-void		free_command_list(t_cmd *cmd_list);
-// void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
-int			error_empty_token(t_tokens *token, t_list *cmd_list);
-int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
-int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 
 //**************BUILTINS-1********/
 
@@ -101,6 +88,8 @@ int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
 t_list		*generate_token_list(char *line);
+t_list		*tokenize_list(char **tokens);
+t_list *generate_token_list(char *line);
 
 //************** TOKEN_FREE.c ********************/
 
@@ -115,10 +104,8 @@ void		ft_free_array(char **array);
 //************** TOKEN_TYPE.c ********************/
 
 int			set_token_type(char *str);
-int			is_builtin_command(const char *str);
-void		update_words_to_builtin(t_list *tokens_list);
-void		identify_commands(t_list *tokens_list);
-
+//void		update_words_to_builtin(t_list *tokens_list);
+void identify_commands(t_list *tokens_list, t_mini*exec_info);
 //************** TOKEN_UTILS.c ********************/
 
 char		**ft_split_quote(char *str);
@@ -178,4 +165,47 @@ char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_
 void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*ft_strjoin_array(char **split_word);
 
+
+//************** INIT_COMMAND.C ********/
+
+int			is_type_of_operator(t_tokens *token);
+int			is_builtin_command(char *cmd);
+t_cmd		*init_command(void);
+void		print_list_commands(t_list *cmd_list);
+t_cmd 		*create_new_command(t_tokens *current_token, int cmd_id, char **paths);
+t_list		*create_cmd_list(t_list *token_list, char **paths);
+void		count_args(t_list *token_list, t_cmd *cmd);
+void		add_args(t_cmd **cmd, t_list *token_list);
+int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
+
+//************** ERRORS_COMMAND.C ********/
+
+void		free_command(t_cmd *cmd);
+// void			check_null_token(t_tokens *token, t_cmd *cmd_list, char *err_message);
+int			error_empty_token(t_tokens *token, t_list *cmd_list);
+int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
+int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
+char 		**get_path(char **env);
+int 		main(int argc, char **argv, char **env);
+void 		print_paths(char **paths);
+char 		*get_cmd_path(t_tokens *token, char **paths);
+void 		free_cmd(t_cmd *cmd);
+void 		free_cmd_list(t_list *cmd_list);
+void		free_split_result(char **result);
+t_exec 		*init_exec(t_list *env_list);
+char		**lst_to_arr(t_list *env_list);
+int 		is_cmd_external(t_mini *mini, t_tokens *token);
+int		execute_commands(t_mini *mini);
+void		execute_external(t_cmd *cmd, char **envp);
+void 		process_flags(t_cmd *cmd, char *cmd_str);
+t_cmd 		*init_command(void);
+t_cmd		*handle_cmd_error(t_cmd *new);
+//t_pipe		*init_pipe(void);
+//t_pipe 		*create_pipe(int is_last);
+int 		count_pipes(t_list *token_list);
+//void		setup_pipes(t_pipe *pipe_info, int cmd_id);
+
+//*************redis**************/
+
+int 		check_repeat_redir(t_tokens *token);
 #endif

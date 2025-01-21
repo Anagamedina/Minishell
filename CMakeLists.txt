@@ -43,7 +43,19 @@ add_executable(minishell
         ${BUILTINS_DARUNY}
         ${EXPAND_DIR}
         ${PARSER_DIR}
-        libft/ft_strchr_c.c
+        src/commands/cmd_builtins.c
+        src/execute/exce_cmd.c
+        src/execute/exce_paths.c
+        src/execute/exce_init.c
+        src/execute/get_input.c
+        src/execute/free_errors.c
+        src/execute/exce_type.c
+        src/execute/tests.c
+        src/execute/exce_pipes.c
+        src/commands/cmd_init.c
+        src/execute/exce_pipes.c
+        src/execute/exce_cmd.c
+        testing/testing.h
 )
 # link with readline library
 target_link_libraries(minishell readline)

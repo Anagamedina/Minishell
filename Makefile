@@ -22,6 +22,7 @@ SRC_INPUT= $(SRC_DIR)/input
 SRC_PARSER= $(SRC_DIR)/parser
 SRC_REDIR= $(SRC_DIR)/redir
 SRC_TOKEN = $(SRC_DIR)/tokenize
+SRC_EXECUTE = $(SRC_DIR)/execute
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
@@ -41,8 +42,12 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_TOKEN)/token_utils.c \
 		$(SRC_TOKEN)/token_free.c \
 		$(SRC_TOKEN)/token_list.c \
-		$(SRC_CMD)/init_commands.c \
-		$(SRC_CMD)/errors_commands.c \
+		$(SRC_CMD)/cmd_init.c \
+		$(SRC_CMD)/cmd_args.c \
+		$(SRC_CMD)/cmd_free.c \
+		$(SRC_CMD)/cmd_builtins.c \
+		$(SRC_CMD)/cmd_errors.c \
+		$(SRC_CMD)/print_cmd.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
@@ -55,11 +60,19 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_syntax_expand.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
-		$(SRC_REDIR)/input_redir.c \
-		$(SRC_REDIR)/output_redir.c \
-		$(SRC_REDIR)/redir_utils.c
-#		$(SRC_REDIR)/heredoc.c
+		$(SRC_EXECUTE)/free_errors.c \
+		$(SRC_EXECUTE)/exce_paths.c \
+		$(SRC_EXECUTE)/exce_init.c \
+		$(SRC_EXECUTE)/exce_pipes.c \
+		$(SRC_EXECUTE)/exce_type.c \
+		$(SRC_EXECUTE)/exce_cmd.c \
+		$(SRC_EXECUTE)/get_input.c \
+		$(SRC_EXECUTE)/tests.c
 
+#		$(SRC_REDIR)/heredoc.c
+#		$(SRC_EXECUTE)/get_inputc \
+#		$(SRC_REDIR)/redir_syntax.c \
+#		$(SRC_REDIR)/redir_file.c
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))
 

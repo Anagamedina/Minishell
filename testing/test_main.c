@@ -1,32 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 12:40:59 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 11:49:25 by  dasalaza        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 //
 // Created by daruuu on 12/24/24.
 //
 
-#include "testing.h"
+# include "unity.h"
+# include "testing.h"
+# include "../includes/minishell.h"
 
 t_mini	*g_minishell;
 
@@ -375,7 +353,7 @@ void	test_has_more_than_one_dollar_without_spaces_in_token(void)
 /**
  * @brief Prueba la detección de variables de entorno consecutivas.
  * @see has_consecutives_dollars_in_token
- * 
+ *
  */
 
 void	test_has_consecutices_dollars_in_token(void)
@@ -415,7 +393,7 @@ void	test_has_consecutices_dollars_in_token(void)
 		}
 		else
 			token->str = NULL;
-		
+
 		result = has_consecutives_env_variables_in_token(token);
 
 		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input, t_matrix_cases[i].expected);
@@ -484,6 +462,6 @@ int	main(void)
 
 	/*
 	RUN_TEST(test_check_dollar_with_space_in_s_quotes);
-	
+
 	RUN_TEST(test_handle_special_quotes);
 	*/

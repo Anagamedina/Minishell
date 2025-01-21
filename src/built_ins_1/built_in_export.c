@@ -82,7 +82,7 @@ void	builtin_export(t_mini *mini)
 	t_tokens 	*first_token;
 
 	first_token = mini->token->content;
-	cmd_01 = mini->cmds->content;
+	cmd_01 = mini->exec->first_cmd->content;
 	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
 	{
 		if (first_token->next == NULL)

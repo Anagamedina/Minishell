@@ -21,9 +21,9 @@ t_mini	*init_mini_list(char **envp)
         return (NULL);
     minishell->bash_lvl = 0;
     minishell->chars_in_line = -1;
-    minishell->cmds = NULL;
+    minishell->exec = NULL;
     minishell->env = init_env_list(envp);
-    minishell->exit_status = -1;
+    //minishell->exit_status = -1;
     minishell->token = NULL;
     if (!minishell->env)
     {
@@ -33,6 +33,22 @@ t_mini	*init_mini_list(char **envp)
     }
     return (minishell);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void	print_mini(t_mini *mini)
 {
@@ -45,7 +61,7 @@ void	print_mini(t_mini *mini)
     printf("=== Información de t_mini ===\n");
     printf("Bash Level: %d\n", mini->bash_lvl);
     printf("Chars in Line: %d\n", mini->chars_in_line);
-    printf("Exit Status: %d\n", mini->exit_status);
+    //printf("Exit Status: %d\n", mini->exit_status);
 
     printf("\n--- Variables de Entorno ---\n");
     if (mini->env)
@@ -60,8 +76,8 @@ void	print_mini(t_mini *mini)
         printf("No hay tokens.\n");
 
     printf("\n--- Comandos ---\n");
-    if (mini->cmds)
-        print_list_token((t_list *)mini->cmds); 
+    if (mini->exec)
+        print_list_token((t_list *)mini->exec);
     else
         printf("No hay comandos.\n");
     
