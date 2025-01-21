@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/21 13:37:34 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_syntax_expand.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/03 11:16:05 by dasalaza          #+#    #+#             */
@@ -321,6 +333,8 @@ int	check_dquote_squote_dollar_case(char *str)
  * 4. General dollar variable expansion.
  */
 
+char* expand_consecutives_variables(t_tokens *token, t_list *env_list);
+
 void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {
 	char	*processed_str;
@@ -389,9 +403,15 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	{
 		//	TODO: add new case consecutves dollars 
 		// echo "$USER$USER$USER"
+		// echo "$USER$HOME$helloabcd abcd"
+
 		if (has_consecutives_env_variables_in_token(token))
 		{
-			printf("has consecutives dollars in token ****\n");
+			char *tmp = expand_consecutives_variables(token, env_list);
+
+
+			printf("has consecutives dollars in token *************\n");
+			return ;
 		}
 
 		expand_dollar(token, env_list);
@@ -399,11 +419,43 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	}
 }
 
+//	 echo "hello$USER$USER   "
+char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
+{
+	int	i;
+	int	j;
+	int	len_token;
+	int	len;
+	char	*token_updated;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	len_token = (int) ft_strlen(token->str);
+	while (token->str[i] != '\0')
+	{
+		if (token->str[i] == DOLLAR_SIGN)
+		{
+			i ++;
+			j = i;
+			while (token->str[j] != '\0' && token->str[j] != DOLLAR_SIGN)
+				j ++;
+			printf("j: [%d]\n", j);
+			len = j - i + 1;
+			char *tmp = ft_substr(token->str, i, j - i);
+			printf("tmp: [%s]\n", tmp);
+		}
+		i ++;
+	}
+	// printf("token_updated: [%s]\n", token_updated);
+	return (NULL);
+}
+
 int	check_if_variable_is_valid(char *str, int *i)
 {
-	while (str[*i] != '\0' && (ft_isalpha(str[*i]) || str[*i] == '_'))
+	while (str[*i] != '\0' && (ft_isalpha(str[*i]) || str[*i] == '_' || str[*i] != D_QUOTE ) )
 		(*i)++;
-	if (str[*i] == DOLLAR_SIGN)
+	if (str[*i] == DOLLAR_SIGN && str[*i])
 		return (TRUE);
 	return (FALSE);
 }
@@ -426,23 +478,22 @@ int	has_consecutives_env_variables_in_token(t_tokens *token)
 	i = 0;
 	if (token->str[0] == D_QUOTE)
 		i = 1;
-	while (token->str[i] == SPACE)
-		i ++;
 
 	while (token->str[i] != '\0')
 	{
-		if (token->str[i] == DOLLAR_SIGN && \
-			token->str[i + 1] != SPACE)
-		{
+		while (token->str[i] == SPACE)
 			i ++;
-			printf("token->str[%c],  i: [%d]\n", token->str[i], i);
-			if (check_if_variable_is_valid(token->str, &i) == TRUE)
-				count_dollar ++;
-			printf("token->str[%c],  i: [%d]\n", token->str[i], i);
+		if (token->str[i] == DOLLAR_SIGN && ft_isalpha(token->str[i + 1]))
+		{
+			count_dollar ++;
+			i ++;
+			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
+				i++;
 		}
 		else
 			i ++;
 	}
+		// printf("token->str[%c],  i: [%d]\n", token->str[i], i);
 	printf("count_dollar: [%d]\n", count_dollar);
 	if (count_dollar > 1)
 		return (TRUE);

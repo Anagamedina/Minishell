@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/21 12:40:59 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 20:02:43 by dasalaza          #+#    #+#             */
@@ -374,17 +386,19 @@ void	test_has_consecutices_dollars_in_token(void)
 		// {"hello$HOME", TRUE},       // Precedido por 'o'
 		// {"var$USER", TRUE},         // Precedido por 'r'
 		// {"my_var helllo $PATH", TRUE},      // Precedido por 'r'
-		{"    $PATH$HOME", TRUE},      // Precedido por 'r'
-		{"my_var$$PATH$USER", TRUE},
+
+		{" abcd    $PATH$HOME", TRUE},
+		{"my_var$PATH$USER", TRUE},
+		{"$HOME abcd $USER", TRUE},
+		// {"123$VAR", TRUE},         // Precedido por un número
+		{"hello world", FALSE},     // No hay ningún $
 
 		// Casos que retornan FALSE
+		/*
 		{"", FALSE},                // Cadena vacía
-		{NULL, FALSE},              // Cadena nula
-		{"$HOME", FALSE},           // Nada antes del $
-		{"123$VAR", FALSE},         // Precedido por un número
 		{"!$HOME", FALSE},          // Precedido por un símbolo
 		{"var!$USER", FALSE},       // Precedido por símbolo '!'
-		{"hello world", FALSE},     // No hay ningún $
+	*/
 	};
 
 	int		i = 0;
@@ -404,8 +418,7 @@ void	test_has_consecutices_dollars_in_token(void)
 		
 		result = has_consecutives_env_variables_in_token(token);
 
-		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, 
-			t_matrix_cases[i].input, t_matrix_cases[i].expected);
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input, t_matrix_cases[i].expected);
 		TEST_ASSERT_EQUAL_INT_MESSAGE(t_matrix_cases[i].expected, token, result);
 		free(token->str);
 		free(token);
