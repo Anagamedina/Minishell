@@ -6,17 +6,13 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:12:29 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/21 12:14:41 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/21 12:30:02 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
 #include "../../includes/minishell.h"
-
-
-
-
 
 void	execute_external(t_cmd *cmd, char **envp)
 {
