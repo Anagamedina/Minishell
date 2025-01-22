@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 16:28:08 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/22 17:00:57 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 
 static int	handle_one_digit_after_dollar(t_tokens *token)
 {
+	free(token->str);
 	token->str = ft_strdup("");
 	return (TRUE);
 }
@@ -134,7 +135,6 @@ int	handle_str_trim_before_dollar(t_tokens *token)
 }
 
 
-//  TODO: En el siguiente caso echo "$USER abcdh $HOME $1" falta eliminar $1.
 
 static int	handle_digit_and_more_after_dollar(t_tokens *token)
 {
@@ -595,15 +595,11 @@ int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
-/*
-	 remove this case to see whats happening
-	 caso a gestionar TODO: echo "$USER abcdh $HOME $1"
-*/
+
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
-	/*
-	 if (has_dollar_with_only_spaces_or_only_dollar(token->str))
-		return (handle_dollar_with_space_single(token));
-	 */
+
+	// if (has_dollar_with_only_spaces_or_only_dollar(token->str))
+	// 	return (handle_dollar_with_space_single(token));
 	return (0);
 }
