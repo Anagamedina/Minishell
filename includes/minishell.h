@@ -105,8 +105,7 @@ typedef struct s_cmd
 	int            	input_fd;
 	int             output_fd;
 	//int 			exit_status;
-	//t_pipe   		*pipes;
-	//struct t_redir 	*redir_list;
+	t_list 			*redir_list;
 	struct s_cmd    *next;
 }				t_cmd;
 

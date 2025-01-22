@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_file.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/22 11:36:55 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 // Abre un archivo según el tipo de redirección especificado
@@ -15,8 +27,61 @@ int open_file(char *file, int type)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		return (-1);
+	 if (fd == -1)
+		 perror("Error al abrir el archivo");
 	return (fd);
 }
+
+
+
+t_redir *init_redirection(t_cmd *cmd, t_tokens *token)
+{
+	t_redir *new_redir = malloc(sizeof(t_redir));
+	if (!new_redir)
+		return (NULL);
+	//copiar el nonbre del archivo asociado a la redirección
+	new_redir->filename = ft_strdup(token->str);
+	if (!new_redir->filename)
+	{
+		perror("Error: al duplicar el nombre del archivo");
+		free(new_redir);
+		return (NULL);
+	}
+	new_redir->type = token->type_token;
+	new_redir->fd_input = -1;
+	new_redir->fd_output = -1;
+	new_redir->next = NULL;
+	return (new_redir);
+}
+
+
+void add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
+{
+	t_redir *new_redir = init_redirection(cmd, token);
+	if (!new_redir)
+		return;
+	t_list *new_node = ft_lstnew(new_redir);
+	if (!new_node)
+	{
+		//free(new_redir->filename);
+		//free(new_redir);
+		return;
+	}
+	if (!cmd->redir_list)
+		cmd->redir_list = new_node;
+	else
+		ft_lstadd_back(&cmd->redir_list, new_node);
+
+}
+
+
+
+
+
+
+
+
+
 
 // Duplica un descriptor de archivo al descriptor de entrada o salida correspondiente
 // Luego cierra el descriptor original para evitar fugas de recursos
@@ -40,24 +105,24 @@ void redirect_file(int fd, int target_fd)
 int input_redirect_with_default(char *file, t_cmd *cmd)
 {
 	int fd;
-	int pfd[2];
+	int p_empty_fd[2];
 
 	// Intentar abrir el archivo en modo lectura
 	fd = open(file, O_RDONLY);
 	if (fd == -1) {
-		if (pipe(pfd) == -1) {
+		if (pipe(p_empty_fd) == -1) {
 			perror("Error creating pipe");
 			exit(1);
 		}
 
 		// Redirigir la entrada al pipe vacío
-		if (dup2(pfd[0], cmd->input_fd) == -1) {
+		if (dup2(p_empty_fd[0], cmd->input_fd) == -1) {
 			perror("Error duplicating pipe");
 			exit(1);
 		}
 
-		close(pfd[0]);
-		close(pfd[1]);
+		close(p_empty_fd[0]);
+		close(p_empty_fd[1]);
 
 		free(file);
 		return 1;    // Continuar la ejecución con un flujo vacío

@@ -45,11 +45,11 @@ int check_first_last_redir(t_tokens *token)
 }
 
 //verificar que despues de un operador > >> >> haya un nombre valido de archivo
-int check_file_name(t_tokens *token)
-{
+//int check_file_name(t_tokens *token)
+//{
 
 
-}
+//}
 
 //**********************MAIN FUNCTION ***************//
 
@@ -58,6 +58,6 @@ void check_redir_syntax(t_tokens *token)
 
 	check_repeat_redir(token);
 	check_first_last_redir(token);
-	check_file_name(token);
+	//check_file_name(token);
 
 }
