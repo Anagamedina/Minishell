@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 17:02:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:37:09 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,9 +297,11 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 {
 	char	*processed_str;
 	char	*expanded_str;
+	char	*tmp;
 
 	processed_str = NULL;
 	expanded_str = NULL;
+	tmp = NULL;
 
 	/**
 	 * Handles cases with mixed d_quotes (") and s_quotes (') containing `$`.
@@ -307,8 +309,8 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	 * - Ensures only one valid pair of double quotes exists (open and close).
 	 * - Allows spaces between double and single quotes.
 	 * - Invalidates consecutive dollar signs (`$$`).
-	 * @example:
-	 * Input: `"$'string'"` or `" $ 'string'"`.
+	 * @example: ["$'string'"] -> ["string"].
+	 * 
 	 * Output: Processed token without expanding variables inside single quotes.
 	 */
 
@@ -359,22 +361,26 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	 */
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
-		//	TODO: add new case consecutves dollars 
-		// echo "$USER$USER$USER"
-		// echo "$USER$HOME$helloabcd abcd"
-
 		if (has_consecutives_env_variables_in_token(token))
 		{
 			// TODO: remove double quotes and update token->str | token->len
-			char *tmp = expand_consecutives_variables(token, env_list);
-			printf("after expanddddddd: [%s]\n", tmp);
-			// free(token->str);
-            // token->str = ft_strdup(tmp);
-            // free(tmp);
-			printf("has consecutives dollars in token *************\n");
+
+			processed_str = remove_quotes_str(token->str, D_QUOTE);
+			printf("after remove dquotes: [%s]\n", processed_str);
+
+			free(token->str);
+            token->str = ft_strdup(processed_str);
+			token->length = ft_strlen(token->str);
+			printf("after update token->str: [%s]\n", token->str);
+
+			expanded_str = expand_consecutives_variables(token, env_list);
+			printf("after expanddddddd: [%s]\n", expanded_str);
+
+			free(token->str);
+            token->str = ft_strdup(expanded_str);
+            free(tmp);
 			return ;
 		}
-
 
 		expand_dollar(token, env_list);
 		return ;

@@ -396,8 +396,11 @@ void	test_has_consecutices_dollars_in_token(void)
 
 		result = has_consecutives_env_variables_in_token(token);
 
-		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input, t_matrix_cases[i].expected);
-		TEST_ASSERT_EQUAL_INT_MESSAGE(t_matrix_cases[i].expected, token, result);
+		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", 
+         i + 1, t_matrix_cases[i].input ? t_matrix_cases[i].input : "(NULL)");
+
+
+		TEST_ASSERT_EQUAL_INT_MESSAGE(t_matrix_cases[i].expected, result, message);
 		free(token->str);
 		free(token);
 		i ++;

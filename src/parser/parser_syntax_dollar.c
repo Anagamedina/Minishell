@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_dollar.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 18:38:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:18:52 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 	tmp = NULL;
 
 	/**
-     * Case: Single quotes
+     * Case: Single quotes(' ')
      * - Removes single quotes from the token string.
-     * @example
-     * Input: echo 'example_token'
-     * Output: example_token
-	 *
+     * @example: [echo 'example_token'] -> [example_token]
 	 * TODO: gestionar mas de una sola single quote en un string
 	 * TODO: update name function: process_single_quotes
 	 */
@@ -46,21 +43,21 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 	if (handle_single_quote(token))
 	{
 		tmp = remove_quotes_str(token->str, S_QUOTE);
+		free(token->str);
 		token->str = ft_strdup(tmp);
-		free(tmp);
+		// free(tmp);
 		return ;
 	}
 
 	/**
-     * Case: Special quotes (double quotes with variables)
+     * Case: Special quotes (" '...' '...' $VAR")
      * - Expands variables if `$` is present within uneven double quotes.
-     * @example
-     * Input: echo "'$USER hello'"
-     * Output: 'username hello'
+     * @example: [echo "'$USER hello'"] -> [username hello]
      * TODO: update name function: process_special_quotes
      */
 	if (handle_special_quotes(token))
 	{
+		// if found $ in the string
 		if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		{
 			handle_dollar_cases(token, env_list, next_token);
@@ -68,9 +65,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 		}
 		else
 		{
-			// TODO: Handle double quotes without `$` properly.
-			//  TODO: falta implementar el caso donde no hay $ en el string
+			printf("entra en handle_special_quotes when not found $ :)\n");
+			//	TODO: Handle double quotes without `$` properly.
+			//	TODO: falta implementar el caso donde no hay $ en el string
 			tmp = remove_quotes_str(token->str, D_QUOTE);
+			
 			free(token->str);
 			token->str = ft_strdup(tmp);
 			free(tmp);
@@ -79,11 +78,11 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 	}
 
 	/**
-     * Case: Even double quotes
+     * Case: Even double quotes ("..." "...")
      * - Handles cases where double quotes are even.
-     * @example
-     * Input: echo " '$USER ' "
+     * @example: [echo " '$USER ' "] -> [ '$USER ' ]
      */
+
 	if (has_even_double_quotes(token))
 	{
 		handle_dollar_cases(token, env_list, next_token);
@@ -102,11 +101,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 }
 
 
-
-
-
-
-//actualizando tokens de words a builtins o cmd externo
+//	actualizando tokens de words a builtins o cmd externo
 //	actualizando type_token de las words de token list
 void	update_words_in_tokens(t_mini *mini)
 {
@@ -140,8 +135,6 @@ void	update_words_in_tokens(t_mini *mini)
 }
 
 
-
-//darunny
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;

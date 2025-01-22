@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 17:32:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:40:28 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int			error_empty_token(t_tokens *token, t_list *cmd_list);
 int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 char 		**get_path(char **env);
-int 		main(int argc, char **argv, char **env);
+// int 		main(int argc, char **argv, char **env);
 void 		print_paths(char **paths);
 char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
