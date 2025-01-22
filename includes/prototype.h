@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 11:40:28 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/22 15:57:44 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void		get_current_directory(t_mini *mini);
 t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
+void print_list_token_str_one_line(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);

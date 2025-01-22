@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 00:13:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:47:29 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

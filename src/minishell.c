@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 11:08:19 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/22 16:00:53 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,33 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
+
+
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");
 			continue ;
 		}
-		// printf("************************************\n");
-		// print_list_token_str(minishell->token);
-		// printf("************************************\n");
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
-		// print_list_commands(minishell->exec->first_cmd);
+		printf("************************************\n");
+		// print_list_token_str(minishell->token);
+		print_list_commands(minishell->exec->first_cmd);
+		printf("************************************\n");
+		
+
 		//execute_commands(minishell);
-		if (execute_commands(minishell) != TRUE)
-		{
-			free_cmd_list(minishell->exec->first_cmd);
-			//free_token_list(minishell->token);
-			free(minishell);
-			continue;
-		}
-		else
-			continue ;
+		// if (execute_commands(minishell) != TRUE)
+		// {
+		// 	free_cmd_list(minishell->exec->first_cmd);
+		// 	//free_token_list(minishell->token);
+		// 	free(minishell);
+		// 	continue;
+		// }
+		// else
+		// 	continue ;
 
 		//free_cmd_list(minishell->exec->first_cmd);
 		//cases_builtins(minishell);
