@@ -80,34 +80,6 @@ static int	skip_quotes(const char *str, int *i)
 	return (TRUE);
 }
 
-
-/*
- * ORIGINAL
-static int	skip_quotes(const char *str, int *index)
-{
-    char opening_quote;
-
-    // Guardar el tipo de comilla (simple o doble)
-    opening_quote = str[*index];
-    (*index)++; // Saltar la comilla inicial
-
-    // Avanzar hasta encontrar la comilla de cierre correspondiente
-    while (str[*index] != '\0')
-    {
-        // Si encontramos la comilla de cierre
-        if (str[*index] == opening_quote)
-        {
-            return (TRUE); // Éxito: pareja encontrada
-        }
-        (*index) ++; // Continuar buscando
-    }
-
-    // Si no encontramos la comilla de cierre
-    printf("Error: Unclosed quote starting at index %d\n", *index);
-    return (FALSE);
-}
-*/
-
 static void	skip_whitespace(const char *str, int *i)
 {
 	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t' || str[*i] == '\n'))
@@ -237,15 +209,6 @@ char	**ft_split_quote(char *str)
 		{
 			while (data.str[data.end] && !is_special_char(data.str[data.end]))
 			{
-				// Verificar si estamos dentro de una variable/env seguida por comillas
-				// echo "$'heloo' "
-				/*
-				if ((data.str[data.end] == '$' && (data.str[data.end + 1] == S_QUOTE)))
-				{
-					data.str[data.end] = ' ';
-					break ;
-				}
-				*/
 				data.end ++;
 			}
 		}

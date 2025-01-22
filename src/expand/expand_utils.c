@@ -55,51 +55,7 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 	}
 	return (NULL);
 }
-/*
-void	replace_dollar_variable(char **split_word, t_list *env_list)
-{
-	char	*var_name;
-	char	*var_value;
-	char	*new_word;
-	int		i;
 
-	i = 0;
-	while ((*split_word)[i] != '\0')
-	{
-		if ((*split_word)[i] == DOLLAR_SIGN)
-		{
-			// Obtener el nombre de la variable desde el carácter siguiente al '$'
-			var_name = ft_substr(*split_word, i + 1, ft_strlen(*split_word) - (i + 1));
-			if (var_name == NULL)
-				return ;
-			
-			// Buscar el valor de la variable en la lista de entorno
-			var_value = find_value_in_env(env_list, var_name);
-
-			// Crear la nueva palabra reemplazando la variable
-			new_word = ft_strjoin(ft_substr(*split_word, 0, i), var_value ? var_value : "");
-			if (new_word == NULL)
-			{
-				free(var_name);
-				return ;
-			}
-
-			// Liberar la palabra antigua y actualizar con la nueva
-			free(*split_word);
-			*split_word = new_word;
-
-			// Liberar memoria temporal
-			free(var_name);
-			if (var_value)
-				free(var_value);
-
-			// Reiniciar el índice para seguir procesando en caso de múltiples '$'
-			i = -1;
-		}
-		i++;
-	}
-}
-*/
 void	replace_dollar_variable(char **split_word, t_list *env_list)
 {
 	char	*var_name;

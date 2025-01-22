@@ -6,36 +6,13 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 16:05:48 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/21 18:35:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/minishell.h"
 
-/*t_pipe	*init_pipe(void)
-{
-	t_pipe	*pipe_info;
-
-	// Reserva memoria para la estructura t_pipe
-	pipe_info = malloc(sizeof(t_pipe));
-	if (!pipe_info)
-	{
-		perror("Error: memoria insuficiente para pipe");
-		return (NULL);
-	}
-
-	// Inicializar los descriptores de archivos
-	pipe_info->prev_pipe_fd = -1;         // No hay pipe previo
-	pipe_info->last_cmd = 0;
-	pipe_info->error_fd = STDERR_FILENO;  // Redirección de errores estándar
-
-	// Inicializar los descriptores del pipe actual a -1 (sin pipe creado aún)
-	pipe_info->pipe_fds[0] = -1;
-	pipe_info->pipe_fds[1] = -1;
-
-	return (pipe_info);
-}*/
 
 
 t_exec	*init_exec(t_list *env_list)
@@ -54,8 +31,6 @@ t_exec	*init_exec(t_list *env_list)
 
 	return exec_info;
 }
-
-
 
 /*// Initialize the first pipe
 t_pipe *pipe_info = init_pipe();
@@ -113,4 +88,27 @@ while (current)
     }
 
     current = current->next;  // Avanza al siguiente comando
+}*/
+/*t_pipe	*init_pipe(void)
+{
+	t_pipe	*pipe_info;
+
+	// Reserva memoria para la estructura t_pipe
+	pipe_info = malloc(sizeof(t_pipe));
+	if (!pipe_info)
+	{
+		perror("Error: memoria insuficiente para pipe");
+		return (NULL);
+	}
+
+	// Inicializar los descriptores de archivos
+	pipe_info->prev_pipe_fd = -1;         // No hay pipe previo
+	pipe_info->last_cmd = 0;
+	pipe_info->error_fd = STDERR_FILENO;  // Redirección de errores estándar
+
+	// Inicializar los descriptores del pipe actual a -1 (sin pipe creado aún)
+	pipe_info->pipe_fds[0] = -1;
+	pipe_info->pipe_fds[1] = -1;
+
+	return (pipe_info);
 }*/

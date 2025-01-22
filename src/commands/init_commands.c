@@ -8,17 +8,13 @@
  * this function categorize the tokens
 */
 
-int	is_type_of_operator(t_tokens *token)
+/*int	is_type_of_operator(t_tokens *token)
 {
 	return (token->type_token == PIPE_CHAR || \
 		token->type_token == REDIR_IN || \
 		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND);
 }
-
-/**
- * init struct commands with NULL
-*/
 
 t_cmd	*init_command(void)
 {
@@ -39,45 +35,7 @@ t_cmd	*init_command(void)
 	return (new_cmd);
 }
 
-/**
- * print the list of commands
-*/
 
-void	print_list_commands(t_list *cmd_list)
-{
-	t_list	*current;
-	t_cmd	*cmd;
-	int		i;
-
-	current = cmd_list;
-//	i = 0;
-	while (current != NULL)
-	{
-		cmd = (t_cmd *)current->content;
-		printf("----------------------------\n");
-		printf("Command name: %s\n", cmd->cmd);
-		printf("Args:\n");
-		i = 0;
-		while (cmd->cmd_args && cmd->cmd_args[i] != NULL)
-		{
-			printf("\targv[%d] = [%s]\n", i, cmd->cmd_args[i]);
-			i ++;
-		}
-		printf("Command ID: [%d]\n", cmd->cmd_id);
-		printf("----------------------------\n");
-		current = current->next;
-	}
-}
-
-/**
- * create_new_command - Initializes a t_cmd.
- * cmd_token string
- * cmd_id to the given ID.
- * arguments are not handled here.
- * @example
- * t_cmd	*command = create_new_command(token, 1);
-*/
-//**********MAIN FUNCTION***************/
 t_cmd	*create_new_command(t_tokens *current_token, int i)
 {
 	t_cmd	*new;
@@ -99,25 +57,7 @@ t_cmd	*create_new_command(t_tokens *current_token, int i)
 	return (new);
 }
 
-//	********** MAIN FUNCTION ***************/
-/**
- * Converts a list of tokens into a list of commands. or NULL if an error occurs.
- *
- * This function processes a linked list of tokens, identifies valid commands
- * (BUILT_INS), and creates a new linked list of t_cmd structures representing
- * these commands. Each command is initialized with its corresponding token data
- * and a unique command ID.
- *
- * If an error occurs during token processing, command creation, or node creation
- * the function cleans up allocated memory and returns NULL.
- *
- * Parameters:
- * @token_list: The linked list of tokens to process.
- *
- * @return:
- * A linked list of t_cmd structures representing the commands,
- * or NULL if an error occurs.
-*/
+
 
 t_list	*handle_error(t_list *cmds_list, t_list *new_cmd, t_list *new_node)
 {
@@ -213,3 +153,4 @@ void	agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list)
 	}
 	(*cmd)->cmd_args[j] = NULL;
 }
+*/

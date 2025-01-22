@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/16 23:23:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:48:50 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,87 +35,6 @@ t_tokens	*init_token(char *str, int token_type)
 	new_token->prev = NULL;
 	return (new_token);
 }
-
-/**
- * Print all tokens in a linked list (t_list).
- *
- * @param tokens_list Pointer to the head of the token list.
- */
-
-void	print_list_token(t_list *tokens_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-	int			i;
-
-	current = tokens_list;
-	i = 1;
-	while (current != NULL)
-	{
-		token = (t_tokens *)current->content;
-		printf("TOKEN [%i] :\n", i);
-		printf("str: [%s]\n", token->str);
-		printf("type: [%i]\n", token->type_token);
-		printf("len: [%zu]\n", token->length);
-		i ++;
-		current = current->next;
-		printf("-------------------\n");
-	}
-}
-
-/**
- * Print only the tokens that are not built-in commands
- *
- * @param tokens_list Pointer to the head of the token list.
- */
-void	print_list_token_str(t_list *tokens_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-
-	current = tokens_list;
-	printf("[");
-	while (current != NULL)
-	{
-		token = (t_tokens *)current->content;
-		if (!is_builtin_command(token->str))
-		{
-			printf("%s", token->str);
-			if (current->next != NULL)
-				printf(" ");
-		}
-		current = current->next;
-	}
-	printf("]");
-	printf("\n");
-}
-
-/*
-int	check_lowercase_tokens(t_list *tokens_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-	int 		i;
-
-	current = tokens_list;
-	while (current->next != NULL)
-	{
-		token = (t_tokens *)current->content;
-		if (token->type_token == WORD)
-		{
-			i = 0;
-			while (token->str[i])
-			{
-				if (token->str[i] < 'a' || token->str[i] > 'z')
-					return (FALSE);
-				i++;
-			}
-		}
-		current = current->next;
-	}
-	return (TRUE);
-}
-*/
 
 /**
  * Converts a 2D array of strings into a linked list of tokens (`t_list`).
@@ -197,41 +116,6 @@ int	calculate_length_excluding_quotes(char *line)
 	return ((int) ft_strlen(line) - (consecutive_quotes * 2));
 }
 
-/*
-int	calculate_length_excluding_quotes(char *line)
-{
-	int		i;
-	int		consecutives_quotes_counter;
-	int		start_dquotes;
-	int		end_dquotes;
-
-	i = 0;
-	consecutives_quotes_counter = 0;
-	start_dquotes = FALSE;
-	end_dquotes = FALSE;
-	while (line[i] != '\0')
-	{
-		if ((line[i] == D_QUOTE && line[i + 1] != '\0' \
-			&& line[i + 1] == D_QUOTE) || (line[i] == S_QUOTE && \
-			line[i + 1] != '\0' && line[i + 1] == S_QUOTE && \
-			start_dquotes == FALSE))
-			consecutives_quotes_counter ++;
-		if (line[i] == D_QUOTE && start_dquotes == FALSE)
-		{
-			start_dquotes = TRUE;
-			end_dquotes = FALSE;
-		}
-		else if (start_dquotes == TRUE && end_dquotes == FALSE \
-			&& line[i] == D_QUOTE)
-		{
-			end_dquotes = TRUE;
-			start_dquotes = FALSE;
-		}
-		i ++;
-	}
-	return ((int)ft_strlen(line) - (consecutives_quotes_counter * 2));
-}
-*/
 
 int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 {
@@ -297,124 +181,6 @@ char	*remove_consecutive_quotes(char *line)
 	return (new_line);
 }
 
-/*
-char	*clean_consecutive_quotes(char *line)
-{
-	int		i;
-	int		j;
-	int		len;
-	char	*new_line;
-	int		start_dquotes;
-	int		end_dquotes;
-
-	len = calculate_length_excluding_quotes(line);
-	new_line = malloc(sizeof (char) * (len + 1));
-	if (!new_line)
-		return (NULL);
-	i = 0;
-	j = 0;
-	start_dquotes = FALSE;
-	end_dquotes = FALSE;
-	while (line[i] != '\0')
-	{
-		if (line[i] == D_QUOTE && start_dquotes == FALSE)
-		{
-			start_dquotes = TRUE;
-			end_dquotes = FALSE;
-		}
-		else if (start_dquotes == TRUE && end_dquotes == FALSE && line[i] == D_QUOTE)
-		{
-			end_dquotes = TRUE;
-			start_dquotes = FALSE;
-		}
-		if ((line[i] == D_QUOTE && line[i + 1] != '\0' && line[i + 1] == D_QUOTE) || \
-			(line[i] == S_QUOTE && line[i + 1] != '\0' && line[i + 1] == S_QUOTE  && start_dquotes == FALSE))
-		{
-			i += 2;
-		}
-		else
-		{
-			new_line[j] = line[i];
-			i ++;
-			j ++;
-		}
-	}
-	new_line[j] = '\0';
-	return (new_line);
-}
-*/
-
-/*
- * ORIGINAL FUNCTION
-char	*clean_consecutive_quotes(const char *line)
-{
-	int		i;
-	int		j;
-	int		len;
-	int		consecutives_quotes_counter;
-	char	*new_line;
-	int		start_dquotes;
-	int		end_dquotes;
-
-	i = 0;
-	len = 0;
-	consecutives_quotes_counter = 0;
-	start_dquotes = FALSE;
-	end_dquotes = FALSE;
-
-	while (line[i] != '\0')
-	{
-		if ((line[i] == D_QUOTE && line[i + 1] != '\0' && line[i + 1] == D_QUOTE) || \
-			(line[i] == S_QUOTE && line[i + 1] != '\0' && line[i + 1] == S_QUOTE && start_dquotes == FALSE))
-			consecutives_quotes_counter ++;
-		if (line[i] == D_QUOTE && start_dquotes == FALSE)
-		{
-			start_dquotes = TRUE;
-			end_dquotes = FALSE;
-		}
-		else if (start_dquotes == TRUE && end_dquotes == FALSE && line[i] == D_QUOTE)
-		{
-			end_dquotes = TRUE;
-			start_dquotes = FALSE;
-		}
-		i ++;
-	}
-	len = (int)ft_strlen(line) - (consecutives_quotes_counter * 2);
-	new_line = malloc(sizeof (char) * (len + 1));
-	if (!new_line)
-		return (NULL);
-	i = 0;
-	j = 0;
-	start_dquotes = FALSE;
-	end_dquotes = FALSE;
-	while (line[i] != '\0')
-	{
-		if (line[i] == D_QUOTE && start_dquotes == FALSE)
-		{
-			start_dquotes = TRUE;
-			end_dquotes = FALSE;
-		}
-		else if (start_dquotes == TRUE && end_dquotes == FALSE && line[i] == D_QUOTE)
-		{
-			end_dquotes = TRUE;
-			start_dquotes = FALSE;
-		}
-		if ((line[i] == D_QUOTE && line[i + 1] != '\0' && line[i + 1] == D_QUOTE) || \
-			(line[i] == S_QUOTE && line[i + 1] != '\0' && line[i + 1] == S_QUOTE  && start_dquotes == FALSE))
-		{
-			i += 2;
-		}
-		else
-		{
-			new_line[j] = line[i];
-			i ++;
-			j ++;
-		}
-	}
-	new_line[j] = '\0';
-	return (new_line);
-}
- */
 //**********MAIN FUNCTION**********************/
 
 /**
@@ -473,7 +239,37 @@ t_list	*generate_token_list(char *line)
 		printf ("Error: Failed to generate token list\n");
 		return (NULL);
 	}
-	identify_commands(tokens_list);
+	//identify_commands(tokens_list);
 	return (tokens_list);
 }
 
+
+
+
+//TODO
+/*
+int	check_lowercase_tokens(t_list *tokens_list)
+{
+	t_list		*current;
+	t_tokens	*token;
+	int 		i;
+
+	current = tokens_list;
+	while (current->next != NULL)
+	{
+		token = (t_tokens *)current->content;
+		if (token->type_token == WORD)
+		{
+			i = 0;
+			while (token->str[i])
+			{
+				if (token->str[i] < 'a' || token->str[i] > 'z')
+					return (FALSE);
+				i++;
+			}
+		}
+		current = current->next;
+	}
+	return (TRUE);
+}
+*/

@@ -69,22 +69,6 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-/*
-static int	handle_single_quotes_after_dollar(t_tokens *token)
-{
-	char	*temp;
-
-	temp = convert_escape_sequences(token->str + 1);
-	free(token->str);
-	token->str = ft_strdup(remove_quotes_str(temp, D_QUOTE));//doble???
-	if (!token->str)
-	{
-		perror("error: ft_strdup failed");
-		return (FALSE);
-	}
-	return (TRUE);
-}
-*/
 static int	handle_one_digit_after_dollar(t_tokens *token)
 {
 	token->str = ft_strdup("");
@@ -173,16 +157,6 @@ static int	handle_digit_and_more_after_dollar(t_tokens *token)
 }
 
 
-//caso--> "'$'"
-/*
-static int	check_dollar_special_quote(const char *str)
-{
-	if (ft_strchr_true(str, DOLLAR_SIGN) \
-		&& ft_strchr_true(str, D_QUOTE) && ft_strchr_true(str, S_QUOTE))
-		return (TRUE);
-	return (FALSE);
-}
-*/
 
 int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 {
@@ -192,20 +166,7 @@ int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
 
-/*
-int handle_dollar_with_space_single(t_tokens* token)
-{
-	char	*temp;
 
-	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
-	{
-		temp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(temp);
-		temp = NULL;
-	}
-	return (TRUE);
-}
-*/
 
 
 // Caso "$ '...'" -> manejar espacio después del dólar
@@ -271,7 +232,6 @@ int	check_dollar_simple(char *str)
 
 
 /**
- * TODO: daruny(finish this function)
  * d_quote -> s_quote -> (string o $)
  *
  * Case: "'$...'"
@@ -458,7 +418,6 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
                 token_updated = ft_strjoin(result, find_value);
 				result = token_updated;
 			}
-//expansio no esta hecha? haccemos algo imprime $USERafter
 			else
 			{
 				//token_updated = ft_strjoin(result, "$");
@@ -520,16 +479,7 @@ int	has_consecutives_env_variables_in_token(t_tokens *token)
 	return (FALSE);
 }
 
-/**
- * @brief Expands consecutive variables in a token.
- * expand consecutives vars in same token
- */
 
-// char	*expand_consecutives_variables(char *str) 
-// {
-	
-// 	return (NULL);
-// }
 /**
  * Handles tokens where dollar-based expansion is conditional or restricted.
  *

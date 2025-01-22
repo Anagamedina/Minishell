@@ -59,46 +59,7 @@ void count_args(t_list *token_list, t_cmd *cmd)
 
 }
 
-/*void count_args(t_list *token_list, t_cmd *cmd)
-{
-	t_list      *current;
-	t_tokens    *token;
 
-	if (!token_list || !cmd)
-		return;
-
-	current = token_list; // Comienza desde el primer token
-	cmd->count_args = 0;
-
-	// Si el primer token es un comando externo o un built-in, cuenta como un argumento.
-	token = (t_tokens *)current->content;
-	if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
-	{
-		cmd->count_args = 1; // El primer comando cuenta como un argumento
-		printf("cmd->count_args: %d\n", cmd->count_args);
-	}
-
-	current = current->next; // Avanza al siguiente token para contar los argumentos
-
-	// Ahora cuenta los argumentos (tokens de tipo WORD)
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-
-		// Detén la cuenta si encuentras otro comando, un delimitador, o un pipe
-		if (token->type_token == BUILTINS || token->type_token == CMD_EXTERNAL \
-			|| token->type_token == DELIMITER || token->type_token == PIPE)
-		{
-			break ;
-		}
-		// Incrementa el contador si es un argumento válido
-		if (token->type_token == WORD)
-			cmd->count_args++;
-
-		current = current->next;
-	}
-}
-*/
 
 void add_args(t_cmd **cmd, t_list *token_list)
 {

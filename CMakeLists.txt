@@ -51,9 +51,7 @@ add_executable(minishell
         src/execute/free_errors.c
         src/execute/exce_type.c
         src/execute/tests.c
-        src/execute/exce_pipes.c
         src/commands/cmd_init.c
-        src/execute/exce_pipes.c
         src/execute/exce_cmd.c
         testing/testing.h
 )

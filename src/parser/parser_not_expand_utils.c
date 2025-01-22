@@ -43,27 +43,7 @@ int	check_dollar_and_next_token(char** str, t_tokens* next_token)
 	}
 	return (FALSE);
 }
-/*
-int	check_d_quote_dollar_s_quote(const char *str)
-{
-	int	i;
-	int	len_str;
 
-	i = 0;
-	len_str = (int) ft_strlen(str);
-	while (str[i] != '\0')
-	{
-		if (str[i] == '$')
-		{
-			i ++;
-			if (str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
-				return (TRUE);
-		}
-		i++;
-	}
-	return (0);
-}
-*/
 
 /**
  * Case 1: Backslash before dollar sign.
@@ -218,19 +198,5 @@ char	*convert_escape_sequences(const char *str)
 	process_string(str, result);
 	return (result);
 }
-/**
- * Checks if there is a valid alphabetical character
- * (A-Z or a-z) immediately before the first
- * occurrence of a dollar sign ('$') in the string.
- *
- * @example
- * Input: "Hello$World"
- * Output: TRUE (1)
- *
- * Input: "123$World"
- * Output: FALSE (0)
- *
- * @return TRUE (1) if there is a valid letter before the dollar sign.
- *         FALSE (0) otherwise.
- */
+
 

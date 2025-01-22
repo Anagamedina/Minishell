@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 12:39:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/21 18:05:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,32 +74,6 @@ typedef struct	s_redir
 } 			t_redir;
 
 
-// "wc -l" sería el comando y sus parámetros:
-// cmd_args[0] = "wc"
-// cmd_args[1] = "-l"
-typedef struct s_cmd
-{
-    char            *cmd;           // Nombre del comando, ej. "wc"
-    char            **cmd_args;     // Argumentos del comando (por ejemplo, ["echo", "hello"])
-	int 			count_args;		// Numero de argumentos del comando
-    int             cmd_id;         // ID del comando para orden en pipeline
-	struct t_redir 		*redir_list;    // Lista de redirecciones asociadas al comando
-    int             pipe[2];        // Descriptores para el pipe
-    int             input_fd;       // Descriptor de archivo de entrada
-    int             output_fd;      // Descriptor de archivo de salida
-    struct s_cmd    *next;          // Puntero al siguiente comando
-}				t_cmd;
-
-typedef struct s_mini
-{
-    int             bash_lvl;       // Nivel de la shell
-    int             chars_in_line;  // Contador de caracteres en línea de entrada
-    t_list          *env;           // Variables de entorno
-    t_list          *token;         // Lista de tokens
-    t_list          *cmds;         // Lista de commands 
-    int             exit_status;    // Estado de salida del último comando ejecutado
-    // char            *prompt;        // Prompt actual (opcional) ???
-}                   t_mini;
 
 typedef struct s_split_data
 {
@@ -147,16 +121,16 @@ typedef struct s_exec
 
 }		t_exec;
 
-}				t_pipe;*/
 
 typedef struct s_mini
 {
-	int             bash_lvl;
-	int             chars_in_line;
-	t_list          *env;
-	t_list          *token;
-	int             exit_status;
+    int             bash_lvl;       // Nivel de la shell
+    int             chars_in_line;  // Contador de caracteres en línea de entrada
+    t_list          *env;           // Variables de entorno
+    t_list          *token;         // Lista de tokens
 	t_exec			*exec;
+    int             exit_status;    // Estado de salida del último comando ejecutado
+    // char            *prompt;        // Prompt actual (opcional) ???
 }                   t_mini;
 
 #endif
