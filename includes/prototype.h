@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 15:57:44 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/22 17:20:48 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_env		*find_env_var(t_list *env_list, char *key);
 //************ MAIN BUILTINS ********/
 
 void		cases_builtins(t_mini *mini);
+void		ft_echo(t_cmd *cmd);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 16:12:29 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/21 18:36:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:31:04 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,15 @@ int execute_commands(t_mini *mini)
 			}
 			char **envp = lst_to_arr(mini->env);
 
-			execute_external(curr_cmd, envp);
-			perror("Error ejecutando el comando con execve");
-			printf("cmd1: %s\n", curr_cmd->cmd);
-			printf("cmd2: %s\n", curr_cmd->cmd_args[0]);
+			if (curr_cmd->is_external)
+			{
+				execute_external(curr_cmd, envp);
+			}
+			else 
+				cases_builtins(mini);
+			// perror("Error ejecutando el comando con execve");
+			// printf("cmd1: %s\n", curr_cmd->cmd);
+			// printf("cmd2: %s\n", curr_cmd->cmd_args[0]);
 			exit(EXIT_FAILURE);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 16:00:53 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/22 17:22:05 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ int	main(int argc, char **argv, char **envp)
 		printf("************************************\n");
 		
 
-		//execute_commands(minishell);
-		// if (execute_commands(minishell) != TRUE)
-		// {
-		// 	free_cmd_list(minishell->exec->first_cmd);
-		// 	//free_token_list(minishell->token);
-		// 	free(minishell);
-		// 	continue;
-		// }
-		// else
-		// 	continue ;
+		execute_commands(minishell);
+		if (execute_commands(minishell) != TRUE)
+		{
+			free_cmd_list(minishell->exec->first_cmd);
+			//free_token_list(minishell->token);
+			free(minishell);
+			continue;
+		}
+		else
+			continue ;
 
-		//free_cmd_list(minishell->exec->first_cmd);
-		//cases_builtins(minishell);
+		free_cmd_list(minishell->exec->first_cmd);
+		// cases_builtins(minishell);
 	}
 	return (0);
 }
