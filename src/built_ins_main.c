@@ -1,25 +1,29 @@
 
 #include "../includes/minishell.h"
 
-/*void    cases_builtins(t_mini *mini)
+void    cases_builtins(t_mini *mini)
 {
-    t_cmd   *cmd_01;
-//    t_cmd   *token_02;
+    t_cmd   *current_command;
 
-    cmd_01 = (t_cmd *)mini->cmd->content;
-//    token_02 = (t_cmd *)mini->token->next->content;
-    printf("cmd_01 : %s\n", cmd_01->cmd);
+
+    current_command = (t_cmd *)mini->exec->first_cmd->content;
+
+    printf("current_command : %s\n", current_command->cmd);
 //    printf("token 02 : %s\n", token_02->cmd);
-
-    if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
+    if ((ft_strcmp((char *)current_command->cmd, "echo") == 0))
     {
-		builtin_export(mini);
+		ft_echo(current_command);
     }
-    else if (ft_strcmp((char *)cmd_01->cmd, "cd") == 0)
-	{
-		printf("enmtra caso cd\n");
-		get_current_directory(mini);
-	}
+
+    // if ((ft_strcmp((char *)current_command->cmd, "export") == 0))
+    // {
+	// 	builtin_export(mini);
+    // }
+    // else if (ft_strcmp((char *)current_command->cmd, "cd") == 0)
+	// {
+	// 	printf("enmtra caso cd\n");
+	// 	get_current_directory(mini);
+	// }
 	else
 		return ;
-}*/
+}

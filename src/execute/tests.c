@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 17:12:03 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/22 15:59:03 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,27 @@ void	print_list_token_str(t_list *tokens_list)
 		current = current->next;
 		printf("-------------------\n");
 	}
+}
+
+void print_list_token_str_one_line(t_list *tokens_list)
+{
+    t_list *current;
+    t_tokens *token;
+    int found_builtin = 0;
+
+    current = tokens_list;
+    while (current != NULL)
+    {
+        token = (t_tokens *)current->content;
+        if (token->type_token == BUILTINS)
+        {
+            found_builtin = 1;
+        }
+        else if (found_builtin && token->type_token == WORD)
+        {
+            printf("%s", token->str);
+        }
+        current = current->next;
+    }
+    printf("\n");
 }

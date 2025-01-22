@@ -108,3 +108,19 @@ void	builtin_export(t_mini *mini)
 	else
 		return;
 }
+
+/*
+enviar a un file echo 
+*/
+void	ft_echo(t_cmd *cmd)
+{
+	int i;
+
+	i = 1;
+	while (cmd->cmd_args[i])
+	{
+		printf("[%s]", cmd->cmd_args[i]);
+		i ++;
+	}
+	printf("\n");
+}

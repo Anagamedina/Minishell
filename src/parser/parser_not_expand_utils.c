@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_not_expand_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/20 00:13:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:44:37 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ int	has_dollar_followed_by_digit(const char *str)
 	}
 	if (count_dollar > 1)
 		return (FALSE);
+	i = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '$')

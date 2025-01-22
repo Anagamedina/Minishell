@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 17:32:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:20:48 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_env		*find_env_var(t_list *env_list, char *key);
 //************ MAIN BUILTINS ********/
 
 void		cases_builtins(t_mini *mini);
+void		ft_echo(t_cmd *cmd);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
@@ -96,6 +97,7 @@ void		get_current_directory(t_mini *mini);
 t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
+void print_list_token_str_one_line(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
@@ -198,7 +200,7 @@ int			error_empty_token(t_tokens *token, t_list *cmd_list);
 int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
 char 		**get_path(char **env);
-int 		main(int argc, char **argv, char **env);
+// int 		main(int argc, char **argv, char **env);
 void 		print_paths(char **paths);
 char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);

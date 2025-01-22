@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_syntax_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 17:02:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:00:57 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 	char	*processed_str;
 
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
+	printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 	{
 		perror("Error: remove_quotes_str failed");
@@ -71,6 +72,7 @@ static int	handle_single_quotes_after_dollar(t_tokens *token)
 
 static int	handle_one_digit_after_dollar(t_tokens *token)
 {
+	free(token->str);
 	token->str = ft_strdup("");
 	return (TRUE);
 }
@@ -133,7 +135,6 @@ int	handle_str_trim_before_dollar(t_tokens *token)
 }
 
 
-//  TODO: En el siguiente caso echo "$USER abcdh $HOME $1" falta eliminar $1.
 
 static int	handle_digit_and_more_after_dollar(t_tokens *token)
 {
@@ -297,9 +298,11 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 {
 	char	*processed_str;
 	char	*expanded_str;
+	char	*tmp;
 
 	processed_str = NULL;
 	expanded_str = NULL;
+	tmp = NULL;
 
 	/**
 	 * Handles cases with mixed d_quotes (") and s_quotes (') containing `$`.
@@ -307,8 +310,8 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	 * - Ensures only one valid pair of double quotes exists (open and close).
 	 * - Allows spaces between double and single quotes.
 	 * - Invalidates consecutive dollar signs (`$$`).
-	 * @example:
-	 * Input: `"$'string'"` or `" $ 'string'"`.
+	 * @example: ["$'string'"] -> ["string"].
+	 * 
 	 * Output: Processed token without expanding variables inside single quotes.
 	 */
 
@@ -359,28 +362,100 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 	 */
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
-		//	TODO: add new case consecutves dollars 
-		// echo "$USER$USER$USER"
-		// echo "$USER$HOME$helloabcd abcd"
-
 		if (has_consecutives_env_variables_in_token(token))
 		{
-			// TODO: remove double quotes and update token->str | token->len
-			char *tmp = expand_consecutives_variables(token, env_list);
-			printf("after expanddddddd: [%s]\n", tmp);
-			// free(token->str);
-            // token->str = ft_strdup(tmp);
-            // free(tmp);
-			printf("has consecutives dollars in token *************\n");
+			processed_str = remove_quotes_str(token->str, D_QUOTE);
+
+			free(token->str);
+            token->str = ft_strdup(processed_str);
+			token->length = ft_strlen(token->str);
+			printf("remove quotes: [%s]\n", token->str);
+
+			expanded_str = expand_consecutives_variables(token, env_list);
+			printf("**************expanded_str: [%s]\n", expanded_str);
+
+			free(token->str);
+            token->str = ft_strdup(expanded_str);
+            free(tmp);
 			return ;
 		}
-
 
 		expand_dollar(token, env_list);
 		return ;
 	}
 }
 
+char *expand_consecutives_variables(t_tokens *token, t_list *env_list)
+{
+    int i = 0, j = 0, len = 0;
+    char *tmp = NULL;
+    char *find_value = NULL;
+    char *result = ft_strdup(""); // Token reconstruido
+    char *token_updated = NULL;
+
+    if (!token || !token->str || !env_list)
+        return (NULL);
+
+    while (token->str[i] != '\0')
+    {
+        // Detecta un '$'
+        if (token->str[i] == DOLLAR_SIGN)
+        {
+            i++; // Salta el '$'
+            j = i;
+
+            if (token->str[j] == '\0' || token->str[j] == SPACE)
+            {
+                tmp = ft_strdup("$"); // Agrega el dólar solo al resultado
+                token_updated = ft_strjoin(result, tmp);
+                free(result);
+                free(tmp);
+                result = token_updated;
+                continue;
+            }
+
+            // Busca el final del nombre de la variable
+            while (token->str[j] != '\0' && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
+                j++;
+
+            len = j - i;
+            tmp = ft_substr(token->str, i, len); // Extrae el nombre de la variable
+            find_value = find_value_in_env(env_list, tmp);
+            free(tmp);
+
+            if (find_value)
+            {
+                // Agrega el valor de la variable al resultado
+                token_updated = ft_strjoin(result, find_value);
+                free(result);
+                result = token_updated;
+            }
+          	else	
+			{
+				i = j;
+				continue ;
+
+			}
+			i = j; // Salta al final del nombre de la variable
+        }
+        else
+        {
+            // Maneja caracteres normales
+            tmp = ft_substr(token->str, i, 1); // Extrae un carácter
+            token_updated = ft_strjoin(result, tmp);
+            free(result);
+            free(tmp);
+            result = token_updated;
+            i++;
+        }
+    }
+
+    return (result);
+}
+
+
+/*
+ORIGINAL
 //	 echo "hello$USER$USER   "
 char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 {
@@ -399,10 +474,21 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	while (token->str[i] != '\0')
 	{
 	    tmp = NULL;
-		if (token->str[i] == DOLLAR_SIGN)
+		// mejorar esta condicion con dollar 
+		if ((token->str[i] == DOLLAR_SIGN && token->str[i + 1] != SPACE) || token->str[i + 1] == '\0')
 		{
 			i ++;
 			j = i;
+			// Verifica si es un dólar solo o seguido de espacios
+            if (token->str[j] == '\0' || token->str[j] == SPACE)
+            {
+                tmp = ft_strdup("$"); // Agrega el dólar solo al resultado
+                token_updated = ft_strjoin(result, tmp);
+                free(result);
+                free(tmp);
+                result = token_updated;
+                continue;
+            }
 			while (token->str[j] != '\0' && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
 				j ++;
 			printf("j: [%d]\n", j);
@@ -418,15 +504,14 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
                 token_updated = ft_strjoin(result, find_value);
 				result = token_updated;
 			}
-			else
+			else	
 			{
-				//token_updated = ft_strjoin(result, "$");
-				//free(result);
-				//result = ft_strjoin(token_updated, tmp);
-				 break;
+				i = j;
+				continue ;
 
 			}
 			i = j;
+			printf("i actual: [%d]\n", i);
 		}
 		else//si no es dollar sign
 		{
@@ -439,7 +524,7 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	}
 	return (result);
 }
-
+*/
 /**
  * @brief Checks if a token has consecutive dollar signs.
  * case valid: echo "   $USER$HOME   "
@@ -469,11 +554,16 @@ int	has_consecutives_env_variables_in_token(t_tokens *token)
 			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
 				i++;
 		}
+		else if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] == ' ')
+		{
+			count_dollar ++;
+			i ++;
+		}
 		else
 			i ++;
 	}
 		// printf("token->str[%c],  i: [%d]\n", token->str[i], i);
-	printf("count_dollar: [%d]\n", count_dollar);
+	printf("count_dollar in consecutive_env: [%d]\n", count_dollar);
 	if (count_dollar >= 1)
 		return (TRUE);
 	return (FALSE);
@@ -505,15 +595,11 @@ int	handle_no_expand_cases(t_tokens *token, t_tokens* next_token)
 
 	if (has_only_one_digit_after_dollar(token->str))
 		return (handle_one_digit_after_dollar(token));
-/*
-	 remove this case to see whats happening
-	 caso a gestionar TODO: echo "$USER abcdh $HOME $1"
-*/
+
 	if (has_dollar_followed_by_digit(token->str))
 		return (handle_digit_and_more_after_dollar(token));
-	/*
-	 if (has_dollar_with_only_spaces_or_only_dollar(token->str))
-		return (handle_dollar_with_space_single(token));
-	 */
+
+	// if (has_dollar_with_only_spaces_or_only_dollar(token->str))
+	// 	return (handle_dollar_with_space_single(token));
 	return (0);
 }

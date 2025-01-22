@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 17:59:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:22:05 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error al generar la lista de tokens.\n");
 			continue ;
 		}
-
-			minishell->exec = init_exec(minishell->env);
+		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
@@ -70,21 +69,24 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
+
+
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");
 			continue ;
 		}
-		printf("************************************\n");
-		print_list_token_str(minishell->token);
-		printf("************************************\n");
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
-
+		printf("************************************\n");
+		// print_list_token_str(minishell->token);
 		print_list_commands(minishell->exec->first_cmd);
-		//execute_commands(minishell);
+		printf("************************************\n");
+		
+
+		execute_commands(minishell);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
@@ -95,8 +97,8 @@ int	main(int argc, char **argv, char **envp)
 		else
 			continue ;
 
-		//free_cmd_list(minishell->exec->first_cmd);
-		 //cases_builtins(minishell);
+		free_cmd_list(minishell->exec->first_cmd);
+		// cases_builtins(minishell);
 	}
 	return (0);
 }
