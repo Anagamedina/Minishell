@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 17:22:05 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/23 13:26:23 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ int	main(int argc, char **argv, char **envp)
 			printf("Error al generar la lista de tokens.\n");
 			continue ;
 		}
+		print_list_token_str_one_line(minishell->token);
+		// print_list_token(minishell->token);
+		// free(minishell->token)
+
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
@@ -99,6 +103,7 @@ int	main(int argc, char **argv, char **envp)
 
 		free_cmd_list(minishell->exec->first_cmd);
 		// cases_builtins(minishell);
+
 	}
 	return (0);
 }

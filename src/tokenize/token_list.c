@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/21 18:48:50 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:59:47 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,18 @@ t_tokens	*init_token(char *str, int token_type)
 {
 	t_tokens	*new_token;
 
+	if (!str)
+		return (NULL);
+	new_token = NULL;
 	new_token = malloc(sizeof(t_tokens));
 	if (!new_token)
 		return (NULL);
 	new_token->str = ft_strdup(str);
+	if (!new_token->str)
+	{
+		free(new_token);
+		return (NULL);
+	}
 	new_token->type_token = token_type;
 	new_token->length = ft_strlen(str);
 	new_token->id_token = -1;
@@ -38,9 +46,6 @@ t_tokens	*init_token(char *str, int token_type)
 
 /**
  * Converts a 2D array of strings into a linked list of tokens (`t_list`).
- *
- * @param tokens 2D array of strings (NULL-terminated).
- * @return Pointer to the head of the token list, or NULL on allocation failure.
  *
  * @note Each token is initialized with `init_token`
  * and linked using `ft_lstadd_back`.
@@ -103,7 +108,7 @@ int	count_consecutive_quotes(const char *line)
 		}
 		else if (line[i] == D_QUOTE)
 			inside_quotes = !inside_quotes;
-		i++;
+		i ++;
 	}
 	return (consecutive_quotes);
 }
@@ -111,11 +116,12 @@ int	count_consecutive_quotes(const char *line)
 int	calculate_length_excluding_quotes(char *line)
 {
 	int	consecutive_quotes;
+	int	new_length;
 
 	consecutive_quotes = count_consecutive_quotes(line);
-	return ((int) ft_strlen(line) - (consecutive_quotes * 2));
+	new_length = ft_strlen(line) - (consecutive_quotes * 2);
+	return (new_length);
 }
-
 
 int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 {
@@ -142,7 +148,6 @@ int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 	}
 	return (skipped);
 }
-
 
 /**
  * Removes consecutive quotes (single and double) from a string.
@@ -204,49 +209,34 @@ char	*remove_consecutive_quotes(char *line)
 
 t_list	*generate_token_list(char *line)
 {
-	char	**token_array;
+	char	**tokens_array;
 	t_list	*tokens_list;
 	char	*processed_line;
-	int		i;
 
 	tokens_list = NULL;
-	token_array = NULL;
+	tokens_array = NULL;
 	processed_line = remove_consecutive_quotes(line);
 	if (!processed_line)
-	{
-		printf("Error: Failed to clean the input line\n");
 		return (NULL);
-	}
 	printf("Processed line: [%s]\n", processed_line);
-	token_array = ft_split_quote(processed_line);
-	if (token_array == NULL)
-	{
-		printf("Error: Tokenization failed\n");
+	tokens_array = ft_split_quote(processed_line);
+	if (tokens_array == NULL)
 		return (NULL);
-	}
-	printf("****** Tokens AFTER SPLIT ******\n");
-	i = 0;
-	while (token_array[i] != NULL)
+
+	int i =0;
+	while (tokens_array[i])
 	{
-		printf("[%d] [%s]\n", i, token_array[i]);
+		printf("Token[%d]: [%s]\n", i, tokens_array[i]);
 		i ++;
 	}
-	printf("--------------------------------\n");
-
-	tokens_list = convert_tokens_to_list(token_array);
+	
+	tokens_list = convert_tokens_to_list(tokens_array);
 	if (tokens_list == NULL)
-	{
-		printf ("Error: Failed to generate token list\n");
 		return (NULL);
-	}
-	//identify_commands(tokens_list);
 	return (tokens_list);
 }
 
-
-
-
-//TODO
+//TODO: implement in first function of validation
 /*
 int	check_lowercase_tokens(t_list *tokens_list)
 {

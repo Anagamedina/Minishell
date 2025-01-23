@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 17:00:57 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/23 13:31:22 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,7 +380,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 			return ;
 		}
 
-		expand_dollar(token, env_list);
+		// expand_dollar(token, env_list);
 		return ;
 	}
 }
