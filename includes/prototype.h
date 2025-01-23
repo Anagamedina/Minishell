@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 17:20:48 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/23 12:52:46 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,11 @@ int			has_string_before_dollar(const char *str);
 int			check_dquote_squote_dollar_case(char *str);
 int			handle_no_expand_cases(t_tokens *token, t_tokens* next_token);
 int			has_consecutives_env_variables_in_token(t_tokens *token);
+char		*expand_consecutives_variables(t_tokens *token, t_list *env_list);
+int			handle_single_quotes_after_dollar(t_tokens *token);
+int			handle_backslash_after_dollar(t_tokens *token);
+int			handle_one_digit_after_dollar(t_tokens *token);
+int			handle_digit_and_more_after_dollar(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 

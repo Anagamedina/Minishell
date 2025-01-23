@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
+#    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2024/12/28 12:53:06 by  dasalaza        ###   ########.fr        #
+#    Updated: 2025/01/23 13:23:51 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,10 +54,15 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
-		$(SRC_PARSER)/parser_syntax_dollar.c \
-		$(SRC_PARSER)/parser_syntax_quotes.c \
-		$(SRC_PARSER)/parser_not_expand_utils.c \
-		$(SRC_PARSER)/parser_syntax_expand.c \
+		$(SRC_PARSER)/parser_check_quotes_dollar.c \
+		$(SRC_PARSER)/parser_expand_cases.c \
+		$(SRC_PARSER)/parser_expand_dollar.c \
+		$(SRC_PARSER)/parser_init_quotes.c \
+		$(SRC_PARSER)/parser_not_expand.c \
+		$(SRC_PARSER)/parser_tab.c \
+		$(SRC_PARSER)/parser_tokens.c \
+		$(SRC_PARSER)/parser_utils.c \
+		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
 		$(SRC_EXECUTE)/free_errors.c \

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/21 18:48:50 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:52:13 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,6 @@ t_list	*generate_token_list(char *line)
 		printf ("Error: Failed to generate token list\n");
 		return (NULL);
 	}
-	//identify_commands(tokens_list);
 	return (tokens_list);
 }
 

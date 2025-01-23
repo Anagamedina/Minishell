@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 17:22:05 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/23 15:53:29 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
 		printf("************************************\n");
-		// print_list_token_str(minishell->token);
+		print_list_token_str(minishell->token);
 		print_list_commands(minishell->exec->first_cmd);
 		printf("************************************\n");
 		
@@ -98,7 +98,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 
 		free_cmd_list(minishell->exec->first_cmd);
-		// cases_builtins(minishell);
+		cases_builtins(minishell);
 	}
 	return (0);
 }
