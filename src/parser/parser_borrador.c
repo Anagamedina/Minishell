@@ -3,7 +3,25 @@
 #include "../../includes/minishell.h"
 
 
-int	has_dollar_between_double_and_single_quotes(const char *str)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*int	has_dollar_between_double_and_single_quotes(const char *str)
 {
 	int i;
 	int condition01;
@@ -124,4 +142,4 @@ int	handle_str_trim_before_dollar(t_tokens *token)
 	}
 	printf("token->str after trim: [%s]\n", token->str);
 	return (TRUE);
-}
+}*/

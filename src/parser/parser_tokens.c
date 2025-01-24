@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_tokens.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/24 13:55:06 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
 //se pude poner en una funcion esta parte:
 //porque veo que se repite varias veces.
 
-/*
- * void	remove_and_replace_quotes(t_tokens *token, char quote_type)
+void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 {
 	char	*tmp;
 
@@ -50,52 +61,6 @@
 	{
 		handle_dollar_cases(token, env_list, next_token);
 		return;
-	}
-}
-
-
- * */
-void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
-{
-	char	*tmp;
-
-	tmp = NULL;
-
-	if (handle_single_quote(token))
-	{
-		tmp = remove_quotes_str(token->str, S_QUOTE);
-		free(token->str);
-		token->str = ft_strdup(tmp);
-		// free(tmp);
-		return ;
-	}
-
-	if (handle_special_quotes(token))
-	{
-		if (ft_strchr_true(token->str, DOLLAR_SIGN))
-		{
-			handle_dollar_cases(token, env_list, next_token);
-			return ;
-		}
-		else
-		{
-			tmp = remove_quotes_str(token->str, D_QUOTE);
-			free(token->str);
-			token->str = ft_strdup(tmp);
-			free(tmp);
-			return ;
-		}
-	}
-
-	if (has_even_double_quotes(token))
-	{
-		handle_dollar_cases(token, env_list, next_token);
-		return ;
-	}
-	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-	{
-		handle_dollar_cases(token, env_list, next_token);
-		return ;
 	}
 }
 
@@ -161,7 +126,7 @@ void	parser_tokens(t_mini *mini)
 
 //COPIA 
 
-/**void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+/*void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 {
 	char	*tmp;
 
@@ -204,3 +169,51 @@ void	parser_tokens(t_mini *mini)
 		return ;
 	}
 } */
+
+
+
+/*
+void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	char	*tmp;
+
+	tmp = NULL;
+
+	if (handle_single_quote(token))
+	{
+		tmp = remove_quotes_str(token->str, S_QUOTE);
+		free(token->str);
+		token->str = ft_strdup(tmp);
+		// free(tmp);
+		return ;
+	}
+
+	if (handle_special_quotes(token))
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		{
+			handle_dollar_cases(token, env_list, next_token);
+			return ;
+		}
+		else
+		{
+			tmp = remove_quotes_str(token->str, D_QUOTE);
+			free(token->str);
+			token->str = ft_strdup(tmp);
+			free(tmp);
+			return ;
+		}
+	}
+
+	if (has_even_double_quotes(token))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return ;
+	}
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return ;
+	}
+}
+*/

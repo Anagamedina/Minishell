@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 20:32:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/23 17:08:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:22:18 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	check_dollar_and_next_token(char** str, t_tokens* next_token)
 	}
 	return (FALSE);
 }
-
-
 
 
 int	check_backslash_before_dollar(const char* str)

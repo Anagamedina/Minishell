@@ -17,6 +17,7 @@ file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
+file(GLOB EXECUTE_DIR src/execute/*.c)
 
 # include the headers
 include_directories(includes)
@@ -43,17 +44,8 @@ add_executable(minishell
         ${BUILTINS_DARUNY}
         ${EXPAND_DIR}
         ${PARSER_DIR}
-        src/commands/cmd_builtins.c
-        src/execute/exce_cmd.c
-        src/execute/exce_paths.c
-        src/execute/exce_init.c
-        src/execute/get_input.c
-        src/execute/free_errors.c
-        src/execute/exce_type.c
-        src/execute/tests.c
-        src/commands/cmd_init.c
-        src/execute/exce_cmd.c
-        testing/testing.h
+        ${EXECUTE_DIR}
+
 )
 # link with readline library
 target_link_libraries(minishell readline)
