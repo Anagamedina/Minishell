@@ -26,6 +26,27 @@ int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
 
+int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
+{
+	return (
+		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' \
+		&& str[2] != '\0' && str[2] == ' ') || \
+		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
+}
+
+/**
+ * 
+ * se podria poner esta condicion en una funcion aparte 
+ * while (str[i] != '\0')
+	{
+		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
+		{
+			new_str[j] = str[i];
+			i++;
+			j++;
+		}
+		else
+			i ++; */
 
 char	*remove_quotes_str(const char *str, char c)
 {
@@ -105,6 +126,7 @@ char	*remove_quotes_str2(const char *str, char c)
 	j = 0;
 
 	new_str = remove_quotes_str(str, c);
+	//lamar una funcion que cumpla esto dentro de esta funcion 
 	while (str[i] != '\0')
 	{
 		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))

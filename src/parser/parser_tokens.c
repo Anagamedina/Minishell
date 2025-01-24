@@ -6,7 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/01/24 12:09:43 by catalinab        ###   ########.fr       */
+=======
+/*   Updated: 2025/01/24 11:37:27 by anamedin         ###   ########.fr       */
+>>>>>>> 8c8f41c (factorizar process en visual)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,3 +171,52 @@ void	parser_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
+
+
+
+
+//COPIA 
+
+/**void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	char	*tmp;
+
+	tmp = NULL;
+
+	if (handle_single_quote(token))
+	{
+		tmp = remove_quotes_str(token->str, S_QUOTE);
+		free(token->str);
+		token->str = ft_strdup(tmp);
+		// free(tmp);
+		return ;
+	}
+
+	if (handle_special_quotes(token))
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		{
+			handle_dollar_cases(token, env_list, next_token);
+			return ;
+		}
+		else
+		{
+			tmp = remove_quotes_str(token->str, D_QUOTE);
+			free(token->str);
+			token->str = ft_strdup(tmp);
+			free(tmp);
+			return ;
+		}
+	}
+
+	if (has_even_double_quotes(token))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return ;
+	}
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return ;
+	}
+} */
