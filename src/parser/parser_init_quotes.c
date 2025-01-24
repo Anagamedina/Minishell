@@ -53,23 +53,3 @@ int	has_even_double_quotes(t_tokens* token)
 }
 
 
-
-//echo $'USER'
-int	check_dollar_simple(char *str)
-{
-	int i;
-	int len_str;
-
-	i = 0;
-	len_str = (int) ft_strlen(str);
-	while (str[i] != '\0')
-	{
-		if (str[i] == '$')
-		{
-			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
-				return (TRUE);
-		}
-		i++;
-	}
-	return (0);
-}

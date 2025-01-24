@@ -17,12 +17,10 @@ int has_consecutives_env_variables_in_token(t_tokens *token)
 	int	i;
 	int	count_dollar;
 
+	i = 0;
+	count_dollar = 0;
 	if (!token || !token->str)
 		return (FALSE);
-
-	count_dollar = 0;
-	i = 0;
-
 	if (token->str[0] == D_QUOTE)
 		i = 1;
 	while (token->str[i] != '\0')
@@ -33,7 +31,8 @@ int has_consecutives_env_variables_in_token(t_tokens *token)
 		{
 			count_dollar ++;
 			i ++;
-			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
+			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) \
+						|| token->str[i] == '_'))
 				i++;
 		}
 		else if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] == ' ')
@@ -63,7 +62,8 @@ static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 	token->str = ft_strdup(processed_str);
 	free(processed_str);
 
-	expanded_str = replace_dollar_variable_skip_s_quote(token->str, env_list);
+	expanded_str = \
+	replace_dollar_variable_skip_s_quote(token->str, env_list);
 	if (!expanded_str)
 		return;
 	free(token->str);
@@ -94,17 +94,16 @@ static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 
 /**********MAIN FUNCTION*************/
 
-void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens *next_token)
+void	handle_dollar_cases(t_tokens *token, \
+								t_list *env_list, t_tokens *next_token)
 {
 	if (check_dquote_dollar_and_squotes(token->str))
 		return;
-
 	if (check_dquote_squote_dollar_case(token->str))
 	{
 		handle_case_dquote_squote(token, env_list);
 		return;
 	}
-
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
 		if (has_consecutives_env_variables_in_token(token))

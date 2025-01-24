@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_tab.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/24 16:24:18 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -26,7 +38,6 @@ void	process_string(const char *str, char *result)
 
 	i = 0;
 	j = 0;
-	
 	while (str[i] != '\0')
 	{
 		if (str[i] == BACKSLASH && str[i + 1])
@@ -44,9 +55,6 @@ void	process_string(const char *str, char *result)
 	}
 	result[j] = '\0';
 }
-
-
-/************ MAIN FUNCTION *************/
 
 
 //echo "$'\n..\t'"-> $'USER'
@@ -68,6 +76,8 @@ char	*convert_escape_sequences(const char *str)
 	return (result);
 }
 
+
+//******************MAIN FUCNTION***********************/
 // caso $'..'---> \t ... SIN COMILLA DOBLES
 int	handle_single_quotes_after_dollar(t_tokens *token)
 {
@@ -75,14 +85,12 @@ int	handle_single_quotes_after_dollar(t_tokens *token)
 	char	*processed_str;
 
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
-	printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 	{
 		perror("Error: remove_quotes_str failed");
 		return (FALSE);
 	}
 	temp = convert_escape_sequences(processed_str);
-
 	if (!temp)
 	{
 		perror("Error: convert_escape_sequences failed");

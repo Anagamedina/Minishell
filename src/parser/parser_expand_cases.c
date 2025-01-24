@@ -35,7 +35,8 @@ static char	*handle_dollar_alone(char *result)
 	return (result);
 }
 
-static char	*expand_variable(char *result, t_list *env_list, const char *var, int len)
+static char	*expand_variable(char *result, \
+								t_list *env_list, const char *var, int len)
 {
 	char	*tmp;
 	char	*expanded_value;
@@ -62,13 +63,36 @@ static char	*append_non_dollar_char(char *result, char c)
 	return (result);
 }
 
+static void	handle_dollar_case(t_tokens *token, t_list *env_list, char **result, int *i)
+{
+	int	j;
+
+	(*i)++;
+	if (token->str[*i] == '\0' || token->str[*i] == SPACE)
+	{
+		*result = handle_dollar_alone(*result);
+		return;
+	}
+	j = *i;
+	while (token->str[j] && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
+		j++;
+	*result = expand_variable(*result, env_list, &token->str[*i], j - *i);
+	*i = j;
+}
+
+static int	is_valid_input(t_tokens *token, t_list *env_list)
+{
+	return (token && token->str && env_list);
+}
+
+
+
 char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 {
 	char	*result;
 	int		i;
-	int		j;
 
-	if (!token || !token->str || !env_list)
+	if (!is_valid_input(token, env_list))
 		return (NULL);
 	result = ft_strdup("");
 	if (!result)
@@ -77,24 +101,9 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	while (token->str[i] != '\0')
 	{
 		if (token->str[i] == DOLLAR_SIGN)
-		{
-			i++;
-			if (token->str[i] == '\0' || token->str[i] == SPACE)
-			{
-				result = handle_dollar_alone(result);
-				continue;
-			}
-			j = i;
-			while (token->str[j] && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
-				j++;
-			result = expand_variable(result, env_list, &token->str[i], j - i);
-			i = j;
-		}
+			handle_dollar_case(token, env_list, &result, &i);
 		else
-		{
-			result = append_non_dollar_char(result, token->str[i]);
-			i++;
-		}
+			result = append_non_dollar_char(result, token->str[i++]);
 	}
 	return (result);
 }

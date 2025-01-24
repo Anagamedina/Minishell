@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_borrador.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/24 16:20:56 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "../../includes/minishell.h"
@@ -142,4 +154,24 @@ int	handle_str_trim_before_dollar(t_tokens *token)
 	}
 	printf("token->str after trim: [%s]\n", token->str);
 	return (TRUE);
+}
+
+ //echo $'USER'
+int	check_dollar_simple(char *str)
+{
+	int i;
+	int len_str;
+
+	i = 0;
+	len_str = (int) ft_strlen(str);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] == S_QUOTE && str[len_str - 1] == S_QUOTE)
+				return (TRUE);
+		}
+		i++;
+	}
+	return (0);
 }*/
