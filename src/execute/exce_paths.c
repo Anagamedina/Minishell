@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
 
 char	*get_cmd_path(t_tokens *token, char **paths)

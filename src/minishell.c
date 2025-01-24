@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/23 16:18:39 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/24 00:11:00 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -54,7 +66,14 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			break ;
 		}
+		minishell->token = NULL;
 		minishell->token = generate_token_list(input);
+		if (!minishell->token)
+		{
+            printf("Error al generar la lista de tokens.\n");
+            continue ;
+		}
+		free(input);
 
 		if (minishell->token == NULL)
 		{
@@ -65,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		// print_list_token(minishell->token);
 		// free(minishell->token)
 
+		/*
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
@@ -103,7 +123,7 @@ int	main(int argc, char **argv, char **envp)
 
 		free_cmd_list(minishell->exec->first_cmd);
 		// cases_builtins(minishell);
-
+		*/
 	}
 	return (0);
 }

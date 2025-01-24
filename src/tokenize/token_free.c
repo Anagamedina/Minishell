@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 18:28:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 00:33:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,17 @@ void	ft_free_array(char **array)
 		i ++;
 	}
 	// free(array);
+}
+
+void	free_mini_list(t_mini *minishell)
+{
+	if (!minishell)
+		return;
+
+	// ft_lstclear(&(minishell->env), free_env);
+	if (minishell->exec)
+		free(minishell->exec);
+	if (minishell->token)
+		free(minishell->token);
+	free(minishell);
 }

@@ -5,6 +5,10 @@ project(minishell C)
 
 set(CMAKE_C_STANDARD 99)
 
+# Habilitar sanitizers para depuración
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
+
 # setup the dirs and files here:
 file(GLOB INPUT_FILES src/input/*.c)
 file(GLOB TOKENIZE_FILES src/tokenize/*.c)

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 23:48:37 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/24 00:21:57 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
@@ -103,7 +115,7 @@ t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
 t_list		*generate_token_list(char *line);
 t_list		*tokenize_list(char **tokens);
-t_list *generate_token_list(char *line);
+void		free_mini_list(t_mini *minishell);
 
 //************** TOKEN_FREE.c ********************/
 
@@ -119,7 +131,7 @@ void		ft_free_array(char **array);
 
 int			set_token_type(char *str);
 //void		update_words_to_builtin(t_list *tokens_list);
-void identify_commands(t_list *tokens_list, t_mini*exec_info);
+void		identify_commands(t_list *tokens_list, t_mini*exec_info);
 //************** TOKEN_UTILS.c ********************/
 
 char		**ft_split_quote(char *str);
@@ -191,6 +203,7 @@ t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
+
 
 //************** ERRORS_COMMAND.C ********/
 
