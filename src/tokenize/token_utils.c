@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:30:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/23 14:03:39 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/24 11:04:40 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * Finds the matching closing quote in a string.
  * Returns TRUE if a matching quote is found, otherwise -1.
  */
+
 int	find_matching_quote(const char *str, int start_index, char quote_char)
 {
 	int	i;
@@ -48,7 +49,6 @@ static int	skip_quotes(const char *str, int *i)
 	close_quote_position = find_matching_quote(str, *i, open_quote_position);
 	if (close_quote_position == -1)
 		return (FALSE);
-		//return (("Error: Unclosed quotes\n"), FALSE);
 	*i = close_quote_position + 1;
 	return (TRUE);
 }
@@ -94,12 +94,9 @@ int	count_words(const char *str)
 		else
 		{
 			wc ++;
-			while (str[i] && !is_whitespace(str[i]) &&
-				   str[i] != SEMICOLON && str[i] != PIPE_CHAR &&
-				   str[i] != D_QUOTE && str[i] != S_QUOTE)
-			{
+			while (str[i] && !is_whitespace(str[i]) && str[i] != ';' && \
+			str[i] != '|' && str[i] != '\"' && str[i] != '\'')
 				i ++;
-			}
 		}
 	}
 	return (wc);
@@ -188,35 +185,3 @@ char	**ft_split_quote(char *str)
 	data.out[data.k] = NULL;
 	return (data.out);
 }
-
-// refactorizado 
-// char	**ft_split_quote(char *str)
-// {
-// 	t_split_data	data;
-
-// 	if (init_vars_split(&data, str) == FALSE)
-// 		return (NULL);
-// 	while (data.str[data.start] != '\0' && data.k < data.wc)
-// 	{
-// 		skip_whitespace(data.str, &data.start);
-// 		data.end = data.start;
-// 		if (data.str[data.start] == D_QUOTE || data.str[data.start] == S_QUOTE)
-// 		{
-// 			if (!skip_quotes(data.str, &data.end))
-// 				return (free_split_result_struct(data.out, data.k), NULL);
-// 		}
-// 		else if (data.str[data.start] == ';' || data.str[data.start] == '|')
-// 			data.end ++;
-// 		else
-// 		{
-// 			while (data.str[data.end] && !is_special_char(data.str[data.end]))
-// 				data.end ++;
-// 		}
-// 		if (data.end > data.start && copy_word(&data) == -1)
-
-// 			return (free_split_result_struct(data.out, data.k), NULL);
-// 		data.start = data.end;
-// 	}
-// 	data.out[data.k] = NULL;
-// 	return (data.out);
-// }

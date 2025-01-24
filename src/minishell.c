@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 16:18:39 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 00:11:00 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/23 13:26:23 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/24 10:48:15 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +28,6 @@
 		current = current->next; // Avanza al siguiente token
 	}
 }*/
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -70,8 +57,8 @@ int	main(int argc, char **argv, char **envp)
 		minishell->token = generate_token_list(input);
 		if (!minishell->token)
 		{
-            printf("Error al generar la lista de tokens.\n");
-            continue ;
+			printf("Error al generar la lista de tokens.\n");
+			continue ;
 		}
 		free(input);
 
