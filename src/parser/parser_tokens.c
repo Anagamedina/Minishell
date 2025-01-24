@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 23:08:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/23 16:49:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:09:43 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,59 @@
 #include "../../includes/minishell.h"
 
 //se pude poner en una funcion esta parte:
-/* tmp = remove_quotes_str(token->str, S_QUOTE);
+//porque veo que se repite varias veces.
+
+/*
+ * void	remove_and_replace_quotes(t_tokens *token, char quote_type)
+{
+	char	*tmp;
+
+	tmp = remove_quotes_str(token->str, quote_type);
+	if (tmp)
+	{
 		free(token->str);
 		token->str = ft_strdup(tmp);
-		// free(tmp);*/
+		free(tmp);
+	}
+}
 
+ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	if (handle_single_quote(token))
+	{
+		remove_and_replace_quotes(token, S_QUOTE);
+		return;
+	}
+
+	if (handle_special_quotes(token))
+	{
+		if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		{
+			handle_dollar_cases(token, env_list, next_token);
+			return;
+		}
+		else
+		{
+			remove_and_replace_quotes(token, D_QUOTE);
+			return;
+		}
+	}
+
+	if (has_even_double_quotes(token))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return;
+	}
+
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+	{
+		handle_dollar_cases(token, env_list, next_token);
+		return;
+	}
+}
+
+
+ * */
 void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 {
 	char	*tmp;
@@ -78,17 +126,11 @@ void	update_words_in_tokens(t_mini *mini)
 		if (curr_token->type_token == WORD)
 		{
 			if (is_builtin_command(curr_token->str))
-			{
 				curr_token->type_token = BUILTINS;
-			}
 			else if (is_cmd_external(mini, curr_token))
-			{
 				curr_token->type_token = CMD_EXTERNAL;
-			}
 			else
-			{
 				curr_token->type_token = WORD;
-			}
 		}
 		token_list = token_list->next;
 	}

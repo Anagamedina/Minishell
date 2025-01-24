@@ -123,7 +123,7 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 
 	if (check_dquote_dollar_and_squotes(token->str))
 	{
-		handle_dollar_with_space_single(token);
+		//handle_dollar_with_space_single(token); no es necesario??
 		return ;
 	}
 	if (check_dquote_squote_dollar_case(token->str))
