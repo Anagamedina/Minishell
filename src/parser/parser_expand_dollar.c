@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 11:42:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:29:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,27 +90,50 @@ int	handle_digit_and_more_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-/*
-Se podria poner en una funcion y llamarla en handle dollar cases 
-if (check_dquote_dollar_and_squotes(token->str))
-	{
-		handle_dollar_with_space_single(token);
-		return ;
-	}
-	if (check_dquote_squote_dollar_case(token->str))
-	{
-		processed_str = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(processed_str);
 
-		expanded_str = \
-		replace_dollar_variable_skip_s_quote(token->str, env_list);
-		free(token->str);
-		token->str = ft_strdup(expanded_str);
-		free(processed_str);
-		return ;
-	}*/
 
-void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
+static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
+{
+	char	*processed_str;
+	char	*expanded_str;
+
+	processed_str = remove_quotes_str(token->str, D_QUOTE);
+	if (!processed_str)
+		return;
+	free(token->str);
+	token->str = ft_strdup(processed_str);
+	free(processed_str);
+
+	expanded_str = replace_dollar_variable_skip_s_quote(token->str, env_list);
+	if (!expanded_str)
+		return;
+	free(token->str);
+	token->str = ft_strdup(expanded_str);
+	free(expanded_str);
+}
+
+static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
+{
+	char	*processed_str;
+	char	*expanded_str;
+
+	processed_str = remove_quotes_str(token->str, D_QUOTE);
+	if (!processed_str)
+		return;
+	free(token->str);
+	token->str = ft_strdup(processed_str);
+	free(processed_str);
+
+	token->length = ft_strlen(token->str);
+	expanded_str = expand_consecutives_variables(token, env_list);
+	if (!expanded_str)
+		return;
+	free(token->str);
+	token->str = ft_strdup(expanded_str);
+	free(expanded_str);
+}
+
+/*void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {
 	char	*processed_str;
 	char	*expanded_str;
@@ -161,9 +184,9 @@ void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token
 		return ;
 	}
 }
+*/
 
-
-//COPIA REFACTORIZAR 
+//COPIA ORIGINAL 
 
 /**void	handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token)
 {

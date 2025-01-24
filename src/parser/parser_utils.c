@@ -26,29 +26,90 @@ int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
 
-int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
+
+
+ static int	count_new_length(const char *str, char quote_char)
 {
-	return (
-		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' \
-		&& str[2] != '\0' && str[2] == ' ') || \
-		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
+	int	i;
+	int	new_len;
+
+	i = 0;
+	new_len = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i] != quote_char && (str[i] >= 31 && str[i] <= 126)) \
+			|| check_special_c(str[i]) == TRUE)
+			new_len++;
+		i++;
+	}
+	return (new_len);
 }
 
-/**
- * 
- * se podria poner esta condicion en una funcion aparte 
- * while (str[i] != '\0')
-	{
-		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
-		{
-			new_str[j] = str[i];
-			i++;
-			j++;
-		}
-		else
-			i ++; */
+static void	copy_without_quotes(const char *str, char *new_str, char quote_char)
+{
+	int	i;
+	int	j;
 
-char	*remove_quotes_str(const char *str, char c)
+	i = 0;
+	j = 0;
+	while (str[i] != '\0')
+	{
+		if ((str[i] != quote_char && (str[i] >= 31 && str[i] <= 126)) \
+			|| check_special_c(str[i]) == TRUE)
+			new_str[j++] = str[i];
+		i++;
+	}
+	new_str[j] = '\0';
+}
+
+char	*remove_quotes_str(const char *str, char quote_char)
+{
+	int		new_len;
+	char	*new_str;
+
+	if (!str)
+		return (NULL);
+	new_len = count_new_length(str, quote_char);
+	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
+	if (!new_str)
+		return (NULL);
+	copy_without_quotes(str, new_str, quote_char);
+	return (new_str);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*char	*remove_quotes_str(const char *str, char c)
 {
 	int		i;
 	int		j;
@@ -88,77 +149,4 @@ char	*remove_quotes_str(const char *str, char c)
 	}
 	new_str[j] = '\0';
 	return (new_str);
-}
-
-
-/*
-
-char *remove_quotes_str(const char *str, char c) {
-	int i;
-	int j;
-	int new_len;
-	char *new_str;
-
-	i = 0;
-	new_len = 0;
-	while (str[i] != '\0') {
-		if ((str[i] != c && (str[i] >= 31 && str[i] <= 126)) ||
-			(check_special_c(str[i]) == TRUE)) {
-			new_len++;
-			i++;
-		} else
-			i++;
-	}
-
-	new_str = (char *) malloc(sizeof(char) * (new_len + 1));
-	if (new_str == NULL)
-		return (NULL);
-	return (new_str);
-}
-
-
-char	*remove_quotes_str2(const char *str, char c)
-{
-	int		i;
-	int		j;
-	char	*new_str;
-	i = 0;
-	j = 0;
-
-	new_str = remove_quotes_str(str, c);
-	//lamar una funcion que cumpla esto dentro de esta funcion 
-	while (str[i] != '\0')
-	{
-		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
-		{
-			new_str[j] = str[i];
-			i++;
-			j++;
-		}
-		else
-			i ++;
-	}
-	new_str[j] = '\0';
-	return (new_str);
-}
-
-
-char	*remove_d_quote_and_s_quotes_str(char *str)
-{
-	char	*rm_d_quote;
-	char	*rm_s_quote;
-	char	*result;
-
-	rm_d_quote = remove_quotes_str2(str, D_QUOTE);
-	if (rm_d_quote == NULL)
-		return (NULL);
-
-	rm_s_quote = remove_quotes_str2(rm_d_quote, S_QUOTE);
-	if (rm_s_quote == NULL)
-		return (NULL);
-	result = ft_strdup(rm_s_quote);
-	if (result == NULL)
-		return (NULL);
-	return (result);
-}
-*/
+}*/
