@@ -12,82 +12,41 @@
 
 #include "../../includes/minishell.h"
 
-//----> \$USER
-int	handle_backslash_after_dollar(t_tokens *token)
+int has_consecutives_env_variables_in_token(t_tokens *token)
 {
-	char	*temp;
+	int	i;
+	int	count_dollar;
 
-	temp = remove_quotes_str(token->str, D_QUOTE);
-	token->str = ft_strdup(temp + 1);
-	if (!token->str)
-	{
-		perror("error: ft_strdup failed");
+	if (!token || !token->str)
 		return (FALSE);
-	}
-	return (TRUE);
-}
 
-// caso $'..'---> \t ... SIN COMILLA DOBLES
-int	handle_single_quotes_after_dollar(t_tokens *token)
-{
-	char	*temp;
-	char	*processed_str;
+	count_dollar = 0;
+	i = 0;
 
-	processed_str = remove_quotes_str(token->str, S_QUOTE);
-	printf("processed_str: [%s]\n", processed_str);
-	if (!processed_str)
+	if (token->str[0] == D_QUOTE)
+		i = 1;
+	while (token->str[i] != '\0')
 	{
-		perror("Error: remove_quotes_str failed");
-		return (FALSE);
+		while (token->str[i] == SPACE)
+			i ++;
+		if (token->str[i] == DOLLAR_SIGN && ft_isalpha(token->str[i + 1]))
+		{
+			count_dollar ++;
+			i ++;
+			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
+				i++;
+		}
+		else if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] == ' ')
+		{
+			count_dollar ++;
+			i ++;
+		}
+		else
+			i ++;
 	}
-	temp = convert_escape_sequences(processed_str);
-
-	if (!temp)
-	{
-		perror("Error: convert_escape_sequences failed");
-		return (FALSE);
-	}
-	free(token->str);
-	token->str = ft_strdup(temp);
-	if (!token->str)
-	{
-		perror("Error: ft_strdup failed");
-		return (FALSE);
-	}
-	return (TRUE);
-}
-
-//*********************************************************************/
-
-int	handle_one_digit_after_dollar(t_tokens *token)
-{
-	free(token->str);
-	token->str = ft_strdup("");
-	return (TRUE);
-}
-
-
-
-
-int	handle_digit_and_more_after_dollar(t_tokens *token)
-{
-	char	*temp;
-
-	if (token->str[0] == D_QUOTE && token->str[token->length - 1] == D_QUOTE)
-	{
-		temp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(temp);
-		temp = NULL;
-	}
-	temp = ft_strdup(token->str + 2);
-	if (!temp)
-	{
-		perror("error: strdup");
-		exit(EXIT_FAILURE);
-	}
-	free(token->str);
-	token->str = temp;
-	return (TRUE);
+	if (count_dollar >= 1)
+		return (TRUE);
+	return (FALSE);
 }
 
 

@@ -13,42 +13,6 @@
 #include "../../includes/minishell.h"
 //archivo: parser_expand_cases.c
 
-int	has_consecutives_env_variables_in_token(t_tokens *token)
-{
-	int	i;
-	int	count_dollar;
-	
-	if (!token || !token->str)
-		return (FALSE);
-	
-	count_dollar = 0;
-	i = 0;
-
-	if (token->str[0] == D_QUOTE)
-		i = 1;
-	while (token->str[i] != '\0')
-	{
-		while (token->str[i] == SPACE)
-			i ++;
-		if (token->str[i] == DOLLAR_SIGN && ft_isalpha(token->str[i + 1]))
-		{
-			count_dollar ++;
-			i ++;
-			while (token->str[i] != '\0' && (ft_isalpha(token->str[i]) || token->str[i] == '_'))
-				i++;
-		}
-		else if (token->str[i] == DOLLAR_SIGN && token->str[i + 1] == ' ')
-		{
-			count_dollar ++;
-			i ++;
-		}
-		else
-			i ++;
-	}
-	if (count_dollar >= 1)
-		return (TRUE);
-	return (FALSE);
-}
 
 static char	*append_result(char *result, char *to_append)
 {

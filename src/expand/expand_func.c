@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 18:16:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:59:09 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,9 @@ char	**ft_split_new_version(char *str)
 	{
 		// int start_word = 0;
 		// int end_word = 0;
-		int spaces_before_start = 0;
-		int spaces_end = 0;
 		j = i;
 		while (str[i] && (str[i] == ' '))
 		{
-			spaces_before_start ++;
 			i ++;
 		}
 		// start_word = i;
@@ -228,7 +225,6 @@ char	**ft_split_new_version(char *str)
 		// end_word = i;
 		while (str[i] && (str[i] == ' ') && str[i] != '\0')
 		{
-			spaces_end ++;
 			i ++;
 		}
 

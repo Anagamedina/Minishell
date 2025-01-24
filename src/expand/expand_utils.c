@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 10:28:28 by catalinab         #+#    #+#             */
+/*   Updated: 2025/01/24 15:59:46 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -156,15 +168,12 @@ static char	*get_size_split_and_malloc(char **split_word)
 	size_t	new_len;
 	int		i;
 	char	*merged_token;
-	size_t	len_split;
 
 	new_len = 0;
 	i = 0;
-	len_split = 0;
 	while (split_word[i] != NULL)
 	{
 		new_len = ft_strlen(split_word[i]);
-		len_split += new_len;
 //		new_len ++;
 //		add this new condition
 //		if (split_word[i + 1] != NULL)

@@ -67,3 +67,33 @@ char	*convert_escape_sequences(const char *str)
 	process_string(str, result);
 	return (result);
 }
+
+// caso $'..'---> \t ... SIN COMILLA DOBLES
+int	handle_single_quotes_after_dollar(t_tokens *token)
+{
+	char	*temp;
+	char	*processed_str;
+
+	processed_str = remove_quotes_str(token->str, S_QUOTE);
+	printf("processed_str: [%s]\n", processed_str);
+	if (!processed_str)
+	{
+		perror("Error: remove_quotes_str failed");
+		return (FALSE);
+	}
+	temp = convert_escape_sequences(processed_str);
+
+	if (!temp)
+	{
+		perror("Error: convert_escape_sequences failed");
+		return (FALSE);
+	}
+	free(token->str);
+	token->str = ft_strdup(temp);
+	if (!token->str)
+	{
+		perror("Error: ft_strdup failed");
+		return (FALSE);
+	}
+	return (TRUE);
+}
