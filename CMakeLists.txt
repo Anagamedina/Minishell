@@ -21,6 +21,7 @@ file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
+file(GLOB EXECUTE_DIR  src/execute/*.c)
 
 # include the headers
 include_directories(includes)
@@ -37,6 +38,7 @@ execute_process(
 add_executable(minishell
         src/minishell.c
         src/built_ins_main.c
+        src/ft_string_utils.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
@@ -47,17 +49,8 @@ add_executable(minishell
         ${BUILTINS_DARUNY}
         ${EXPAND_DIR}
         ${PARSER_DIR}
-        src/commands/cmd_builtins.c
-        src/execute/exce_cmd.c
-        src/execute/exce_paths.c
-        src/execute/exce_init.c
-        src/execute/get_input.c
-        src/execute/free_errors.c
-        src/execute/exce_type.c
-        src/execute/tests.c
-        src/commands/cmd_init.c
-        src/execute/exce_cmd.c
-        testing/testing.h
+        ${EXECUTE_DIR}
+        src/tokenize/token_utils_quotes.c
 )
 # link with readline library
 target_link_libraries(minishell readline)
@@ -80,7 +73,9 @@ add_executable(testing_shell
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
         ${EXPAND_DIR}
+        ${EXECUTE_DIR}
         testing/test_split.c
+        src/tokenize/token_utils_quotes.c
 )
 # link with readline library
 target_link_libraries(testing_shell readline)

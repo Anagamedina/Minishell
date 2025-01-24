@@ -6,51 +6,11 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 00:33:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:13:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	if (s1 == NULL || s2 == NULL)
-		return (-1);
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char )s2[i]);
-}
-
-char	*ft_strncpy(char *s1, const char *s2, int n)
-{
-	int	i;
-
-	i = 0;
-	while (i < n && s2[i])
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	s1[i] = '\0';
-	return (s1);
-}
-
-char	*ft_strcpy(char *dest, const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 
 void	free_split_result(char **out)
 {
@@ -87,15 +47,12 @@ void	ft_free_array(char **array)
 		free(array[i]);
 		i ++;
 	}
-	// free(array);
 }
 
 void	free_mini_list(t_mini *minishell)
 {
 	if (!minishell)
-		return;
-
-	// ft_lstclear(&(minishell->env), free_env);
+		return ;
 	if (minishell->exec)
 		free(minishell->exec);
 	if (minishell->token)

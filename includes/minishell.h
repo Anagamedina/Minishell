@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/21 18:05:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:17:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ typedef enum e_type_token
 	REDIR_OUT, //>
 	BUILTINS,
 	CMD_EXTERNAL,
-	DELIMITER,			// Para manejar ';'
-	NULL_TYPE,     // Representa el final de la lista de tokens
+	DELIMITER,
+	NULL_TYPE,
 	PIPE,
+	HEREDOC,
 }					t_type_token;
 
-
-//	ECHO,               // Builtin: echo
-//	CD,                 // Builtin: cd
-//	PWD,                // Builtin: pwd
-//	EXPORT,             // Builtin: export
-
+/*
+	ECHO,               // Builtin: echo
+	CD,                 // Builtin: cd
+	PWD,                // Builtin: pwd
+	EXPORT,             // Builtin: export
+*/
 typedef struct s_tokens
 {
     char            *str;

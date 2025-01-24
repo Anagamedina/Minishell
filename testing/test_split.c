@@ -22,7 +22,7 @@ void	test_count_words(void)
 
 	while (i < len)
 	{
-		result = count_words(t_matrix_cases[i].input);
+		result = count_words_split(t_matrix_cases[i].input);
 
 		snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
 		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/23 11:42:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:14:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	set_token_type(char *str)
 		return (REDIR_OUT);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (REDIR_APPEND);
-	/*else if (strcmp(str, "<<") == 0)
-		return (HEREDOC);*/
+	else if (ft_strcmp(str, "<<") == 0)
+		return (HEREDOC);
 	else if (ft_strcmp(str, "2>") == 0)
 		return (REDIR_ERR_OUT);
 	else if (ft_strcmp(str, "2>>") == 0)

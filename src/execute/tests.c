@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/23 16:18:39 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/24 14:30:24 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
@@ -53,9 +65,9 @@ void	print_list_token(t_list *tokens_list)
 
 void	print_list_token_str(t_list *tokens_list)
 {
-	t_list *current;
-	t_tokens *token;
-	int i;
+	t_list		*current;
+	t_tokens	*token;
+	int			i;
 
 	current = tokens_list;
 	i = 1;

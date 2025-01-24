@@ -21,7 +21,7 @@ SRC_MINI= $(SRC_DIR)/mini
 SRC_INPUT= $(SRC_DIR)/input
 SRC_PARSER= $(SRC_DIR)/parser
 SRC_REDIR= $(SRC_DIR)/redir
-SRC_TOKEN = $(SRC_DIR)/tokenize
+SRC_TOKENIZE = $(SRC_DIR)/tokenize
 SRC_EXECUTE = $(SRC_DIR)/execute
 SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
@@ -34,14 +34,18 @@ TESTING_H = testing/testing.h
 
 SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_INPUT)/input.c \
+		$(SRC_DIR)/ft_string_utils.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_utils_locals.c \
 		$(SRC_ENV)/env_locals_list.c \
 		$(SRC_ENV)/free_env.c \
-		$(SRC_TOKEN)/token_type.c \
-		$(SRC_TOKEN)/token_utils.c \
-		$(SRC_TOKEN)/token_free.c \
-		$(SRC_TOKEN)/token_list.c \
+		$(SRC_TOKENIZE)/token_free.c \
+		$(SRC_TOKENIZE)/token_split.c \
+		$(SRC_TOKENIZE)/token_type.c \
+		$(SRC_TOKENIZE)/token_utils.c \
+		$(SRC_TOKENIZE)/token_utils_quotes.c \
+		$(SRC_TOKENIZE)/token_utils_split.c \
+		$(SRC_TOKENIZE)/token_utils_word_count.c \
 		$(SRC_CMD)/cmd_init.c \
 		$(SRC_CMD)/cmd_args.c \
 		$(SRC_CMD)/cmd_free.c \
@@ -51,7 +55,6 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
-		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
 		$(SRC_PARSER)/parser_syntax_dollar.c \
