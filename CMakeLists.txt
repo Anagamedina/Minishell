@@ -63,6 +63,8 @@ add_executable(testing_shell
         testing/setup_testing.c
         testing/test_remove_quotes.c
         testing/test_double_quotes.c
+        src/ft_string_utils.c
+        src/built_ins_main.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}

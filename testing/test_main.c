@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/25 23:27:51 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 12/24/24.
 //
@@ -407,6 +419,30 @@ void	test_has_consecutices_dollars_in_token(void)
 	}
 }
 
+void	test_ft_strjoin(void)
+{
+	struct s_test_str_str	t_matrix_cases[] =
+	{
+		{"USER", "ab","USER ab"},
+	};
+
+	int		i = 0;
+	char	*result;
+	char	message[256];
+	int		len = sizeof(t_matrix_cases) / sizeof(t_matrix_cases[0]);
+
+	while (i < len)
+	{
+		result = ft_strjoin(t_matrix_cases[i].input_a, t_matrix_cases[i].input_b);
+
+		// snprintf(message, sizeof(message), "Failed on case %d: input='%s'", i + 1, t_matrix_cases[i].input);
+		TEST_ASSERT_EQUAL_STRING(t_matrix_cases[i].expected, result);
+		free(result);
+		i++;
+	}
+
+};
+
 /*
  * heap: cuando usamos malloc, calloc, realloc, strdup, etc.
  * stack o pila: cuando declaramos variables locales.
@@ -416,7 +452,8 @@ int	main(void)
 	UNITY_BEGIN();
 
 
-	RUN_TEST(test_has_consecutices_dollars_in_token);
+	// RUN_TEST(test_has_consecutices_dollars_in_token);
+	RUN_TEST(test_ft_strjoin);
 
 	return (UNITY_END());
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_split.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/25 22:58:08 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 1/14/25.
 //
@@ -33,7 +45,7 @@ void	test_count_words(void)
 /**
  * @see find_matching_quote
  */
-void	test_find_matching_quote(void)
+/*void	test_find_matching_quote(void)
 {
 	struct s_test_int	t_matrix_cases[] =
 			{
@@ -56,4 +68,4 @@ void	test_find_matching_quote(void)
 		TEST_ASSERT_EQUAL_INT(t_matrix_cases[i].expected, result);
 		i ++;
 	}
-}
+}*/

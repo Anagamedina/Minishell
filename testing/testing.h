@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:24 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 00:23:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/25 22:56:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_test_str
     char    *expected;  // Resultado esperado (cadena)
 }   t_test_str;
 
+typedef struct s_test_str_str
+{
+    char    *input_a;     // Entrada del caso de prueba
+    char    *input_b;     // Entrada del caso de prueba
+    char    *expected;  // Resultado esperado (cadena)
+}   t_test_str_str;
 // Funciones de configuración del entorno de testing
 void    init_environment_testing(void);  // Inicializa el entorno para pruebas
 void    clean_environment_testing(void); // Limpia el entorno de pruebas

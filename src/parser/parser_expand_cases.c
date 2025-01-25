@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/24 13:22:22 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/25 23:59:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static char	*expand_variable(char *result, \
 	free(tmp);
 	if (expanded_value)
 		result = append_result(result, expanded_value);
+	else
+		result = append_result(result, " ");
 	return (result);
 }
 
@@ -97,6 +99,7 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
+	// result = NULL;
 	i = 0;
 	while (token->str[i] != '\0')
 	{

@@ -80,10 +80,10 @@ int	main(int argc, char **argv, char **envp)
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
-		printf("************************************\n");
-		print_list_token_str(minishell->token);
-		print_list_commands(minishell->exec->first_cmd);
-		printf("************************************\n");
+		// printf("************************************\n");
+		// print_list_token_str(minishell->token);
+		// print_list_commands(minishell->exec->first_cmd);
+		// printf("************************************\n");
 
 
 		if (execute_commands(minishell) != TRUE)
