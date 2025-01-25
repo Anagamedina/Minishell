@@ -99,7 +99,7 @@ int	handle_no_expand_cases(t_tokens* token, t_tokens* next_token)
 	{
 		return (handle_backslash_after_dollar(token));
 	}
-
+// echo "$'US\tER'"
 	if (check_dollar_and_next_token(&token->str, next_token))
 	{
 		return (handle_single_quotes_after_dollar(next_token));

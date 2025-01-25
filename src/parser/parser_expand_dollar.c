@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 13:46:00 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/25 18:28:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 void	handle_dollar_cases(t_tokens *token, \
 								t_list *env_list, t_tokens *next_token)
 {
-	if (check_dquote_dollar_and_squotes(token->str))
-		return;
+	//if (check_dquote_dollar_and_squotes(token->str))
+	//	return;
 	if (check_dquote_squote_dollar_case(token->str))
 	{
 		handle_case_dquote_squote(token, env_list);

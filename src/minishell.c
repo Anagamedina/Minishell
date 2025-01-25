@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 14:00:42 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/25 17:37:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		print_list_token_str(minishell->token);
 		print_list_commands(minishell->exec->first_cmd);
 		printf("************************************\n");
-		
+
 
 		if (execute_commands(minishell) != TRUE)
 		{
@@ -99,8 +99,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-
 
 
 

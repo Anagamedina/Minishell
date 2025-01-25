@@ -21,6 +21,7 @@ file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
+file(GLOB EXECUTE_DIR src/execute/*.c)
 
 # include the headers
 include_directories(includes)
