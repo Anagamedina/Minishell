@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 18:28:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/25 20:05:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int has_consecutives_env_variables_in_token(t_tokens *token)
 	{
 		while (token->str[i] == SPACE)
 			i ++;
-		if (token->str[i] == DOLLAR_SIGN && ft_isalpha(token->str[i + 1]))
+		if (token->str[i] == DOLLAR_SIGN && (ft_isalpha(token->str[i + 1]) || token->str[i] == '_'))
 		{
 			count_dollar ++;
 			i ++;
@@ -97,8 +97,11 @@ static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 void	handle_dollar_cases(t_tokens *token, \
 								t_list *env_list, t_tokens *next_token)
 {
-	//if (check_dquote_dollar_and_squotes(token->str))
-	//	return;
+	if (check_dquote_dollar_and_squotes(token->str))
+	{
+		remove_and_replace_quotes(token, D_QUOTE);
+		return;
+	}
 	if (check_dquote_squote_dollar_case(token->str))
 	{
 		handle_case_dquote_squote(token, env_list);
@@ -109,7 +112,10 @@ void	handle_dollar_cases(t_tokens *token, \
 		if (has_consecutives_env_variables_in_token(token))
 		{
 			handle_consecutive_vars(token, env_list);
-			return;
+		}
+		else
+		{
+			remove_and_replace_quotes(token, D_QUOTE);
 		}
 	}
 }

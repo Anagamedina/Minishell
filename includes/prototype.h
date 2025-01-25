@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/25 19:46:00 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
@@ -148,6 +160,7 @@ char	*remove_consecutive_quotes(char *line);
 int			check_special_c(char c);
 char		*remove_quotes_str(const char *str, char c);
 int			handle_special_balanced_dquotes(t_tokens *token);
+void	remove_and_replace_quotes(t_tokens *token, char quote_type);
 
 //************** parser_syntax_quotes.c ********************/
 
