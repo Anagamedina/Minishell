@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/15 21:20:50 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/23 23:56:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_mini	*init_mini_list(char **envp)
     if (!minishell->env)
     {
         free(minishell);
-        printf("error con env ***********8.\n");
+        fprintf(stderr, "Error: Failed to initialize environment list.\n");
         return (NULL);
     }
     return (minishell);

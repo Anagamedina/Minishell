@@ -3,10 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/23 16:18:39 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/24 14:30:24 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/22 15:59:03 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/01/23 12:21:45 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +65,9 @@ void	print_list_token(t_list *tokens_list)
 
 void	print_list_token_str(t_list *tokens_list)
 {
-	t_list *current;
-	t_tokens *token;
-	int i;
+	t_list		*current;
+	t_tokens	*token;
+	int			i;
 
 	current = tokens_list;
 	i = 1;
@@ -89,25 +101,24 @@ void	print_list_token_str(t_list *tokens_list)
 	}
 }
 
-void print_list_token_str_one_line(t_list *tokens_list)
+void	print_list_token_str_one_line(t_list *tokens_list)
 {
-    t_list *current;
-    t_tokens *token;
-    int found_builtin = 0;
+	t_list		*current;
+	t_tokens	*token;
 
-    current = tokens_list;
-    while (current != NULL)
-    {
-        token = (t_tokens *)current->content;
-        if (token->type_token == BUILTINS)
-        {
-            found_builtin = 1;
-        }
-        else if (found_builtin && token->type_token == WORD)
-        {
-            printf("%s", token->str);
-        }
-        current = current->next;
-    }
-    printf("\n");
+	current = tokens_list;
+	printf("[");
+	while (current != NULL)
+	{
+		token = (t_tokens *)current->content;
+		if (!is_builtin_command(token->str))
+		{
+			printf("%s", token->str);
+			if (current->next != NULL)
+				printf(" ");
+		}
+		current = current->next;
+	}
+	printf("]");
+	printf("\n");
 }

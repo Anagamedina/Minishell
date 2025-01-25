@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 17:18:24 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/24 00:23:09 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TESTING_H
 # define TESTING_H
 
@@ -77,5 +89,9 @@ void	test_handle_special_quotes(void);
 void	test_count_words(void);
 void	test_find_matching_quote(void);
 
+//************** COMMAND.C ********/
+char	*get_cmd_path(t_tokens *token, char **paths);
+
+void	print_list_token(t_list *tokens_list);
 
 #endif

@@ -6,12 +6,12 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/16 23:12:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:16:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
-#define MACROS_H
+# define MACROS_H
 
 # include "prototype.h"
 # include "minishell.h"
@@ -37,7 +37,6 @@
 # define CD "cd"
 # define PWD "pwd"
 # define EXIT "exit"
-
 
 /*--------------------Error messages-------------------*/
 # define PRINT_SYNTAX_ERR_1 "syntax error near unexpected token `|'\n"

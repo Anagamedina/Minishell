@@ -6,43 +6,47 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 11:05:53 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:14:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// Asigna un tipo de token basado en el valor de la cadena de entrada (por ejemplo, redirección, pipe, palabra, etc.).
-int set_token_type(char *str)
+/**
+ * Determines the type of a token based on the input string.
+ * @param str The input string to evaluate.
+ */
+
+int	set_token_type(char *str)
 {
+	if (!str || ft_strlen(str) == 0)
+		return (NULL_TYPE);
 	if (ft_strcmp(str, "<") == 0)
 		return (REDIR_IN);
 	else if (ft_strcmp(str, ">") == 0)
 		return (REDIR_OUT);
 	else if (ft_strcmp(str, ">>") == 0)
 		return (REDIR_APPEND);
-		//else if (strcmp(str, "<<") == 0)
-		//return (HEREDOC);
-	else if (strcmp(str, "2>") == 0)
+	else if (ft_strcmp(str, "<<") == 0)
+		return (HEREDOC);
+	else if (ft_strcmp(str, "2>") == 0)
 		return (REDIR_ERR_OUT);
-	else if (strcmp(str, "2>>") == 0)
+	else if (ft_strcmp(str, "2>>") == 0)
 		return (REDIR_ERR_APPEND);
 	else if (ft_strcmp(str, "|") == 0)
 		return (PIPE);
 	else if (ft_strcmp(str, ";") == 0)
 		return (DELIMITER);
-	else if (str && ft_strlen(str) > 0)
-		return (WORD);
 	else
-		return (NULL_TYPE);
+		return (WORD);
 }
 
-
 /**
- * Verifica si un token es un operador (|, <, > o >>).
- * Esta función categoriza los tokens según si son operadores.
+ * chek if a token is an operator (|, <, > o >>).
+ * @return TRUE or FALSE
  */
-int is_type_of_operator(t_tokens *token)
+
+int	is_type_of_operator(t_tokens *token)
 {
 	return (token->type_token == PIPE || \
 		token->type_token == REDIR_IN || \

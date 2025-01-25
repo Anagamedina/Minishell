@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/23 12:52:46 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:20:48 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void		get_current_directory(t_mini *mini);
 t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
 void		print_list_token_str(t_list *tokens_list);
-void print_list_token_str_one_line(t_list *tokens_list);
+void		print_list_token_str_one_line(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
 t_list		*generate_token_list(char *line);
 t_list		*tokenize_list(char **tokens);
-t_list *generate_token_list(char *line);
+void		free_mini_list(t_mini *minishell);
 
 //************** TOKEN_FREE.c ********************/
 
@@ -119,13 +119,27 @@ void		ft_free_array(char **array);
 
 int			set_token_type(char *str);
 //void		update_words_to_builtin(t_list *tokens_list);
-void identify_commands(t_list *tokens_list, t_mini*exec_info);
-//************** TOKEN_UTILS.c ********************/
+void		identify_commands(t_list *tokens_list, t_mini*exec_info);
 
-char		**ft_split_quote(char *str);
-char		**ft_split_new_version(char *str);
-int			count_words(const char *str);
-int			find_matching_quote(const char *str, int start_index, char quote_char);
+//************** TOKEN_UTILS_SPLIT.c ********************/
+
+void		skip_whitespace(const char *str, int *i);
+int			skip_quotes(const char *str, int *i);
+int			is_whitespace(char c);
+int			is_special_char(char c);
+
+//************** TOKEN_UTILS_WORD_COUNT.c ********************/
+
+int			count_words_split(const char *str);
+int			is_quote(char c);
+
+//************** TOKEN_SPLIT.c ********************/
+
+char		**ft_split_quotes(char *str);
+
+//************** TOKEN_UTILS_QUOTES.c ********************/
+
+char	*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
 //

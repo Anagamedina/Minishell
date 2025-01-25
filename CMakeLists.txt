@@ -5,6 +5,10 @@ project(minishell C)
 
 set(CMAKE_C_STANDARD 99)
 
+# Habilitar sanitizers para depuración
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
+
 # setup the dirs and files here:
 file(GLOB INPUT_FILES src/input/*.c)
 file(GLOB TOKENIZE_FILES src/tokenize/*.c)
@@ -17,7 +21,6 @@ file(GLOB BUILTINS_DARUNY src/built_ins_2/*.c)
 file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
-file(GLOB EXECUTE_DIR src/execute/*.c)
 
 # include the headers
 include_directories(includes)
@@ -34,6 +37,7 @@ execute_process(
 add_executable(minishell
         src/minishell.c
         src/built_ins_main.c
+        src/ft_string_utils.c
         ${INPUT_FILES}
         ${TOKENIZE_FILES}
         ${COMMAND_FILES}
@@ -68,7 +72,9 @@ add_executable(testing_shell
         ${BUILTINS_DARUNY}
         ${PARSER_DIR}
         ${EXPAND_DIR}
+        ${EXECUTE_DIR}
         testing/test_split.c
+        src/tokenize/token_utils_quotes.c
 )
 # link with readline library
 target_link_libraries(testing_shell readline)
