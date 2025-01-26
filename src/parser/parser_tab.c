@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/24 16:24:18 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/26 11:58:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,14 @@ int	handle_single_quotes_after_dollar(t_tokens *token)
 	char	*processed_str;
 
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
+	printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 	{
 		perror("Error: remove_quotes_str failed");
 		return (FALSE);
 	}
 	temp = convert_escape_sequences(processed_str);
+	printf("temp: [%s]\n", temp);
 	if (!temp)
 	{
 		perror("Error: convert_escape_sequences failed");

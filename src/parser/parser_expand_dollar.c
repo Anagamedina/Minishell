@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 20:05:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 11:50:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 	char	*expanded_str;
 
 	processed_str = remove_quotes_str(token->str, D_QUOTE);
+	printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 		return;
 	free(token->str);
@@ -64,6 +65,7 @@ static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 
 	expanded_str = \
 	replace_dollar_variable_skip_s_quote(token->str, env_list);
+	printf("expanded_str: [%s]\n", expanded_str);
 	if (!expanded_str)
 		return;
 	free(token->str);
@@ -104,7 +106,8 @@ void	handle_dollar_cases(t_tokens *token, \
 	}
 	if (check_dquote_squote_dollar_case(token->str))
 	{
-		handle_case_dquote_squote(token, env_list);
+	//handle_case_dquote_squote(token, env_list);
+		remove_and_replace_quotes(token, D_QUOTE);
 		return;
 	}
 	if (handle_no_expand_cases(token, next_token) == 0)

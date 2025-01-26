@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 01:01:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 12:46:51 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	builtin_export(t_mini *mini)
 /*
 enviar a un file echo 
 */
-void	ft_echo(t_cmd *cmd)
+/*void	ft_echo(t_cmd *cmd)
 {
 	int i;
 
@@ -139,4 +139,30 @@ void	ft_echo(t_cmd *cmd)
 	}
 	printf("]");
 	printf("\n");
+}*/
+
+
+void	ft_echo(t_cmd *cmd)
+{
+	int	i;
+	int	first_arg;
+
+	i = 1;
+	first_arg = 1; // Usamos esta variable para evitar agregar un espacio antes del primer argumento
+
+	printf("[");
+	while (cmd->cmd_args[i])
+	{
+		if (cmd->cmd_args[i][0] != first_arg)
+		{
+			printf("%s", cmd->cmd_args[i]);
+			if (cmd->cmd_args[i][0] != '\0' && cmd->cmd_args[i + 1]) // Verifica si hay un siguiente argumento()
+				printf(" ");
+		//	first_arg = 0; // Después del primer argumento, se agregan espacios
+
+		}
+
+		i++;
+	}
+	printf("]\n");
 }
