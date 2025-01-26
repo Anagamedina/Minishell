@@ -99,7 +99,6 @@ char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	// result = NULL;
 	i = 0;
 	while (token->str[i] != '\0')
 	{

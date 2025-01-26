@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 16:43:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:59:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ t_list	*generate_token_list(char *line)
 	char	**tokens_array;
 	t_list	*tokens_list;
 	char	*processed_line;
-	int		i;
 
 	tokens_list = NULL;
 	tokens_array = NULL;
@@ -130,12 +129,6 @@ t_list	*generate_token_list(char *line)
 	tokens_array = ft_split_quotes(processed_line);
 	if (tokens_array == NULL)
 		return (NULL);
-	i = 0;
-	while (tokens_array[i])
-	{
-		printf("Token[%d]: [%s]\n", i, tokens_array[i]);
-		i ++;
-	}
 	tokens_list = convert_tokens_to_list(tokens_array);
 	if (tokens_list == NULL)
 		return (NULL);

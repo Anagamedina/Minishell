@@ -18,7 +18,6 @@ int	check_dollar_and_next_token(char** str, t_tokens* next_token)
 
 	if (next_token == NULL)
 		return (FALSE);
-	printf("next token: %s\n", next_token->str);
 	len_str = (int)ft_strlen(*str);
 	if (len_str == 1 && (*str)[0] == '$' && handle_single_quote(next_token) == TRUE)
 	{

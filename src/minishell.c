@@ -6,29 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 17:37:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:31:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
-/*static void free_token_list(t_list *tokens) {
-	t_list *current = NULL;
-	t_tokens *token_data;
-
-	while (current->next != NULL)
-	{
-		token_data = (t_tokens *)tokens->content;
-		if (token_data->next) // Si hay siguiente token
-		{
-			free(token_data->str);// Libera la cadena asociada al token
-		}
-		free(token_data); // Libera el nodo actual
-		current = current->next; // Avanza al siguiente token
-	}
-}*/
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -70,7 +52,6 @@ int	main(int argc, char **argv, char **envp)
 
 		parser_tokens(minishell);
 
-
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
@@ -79,12 +60,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
-
-		// printf("************************************\n");
-		// print_list_token_str(minishell->token);
-		// print_list_commands(minishell->exec->first_cmd);
-		// printf("************************************\n");
-
 
 		if (execute_commands(minishell) != TRUE)
 		{
@@ -178,3 +153,22 @@ waitpid(-1, NULL, 0);
 
 return 1;
 */
+
+
+/*static void free_token_list(t_list *tokens) {
+	t_list *current = NULL;
+	t_tokens *token_data;
+
+	while (current->next != NULL)
+	{
+		token_data = (t_tokens *)tokens->content;
+		if (token_data->next) // Si hay siguiente token
+		{
+			free(token_data->str);// Libera la cadena asociada al token
+		}
+		free(token_data); // Libera el nodo actual
+		current = current->next; // Avanza al siguiente token
+	}
+}*/
+
+

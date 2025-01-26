@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 18:01:38 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:55:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,8 @@ int execute_commands(t_mini *mini)
 	while (t_list_exec_cmd)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
-		printf("current command: [%s]\n", curr_cmd->cmd);
-		printf("current builtins: [%d]\n", curr_cmd->is_builtin);
-		printf("current external: [%d]\n", curr_cmd->is_external);
 		curr_cmd->cmd_id = i;
-		printf("id: [%d], command: [%s]\n", i, curr_cmd->cmd);
-		i++;
-
+		i ++;
 		// Crear pipe solo si no es el último comando
 		if (t_list_exec_cmd->next)
 		{
@@ -73,7 +68,7 @@ int execute_commands(t_mini *mini)
 
 		//entrada del comando
 		curr_cmd->input_fd = input_fd;
-		printf("PID PADRE: [%d]\n", getpid());
+		// printf("PID PADRE: [%d]\n", getpid());
 		pid = fork();
 
 		if (pid < 0)
@@ -85,8 +80,8 @@ int execute_commands(t_mini *mini)
 		if (pid == 0)
 		{
 			// Proceso hijo
-			printf("Proceso hijo ejecutándose\n");
-			printf("PID HIJO: %d\n", getpid());
+			// printf("Proceso hijo ejecutándose\n");
+			// printf("PID HIJO: %d\n", getpid());
 
 			//redirigir entrada si no el primer comando
 			if (curr_cmd->input_fd != STDIN_FILENO)

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:59:09 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/26 00:51:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,14 +363,10 @@ void	expand_dollar(t_tokens *token_list, t_list *env_list)
 
 	curr_token = token_list;
 	update_token_str = NULL;
-	printf("curr_token->str: [%s]\n", curr_token->str);
-
 	while (curr_token != NULL)
 	{
 		update_token_str = remove_quotes_str(curr_token->str, D_QUOTE);
-		printf("remove quotes: [%s]\n", update_token_str);
 		curr_token->str = ft_strdup(update_token_str);
-//		verificar si dollar + 1 != space
 		get_var_from_token(token_list, env_list);
 		curr_token = curr_token->next;
 	}

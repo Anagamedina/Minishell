@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:28:28 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/24 15:59:46 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/26 00:34:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 		return (NULL);
 
 	curr_env_list = env_list;
-
-	printf("var_name_token: [%s]\n", var_name_token);
-
 	while (curr_env_list != NULL)
 	{
 		curr_env = (t_env *)curr_env_list->content;
@@ -74,7 +71,6 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 	char	*var_value;
 	int		i;
 
-	
 	i = 0;
 	while ((*split_word)[i] != '\0')
 	{
@@ -87,13 +83,9 @@ void	replace_dollar_variable(char **split_word, t_list *env_list)
 
 			free(*split_word);
 			if (var_value != NULL)
-			{
 				*split_word = ft_strdup(var_value);
-			}
 			else
-			{
 				*split_word = ft_strdup("");
-			}
 		}
 		else
 		{

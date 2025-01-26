@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/25 17:29:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:03:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_cmd *init_command(void)
 	return (new_cmd);
 }
 
+//TODO: remove cmd_id
 t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 {
 	t_cmd *new_cmd = init_command();
@@ -88,18 +89,16 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;
-		printf("token->id_token: [%d]\n", token->id_token);
-
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			new_cmd = create_new_command(token, cmd_id, paths);
 			new_cmd->cmd_id = cmd_id;
 		}
-		else {
+		else
+		{
 			current = current->next;
 			continue;
 		}
-
 		if (!new_cmd)
 		{
 			fprintf(stderr, "Error: Falló la creación del comando '%s'.\n", token->str);
@@ -115,12 +114,11 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 			free_cmd_list(commands_list);
 			return NULL;
 		}
-
 		ft_lstadd_back(&commands_list, new_node);
 		cmd_id ++;
 		current = current->next;
 	}
-	return commands_list;
+	return (commands_list);
 }
 
 int add_details_to_cmd_list(t_list *commands_list, t_list *token_list)

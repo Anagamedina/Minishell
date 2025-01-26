@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_input.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 23:48:37 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/26 00:45:41 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "../../includes/minishell.h"
@@ -37,8 +49,6 @@ char	**lst_to_arr(t_list *env_list)
 	arr = ft_calloc(count + 1, sizeof(char *)); // +1 para NULL final
 	if (!arr)
 		return NULL;
-
-	// Copiar valores al array
 	node = env_list;
 	count = 0;
 	while (node)
@@ -55,7 +65,6 @@ char	**lst_to_arr(t_list *env_list)
 		count++;
 		node = node->next;
 	}
-
 	arr[count] = NULL; // Terminar el array con NULL
 	return arr;
 }

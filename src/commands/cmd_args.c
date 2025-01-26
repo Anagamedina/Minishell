@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 23:08:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/26 00:49:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,21 @@ void count_args(t_list *token_list, t_cmd *cmd)
 			// Guardamos el comando y lo contamos como el primer argumento
 			cmd->cmd = token->str;
 			cmd->count_args = 1;
-			printf("Comando encontrado: %s, count_args = %d, cmd_id = %d\n", cmd->cmd, cmd->count_args, cmd->cmd_id);
 		}
 			// Si encontramos un delimitador (PIPE), detenemos el procesamiento del comando actual
 		else if (token->type_token == PIPE || token->type_token == DELIMITER)
 		{
-			printf("Detenido en token: [%s], tipo: %d\n", token->str, token->type_token);
 			break;
 		}
-			// Si es un argumento válido, lo contamos
 		else if (token->type_token == WORD)
 		{
-			cmd->count_args++;
-			printf("Argumento válido encontrado: [%s]\n", token->str);
+			// Si es un argumento válido, lo contamos
+			cmd->count_args ++;
 		}
 
 		current = current->next;
 	}
-	printf("Final count_args: %d, cmd_id = %d\n", cmd->count_args, cmd->cmd_id);
-
-
 }
-
-
 
 void add_args(t_cmd **cmd, t_list *token_list)
 {

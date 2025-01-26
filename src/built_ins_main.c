@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 17:18:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:50:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void    cases_builtins(t_mini *mini)
 
     current_command = (t_cmd *)mini->exec->first_cmd->content;
 
-    printf("current_command : %s\n", current_command->cmd);
-//    printf("token 02 : %s\n", token_02->cmd);
     if ((ft_strcmp((char *)current_command->cmd, "echo") == 0))
     {
 		ft_echo(current_command);

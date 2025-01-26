@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   token_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/26 00:27:36 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:20:25 by dasalaza          #+#    #+#             */
@@ -20,7 +32,6 @@ static int	init_vars_split(t_split_data *data, char *str)
 	data->start = 0;
 	data->end = 0;
 	data->wc = count_words_split(str);
-	printf("wcs in init_vars_split(): [%d]\n", data->wc);
 	data->out = (char **) malloc(sizeof(char *) * (data->wc + 1));
 	if (!data->out)
 		return (FALSE);

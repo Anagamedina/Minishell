@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 23:54:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/26 01:01:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,14 @@ void	ft_echo(t_cmd *cmd)
 	int i;
 
 	i = 1;
+	printf("[");
 	while (cmd->cmd_args[i])
 	{
-		printf("[%s]", cmd->cmd_args[i]);
-		// printf("%s", cmd->cmd_args[i]);
-		// printf(" ");
+		printf("%s", cmd->cmd_args[i]);
 		i ++;
+		if (cmd->cmd_args[i])
+			printf(" ");
 	}
+	printf("]");
 	printf("\n");
 }
