@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:40:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ typedef struct s_exec
 	int             cmd_count;
 
 }		t_exec;
-
 
 typedef struct s_mini
 {

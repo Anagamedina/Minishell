@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 00:31:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/27 21:34:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		minishell->token = generate_token_list(input);
-
 		if (minishell->token == NULL)
 		{
-			printf("Error al generar la lista de tokens.\n");
+			perror("Error: generating the list of tokens.\n");
 			continue ;
 		}
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
-			return 1;
+			return (1);
 		}
 
 		parser_tokens(minishell);
@@ -74,8 +73,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-
 
 /*
 printf("PID PADRE: [%d]\n", getpid());
