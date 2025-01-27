@@ -95,6 +95,8 @@ int execute_commands(t_mini *mini)
 				//cerrar el descriptor original
 			}
 
+
+
 			//redirigir la salida si no es el ultimo comando
 			if (curr_cmd->output_fd != STDOUT_FILENO)
 			{
