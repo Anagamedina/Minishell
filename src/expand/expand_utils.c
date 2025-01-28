@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:28:28 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/26 00:34:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:25:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 		{
 			if (curr_env->value != NULL)
 				return (ft_strdup(curr_env->value));
-			else
-				return (NULL);
+			return (NULL);
 		}
 		curr_env_list = curr_env_list->next;
 	}

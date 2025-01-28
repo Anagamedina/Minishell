@@ -7,17 +7,38 @@ MINISHELL_EXEC=./minishell
 TEMP_OUTPUT=temp_minishell_output.txt
 
 # Comandos de prueba
+#    "echo Hello, World!"                     # Caso 1
+#    "echo \"Hola 'Mundo'\""                  # Caso 2
+#    "echo 'Hola \"Mundo\"'"                  # Caso 3
+#    "echo \"Hola & Mundo * \$ ?\""           # Caso 4
+#    "echo 'Hola & Mundo * \$ ?'"             # Caso 5
+#    "echo \"Hola $USER, esto cuesta $100\"" # Caso 6
+#    "echo \"Hola\nMundo\""                   # Caso 7
+#    "echo \"Hola \$\nMundo\""                # Caso 8
+#    "echo "" \$ \"\" '' \*"             # Caso 9
 COMMANDS=(
-    "echo Hello, World!"
-    "echo \$PWD"
-    "ls"
+#    "echo \"Hola \$VAR_INEXISTENTE, cómo estás?\"" # Caso 11
+#    "echo \"Hola $USER$HOME\""               # Caso 12
+#    "echo \"'Hola' \\\"Mundo\\\" '$USER' \\\"$HOME\\\"\"" # Caso 13
+#    "echo \"Hola	Mundo\""                   # Caso 14
+#    "echo \"Hola\" '' \"Mundo\" \"\" \"!\""  # Caso 15
 )
+# Salidas esperadas (personalizadas según el comportamiento esperado de minishell)
+#    "[Hello, World!]"                     # Caso 1
+#    "[Hola 'Mundo']"                      # Caso 2
+#    "[Hola \"Mundo\"]"                    # Caso 3
+#    "[Hola & Mundo * $ ?]"                # Caso 4
+#    "[Hola & Mundo * \$ ?]"               # Caso 5
+#    "[Hola $USER, esto cuesta 00]"     # Caso 6
 
-# Salidas esperadas (puedes personalizarlas)
+#    "[HolanMundo]"                       # Caso 7
+#    "[Hola $nMundo]"                     # Caso 8
 EXPECTED_OUTPUTS=(
-    "minishell> echo Hello, World!"
-    "minishell> $PWD"
-    "minishell> $(ls)"
+#    "[Hola , cómo estás?]"                # Caso 11
+#    "[Hola $USER$HOME]"                   # Caso 12
+#    "['Hola' \"Mundo\" '$USER' \"$HOME\"]" # Caso 13
+#    "[Hola	Mundo]"                       # Caso 14
+#    "[Hola Mundo !]"                      # Caso 15
 )
 
 # Colores para los mensajes
@@ -53,7 +74,6 @@ for i in "${!COMMANDS[@]}"; do
         echo -e "${RED}Esperado:${RESET} $EXPECTED"
         echo -e "${RED}Obtenido:${RESET} $ACTUAL_OUTPUT"
     fi
-
 done
 
 # Limpieza

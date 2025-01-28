@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 11:40:04 by anamedin          #+#    #+#             */
-/*   Updated: 2024/09/24 13:24:33 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:51:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	del(void *content)
 {
 	free(content);
 }
-*/
-
+original version
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*current;
@@ -33,6 +32,22 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 		del(current->content);
 		free(current);
 		current = next;
+	}
+	*lst = NULL;
+}
+*/
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*temp;
+
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = temp;
 	}
 	*lst = NULL;
 }

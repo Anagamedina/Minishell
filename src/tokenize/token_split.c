@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 00:27:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:12:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,12 @@ static int	init_vars_split(t_split_data *data, char *str)
 
 int	copy_word(t_split_data *data)
 {
-	data->out[data->k] = (char *)malloc(sizeof(char) * \
-		(data->end - data->start + 1));
+	data->out[data->k] = (char *) malloc(sizeof(char) * (data->end - data->start + 1));
 	if (data->out[data->k] == NULL)
+	{
+		free_split_data(data);
 		return (-1);
+	}
 	ft_strncpy(data->out[data->k], &data->str[data->start], \
 	data->end - data->start);
 	data->out[data->k][data->end - data->start] = '\0';

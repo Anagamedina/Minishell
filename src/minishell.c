@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/27 21:34:32 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 19:35:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_mini	*minishell;
 
+	minishell = NULL;
 	minishell = init_mini_list(envp);
 
 	input = NULL;
@@ -27,12 +28,13 @@ int	main(int argc, char **argv, char **envp)
 		printf("Error al inicializar minishell.\n");
 		return (1);
 	}
+	// echo "the user: $USER in level: $SHLVL " 'cReAtE_This_minishell' :)
 	while (1)
 	{
 		input = read_input();
 		if (!input || !check_quotes_line(input))
 		{
-			printf("Error al leer el input\n");
+			printf("Error: fail reading input.\n");
 			free(input);
 			break ;
 		}
@@ -42,15 +44,19 @@ int	main(int argc, char **argv, char **envp)
 			perror("Error: generating the list of tokens.\n");
 			continue ;
 		}
+		// free(input);
+		/*
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
 			return (1);
 		}
+		*/
 
 		parser_tokens(minishell);
-
+		print_list_token_str_one_line(minishell->token);
+		/*
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
@@ -68,9 +74,12 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			continue;
+		*/
 		//free_cmd_list(minishell->exec->first_cmd);
 		//cases_builtins(minishell);
+		// free_tokens((t_tokens *)minishell->token);
 	}
+	free_mini(minishell);
 	return (0);
 }
 
