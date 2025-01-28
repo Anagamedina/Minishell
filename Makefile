@@ -27,6 +27,8 @@ SRC_BUILTINS1 = $(SRC_DIR)/built_ins_1
 SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
 SRC_EXPAND= $(SRC_DIR)/expand
+SRC_FREE= $(SRC_DIR)/free
+
 OBJ_DIR = obj
 LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h 
@@ -38,8 +40,6 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_utils_locals.c \
 		$(SRC_ENV)/env_locals_list.c \
-		$(SRC_ENV)/free_env.c \
-		$(SRC_TOKENIZE)/token_free.c \
 		$(SRC_TOKENIZE)/token_split.c \
 		$(SRC_TOKENIZE)/token_type.c \
 		$(SRC_TOKENIZE)/token_utils.c \
@@ -69,18 +69,25 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_func.c \
 		$(SRC_EXPAND)/expand_utils.c \
-		$(SRC_EXECUTE)/free_errors.c \
 		$(SRC_EXECUTE)/exce_paths.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/get_input.c \
-		$(SRC_EXECUTE)/tests.c
+		$(SRC_EXECUTE)/tests.c \
+		$(SRC_FREE)/free_cmd.c \
+		$(SRC_FREE)/free_env.c \
+		$(SRC_FREE)/free_exec.c \
+		$(SRC_FREE)/free_mini.c \
+		$(SRC_FREE)/free_redir.c \
+		$(SRC_FREE)/free_split.c \
+		$(SRC_FREE)/free_tokens.c
 
 #		$(SRC_REDIR)/heredoc.c
 #		$(SRC_EXECUTE)/get_inputc \
 #		$(SRC_REDIR)/redir_syntax.c \
 #		$(SRC_REDIR)/redir_file.c
+
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))
 
@@ -116,8 +123,6 @@ $(LIBFT):
 obj/testing/%.o: testing/%.c $(TESTING_H)
 	@mkdir -p $(dir $@)
 	$(CC)  -c $< -o $@
-	#$(CC) $(CFLAGS) -c $< -o $@
-
 
 test: $(OBJ_TEST) $(OBJ_TESTING)
 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \

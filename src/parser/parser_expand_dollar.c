@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 11:50:07 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/27 23:24:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int has_consecutives_env_variables_in_token(t_tokens *token)
 	return (FALSE);
 }
 
-
-
+/*
 static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 {
 	char	*processed_str;
@@ -72,6 +71,7 @@ static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 	token->str = ft_strdup(expanded_str);
 	free(expanded_str);
 }
+*/
 
 static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 {

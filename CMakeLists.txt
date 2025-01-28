@@ -10,10 +10,10 @@ set(CMAKE_C_STANDARD 99)
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
 
 # setup the dirs and files here:
-file(GLOB INPUT_FILES src/input/*.c)
-file(GLOB TOKENIZE_FILES src/tokenize/*.c)
-file(GLOB COMMAND_FILES src/commands/*.c)
-file(GLOB ENV_FILES src/env/*.c)
+file(GLOB INPUT_DIR src/input/*.c)
+file(GLOB TOKENIZE_DIR src/tokenize/*.c)
+file(GLOB COMMAND_DIR src/commands/*.c)
+file(GLOB ENV_DIR src/env/*.c)
 file(GLOB LIBFT_DIR libft/*.c)
 file(GLOB MINI src/mini/*.c)
 file(GLOB BUILTINS_ANA src/built_ins_1/*.c)
@@ -22,10 +22,12 @@ file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
 file(GLOB EXECUTE_DIR src/execute/*.c)
+file(GLOB FREE_DIR src/free/*.c)
 
 # include the headers
 include_directories(includes)
 include_directories(testing)
+include_directories(free)
 
 # compile Makefile of libft if it's not compiled
 execute_process(
@@ -39,10 +41,10 @@ add_executable(minishell
         src/minishell.c
         src/built_ins_main.c
         src/ft_string_utils.c
-        ${INPUT_FILES}
-        ${TOKENIZE_FILES}
-        ${COMMAND_FILES}
-        ${ENV_FILES}
+        ${INPUT_DIR}
+        ${TOKENIZE_DIR}
+        ${COMMAND_DIR}
+        ${ENV_DIR}
         ${LIBFT_DIR}
         ${MINI}
         ${BUILTINS_ANA}
@@ -50,7 +52,7 @@ add_executable(minishell
         ${EXPAND_DIR}
         ${PARSER_DIR}
         ${EXECUTE_DIR}
-
+        ${FREE_DIR}
 )
 # link with readline library
 target_link_libraries(minishell readline)
@@ -58,26 +60,21 @@ target_link_libraries(minishell readline)
 # *********** Executable: tesing_minishell **********
 
 add_executable(testing_shell
-        testing/test_main.c
-        testing/unity.c
-        testing/setup_testing.c
-        testing/test_remove_quotes.c
-        testing/test_double_quotes.c
+        ${UNIT_C_TESTING}
         src/ft_string_utils.c
         src/built_ins_main.c
-        ${INPUT_FILES}
-        ${TOKENIZE_FILES}
-        ${COMMAND_FILES}
-        ${ENV_FILES}
+        ${INPUT_DIR}
+        ${TOKENIZE_DIR}
+        ${COMMAND_DIR}
+        ${ENV_DIR}
         ${LIBFT_DIR}
-        ${BUILTINS_ANA}
         ${MINI}
+        ${BUILTINS_ANA}
         ${BUILTINS_DARUNY}
-        ${PARSER_DIR}
         ${EXPAND_DIR}
+        ${PARSER_DIR}
         ${EXECUTE_DIR}
-        testing/test_split.c
-        src/tokenize/token_utils_quotes.c
+        ${FREE_DIR}
 )
 # link with readline library
 target_link_libraries(testing_shell readline)

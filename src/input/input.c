@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/15 22:01:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 00:35:38 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*read_input(void)
 {
 	char	*input;
 
-	input = readline("minishell> ");
+	input = readline("minishell>");
 	if (input && *input)
 	{
 		add_history(input);
@@ -26,8 +26,8 @@ char	*read_input(void)
 
 /**
  * @brief check if the input contains quotes and if the number of quotes is even
- *
  */
+
 int	check_quotes_line(const char *line)
 {
 	int	i;

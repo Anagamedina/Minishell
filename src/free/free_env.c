@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 11:05:01 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/23 11:05:04 by anamedin         ###   ########.fr       */
+/*   Created: 2025/01/27 21:45:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/27 21:56:38 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-/*
- * using this function to free the env list local variable
- */
 
 void	free_env(t_env *env)
 {
-	if (!env)
-		return;
+	t_env	*temp;
 
-	// Liberar los campos dinámicos si fueron asignados
-	if (env->key)
-		free(env->key);
-	if (env->value)
-		free(env->value);
-	if (env->full_var)
-		free(env->full_var);
-	// Liberar la estructura en sí
-	free(env);
+	while (env)
+	{
+		temp = env->next;
+		if (env->key)
+			free(env->key);
+		if (env->value)
+			free(env->value);
+		if (env->full_var)
+			free(env->full_var);
+		free(env);
+		env = temp;
+	}
 }
