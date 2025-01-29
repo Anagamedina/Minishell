@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:12:00 by anamedin          #+#    #+#             */
-/*   Updated: 2024/09/21 20:36:09 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:32:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s1)
 	if (!s1)
 		return (NULL);
 	duplicate = malloc(sizeof(char) * (size_s1 + 1));
-	if (!duplicate)
+	if (duplicate == NULL)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')

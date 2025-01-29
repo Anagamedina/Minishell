@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:14:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:28:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,4 @@ int	is_type_of_operator(t_tokens *token)
 		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND);
 }
+

@@ -8,7 +8,7 @@ set(CMAKE_C_STANDARD 99)
 # Habilitar sanitizers para depuración
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
-
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=[sanitizer_name] [additional_options] [-g] [-OX]")
 # setup the dirs and files here:
 file(GLOB INPUT_DIR src/input/*.c)
 file(GLOB TOKENIZE_DIR src/tokenize/*.c)

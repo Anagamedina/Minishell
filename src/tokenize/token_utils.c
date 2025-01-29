@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 17:10:00 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/24 16:24:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:29:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +44,17 @@ t_tokens	*init_token(char *str, int token_type)
 	return (new_token);
 }
 
+static int	count_words(char **tokens_array)
+{
+	int	count;
+
+	count = 0;
+	if (!tokens_array)
+		return (0);
+	while (tokens_array[count])
+		count ++;
+	return (count);
+}
 /**
  * Converts a 2D array of strings into a linked list of tokens (`t_list`).
  *
@@ -105,7 +104,7 @@ t_list	*convert_tokens_to_list(char **tokens)
  * 3. Tokenize the split tokens into a linked list.
  * 4. Identify and mark commands within the token list.
  *
- * @example [echo ' qwerty' $USER" hello"]
+ * @example [echo ' qwerty' "$USER" hello"]
  * @see clean_consecutive_quotes: Function to clean consecutive quotes.
  * @see ft_split_quote: Function to split the input line into tokens.
  * @see tokenize_list: Function to tokenize the input line into a token list.
@@ -123,18 +122,21 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens_array = NULL;
 	processed_line = remove_consecutive_quotes(line);
-	if (!processed_line)
+	if (processed_line == NULL)
 		return (NULL);
 	// printf("Processed line: [%s]\n", processed_line);
 	tokens_array = ft_split_quotes(processed_line);
 	free(processed_line);
-
 	if (tokens_array == NULL)
 		return (NULL);
-
 	tokens_list = convert_tokens_to_list(tokens_array);
 	if (tokens_list == NULL)
+	{
+		free_split_result_struct(tokens_array, count_words(tokens_array));
+		free(tokens_array);
 		return (NULL);
-
+	}
+	// free_split_result_struct(tokens_array, count_words(tokens_array));
 	return (tokens_list);
 }
+

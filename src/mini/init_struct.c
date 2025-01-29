@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 16:01:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 23:21:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ t_mini	*init_mini_list(char **envp)
     minishell->bash_lvl = 0;
     minishell->chars_in_line = -1;
     minishell->env = init_env_list(envp);
-	// print_env_list(minishell->env);
     if (minishell->env == NULL)
     {
-        fprintf(stderr, "Error: Failed to initialize environment list.\n");
+    	free(minishell);
         return (NULL);
     }
     minishell->token = NULL;

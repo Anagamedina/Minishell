@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:28:28 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/28 16:25:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:36:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 	curr_env_list = env_list;
 	while (curr_env_list != NULL)
 	{
-		curr_env = (t_env *)curr_env_list->content;
+		curr_env = (t_env *) curr_env_list->content;
 
 		if (curr_env->key && (ft_strcmp(var_name_token, curr_env->key) == 0))
 		{

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:54:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/27 23:00:38 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:20:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_string_array(char **array)
 void	free_split_data(t_split_data *split_data)
 {
 	if (!split_data)
-		return;
+		return ;
 	if (split_data->out)
 	{
 		free_string_array(split_data->out);
@@ -60,9 +60,14 @@ void	free_split_result_struct(char **out, int k)
 	int	i;
 
 	i = 0;
-	while (out[k] != NULL && i < k)
+	if (!out)
+		return ;
+	while (i < k)
+	{
 		free(out[i]);
-	free(out);
+		i ++;
+	}
+	// free(out);
 }
 
 void	ft_free_array(char **array)

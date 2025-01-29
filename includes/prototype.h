@@ -111,7 +111,7 @@ t_list		*generate_token_list(char *line);
 
 //************** TOKEN_UTILS_WORD_COUNT.c ********************/
 
-int			count_words_split(const char *str);
+int			count_words_split(char* str);
 int			is_quote(char c);
 
 //************** TOKEN_SPLIT.c ********************/

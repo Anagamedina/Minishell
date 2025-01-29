@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/28 16:27:38 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:39:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ static char	*expand_variable(char *result, \
 	expanded_value = find_value_in_env(env_list, tmp);
 	free(tmp);
 	if (expanded_value)
-		result = append_result(result, expanded_value);
-	else
 	{
+		result = append_result(result, expanded_value);
 		free(expanded_value);
-		result = append_result(result, " ");
 	}
+	else
+		result = append_result(result, " ");
 	return (result);
 }
 

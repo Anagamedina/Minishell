@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 19:35:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 00:00:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ int	main(int argc, char **argv, char **envp)
 	minishell = NULL;
 	minishell = init_mini_list(envp);
 
-	input = NULL;
 	if (minishell == NULL)
 	{
-		printf("Error al inicializar minishell.\n");
-		return (1);
+        fprintf(stderr, "Error: Failed to initialize environment list.\n");
+		// printf("Error al inicializar minishell.\n");
+		free(minishell);
+		// return (1);
+		return (EXIT_FAILURE);
 	}
+	input = NULL;
 	// echo "the user: $USER in level: $SHLVL " 'cReAtE_This_minishell' :)
 	while (1)
 	{
@@ -53,7 +56,6 @@ int	main(int argc, char **argv, char **envp)
 			return (1);
 		}
 		*/
-
 		parser_tokens(minishell);
 		print_list_token_str_one_line(minishell->token);
 		/*
@@ -77,9 +79,16 @@ int	main(int argc, char **argv, char **envp)
 		*/
 		//free_cmd_list(minishell->exec->first_cmd);
 		//cases_builtins(minishell);
+		// free(minishell->token);
 		// free_tokens((t_tokens *)minishell->token);
 	}
 	free_mini(minishell);
+	/*
+	if (input != NULL)
+	{
+        free(input);
+	}
+	*/
 	return (0);
 }
 
