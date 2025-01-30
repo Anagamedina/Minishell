@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/29 13:18:37 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/30 12:10:38 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
-		printf("after parser ***********************\n");
-		print_list_token_str(minishell->token);
+		// printf("after parser ***********************\n");
+		// print_list_token_str(minishell->token);
 
 
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
-		print_list_commands(minishell->exec->first_cmd);
+		// print_list_commands(minishell->exec->first_cmd);
 
 		if (execute_commands(minishell) != TRUE)
 		{

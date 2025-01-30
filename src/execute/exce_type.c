@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/20 10:22:59 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/30 12:14:30 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int is_cmd_external(t_mini *mini, t_tokens *token)
 	if (cmd_path != NULL)
 	{
 		//mini->exec->first_cmd = cmd_path;
-		printf("--------cmd_path: [%s]\n", cmd_path);
+		// printf("--------cmd_path: [%s]\n", cmd_path);
 		//free(cmd_path);
 		return (TRUE);
 	}

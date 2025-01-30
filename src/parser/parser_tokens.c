@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/29 13:32:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/30 12:04:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 	 }
 	 if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		 handle_dollar_cases(token, env_list, next_token);
+	else 
+		return;
  }
 
 
@@ -108,9 +110,13 @@ void	parser_tokens(t_mini *mini)
 			next_token = NULL;
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
-		//else if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER)
+		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || \
+						curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
+		{	
+			token_list = token_list->next;
+			continue;
+		}
 		else
-			continue ;
-		token_list = token_list->next;
+			break;
 	}
 }

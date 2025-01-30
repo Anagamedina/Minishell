@@ -3,24 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exce_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/29 13:12:56 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/30 12:12:50 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exce_cmd.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/30 16:12:29 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/22 17:31:04 by  dasalaza        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -191,8 +180,8 @@ int execute_commands(t_mini *mini)
 void	execute_external(t_cmd *cmd, char **envp)
 {
 	// Ejecuta el comando externo utilizando execve
-	printf("ARGS: %s\n", cmd->cmd_args[0]);
-	printf("ARGS: %s\n", cmd->cmd_args[1]);
+	// printf("ARGS: %s\n", cmd->cmd_args[0]);
+	// printf("ARGS: %s\n", cmd->cmd_args[1]);
 	execve(cmd->cmd_path, cmd->cmd_args, envp);
 
 
@@ -277,8 +266,7 @@ int execute_commands(t_mini *mini)
 
 			if (curr_cmd->is_external == 1)
 			{
-				printf("flag: [%d]\n", curr_cmd->is_external);
-				printf("entra como externo pero no deberia\n");
+				// printf("flag: [%d]\n", curr_cmd->is_external);
 				execute_external(curr_cmd, envp);
 			}
 			else if (curr_cmd->is_builtin == 1)

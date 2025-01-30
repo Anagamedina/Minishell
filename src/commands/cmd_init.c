@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/26 01:03:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:13:35 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 	t_cmd *new_cmd = init_command();
 
 	cmd_id ++;
-	printf("cmd_id: [%d]\n", cmd_id);
+	// printf("cmd_id: [%d]\n", cmd_id);
 	if (!new_cmd)
 		return NULL;
 
