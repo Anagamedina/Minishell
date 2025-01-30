@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:49:20 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,6 @@ typedef struct s_split_data
 	int		wc;
 }				t_split_data;
 
-typedef struct pre_tokens
-{
-	int	*start;
-	int	*end;
-}		t_pre_tokens;
-
-// t_pipex         *first_pipe;    // Estructura del primer pipe
-
 typedef struct s_cmd
 {
 	char			*cmd;
@@ -110,6 +102,7 @@ typedef struct s_cmd
 	int				input_fd;
 	int				output_fd;
 	//int			exit_status;
+	int				last_cmd;
 	t_list			*redir_list;
 	struct s_cmd	*next;
 }				t_cmd;

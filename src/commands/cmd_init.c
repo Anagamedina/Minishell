@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:13:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:53:58 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_cmd *init_command(void)
 	new_cmd->cmd_id = 0;
 	new_cmd->is_builtin = -1;
 	new_cmd->is_external = -1;
-	new_cmd->last_cmd = -0;
+	new_cmd->last_cmd = 0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
 	new_cmd->next = NULL;
@@ -42,7 +42,7 @@ t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 	t_cmd *new_cmd = init_command();
 
 	cmd_id ++;
-	// printf("cmd_id: [%d]\n", cmd_id);
+	printf("cmd_id: [%d]\n", cmd_id);
 	if (!new_cmd)
 		return NULL;
 

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 19:35:48 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/28 01:05:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:53:00 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	size_s2;
 	size_t	i;
 
+	size_s1 = 0;
+	size_s2 = 0;
 	if (s1)
 		size_s1 = ft_strlen(s1);
 	if (s2)
