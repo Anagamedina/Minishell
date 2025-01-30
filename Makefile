@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/23 13:23:51 by anamedin         ###   ########.fr        #
+#    Updated: 2025/01/30 17:34:28 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_tab.c \
 		$(SRC_PARSER)/parser_tokens.c \
 		$(SRC_PARSER)/parser_utils.c \
+		$(SRC_PARSER)/parser_input.c \
 		$(SRC_PARSER)/parser_handle_not_expand.c \
 		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_func.c \
@@ -75,12 +76,10 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/get_input.c \
-		$(SRC_EXECUTE)/tests.c
+		$(SRC_EXECUTE)/tests.c \
+		$(SRC_REDIR)/redir_syntax.c \
+		$(SRC_REDIR)/redir_file.c
 
-#		$(SRC_REDIR)/heredoc.c
-#		$(SRC_EXECUTE)/get_inputc \
-#		$(SRC_REDIR)/redir_syntax.c \
-#		$(SRC_REDIR)/redir_file.c
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))
 

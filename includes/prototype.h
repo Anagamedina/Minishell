@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 11:04:19 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/30 19:24:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
-int		execute_commands(t_mini *mini);
+int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
@@ -254,5 +254,12 @@ int 		count_pipes(t_list *token_list);
 
 //*************redis**************/
 
-int 		check_repeat_redir(t_tokens *token);
+void		update_words_in_tokens(t_mini *mini);
+int			parse_redir(t_mini *mini);
+//void 		check_repeat_redir(t_mini *mini, t_tokens *token);
+int 		check_file(t_mini *mini, t_tokens *token);
+
+
+
+
 #endif

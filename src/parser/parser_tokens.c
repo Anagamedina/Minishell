@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:04:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/30 15:57:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
  }
 
 
-
 void	update_words_in_tokens(t_mini *mini)
 {
 	t_list *token_list;
@@ -86,6 +85,7 @@ void	update_words_in_tokens(t_mini *mini)
 }
 
 
+
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -93,7 +93,6 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*curr_token;
 	t_tokens	*next_token;
 
-	update_words_in_tokens(mini);
 
 	token_list = mini->token;
 	env_list = mini->env;
@@ -104,6 +103,7 @@ void	parser_tokens(t_mini *mini)
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *) token_list->content;
+		//check_redir_syntax(curr_token);
 		if (token_list->next != NULL)
 			next_token = (t_tokens *) token_list->next->content;
 		else

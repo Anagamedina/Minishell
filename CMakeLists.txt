@@ -22,6 +22,7 @@ file(GLOB EXPAND_DIR src/expand/*.c)
 file(GLOB PARSER_DIR src/parser/*.c)
 file(GLOB UNIT_C_TESTING testing/*.c)
 file(GLOB EXECUTE_DIR src/execute/*.c)
+file(GLOB REDIR_DIR src/redir/*.c)
 
 # include the headers
 include_directories(includes)
@@ -50,6 +51,8 @@ add_executable(minishell
         ${EXPAND_DIR}
         ${PARSER_DIR}
         ${EXECUTE_DIR}
+        ${REDIR_DIR}
+
 
 )
 # link with readline library

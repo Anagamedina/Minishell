@@ -6,18 +6,18 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:10:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:21:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(int argc, char** argv, char** envp)
 {
-	(void) argc;
-	(void) argv;
-	char	*input;
-	t_mini	*minishell;
+	(void)argc;
+	(void)argv;
+	char* input;
+	t_mini* minishell;
 
 	minishell = init_mini_list(envp);
 
@@ -34,14 +34,14 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("Error al leer el input\n");
 			free(input);
-			break ;
+			break;
 		}
 		minishell->token = generate_token_list(input);
 
 		if (minishell->token == NULL)
 		{
 			printf("Error al generar la lista de tokens.\n");
-			continue ;
+			continue;
 		}
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
@@ -50,16 +50,22 @@ int	main(int argc, char **argv, char **envp)
 			return 1;
 		}
 
+		update_words_in_tokens(minishell);
+		//check_redir_syntax(minishell);
+		//llamar a checkar las redis repiticion .... 
+		//llamar una funcion para checkear pipes y ; ( | cmd2 o ; (cmd2))
+
+		if(parse_redir(minishell) != TRUE)
+		{
+			printf("Error al parsear las redirecciones.\n");
+			continue;
+		}
 		parser_tokens(minishell);
-		// printf("after parser ***********************\n");
-		// print_list_token_str(minishell->token);
-
-
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");
-			continue ;
+			continue;
 		}
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
