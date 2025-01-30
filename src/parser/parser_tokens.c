@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/24 16:23:15 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/29 13:32:22 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*next_token;
 
 	update_words_in_tokens(mini);
+
 	token_list = mini->token;
 	env_list = mini->env;
+
 	if (token_list && (((t_tokens *) token_list->content)->type_token == BUILTINS || \
 		((t_tokens *) token_list->content)->type_token == CMD_EXTERNAL))
 		token_list = token_list->next;
@@ -106,8 +108,9 @@ void	parser_tokens(t_mini *mini)
 			next_token = NULL;
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
+		//else if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER)
 		else
-			break ;
+			continue ;
 		token_list = token_list->next;
 	}
 }

@@ -28,6 +28,7 @@ t_cmd *init_command(void)
 	new_cmd->cmd_id = 0;
 	new_cmd->is_builtin = -1;
 	new_cmd->is_external = -1;
+	new_cmd->last_cmd = -0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
 	new_cmd->next = NULL;
@@ -82,6 +83,7 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 	t_list *current = token_list;
 	int		cmd_id;
 
+
 	if (!token_list)
 		return NULL;
 
@@ -93,6 +95,11 @@ t_list *create_cmd_list(t_list *token_list, char **paths)
 		{
 			new_cmd = create_new_command(token, cmd_id, paths);
 			new_cmd->cmd_id = cmd_id;
+			// Aquí determinamos si este comando es el último
+			if (current->next == NULL)  // Es el último nodo
+				new_cmd->last_cmd = 1;
+			else
+				new_cmd->last_cmd = 0;
 		}
 		else
 		{

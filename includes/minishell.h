@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:17:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:19:35 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_cmd
 	int             cmd_id;
 	int     		is_builtin;
 	int     		is_external;
+	int             last_cmd;
 	int            	input_fd;
 	int             output_fd;
 	//int 			exit_status;

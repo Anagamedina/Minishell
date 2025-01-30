@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 19:46:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:04:19 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ void		execute_external(t_cmd *cmd, char **envp);
 void 		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd 		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
+void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 //t_pipe		*init_pipe(void);
 //t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);

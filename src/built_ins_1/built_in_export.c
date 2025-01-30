@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 12:46:51 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/29 12:36:05 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	ft_echo(t_cmd *cmd)
 	i = 1;
 	first_arg = 1; // Usamos esta variable para evitar agregar un espacio antes del primer argumento
 
-	printf("[");
+	//printf("[");
 	while (cmd->cmd_args[i])
 	{
 		if (cmd->cmd_args[i][0] != first_arg)
@@ -164,5 +164,5 @@ void	ft_echo(t_cmd *cmd)
 
 		i++;
 	}
-	printf("]\n");
+	printf("\n");
 }
