@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:15:04 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:59:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ t_tokens	*init_token(char *str, int token_type)
 	return (new_token);
 }
 
+static int	count_words(char **tokens_array)
+{
+	int	count;
+
+	count = 0;
+	if (!tokens_array)
+		return (0);
+	while (tokens_array[count])
+		count ++;
+	return (count);
+}
 /**
  * Converts a 2D array of strings into a linked list of tokens (`t_list`).
  *
@@ -123,14 +134,20 @@ t_list	*generate_token_list(char *line)
 	tokens_list = NULL;
 	tokens_array = NULL;
 	processed_line = remove_consecutive_quotes(line);
-	if (!processed_line)
+	if (processed_line == NULL)
 		return (NULL);
 	// printf("Processed line: [%s]\n", processed_line);
 	tokens_array = ft_split_quotes(processed_line);
+	free(processed_line);
 	if (tokens_array == NULL)
 		return (NULL);
 	tokens_list = convert_tokens_to_list(tokens_array);
 	if (tokens_list == NULL)
+	{
+		free_split_result_struct(tokens_array, count_words(tokens_array));
+		free(tokens_array);
 		return (NULL);
+	}
+	// free_split_result_struct(tokens_array, count_words(tokens_array));
 	return (tokens_list);
 }

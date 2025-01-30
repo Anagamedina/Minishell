@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:49:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 14:02:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:19:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	count_word_content(const char *str, int *i)
 	return (count);
 }
 
-int	count_words_split(const char *str)
+int	count_words_split(char *str)
 {
 	int	i;
 	int	wc;

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:10:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:31:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	t_mini	*minishell;
 
+	minishell = NULL;
 	minishell = init_mini_list(envp);
 
 	input = NULL;
@@ -27,12 +28,14 @@ int	main(int argc, char **argv, char **envp)
 		printf("Error al inicializar minishell.\n");
 		return (1);
 	}
+	input = NULL;
+	// echo "the user: $USER in level: $SHLVL " 'cReAtE_This_minishell' :)
 	while (1)
 	{
 		input = read_input();
 		if (!input || !check_quotes_line(input))
 		{
-			printf("Error al leer el input\n");
+			printf("Error: fail reading input.\n");
 			free(input);
 			break ;
 		}
@@ -51,9 +54,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
-		// printf("after parser ***********************\n");
-		// print_list_token_str(minishell->token);
-
 
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
@@ -63,7 +63,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
-		// print_list_commands(minishell->exec->first_cmd);
 
 		if (execute_commands(minishell) != TRUE)
 		{
@@ -74,7 +73,15 @@ int	main(int argc, char **argv, char **envp)
 		else
 			continue;
 		//free_cmd_list(minishell->exec->first_cmd);
+		//cases_builtins(minishell);
 	}
+	free_mini(minishell);
+	/*
+	if (input != NULL)
+	{
+        free(input);
+	}
+	*/
 	return (0);
 }
 

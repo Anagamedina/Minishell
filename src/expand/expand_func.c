@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 00:51:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/27 23:38:19 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,23 +285,17 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 			{
 				// Expandir variables dentro de los fragmentos divididos
 				process_split_words(split_word, env_list);
-				i = 0;
-
 /*
+				i = 0;
 				printf("-------------------------\n");
 				while (split_word[i] != NULL)
-				{
-					printf("split_word[%d]: [%s]\n", i, split_word[i]);
-					i ++;
-				}
+					printf("split_word[%d]: [%s]\n", i, split_word[i++]);
 				printf("-------------------------\n");
 */
-
 				// Actualizar el contenido del token con los resultados procesados
 				update_token_str(curr_token, split_word);
-
 				// Liberar memoria usada por la división del token
-				free_split_result(split_word);
+				free_string_array(split_word);
 			}
 		}
 		curr_token = curr_token->next;

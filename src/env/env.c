@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/24 00:32:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:23:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,32 @@ t_env	*init_env(char *line)
 		return (NULL);
 	}
 	split_var = ft_split(line, '=');
-	if (!split_var)
+	if (!split_var[0] || !split_var[1])
 	{
 		free(new_env->full_var);
 		free(new_env);
+		free_string_array(split_var);
 		return (NULL);
 	}
-	new_env->key = split_var[0];
-    new_env->value = split_var[1];
+	new_env->key = ft_strdup(split_var[0]);
+	new_env->value = ft_strdup(split_var[1]);
+	free_string_array(split_var);
+	if (!new_env->key || !new_env->value)
+	{
+		free_env(new_env);
+		return (NULL);
+	}
 	new_env->next = NULL;
-	free(split_var);
 	return (new_env);
 }
 
 t_env	*init_empty_env_node(void)
 {
-	t_env *new_env = NULL;
+	t_env	*new_env;
 
+	new_env = NULL;
 	new_env = malloc(sizeof(t_env));
-	if(!new_env)
+	if (!new_env)
 		return (NULL);
 	new_env->full_var = NULL;
 	new_env->key = NULL;
@@ -57,26 +64,32 @@ t_env	*init_empty_env_node(void)
 
 t_list	*init_env_list(char **envp)
 {
-    t_list	*env_list;
-    t_env	*new_env;
-    int		i;
+	t_list	*env_list;
+	t_env	*new_env;
+	t_list	*new_node;
+	int		i;
 
-    env_list = NULL;
-    i = 0;
-    while (envp[i] != NULL)
-    {
-        new_env = init_env(envp[i]);
-        if (!new_env)
-        {
+	env_list = NULL;
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		new_env = init_env(envp[i]);
+		if (!new_env)
+		{
+			ft_lstclear(&env_list, (void (*)(void *))free_env);
+			return (NULL);
+		}
+		new_node = ft_lstnew(new_env);
+		if (!new_node)
+		{
 			free_env(new_env);
-            // ft_lstclear(&env_list, free_env);
-            // ft_lstclear(&env_list, free);
-            return (NULL);
-        }
-        ft_lstadd_back(&env_list, ft_lstnew(new_env)); // Añade el nuevo nodo
-        i ++;
-    }
-    return (env_list);
+			ft_lstclear(&env_list, (void (*)(void *))free_env);
+			return (NULL);
+		}
+		ft_lstadd_back(&env_list, new_node);
+		i ++;
+	}
+	return (env_list);
 }
 
 void	print_env_list(t_list *env_list)

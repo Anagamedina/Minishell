@@ -6,14 +6,18 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 10:19:35 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/24 15:17:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include "prototype.h"
+# include "free_structs.h"
+# include "macros.h"
+
 # include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
 # include <stdlib.h>  // malloc, free, exit
 # include <stdio.h>   // perror, printf
@@ -59,20 +63,20 @@ typedef struct s_tokens
 
 typedef struct s_env
 {
-    char            *key;
-    char            *value;
-    char            *full_var;
-    struct s_env    *next;
-}                   t_env;
+	char            *key;
+	char            *value;
+	char            *full_var;
+	struct s_env    *next;
+}				t_env;
 
 typedef struct	s_redir
 {
-	int 	fd_input;
-	int 	fd_output;
-	int 	type;
-	char 	*filename;
-	struct s_redir *next;
-} 			t_redir;
+	int				fd_input;
+	int				fd_output;
+	int				type;
+	char			*filename;
+	struct s_redir	*next;
+} 				t_redir;
 
 
 
@@ -82,9 +86,9 @@ typedef struct s_split_data
 	char	*str;
 	int		start;
 	int		end;
-	int		k;       // Índice del token actual en el array
+	int		k;       // index of current token
 	int		wc;
-}		t_split_data;
+}				t_split_data;
 
 typedef struct pre_tokens
 {
@@ -96,24 +100,23 @@ typedef struct pre_tokens
 
 typedef struct s_cmd
 {
-	char            *cmd;
-	char            **cmd_args;
-	int 			count_args;
+	char			*cmd;
+	char			**cmd_args;
+	int				count_args;
 	char 			*cmd_path;
-	int             cmd_id;
-	int     		is_builtin;
-	int     		is_external;
-	int             last_cmd;
-	int            	input_fd;
-	int             output_fd;
-	//int 			exit_status;
-	t_list 			*redir_list;
-	struct s_cmd    *next;
+	int				cmd_id;
+	int				is_builtin;
+	int				is_external;
+	int				input_fd;
+	int				output_fd;
+	//int			exit_status;
+	t_list			*redir_list;
+	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct s_exec
 {
-	t_list          *first_cmd;
+	t_list			*first_cmd;
 	char 			**env_vars;
 	char			**paths;
 	int				pipe_input_fd;
@@ -125,13 +128,13 @@ typedef struct s_exec
 
 typedef struct s_mini
 {
-    int             bash_lvl;       // Nivel de la shell
-    int             chars_in_line;  // Contador de caracteres en línea de entrada
-    t_list          *env;           // Variables de entorno
-    t_list          *token;         // Lista de tokens
+	int             bash_lvl;       // Nivel de la shell
+	int             chars_in_line;  // Contador de caracteres en línea de entrada
+	t_list          *env;           // Variables de entorno
+	t_list          *token;         // Lista de tokens
 	t_exec			*exec;
-    int             exit_status;    // Estado de salida del último comando ejecutado
-    // char            *prompt;        // Prompt actual (opcional) ???
-}                   t_mini;
+	int             exit_status;    // Estado de salida del último comando ejecutado
+	// char            *prompt;        // Prompt actual (opcional) ???
+}				t_mini;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 11:04:19 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/25 19:46:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ typedef struct s_tokens		t_tokens;
 typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
-
-typedef struct s_exec t_exec;
+typedef struct s_exec		t_exec;
 
 //typedef struct s_pipe t_pipe;
 
@@ -113,16 +112,13 @@ void		print_list_token_str_one_line(t_list *tokens_list);
 int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
-t_list		*generate_token_list(char *line);
 t_list		*tokenize_list(char **tokens);
-void		free_mini_list(t_mini *minishell);
 
 //************** TOKEN_FREE.c ********************/
 
 int			ft_strcmp(char *s1, char *s2);
 char		*ft_strncpy(char *s1, const char *s2, int n);
 char		*ft_strcpy(char *dest, const char *src);
-void		free_split_result(char **out);
 void		free_split_result_struct(char **out, int k);
 int			copy_word(t_split_data *data);
 void		ft_free_array(char **array);
@@ -139,10 +135,11 @@ void		skip_whitespace(const char *str, int *i);
 int			skip_quotes(const char *str, int *i);
 int			is_whitespace(char c);
 int			is_special_char(char c);
+t_list		*generate_token_list(char *line);
 
 //************** TOKEN_UTILS_WORD_COUNT.c ********************/
 
-int			count_words_split(const char *str);
+int			count_words_split(char* str);
 int			is_quote(char c);
 
 //************** TOKEN_SPLIT.c ********************/
@@ -237,16 +234,14 @@ void 		print_paths(char **paths);
 char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
-void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
-int		execute_commands(t_mini *mini);
+int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
-void 		process_flags(t_cmd *cmd, char *cmd_str);
-t_cmd 		*init_command(void);
+void		process_flags(t_cmd *cmd, char *cmd_str);
+t_cmd		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
-void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 //t_pipe		*init_pipe(void);
 //t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);

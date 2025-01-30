@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:08:29 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 16:22:03 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:07:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 	return (skipped);
 }
 
-int	copy_without_consecutive_quotes(char *line, char *new_line)
+void copy_without_consecutive_quotes(char* line, char* new_line)
 {
 	int	i;
 	int	j;
@@ -99,7 +99,6 @@ int	copy_without_consecutive_quotes(char *line, char *new_line)
 		}
 	}
 	new_line[j] = '\0';
-	return (TRUE);
 }
 
 /**
@@ -120,10 +119,7 @@ char	*remove_consecutive_quotes(char *line)
 	new_line = malloc(sizeof(char) * (len + 1));
 	if (!new_line)
 		return (NULL);
-	if (!copy_without_consecutive_quotes(line, new_line))
-	{
-		free(new_line);
-		return (NULL);
-	}
+	copy_without_consecutive_quotes(line, new_line);
+	free(line);
 	return (new_line);
 }
