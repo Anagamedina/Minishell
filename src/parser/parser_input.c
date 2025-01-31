@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 19:44:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:32:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int parse_redir(t_mini *mini)
 }
 
 
-/*void apply_redirections(t_cmd *cmd)
+void apply_redirections(t_cmd *cmd)
 {
 	t_list *redir_node = cmd->redir_list;
 	t_redir *redir;
@@ -96,7 +96,7 @@ int parse_redir(t_mini *mini)
 	if (cmd->output_fd != -1)
 		redirect_file(cmd->output_fd, STDOUT_FILENO);
 }
-*/
+
 
 
 /*int parse_redir(t_mini *mini)
