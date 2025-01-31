@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 15:50:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:57:12 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		//	TOKENS
 		if (minishell->tokens)
-			free_tokens((t_tokens *)minishell->tokens);
+			free_tokens(minishell->tokens);
 		minishell->tokens = generate_token_list(input);
         // free(input);
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		//	EXEC
 		if (minishell->exec)
 			free_exec(minishell->exec);
+
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
@@ -61,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 
 		if (minishell->exec->first_cmd)
             free_cmd_list(minishell->exec->first_cmd);
+
 		int i = 0;
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths, &i);
 
