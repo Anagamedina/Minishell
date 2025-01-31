@@ -239,6 +239,7 @@ int execute_commands(t_mini *mini)
 			// printf("PID HIJO: %d\n", getpid());
 			//ls .....> input ->| grep png |input -> wc -l
 			//redirigir entrada si no el primer comando
+			apply_redirections(curr_cmd);
 			if (curr_cmd->input_fd != STDIN_FILENO)
 			{
 				if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
@@ -318,3 +319,44 @@ int execute_commands(t_mini *mini)
 
 	return (TRUE);
 }
+
+
+
+/*if (pid == 0) // Proceso hijo
+{
+	apply_redirections(curr_cmd);
+
+	// Redirigir la entrada si no es el primer comando
+	if (curr_cmd->input_fd != STDIN_FILENO)
+	{
+		if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
+		{
+			perror("Error redirigiendo entrada");
+			exit(EXIT_FAILURE);
+		}
+		close(curr_cmd->input_fd); // ✅ Cerrar solo si se usó
+	}
+
+	// Redirigir la salida si no es el último comando
+	if (curr_cmd->output_fd != STDOUT_FILENO)
+	{
+		if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
+		{
+			perror("Error redirigiendo salida");
+			exit(EXIT_FAILURE);
+		}
+		close(curr_cmd->output_fd); // ✅ Cerrar solo si se usó
+	}
+
+	char **envp = lst_to_arr(mini->env);
+	if (curr_cmd->is_external == 1)
+	{
+		execute_external(curr_cmd, envp);
+	}
+	else if (curr_cmd->is_builtin == 1)
+	{
+		cases_builtins(mini);
+	}
+
+	exit(EXIT_FAILURE);
+}*/
