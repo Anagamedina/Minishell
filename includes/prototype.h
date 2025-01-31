@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 19:46:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/31 02:18:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void		expand_dollar(t_tokens *token_list, t_list *env_list);
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
 char		*extract_var_name(const char *str);
-char		*get_and_reconstruct_token(const char *split_word, const char *var_value);
+char		*get_and_reconstruct_token(const char *split_word, const char *var_value, int i);
 int			has_more_than_one_dollar_without_spaces_in_token(const char *str);
 
 //************** expand_utils.c ********************/
@@ -215,8 +215,8 @@ int			is_type_of_operator(t_tokens *token);
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);
-t_cmd 		*create_new_command(t_tokens *current_token, int cmd_id, char **paths);
-t_list		*create_cmd_list(t_list *token_list, char **paths);
+t_cmd 		*create_new_command(t_tokens *current_token, char **paths);
+t_list		*create_cmd_list(t_list *token_list, char **paths, int *cmd_id);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);

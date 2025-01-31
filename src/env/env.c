@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/28 15:23:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:32:59 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_env	*init_env(char *line)
 	t_env	*new_env;
 	char	**split_var;
 
-	new_env = NULL;
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
@@ -28,15 +27,11 @@ t_env	*init_env(char *line)
 		return (NULL);
 	}
 	split_var = ft_split(line, '=');
-	if (!split_var[0] || !split_var[1])
-	{
-		free(new_env->full_var);
-		free(new_env);
-		free_string_array(split_var);
-		return (NULL);
-	}
 	new_env->key = ft_strdup(split_var[0]);
-	new_env->value = ft_strdup(split_var[1]);
+	if (split_var[1])
+		 new_env->value = ft_strdup(split_var[1]);
+	else
+		new_env->value = ft_strdup("");
 	free_string_array(split_var);
 	if (!new_env->key || !new_env->value)
 	{
@@ -76,6 +71,7 @@ t_list	*init_env_list(char **envp)
 		new_env = init_env(envp[i]);
 		if (!new_env)
 		{
+			fprintf(stderr, "Error: No se pudo inicializar la variable de entorno [%s]\n", envp[i]);
 			ft_lstclear(&env_list, (void (*)(void *))free_env);
 			return (NULL);
 		}

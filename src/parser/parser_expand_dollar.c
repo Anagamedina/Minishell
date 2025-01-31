@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:54:59 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/31 13:40:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,34 @@ static void	handle_case_dquote_squote(t_tokens *token, t_list *env_list)
 }
 */
 
-static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
+void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 {
 	char	*processed_str;
 	char	*expanded_str;
 
+	if (!token || !token->str)
+		return ;
 	processed_str = remove_quotes_str(token->str, D_QUOTE);
 	if (!processed_str)
-		return;
-	free(token->str);
-	token->str = ft_strdup(processed_str);
+		return ;
+
+	if (processed_str != token->str)
+	{
+		free(token->str);
+		token->str = ft_strdup(processed_str);
+	}
 	free(processed_str);
 
 	token->length = ft_strlen(token->str);
 	expanded_str = expand_consecutives_variables(token, env_list);
 	if (!expanded_str)
-		return;
-	free(token->str);
-	token->str = ft_strdup(expanded_str);
+		return ;
+
+	if (token->str != expanded_str)
+	{
+		free(token->str);
+		token->str = ft_strdup(expanded_str);
+	}
 	free(expanded_str);
 }
 
@@ -100,6 +110,8 @@ static void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 void	handle_dollar_cases(t_tokens *token, \
 								t_list *env_list, t_tokens *next_token)
 {
+	char	*tmp;
+
 	if (check_dquote_dollar_and_squotes(token->str))
 	{
 		remove_and_replace_quotes(token, D_QUOTE);
@@ -107,19 +119,19 @@ void	handle_dollar_cases(t_tokens *token, \
 	}
 	if (check_dquote_squote_dollar_case(token->str))
 	{
-	//handle_case_dquote_squote(token, env_list);
 		remove_and_replace_quotes(token, D_QUOTE);
 		return;
 	}
 	if (handle_no_expand_cases(token, next_token) == 0)
 	{
+		tmp = token->str;
 		if (has_consecutives_env_variables_in_token(token))
 		{
 			handle_consecutive_vars(token, env_list);
+			if (tmp != token->str)
+				tmp = NULL;
 		}
 		else
-		{
 			remove_and_replace_quotes(token, D_QUOTE);
-		}
 	}
 }

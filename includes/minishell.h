@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:49:20 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/31 12:28:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_tokens
     t_type_token	type_token;
     size_t          length;
 	int				id_token;
-    struct s_tokens *next;
-    struct s_tokens *prev;           // Puntero opcional al token anterior
+    struct s_tokens	*next;
+    struct s_tokens	*prev;           // Puntero opcional al token anterior
 }                   t_tokens;
 
 typedef struct s_env
@@ -115,8 +115,7 @@ typedef struct s_exec
 	int				pipe_input_fd;
 	int				pipe_output_fd;
 	int             cmd_count;
-
-}		t_exec;
+}				t_exec;
 
 
 typedef struct s_mini
@@ -124,7 +123,7 @@ typedef struct s_mini
 	int             bash_lvl;       // Nivel de la shell
 	int             chars_in_line;  // Contador de caracteres en línea de entrada
 	t_list          *env;           // Variables de entorno
-	t_list          *token;         // Lista de tokens
+	t_list          *tokens;         // Lista de tokens
 	t_exec			*exec;
 	int             exit_status;    // Estado de salida del último comando ejecutado
 	// char            *prompt;        // Prompt actual (opcional) ???

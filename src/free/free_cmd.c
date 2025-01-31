@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:47:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/27 23:41:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:11:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_cmd(t_cmd *cmd)
 			free_string_array(cmd->cmd_args);
 		if (cmd->cmd_path)
 			free(cmd->cmd_path);
-		if (cmd->redir_list)
+		// if (cmd->redir_list)
 //			free_redir(cmd->redir_list);
 		free(cmd);
 		cmd = temp;

@@ -1,45 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 16:12:00 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/30 13:28:16 by dasalaza         ###   ########.fr       */
+/*   Created: 2024/01/25 14:54:54 by anamedin          #+#    #+#             */
+/*   Updated: 2024/02/19 15:00:37 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	size_s1;
-	size_t	i;
-	char	*duplicate;
+	unsigned char		*dstr;
+	const unsigned char	*sstr;
 
-	size_s1 = ft_strlen(s1);
-	if (!s1)
+	dstr = dst;
+	sstr = src;
+	if (dst == NULL && src == NULL)
 		return (NULL);
-	duplicate = malloc(sizeof(char) * (size_s1 + 1));
-	if (duplicate == NULL)
-		return (NULL);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		duplicate[i] = s1[i];
-		i++;
-	}
-	duplicate[i] = '\0';
-	return (duplicate);
+	while (n--)
+		*dstr++ = *sstr++;
+	return (dst);
 }
-
-/*int main(void)
-{
-	char s1[] = "hola ana";
-	char *result = ft_strdup(s1);
-	printf("%s", result);
-	return(0);
-
-
-}*/

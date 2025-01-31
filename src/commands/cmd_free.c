@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_free.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 23:48:37 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/01/31 01:04:26 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	free_command(t_cmd *cmd)
@@ -9,6 +21,8 @@ void	free_command(t_cmd *cmd)
 		return ;
 	if (cmd->cmd)
 		free(cmd->cmd);
+	if (cmd->cmd_path)
+		free(cmd->cmd_path);
 	if (cmd->cmd_args)
 	{
 		while (cmd->cmd_args[i] != NULL)
@@ -18,6 +32,7 @@ void	free_command(t_cmd *cmd)
 		}
 		free(cmd->cmd_args);
 	}
+	// free(cmd);
 }
 void free_cmd_list(t_list *cmd_list)
 {

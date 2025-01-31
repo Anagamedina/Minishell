@@ -19,8 +19,8 @@ void	free_mini(t_mini *mini)
 	if (mini->env)
 		free_env((t_env *)mini->env);
 	// Nota: Comentado porque se libera en cada iteracion del bucle main.
-	if (mini->token)
-		free_tokens((t_tokens *)mini->token);
+	if (mini->tokens)
+		free_tokens((t_tokens *)mini->tokens);
 	if (mini->exec)
 		free_exec(mini->exec);
 	free(mini);

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/28 12:05:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/31 00:15:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ char	*read_input(void)
 	char	*input;
 
 	input = readline("minishell> ");
-	if (input && *input)
+	if (!input)
 	{
-		add_history(input);
+		return (NULL);
+		// printf("exit\n");
+		// exit(0);
 	}
+	if (*input)
+		add_history(input);
 	return (input);
 }
 

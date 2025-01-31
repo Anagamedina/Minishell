@@ -93,7 +93,7 @@ void	builtin_export(t_mini *mini)
 	t_cmd	*cmd_01;
 	t_tokens 	*first_token;
 
-	first_token = mini->token->content;
+	first_token = mini->tokens->content;
 	cmd_01 = mini->exec->first_cmd->content;
 	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
 	{
@@ -105,7 +105,7 @@ void	builtin_export(t_mini *mini)
 		else
 		{
 			printf("entro en export con variable\n");
-			init_process_export(mini->token, mini->env);
+			init_process_export(mini->tokens, mini->env);
 		}
 		
 	}

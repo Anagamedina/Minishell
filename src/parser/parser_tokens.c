@@ -68,7 +68,7 @@ void	update_words_in_tokens(t_mini *mini)
 	t_list *token_list;
 	t_tokens *curr_token;
 
-	token_list = mini->token;
+	token_list = mini->tokens;
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
@@ -95,7 +95,7 @@ void	parser_tokens(t_mini *mini)
 
 	update_words_in_tokens(mini);
 
-	token_list = mini->token;
+	token_list = mini->tokens;
 	env_list = mini->env;
 
 	if (token_list && (((t_tokens *) token_list->content)->type_token == BUILTINS || \

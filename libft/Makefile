@@ -6,7 +6,7 @@
 #    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 18:38:08 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/13 12:30:23 by  dasalaza        ###   ########.fr        #
+#    Updated: 2025/01/30 16:50:38 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ NAME = libft.a
 HEADER = libft.h
 
 SRCS =  ft_bzero.c ft_calloc.c \
+	ft_memcpy.c ft_memset.c \
 	ft_atoi.c ft_strchr.c ft_strjoin.c \
     ft_strlen.c ft_strnstr.c ft_substr.c \
     ft_itoa.c ft_strdup.c ft_strlcat.c \
@@ -45,7 +46,6 @@ $(NAME): $(OBJS)
 
 bonus: $(OBJS) $(OBJS_BONUS)
 		$(ARC) $(NAME) $(OBJS) $(OBJS_BONUS)
-
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/29 23:21:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:19:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,15 @@ t_mini	*init_mini_list(char **envp)
     minishell->env = init_env_list(envp);
     if (minishell->env == NULL)
     {
+    	fprintf(stderr, "Error: No se pudo inicializar la lista de variables de entorno.\n");
     	free(minishell);
         return (NULL);
     }
-    minishell->token = NULL;
+    minishell->tokens = NULL;
     minishell->exec = NULL;
     minishell->exit_status = -1;
     return (minishell);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void	print_mini(t_mini *mini)
 {
@@ -69,8 +54,8 @@ void	print_mini(t_mini *mini)
         printf("No hay variables de entorno.\n");
 
     // printf("\n--- Tokens ---\n");
-    if (mini->token)
-        print_list_token((t_list *)mini->token); 
+    if (mini->tokens)
+        print_list_token((t_list *)mini->tokens);
     else
         printf("No hay tokens.\n");
 

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:30:43 by anamedin          #+#    #+#             */
-/*   Updated: 2024/10/14 11:30:59 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:05:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@
 # include <fcntl.h>
 # include <stdarg.h>
 
-
-
 typedef struct s_list
 {
 	void			*content;
-	struct s_list		*next;
+	struct s_list	*next;
 
 }					t_list;
 
@@ -59,6 +57,8 @@ int				ft_isdigit(int c);
 
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
+void			*ft_memset(void *b, int c, size_t len);
 
 /* ************************************************************************** */
 /*                                  PRINT                                     */

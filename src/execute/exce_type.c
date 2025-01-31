@@ -24,7 +24,7 @@ int is_cmd_external(t_mini *mini, t_tokens *token)
 {
 	char		*cmd_path;
 
-	if (!mini || !mini->token)
+	if (!mini || !mini->tokens)
 		return FALSE;
 
 	if (!mini->exec || !mini->exec->paths)
