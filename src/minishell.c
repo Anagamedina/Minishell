@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 19:21:31 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:39:48 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,12 @@ int	main(int argc, char** argv, char** envp)
 		}
 
 		update_words_in_tokens(minishell);
-		//check_redir_syntax(minishell);
-		//llamar a checkar las redis repiticion .... 
-		//llamar una funcion para checkear pipes y ; ( | cmd2 o ; (cmd2))
-
-		if(parse_redir(minishell) != TRUE)
+		if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
 			continue;
 		}
+
 		parser_tokens(minishell);
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)

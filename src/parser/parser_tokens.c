@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 15:57:45 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:49:38 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ void	parser_tokens(t_mini *mini)
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *) token_list->content;
-		//check_redir_syntax(curr_token);
 		if (token_list->next != NULL)
 			next_token = (t_tokens *) token_list->next->content;
 		else
 			next_token = NULL;
+	
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
 		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || \
