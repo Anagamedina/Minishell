@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 16:02:17 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/31 19:44:35 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,7 @@
 
 #include "../../includes/minishell.h"
 
-int  	check_file(t_mini *mini, t_tokens *token)
-{
-	t_list *current = mini->token;
 
-	if (!current || !current->next)
-	{
-		printf("Error: Redirección de salida sin archivo.\n");
-		return (FALSE);
-	}
-	t_tokens *next_token = (t_tokens *)current->next->content;
-	if (next_token->type_token != WORD)
-	{
-		printf("Error: Redirección debe ir seguida de un archivo.\n");
-		return (FALSE);	
-	}
-
-	return (TRUE);
-
-}
 
 
 int parse_redir(t_mini *mini)
@@ -59,7 +41,7 @@ int parse_redir(t_mini *mini)
 			}
 			t_tokens *next_token = (t_tokens *)token_list->next->content;
 
-			if (next_token->type_token != WORD)
+			if (next_token->type_token != FILENAME)
 			{
 				printf("Error: Redirección '%s' debe ir seguida de un archivo.\n", curr_token->str);
 				return (FALSE);
@@ -81,7 +63,7 @@ int parse_redir(t_mini *mini)
 }
 
 
-void apply_redirections(t_cmd *cmd)
+/*void apply_redirections(t_cmd *cmd)
 {
 	t_list *redir_node = cmd->redir_list;
 	t_redir *redir;
@@ -114,7 +96,7 @@ void apply_redirections(t_cmd *cmd)
 	if (cmd->output_fd != -1)
 		redirect_file(cmd->output_fd, STDOUT_FILENO);
 }
-
+*/
 
 
 /*int parse_redir(t_mini *mini)
@@ -133,7 +115,7 @@ void apply_redirections(t_cmd *cmd)
 			t_tokens *next_token = (t_tokens *)token_list->next->content;
 			if (curr_token->type_token == REDIR_IN || curr_token->type_token == REDIR_OUT || curr_token->type_token == REDIR_APPEND)
 			{
-				if (next_token->type_token != WORD)
+				if (next_token->type_token != FILENAME)
 				{
 					printf("Error: Redirección '%s' debe ir seguida de un archivo.\n", curr_token->str);
 					return (FALSE);
@@ -154,4 +136,27 @@ void apply_redirections(t_cmd *cmd)
 		token_list = token_list->next;
 	}
 	return (TRUE);
+}
+*/
+
+
+
+/*int  	check_file(t_mini *mini, t_tokens *token)
+{
+	t_list *current = mini->token;
+
+	if (!current || !current->next)
+	{
+		printf("Error: Redirección de salida sin archivo.\n");
+		return (FALSE);
+	}
+	t_tokens *next_token = (t_tokens *)current->next->content;
+	if (next_token->type_token != WORD)
+	{
+		printf("Error: Redirección debe ir seguida de un archivo.\n");
+		return (FALSE);	
+	}
+
+	return (TRUE);
+
 }*/

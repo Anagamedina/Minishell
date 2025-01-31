@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 12:12:50 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:17:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,12 +234,7 @@ int execute_commands(t_mini *mini)
 
 		if (pid == 0)
 		{
-			// Proceso hijo
-			// printf("Proceso hijo ejecutándose\n");
-			// printf("PID HIJO: %d\n", getpid());
-			//ls .....> input ->| grep png |input -> wc -l
-			//redirigir entrada si no el primer comando
-			apply_redirections(curr_cmd);
+			//apply_redirections(curr_cmd);
 			if (curr_cmd->input_fd != STDIN_FILENO)
 			{
 				if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)

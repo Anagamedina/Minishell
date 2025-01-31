@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 16:34:38 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/31 17:05:05 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char** argv, char** envp)
 		}
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
+
 		print_list_commands(minishell->exec->first_cmd);
 
 		if (execute_commands(minishell) != TRUE)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 13:49:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:07:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 
 void	update_words_in_tokens(t_mini *mini)
 {
-	t_list *token_list;
-	t_tokens *curr_token;
+	t_list 		*token_list;
+	t_tokens 	*curr_token;
+	t_tokens 	*curr_next_token;
+	
 
 	token_list = mini->token;
 	while (token_list != NULL)
@@ -77,9 +79,20 @@ void	update_words_in_tokens(t_mini *mini)
 				curr_token->type_token = BUILTINS;
 			else if (is_cmd_external(mini, curr_token))
 				curr_token->type_token = CMD_EXTERNAL;
+			// else if (is_redir(curr_token))
+			// {
+			// }
+			// 	curr_token->type_token = WORD;
 			else
-				curr_token->type_token = WORD;
+				continue ;
 		}
+		else if (is_redir(curr_token))
+		{
+			curr_next_token = (t_tokens *)token_list->next->content;
+			if (curr_next_token->type_token == WORD)
+				curr_next_token->type_token = FILENAME;
+		}
+		
 		token_list = token_list->next;
 	}
 }

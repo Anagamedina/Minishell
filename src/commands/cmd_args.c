@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/26 00:49:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/31 18:40:49 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void count_args(t_list *token_list, t_cmd *cmd)
 			cmd->count_args = 1;
 		}
 			// Si encontramos un delimitador (PIPE), detenemos el procesamiento del comando actual
-		else if (token->type_token == PIPE || token->type_token == DELIMITER)
+		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND)
 		{
 			break;
 		}

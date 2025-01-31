@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:13:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 20:20:25 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_cmd *init_command(void)
 	new_cmd->last_cmd = -0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
+	new_cmd->redir_list = NULL;
 	new_cmd->next = NULL;
 
 	return (new_cmd);
@@ -70,6 +71,7 @@ t_cmd	*create_new_command(t_tokens *token, int cmd_id, char **paths)
 			return NULL;
 		}
 	}
+	add_redirection_to_cmd(new_cmd, token);
 	return new_cmd;
 }
 

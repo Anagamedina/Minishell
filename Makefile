@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/30 17:34:28 by anamedin         ###   ########.fr        #
+#    Updated: 2025/01/31 19:15:03 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,9 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/get_input.c \
 		$(SRC_EXECUTE)/tests.c \
-		$(SRC_REDIR)/redir_syntax.c \
-		$(SRC_REDIR)/redir_file.c
+		$(SRC_REDIR)/redir_file.c \
+		$(SRC_REDIR)/redir_init.c \
+		$(SRC_REDIR)/redir_syntax.c 
 
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))

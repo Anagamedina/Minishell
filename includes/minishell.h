@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 10:19:35 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/01/31 19:35:50 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_type_token
 	NULL_TYPE,
 	PIPE,
 	HEREDOC,
+	FILENAME,
 }					t_type_token;
 
 /*
@@ -65,16 +66,6 @@ typedef struct s_env
     struct s_env    *next;
 }                   t_env;
 
-typedef struct	s_redir
-{
-	int 	fd_input;
-	int 	fd_output;
-	int 	type;
-	char 	*filename;
-	struct s_redir *next;
-} 			t_redir;
-
-
 
 typedef struct s_split_data
 {
@@ -93,6 +84,15 @@ typedef struct pre_tokens
 }		t_pre_tokens;
 
 // t_pipex         *first_pipe;    // Estructura del primer pipe
+typedef struct	s_redir
+{
+	int 	fd_input;
+	int 	fd_output;
+	int 	type;
+	char 	*filename;
+	struct s_redir *next;
+} 			t_redir;
+
 
 typedef struct s_cmd
 {

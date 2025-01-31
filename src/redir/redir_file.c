@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 15:48:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:06:23 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,6 @@ int open_file(char *file, int type)
 
 
 
-t_redir *init_redirection(t_cmd *cmd, t_tokens *token)
-{
-	t_redir *new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
-		return (NULL);
-	//copiar el nonbre del archivo asociado a la redirección
-	new_redir->filename = ft_strdup(token->str);
-	if (!new_redir->filename)
-	{
-		perror("Error: al duplicar el nombre del archivo");
-		free(new_redir);
-		return (NULL);
-	}
-	new_redir->type = token->type_token;
-	new_redir->fd_input = -1;
-	new_redir->fd_output = -1;
-	new_redir->next = NULL;
-	return (new_redir);
-}
-
-// Agrega una redirección a la lista de redirecciones del comando
-void add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
-{
-	t_redir *new_redir = init_redirection(cmd, token);
-	if (!new_redir)
-		return;
-	t_list *new_node = ft_lstnew(new_redir);
-	if (!new_node)
-	{
-		//free(new_redir->filename);
-		//free(new_redir);
-		return;
-	}
-	if (!cmd->redir_list)
-		cmd->redir_list = new_node;
-	else
-		ft_lstadd_back(&cmd->redir_list, new_node);
-
-}
 
 
 
@@ -92,45 +53,7 @@ void redirect_file(int fd, int target_fd)
 	}
 }
 
-// // Maneja la redirección de entrada con un valor predeterminado
-// // Si el archivo de entrada no existe, crea un pipe vacío para continuar la ejecución
-// // Devuelve 0 si la redirección es exitosa y 1 si se usa un flujo vacío
-int input_redirect_with_default(char *file, t_cmd *cmd)
-{
-	int fd;
-	int p_empty_fd[2];
 
-	// Intentar abrir el archivo en modo lectura
-	fd = open(file, O_RDONLY);
-	if (fd == -1) {
-		if (pipe(p_empty_fd) == -1) {
-			perror("Error creating pipe");
-			exit(1);
-		}
-
-		// Redirigir la entrada al pipe vacío
-		if (dup2(p_empty_fd[0], cmd->input_fd) == -1) {
-			perror("Error duplicating pipe");
-			exit(1);
-		}
-
-		close(p_empty_fd[0]);
-		close(p_empty_fd[1]);
-
-		free(file);
-		return 1;    // Continuar la ejecución con un flujo vacío
-	}
-
-	// Si el archivo existe, redirigir normalmente
-	if (dup2(fd, cmd->input_fd) == -1)
-	{
-		perror("Error dup");
-		exit(1);
-	}
-	close(fd);
-	free(file);
-	return 0;
-}
 
 // // Maneja la redirección de entrada o salida de un comando
 // // Abre el archivo correspondiente, redirige el descriptor de archivo y lo cierra
