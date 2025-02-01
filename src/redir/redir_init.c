@@ -1,17 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_init.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/01 12:55:26 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/01 21:19:18 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 #include "../../includes/minishell.h"
 
 
-t_redir *init_redirection(t_cmd *cmd, t_tokens *token)
+t_redir *init_redirection(t_tokens *token, t_tokens* next_token)
 {
+	t_redir	*new_redir;
 
-	printf("cmd: %s\n", cmd->cmd);
-	t_redir *new_redir = malloc(sizeof(t_redir));
+	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
 		return (NULL);
-	//copiar el nonbre del archivo asociado a la redirección
-	new_redir->filename = ft_strdup(token->str);
+
+	if (next_token && next_token->type_token == FILENAME)
+		new_redir->filename = ft_strdup(next_token->str);
+	else
+		new_redir->filename = NULL;
+
+	// new_redir->filename = ft_strdup(token->str);
+	printf("new_redir->filename: [%s]\n", new_redir->filename);
+
 	if (!new_redir->filename)
 	{
 		perror("Error: al duplicar el nombre del archivo");
@@ -25,16 +44,40 @@ t_redir *init_redirection(t_cmd *cmd, t_tokens *token)
 	return (new_redir);
 }
 
-//NO ESTA BIEN ESTE
-// Agrega una redirección a la lista de redirecciones del comando
-//(last_cmd, filename)
-
-void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
+void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_token)
 {
-	t_redir	*new_redir; 
+	t_redir	*new_redir;
 	t_list	*new_node;
 
-	new_redir = init_redirection(cmd, token);
+	if (!cmd || !redir_token || !file_token)
+        return;
+
+    new_redir = init_redirection(redir_token, file_token);
+    if (!new_redir)
+        return;
+
+    new_node = ft_lstnew(new_redir);
+    if (!new_node)
+    {
+        free(new_redir->filename);
+        free(new_redir);
+        return;
+    }
+
+    if (!cmd->redir_list)
+        cmd->redir_list = new_node;
+    else
+        ft_lstadd_back(&cmd->redir_list, new_node);
+}
+
+
+/*
+void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
+{
+	t_redir	*new_redir;
+	t_list	*new_node;
+
+	new_redir = init_redirection(token);
 
 	if (!new_redir)
 		return ;
@@ -46,16 +89,15 @@ void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
 		//free(new_redir);
 		return;
 	}
-
 	if (cmd->redir_list == NULL)
 	{
-		cmd->redir_list = malloc(sizeof(t_list));
 		cmd->redir_list = new_node;
 	}
-	// else
-	// 	ft_lstadd_back(&cmd, new_node);
+	else
+		ft_lstadd_back(&cmd->redir_list, new_node);
 
 }
+*/
 
 
 // // Maneja la redirección de entrada con un valor predeterminado

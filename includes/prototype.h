@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 18:58:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/01 16:46:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_tokens		t_tokens;
 typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
+typedef struct s_redir		t_redir;
 
 typedef struct s_exec t_exec;
 
@@ -259,10 +260,12 @@ int			parse_redir(t_mini *mini);
 int 		check_file(t_mini *mini, t_tokens *token);
 int 		check_repeat_redir(t_list *tokens);
 int			open_file(char *file, int type);
-void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *token);
+void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_token);
 void		redirect_file(int fd, int target_fd);
-void		apply_redirections(t_cmd *cmd);
+int apply_redirections(t_cmd* cmd);
 int			is_redir(t_tokens* token);
+void handle_redirection(char *file, t_cmd *cmd, int type);
+t_redir		*init_redirection(t_tokens *token, t_tokens* next_token);
 
 
 

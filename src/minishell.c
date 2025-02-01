@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/01 13:38:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/01 23:04:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int argc, char** argv, char** envp)
 	(void)argv;
 	char* input;
 	t_mini* minishell;
+	// int has_redirections;
 
 	minishell = init_mini_list(envp);
 
@@ -44,24 +45,23 @@ int	main(int argc, char** argv, char** envp)
 			printf("Error al generar la lista de tokens.\n");
 			continue;
 		}
+		// print_list_token_str(minishell->token);
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
 			return 1;
 		}
-
 		update_words_in_tokens(minishell);
-		// print_list_token_str(minishell->token);
+		parser_tokens(minishell);
+
 		if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
 			continue;
 		}
-
-		parser_tokens(minishell);
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
-		// print_list_commands(minishell->exec->first_cmd);
+
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");
@@ -70,9 +70,7 @@ int	main(int argc, char** argv, char** envp)
 
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->token);
 
-		// print_list_commands(minishell->exec->first_cmd);
-
-		if (execute_commands(minishell) != TRUE)
+		if (execute_commands(minishell) == FALSE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
 			free(minishell);
@@ -80,8 +78,8 @@ int	main(int argc, char** argv, char** envp)
 		}
 		else
 			continue;
-		//free_cmd_list(minishell->exec->first_cmd);
 	}
+	//free_cmd_list(minishell->exec->first_cmd);
 	return (0);
 }
 

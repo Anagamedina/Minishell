@@ -54,7 +54,7 @@ int parse_redir(t_mini *mini)
 			}
 
 			// Agregar redirección al comando correspondiente
-			//add_redirection_to_cmd(last_cmd, next_token);
+			// add_redirection_to_cmd(last_cmd, next_token);
 		}
 
 		token_list = token_list->next;
@@ -63,39 +63,7 @@ int parse_redir(t_mini *mini)
 }
 
 
-void apply_redirections(t_cmd *cmd)
-{
-	t_list *redir_node = cmd->redir_list;
-	t_redir *redir;
 
-	while (redir_node)
-	{
-		redir = (t_redir *)redir_node->content;
-
-		if (redir->type == REDIR_IN)
-			cmd->input_fd = open_file(redir->filename, REDIR_IN);
-		else if (redir->type == REDIR_OUT)
-			cmd->output_fd = open_file(redir->filename, REDIR_OUT);
-		else if (redir->type == REDIR_APPEND)
-			cmd->output_fd = open_file(redir->filename, REDIR_APPEND);
-
-		if (cmd->input_fd == -1 || cmd->output_fd == -1)
-		{
-			printf("Error: No se pudo abrir el archivo '%s'.\n", redir->filename);
-			exit(1);
-		}
-
-		redir_node = redir_node->next;
-	}
-
-	// Aplicar redirección de entrada
-	if (cmd->input_fd != -1)
-		redirect_file(cmd->input_fd, STDIN_FILENO);
-
-	// Aplicar redirección de salida
-	if (cmd->output_fd != -1)
-		redirect_file(cmd->output_fd, STDOUT_FILENO);
-}
 
 
 
