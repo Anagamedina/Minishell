@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/01 13:30:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:08:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 	}
 }
 
-
- static void	handle_special_cases(t_tokens *token, t_list *env_list, t_tokens *next_token)
- {
-	 if (ft_strchr_true(token->str, DOLLAR_SIGN))
-		 handle_dollar_cases(token, env_list, next_token);
-	 else
-		 remove_and_replace_quotes(token, D_QUOTE);
- }
+static void	handle_special_cases(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		handle_dollar_cases(token, env_list, next_token);
+	else
+		remove_and_replace_quotes(token, D_QUOTE);
+}
 
  void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
  {
@@ -83,7 +82,7 @@ void	update_words_in_tokens(t_mini *mini)
 				//continue ;
 				curr_token->type_token = WORD;
 		}
-		else if (is_redir(curr_token))
+		else if (is_redir(curr_token) && token_list->next != NULL)
 		{
 			curr_next_token = (t_tokens *)token_list->next->content;
 			if (curr_next_token->type_token == WORD)
@@ -93,7 +92,6 @@ void	update_words_in_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
-
 
 
 void	parser_tokens(t_mini *mini)
