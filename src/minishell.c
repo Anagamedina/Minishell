@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 17:05:05 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/01 13:20:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char** argv, char** envp)
 			break;
 		}
 		minishell->token = generate_token_list(input);
+		print_list_token_str(minishell->token);
 
 		if (minishell->token == NULL)
 		{
@@ -51,6 +52,7 @@ int	main(int argc, char** argv, char** envp)
 		}
 
 		update_words_in_tokens(minishell);
+		print_list_token_str(minishell->token);
 		if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
@@ -59,6 +61,7 @@ int	main(int argc, char** argv, char** envp)
 
 		parser_tokens(minishell);
 		minishell->exec->first_cmd = create_cmd_list(minishell->token, minishell->exec->paths);
+		print_list_commands(minishell->exec->first_cmd);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error al crear la lista de comandos.\n");

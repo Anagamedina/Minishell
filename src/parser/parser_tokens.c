@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 20:07:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/01 13:30:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 	 }
 	 if (ft_strchr_true(token->str, DOLLAR_SIGN))
 		 handle_dollar_cases(token, env_list, next_token);
-	else 
-		return;
+	// else
+	// 	return;
  }
 
 
@@ -79,12 +79,9 @@ void	update_words_in_tokens(t_mini *mini)
 				curr_token->type_token = BUILTINS;
 			else if (is_cmd_external(mini, curr_token))
 				curr_token->type_token = CMD_EXTERNAL;
-			// else if (is_redir(curr_token))
-			// {
-			// }
-			// 	curr_token->type_token = WORD;
 			else
-				continue ;
+				//continue ;
+				curr_token->type_token = WORD;
 		}
 		else if (is_redir(curr_token))
 		{
@@ -123,13 +120,13 @@ void	parser_tokens(t_mini *mini)
 	
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
-		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || \
-						curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
+		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
 		{	
 			token_list = token_list->next;
 			continue;
 		}
-		else
-			break;
+		// else
+			token_list = token_list->next;
+			// break;
 	}
 }

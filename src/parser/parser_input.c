@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 20:32:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/01 13:02:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int parse_redir(t_mini *mini)
 			}
 
 			// Agregar redirección al comando correspondiente
-			add_redirection_to_cmd(last_cmd, next_token);
+			//add_redirection_to_cmd(last_cmd, next_token);
 		}
 
 		token_list = token_list->next;

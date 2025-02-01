@@ -257,7 +257,7 @@ void	test_extract_var_name(void)
 }
 */
 
-/**
+/*zoom*
  * @see get_and_
  */
 /*
