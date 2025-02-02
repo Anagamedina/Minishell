@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/01 13:02:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/02 15:58:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int parse_redir(t_mini *mini)
 		// Si encontramos un comando, actualizamos last_cmd
 		if (curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
 			last_cmd = (t_cmd *)token_list->content;
+
+		printf("curr_token->type_token: %d\n", curr_token->type_token);
+		printf("last_cmd: %s\n", last_cmd->cmd);
 
 		// Si encontramos una redirección, la asociamos al último comando
 		if (curr_token->type_token == REDIR_IN || curr_token->type_token == REDIR_OUT || curr_token->type_token == REDIR_APPEND)
