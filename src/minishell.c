@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/02 19:49:16 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/02 21:26:54 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
@@ -32,17 +44,22 @@ int	main(int argc, char **argv, char **envp)
 		if (!input || !check_quotes_line(input))
 		{
 			printf("Error: fail reading input.\n");
+			free(input);
 			break ;
 		}
+
 		//	TOKENS
+		//echo $DISPLAY $USERNAME "123" $HOME 'abc' '$HOME'
+		// echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc
+
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);
 		minishell->tokens = generate_token_list(input);
-        // free(input);
 
 		if (!minishell->tokens)
 		{
-			printf("Error al generar la lista de tokens.\n");
+			perror("Error al generar la lista de tokens.\n");
+			free(input);
 			continue ;
 		}
 
@@ -51,13 +68,10 @@ int	main(int argc, char **argv, char **envp)
 		//	EXEC
 		if (minishell->exec)
 			free_exec(minishell->exec);
-
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
-			// free_mini(minishell);
-			// return (1);
 		}
 
 		if (minishell->exec->first_cmd)
@@ -69,6 +83,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!minishell->exec->first_cmd)
 		{
 			printf("Error: creating commands list.\n");
+			free(input);
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
@@ -77,8 +92,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
 			free_mini(minishell);
+			free(input);
 			break ;
 		}
+		free(input);
 	}
 
 	free_mini(minishell);

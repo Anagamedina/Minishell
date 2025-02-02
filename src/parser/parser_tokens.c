@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:04:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/02 22:57:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,36 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 		 remove_and_replace_quotes(token, D_QUOTE);
  }
 
- void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
- {
-	 if (handle_single_quote(token))
-	 {
-		 remove_and_replace_quotes(token, S_QUOTE);
-		 return;
-	 }
-	 if (handle_special_quotes(token))
-	 {
-		 handle_special_cases(token, env_list, next_token);
-		 return;
+void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	if (handle_single_quote(token))
+		remove_and_replace_quotes(token, S_QUOTE);
+
+	if (handle_special_quotes(token))
+		handle_special_cases(token, env_list, next_token);
+	if (has_even_double_quotes(token) || ft_strchr_true(token->str, DOLLAR_SIGN))
+		handle_dollar_cases(token, env_list, next_token);
+	/*
+	if (has_even_double_quotes(token))
+		handle_dollar_cases(token, env_list, next_token);
+	if (ft_strchr_true(token->str, DOLLAR_SIGN))
+		handle_dollar_cases(token, env_list, next_token);
+*/
+}
+
+/*
+ *original
+void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+{
+	if (handle_single_quote(token))
+	{
+		remove_and_replace_quotes(token, S_QUOTE);
+		return;
+	}
+	if (handle_special_quotes(token))
+	{
+		handle_special_cases(token, env_list, next_token);
+		return;
 	 }
 	 if (has_even_double_quotes(token))
 	 {
@@ -59,9 +78,8 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 		 handle_dollar_cases(token, env_list, next_token);
 	else 
 		return;
- }
-
-
+}
+*/
 
 void	update_words_in_tokens(t_mini *mini)
 {
@@ -85,7 +103,6 @@ void	update_words_in_tokens(t_mini *mini)
 	}
 }
 
-
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -98,8 +115,41 @@ void	parser_tokens(t_mini *mini)
 	token_list = mini->tokens;
 	env_list = mini->env;
 
-	if (token_list && (((t_tokens *) token_list->content)->type_token == BUILTINS || \
-		((t_tokens *) token_list->content)->type_token == CMD_EXTERNAL))
+	if (token_list && is_builtin_or_external((t_tokens *) token_list->content))
+		token_list = token_list->next;
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *) token_list->content;
+		if (token_list->next != NULL)
+			next_token = (t_tokens *) token_list->next->content;
+		else
+			next_token = NULL;
+
+		if (curr_token->type_token == WORD)
+			handle_tokens(curr_token, env_list, next_token);
+		if (is_special_token(curr_token))
+		{
+			token_list = token_list->next;
+			continue ;
+		}
+		token_list = token_list->next;
+	}
+}
+/*
+ * ORIGNAL
+void	parser_tokens(t_mini *mini)
+{
+	t_list		*token_list;
+	t_list		*env_list;
+	t_tokens	*curr_token;
+	t_tokens	*next_token;
+
+	update_words_in_tokens(mini);
+
+	token_list = mini->tokens;
+	env_list = mini->env;
+
+	if (token_list && is_builtin_or_external((t_tokens *) token_list->content))
 		token_list = token_list->next;
 	while (token_list != NULL)
 	{
@@ -111,12 +161,12 @@ void	parser_tokens(t_mini *mini)
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
 		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || \
-						curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
-		{	
+			curr_token->type_token == CMD_EXTERNAL || curr_token->type_token == BUILTINS)
+		{
 			token_list = token_list->next;
 			continue;
 		}
 		else
-			break;
+			token_list = token_list->next;
 	}
-}
+}*/

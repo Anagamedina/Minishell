@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 02:18:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/02 22:27:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void		ft_free_array(char **array);
 int			set_token_type(char *str);
 //void		update_words_to_builtin(t_list *tokens_list);
 void		identify_commands(t_list *tokens_list, t_mini*exec_info);
+int			is_builtin_or_external(t_tokens *token);
+int			is_special_token(t_tokens *token);
 
 //************** TOKEN_UTILS_SPLIT.c ********************/
 
@@ -198,7 +200,7 @@ void		expand_dollar(t_tokens *token_list, t_list *env_list);
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
 char		*extract_var_name(const char *str);
-char		*get_and_reconstruct_token(const char *split_word, const char *var_value, int i);
+char		*get_and_reconstruct_token(char* split_word, const char *var_value, int i);
 int			has_more_than_one_dollar_without_spaces_in_token(const char *str);
 
 //************** expand_utils.c ********************/
