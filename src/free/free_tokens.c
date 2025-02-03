@@ -6,11 +6,11 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:44:53 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 17:11:27 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/02/03 19:54:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	free_tokens(t_list *tokens_list)
 {
@@ -33,7 +33,6 @@ void	free_tokens(t_list *tokens_list)
 		tokens_list = temp;
 	}
 }
-
 
 /*
 void	free_tokens(t_tokens *tokens)

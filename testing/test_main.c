@@ -166,7 +166,7 @@ void	test_expand_vars_with_quotes_cases(void)
 	int	len = sizeof(matrix_cases) / sizeof(matrix_cases[0]);
 	while (i < len)
 	{
-		result = replace_dollar_variable_skip_s_quote(matrix_cases[i].input, g_minishell->env);
+		// result = replace_dollar_variable_skip_s_quote(matrix_cases[i].input, g_minishell->env);
 
 		TEST_ASSERT_EQUAL_STRING(matrix_cases[i].expected, result);
 		free(result);

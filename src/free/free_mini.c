@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:47:26 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 18:10:26 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/02/03 19:54:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 void	free_mini(t_mini *mini)
 {
 	if (!mini)
-		return;
+		return ;
 	if (mini->env)
 		free_env((t_env *)mini->env);
-	// Nota: Comentado porque se libera en cada iteracion del bucle main.
 	if (mini->tokens)
 		free_tokens(mini->tokens);
 	if (mini->exec)

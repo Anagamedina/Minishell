@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 19:49:16 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/02 21:26:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:37:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 
 		//	TOKENS
 		//echo $DISPLAY $USERNAME "123" $HOME 'abc' '$HOME'
-		// echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc
+		// echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc $'tab\there'
 		// echo $'hello\t' ana is a te\\nst in minishell
 
 		if (minishell->tokens)

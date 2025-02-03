@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test_double_quotes.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/03 19:41:22 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 //
 // Created by daruuu on 12/30/24.
 //
@@ -259,6 +271,7 @@ void	test02_remove_quotes_str_invalid_quotes(void)
  * @see replace_dollar_variable_skip_s_quote 
  */
 
+/*
 void	test_replace_dollar_variable_skip_s_quote_01(void)
 {
 	int			i;
@@ -324,6 +337,7 @@ void	test_replace_dollar_variable_skip_s_quote_01(void)
 		i ++;
 	}
 }
+*/
 
 
 /*

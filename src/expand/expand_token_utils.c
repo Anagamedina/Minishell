@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:03:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 13:16:08 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:40:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@ char	*extract_var_name(const char *str)
 	return (var_name);
 }
 
-void	update_token_str(t_tokens *token, char **split_word)
+int	update_token_str(t_tokens *token, char **split_word)
 {
 	char	*new_str;
 
 	new_str = ft_strjoin_array(split_word);
 	if (new_str == NULL)
-		return ;
+		return (FALSE);
 	free(token->str);
 	token->str = new_str;
+	return (TRUE);
 }
 
 void	copy_word_to_token(const char *word, char *merged_token, size_t *k)

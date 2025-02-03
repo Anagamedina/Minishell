@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:17:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 13:15:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:19:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,6 @@ static char	*get_size_split_and_malloc(char **split_word)
 		return (NULL);
 	return (merged_token);
 }
-
-/*
-static void	add_space_if_needed(char **split, size_t i, char *merged, size_t *k)
-{
-	if (split[i + 1] != NULL)
-	{
-		merged[*k] = SPACE;
-		(*k)++;
-	}
-}
-*/
 
 char	*ft_strjoin_array(char **split_word)
 {
@@ -77,3 +66,14 @@ char	*ft_strjoin_char(char *str, char c)
 	result[len + 1] = '\0';
 	return (result);
 }
+
+/*
+static void	add_space_if_needed(char **split, size_t i, char *merged, size_t *k)
+{
+	if (split[i + 1] != NULL)
+	{
+		merged[*k] = SPACE;
+		(*k)++;
+	}
+}
+*/

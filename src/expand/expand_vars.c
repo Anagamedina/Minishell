@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 13:16:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:08:08 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,75 @@ static void	process_split_words(char **split_word, t_list *env_list)
 	}
 }
 
+static int	process_token(t_tokens *curr_token, t_list *env_list)
+{
+	char	**split_word;
+
+	split_word = ft_split_new_version(curr_token->str);
+	if (!split_word)
+		return (0);
+	process_split_words(split_word, env_list);
+	if (!update_token_str(curr_token, split_word))
+	{
+		free_string_array(split_word);
+		return (0);
+	}
+	free_string_array(split_word);
+	return (1);
+}
+
 void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
-	char		**split_word;
-	int			position_dollar;
+	int			pos_dolar;
 
 	curr_token = token_list;
 	while (curr_token != NULL)
 	{
 		if (curr_token->type_token == WORD)
 		{
-			position_dollar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
-			if (position_dollar == -1 \
-				&& (position_dollar + 1 < (int)ft_strlen(curr_token->str)) \
-				&& curr_token->str[position_dollar + 1] == SPACE)
+			pos_dolar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
+			if (pos_dolar == -1 && curr_token->str[pos_dolar + 1] == SPACE && \
+				(pos_dolar + 1 < (int)ft_strlen(curr_token->str)))
 				break ;
-			split_word = ft_split_new_version(curr_token->str);
-			if (split_word != NULL)
-			{
-				process_split_words(split_word, env_list);
-				update_token_str(curr_token, split_word);
-				free_string_array(split_word);
-			}
+			if (!process_token(curr_token, env_list))
+				return ;
 		}
 		curr_token = curr_token->next;
 	}
 }
+
+/*
+void	get_var_from_token(t_tokens *token_list, t_list *env_list)
+{
+	t_tokens	*curr_token;
+	char		**split_word;
+	int			pos_dolar;
+
+	curr_token = token_list;
+	while (curr_token != NULL)
+	{
+		if (curr_token->type_token == WORD)
+		{
+			pos_dolar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
+			if (pos_dolar == -1 && curr_token->str[pos_dolar + 1] == SPACE && \
+				(pos_dolar + 1 < (int)ft_strlen(curr_token->str)))
+				break ;
+			split_word = ft_split_new_version(curr_token->str);
+			if (!split_word)
+				return ;
+			process_split_words(split_word, env_list);
+			if (!update_token_str(curr_token, split_word))
+			{
+				free_string_array(split_word);
+				return ;
+			}
+			free_string_array(split_word);
+		}
+		curr_token = curr_token->next;
+	}
+}
+*/
 
 /*
 static void	expand_dollar(t_tokens *token_list, t_list *env_list)

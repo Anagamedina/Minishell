@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/02 22:57:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:16:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,15 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 {
 	if (handle_single_quote(token))
+	{
 		remove_and_replace_quotes(token, S_QUOTE);
-
+		return ;
+	}
 	if (handle_special_quotes(token))
+	{
 		handle_special_cases(token, env_list, next_token);
+		return ;
+	}
 	if (has_even_double_quotes(token) || ft_strchr_true(token->str, DOLLAR_SIGN))
 		handle_dollar_cases(token, env_list, next_token);
 	/*

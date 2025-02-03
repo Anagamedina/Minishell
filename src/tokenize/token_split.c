@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 00:29:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:49:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	init_vars_split(t_split_data *data, char *str)
 	data->start = 0;
 	data->end = 0;
 	data->wc = count_words_split(str);
-
 	data->out = (char **) malloc(sizeof(char *) * (data->wc + 1));
 	if (!data->out)
 		return (FALSE);
@@ -34,10 +33,8 @@ int	copy_word(t_split_data *data)
 	word_length = data->end - data->start;
 	if (word_length <= 0)
 	{
-		return -1;
+		return (-1);
 	}
-	// printf("data.end - start: [%d]\n", data->end - data->start + 1);
-
 	data->out[data->k] = (char *) malloc(sizeof(char) * (word_length + 1));
 	if (!data->out[data->k])
 	{
@@ -72,14 +69,15 @@ int	process_segment(t_split_data *data)
 		data->end++;
 	else
 		process_word(data);
-
 	result_copy_word = copy_word(data);
 	if (data->end > data->start)
-		if (result_copy_word == -1)
 	{
-		free_split_result_struct(data->out, data->k);
-		free(data->out);
-		return (0);
+		if (result_copy_word == -1)
+		{
+			free_split_result_struct(data->out, data->k);
+			free(data->out);
+			return (0);
+		}
 	}
 	data->start = data->end;
 	return (TRUE);

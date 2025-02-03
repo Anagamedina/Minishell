@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/02 21:21:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:51:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ t_list	*convert_tokens_to_list(char **tokens)
 		ft_lstadd_back(&token_list, node_to_add);
 		i ++;
 	}
-	// free(tokens);
 	return (token_list);
 }
 
@@ -136,17 +135,16 @@ t_list	*generate_token_list(char *line)
 	processed_line = remove_consecutive_quotes(line);
 	if (!processed_line)
 		return (NULL);
-
 	printf("Processed line: [%s]\n", processed_line);
-
 	tokens_array = ft_split_quotes(processed_line);
 	free(processed_line);
 	if (!tokens_array)
 		return (NULL);
-
 	tokens_list = convert_tokens_to_list(tokens_array);
 	free_split_result_struct(tokens_array, count_words(tokens_array));
 	free(tokens_array);
+	return (tokens_list);
+}
 	/*
 	if (!tokens_list)
 	{
@@ -157,5 +155,3 @@ t_list	*generate_token_list(char *line)
 	free_split_result_struct(tokens_array, count_words(tokens_array));
 	free(tokens_array);
 	*/
-	return (tokens_list);
-}

@@ -6,11 +6,11 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:54:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/29 19:20:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:53:50 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	free_string_array(char **array)
 {
@@ -67,7 +67,6 @@ void	free_split_result_struct(char **out, int k)
 		free(out[i]);
 		i ++;
 	}
-	// free(out);
 }
 
 void	ft_free_array(char **array)

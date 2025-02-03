@@ -6,7 +6,7 @@
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:47:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 17:26:19 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/02/03 19:56:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 	perror("Error: Command not found here!!");
 	if (new->cmd_args)
 		free_string_array(new->cmd_args);
-	// free(new);
 	return (NULL);
 }
