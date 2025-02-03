@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		//	TOKENS
 		//echo $DISPLAY $USERNAME "123" $HOME 'abc' '$HOME'
 		// echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc
+		// echo $'hello\t' ana is a te\\nst in minishell
 
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);

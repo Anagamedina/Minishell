@@ -67,8 +67,11 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_utils.c \
 		$(SRC_PARSER)/parser_handle_not_expand.c \
 		$(SRC_PARSER)/parser_borrador.c \
-		$(SRC_EXPAND)/expand_func.c \
-		$(SRC_EXPAND)/expand_utils.c \
+		$(SRC_EXPAND)/expand_env.c \
+		$(SRC_EXPAND)/expand_merge.c \
+		$(SRC_EXPAND)/expand_split.c \
+		$(SRC_EXPAND)/expand_token_utils.c \
+		$(SRC_EXPAND)/expand_vars.c \
 		$(SRC_EXECUTE)/exce_paths.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \

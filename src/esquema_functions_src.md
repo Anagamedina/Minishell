@@ -17,8 +17,8 @@
         └── env.c
         └── free_env.c
     └── 📁expand
-        └── expand_func.c
-        └── expand_utils.c
+        └── expand_vars.c
+        └── expand_env.c
     └── 📁input
         └── input.c
     └── 📁mini
