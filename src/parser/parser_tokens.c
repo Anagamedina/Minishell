@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/03 18:16:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:04:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 
 void	update_words_in_tokens(t_mini *mini)
 {
-	t_list *token_list;
-	t_tokens *curr_token;
+	t_list 		*token_list;
+	t_tokens 	*curr_token;
+	t_tokens 	*curr_next_token;
+
 
 	token_list = mini->tokens;
 	while (token_list != NULL)
@@ -102,8 +104,16 @@ void	update_words_in_tokens(t_mini *mini)
 			else if (is_cmd_external(mini, curr_token))
 				curr_token->type_token = CMD_EXTERNAL;
 			else
+				//continue ;
 				curr_token->type_token = WORD;
 		}
+		else if (is_redir(curr_token) && token_list->next != NULL)
+		{
+			curr_next_token = (t_tokens *)token_list->next->content;
+			if (curr_next_token->type_token == WORD)
+				curr_next_token->type_token = FILENAME;
+		}
+
 		token_list = token_list->next;
 	}
 }
@@ -163,6 +173,7 @@ void	parser_tokens(t_mini *mini)
 			next_token = (t_tokens *) token_list->next->content;
 		else
 			next_token = NULL;
+
 		if (curr_token->type_token == WORD)
 			handle_tokens(curr_token, env_list, next_token);
 		if (curr_token->type_token == PIPE || curr_token->type_token == DELIMITER || \
@@ -174,4 +185,4 @@ void	parser_tokens(t_mini *mini)
 		else
 			token_list = token_list->next;
 	}
-}*/
+}

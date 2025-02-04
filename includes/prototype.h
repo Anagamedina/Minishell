@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:44:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:04:19 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 typedef struct s_exec		t_exec;
+typedef struct s_redir		t_redir;
+
+typedef struct s_exec t_exec;
 
 //typedef struct s_pipe t_pipe;
 
@@ -251,6 +254,7 @@ void 		print_paths(char **paths);
 char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
+void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
 int 		is_cmd_external(t_mini *mini, t_tokens *token);
@@ -259,6 +263,7 @@ void		execute_external(t_cmd *cmd, char **envp);
 void		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
+void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 //t_pipe		*init_pipe(void);
 //t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);
@@ -266,5 +271,18 @@ int 		count_pipes(t_list *token_list);
 
 //*************redis**************/
 
-int 		check_repeat_redir(t_tokens *token);
+void		update_words_in_tokens(t_mini *mini);
+int			parse_redir(t_mini *mini);
+int 		check_file(t_mini *mini, t_tokens *token);
+int 		check_repeat_redir(t_list *tokens);
+int			open_file(char *file, int type);
+void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_token);
+void		redirect_file(int fd, int target_fd);
+int apply_redirections(t_cmd* cmd);
+int			is_redir(t_tokens* token);
+void handle_redirection(char *file, t_cmd *cmd, int type);
+t_redir		*init_redirection(t_tokens *token, t_tokens* next_token);
+
+
+
 #endif

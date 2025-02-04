@@ -1,63 +1,28 @@
 #include "../../includes/minishell.h"
-//verificar que dos operadores no esten seguidos de un operador > >> <
-int check_repeat_redir(t_tokens *token)
+
+
+int check_repeat_redir(t_list *tokens)
 {
-	while (token)
-	{
-		if (strcmp(token->str, ">>") == 0 || strcmp(token->str, "<") == 0 ||
-			strcmp(token->str, ">") == 0 || strcmp(token->str, "|") == 0 ||
-			strcmp(token->str, "2>>") == 0 || strcmp(token->str, "2>") == 0)
-		{
-			if (!token->next || is_type_of_operator(token->next))
-			{
-				fprintf(stderr, "Error: operador '%s' repetido o mal colocado\n", token->str);
-				return FALSE;
-			}
-		}
-		token = token->next;
-	}
-	return TRUE;
-}
+    t_list *current = tokens;
 
-int check_first_last_redir(t_tokens *token)
-{
-	t_tokens *head = token;
-
-	// Verificar si el primer token es un operador de redirección
-	if ((head))
-	{
-		fprintf(stderr, "Error: operador de redirección al principio de la línea\n");
-		return (FALSE);
-	}
-
-	// Recorrer hasta el último token
-	while (token->next)
-		token = token->next;
-
-	// Verificar si el último token es un operador de redirección
-	if (is_redir_token(token->str))
-	{
-		fprintf(stderr, "Error: operador de redirección al final de la línea\n");
-		return (FALSE);
-	}
-
-	return (TRUE);
-}
-
-//verificar que despues de un operador > >> >> haya un nombre valido de archivo
-//int check_file_name(t_tokens *token)
-//{
-
-
-//}
-
-//**********************MAIN FUNCTION ***************//
-
-void check_redir_syntax(t_tokens *token)
-{
-
-	check_repeat_redir(token);
-	check_first_last_redir(token);
-	//check_file_name(token);
-
+    while (current && current->next)
+    {
+        t_tokens *token = (t_tokens *)current->content;
+        t_tokens *next_token = (t_tokens *)current->next->content;
+        if (token->type_token == REDIR_IN || token->type_token == REDIR_OUT ||
+            token->type_token == REDIR_APPEND || token->type_token == PIPE || \
+			token->type_token == DELIMITER)
+        {
+            if (next_token->type_token == REDIR_IN || next_token->type_token == REDIR_OUT ||
+                next_token->type_token == REDIR_APPEND || next_token->type_token == PIPE || \
+				next_token->type_token == DELIMITER)
+            {
+                fprintf(stderr, "Error: operador '%s' repetido o mal colocado antes de '%s'.\n",
+                        token->str, next_token->str);
+                return FALSE;
+            }
+        }
+        current = current->next;
+    }
+    return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 13:49:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:13:35 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_cmd	*init_command(void)
 	new_cmd->last_cmd = 0;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
+	new_cmd->redir_list = NULL;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
@@ -133,33 +134,26 @@ t_list	*create_cmd_list(t_list *token_list, char **paths, int *cmd_id)
  * ORIGINAL
 t_list	*create_cmd_list(t_list *token_list, char **paths)
 {
-	t_list		*commands_list;
-	t_list		*new_node;
+	t_list		*commands_list = NULL;
+	t_list		*new_node = NULL;
 	t_cmd		*new_cmd;
 	t_tokens	*token;
-	t_list		*current;
+	t_list		*current = token_list;
 	int			cmd_id;
 
 	if (!token_list)
-		return (NULL);
-	commands_list = NULL;
-	new_node = NULL;
-	current = token_list;
+		return NULL;
+
 	cmd_id = 0;
 	while (current != NULL)
 	{
 		token = (t_tokens *)current->content;
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
-			new_cmd = create_new_command(token, paths);
-			if (!new_cmd)
-			{
-				fprintf(stderr, "Error: creating command: [%s].\n", token->str);
-				free_cmd_list(commands_list);
-				return (NULL);
-			}
+			new_cmd = create_new_command(token, cmd_id, paths);
 			new_cmd->cmd_id = cmd_id;
-			if (current->next == NULL)
+			// Aquí determinamos si este comando es el último
+			if (current->next == NULL)  // Es el último nodo
 				new_cmd->last_cmd = 1;
 			else
 				new_cmd->last_cmd = 0;
@@ -167,7 +161,13 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 		else
 		{
 			current = current->next;
-			continue ;
+			continue;
+		}
+		if (!new_cmd)
+		{
+			fprintf(stderr, "Error: Falló la creación del comando '%s'.\n", token->str);
+			free_cmd_list(commands_list);
+			return NULL;
 		}
 
 		new_node = ft_lstnew(new_cmd);
@@ -176,7 +176,7 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 			fprintf(stderr, "Error: No se pudo crear el nodo del comando.\n");
 			free_command(new_cmd);
 			free_cmd_list(commands_list);
-			return (NULL);
+			return NULL;
 		}
 		ft_lstadd_back(&commands_list, new_node);
 		cmd_id ++;
@@ -184,7 +184,6 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	}
 	return (commands_list);
 }
-*/
 
 int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 {

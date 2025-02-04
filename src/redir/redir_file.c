@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/22 11:36:55 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/04 16:30:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int open_file(char *file, int type)
 {
 	int fd;
 
-	if (type == REDIR_IN)
-		fd = open(file, O_RDONLY);
-	else if (type == REDIR_OUT)
+	// if (type == REDIR_IN)
+	// 	fd = open(file, O_RDONLY);
+	if (type == REDIR_OUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == REDIR_APPEND)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	// else if (type == REDIR_APPEND)
+	// 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		return (-1);
 	 if (fd == -1)
@@ -32,47 +32,52 @@ int open_file(char *file, int type)
 	return (fd);
 }
 
-
-
-t_redir *init_redirection(t_cmd *cmd, t_tokens *token)
+int apply_redirections(t_cmd *cmd)
 {
-	t_redir *new_redir = malloc(sizeof(t_redir));
-	if (!new_redir)
-		return (NULL);
-	//copiar el nonbre del archivo asociado a la redirección
-	new_redir->filename = ft_strdup(token->str);
-	if (!new_redir->filename)
+	t_list *redir_node = cmd->redir_list;
+	t_redir *curr_redir;
+	int redirection_applied = 0;
+
+	while (redir_node)
 	{
-		perror("Error: al duplicar el nombre del archivo");
-		free(new_redir);
-		return (NULL);
+		curr_redir = (t_redir *)redir_node->content;
+
+		// if (curr_redir->type == REDIR_IN)
+		// {
+		// 	cmd->input_fd = open_file(curr_redir->filename, REDIR_IN);
+		// 	redirection_applied = 1;
+		// }
+		if (curr_redir->type == REDIR_OUT)
+		{
+			if (cmd->output_fd != STDOUT_FILENO && cmd->output_fd != -1)
+                close(cmd->output_fd); // Cerrar anterior si había otra redirección
+
+            cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
+            if (cmd->output_fd == -1)
+            {
+                printf("Error: No se pudo abrir '%s'.\n", curr_redir->filename);
+                return FALSE;
+            }
+            redirection_applied = 1;
+		}
+		// else if (curr_redir->type == REDIR_APPEND)
+		// {
+		// 	cmd->output_fd = open_file(curr_redir->filename, REDIR_APPEND);
+		// 	redirection_applied = 1;
+		//
+		// }
+		// if (cmd->input_fd == -1 && cmd->output_fd == -1)
+		// {
+		// 	printf("Error: No se pudo abrir el archivo '%s'.\n", curr_redir->filename);
+		// 	return (0);
+		// }
+
+		redir_node = redir_node->next;
 	}
-	new_redir->type = token->type_token;
-	new_redir->fd_input = -1;
-	new_redir->fd_output = -1;
-	new_redir->next = NULL;
-	return (new_redir);
+	return redirection_applied;
 }
 
 
-void add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
-{
-	t_redir *new_redir = init_redirection(cmd, token);
-	if (!new_redir)
-		return;
-	t_list *new_node = ft_lstnew(new_redir);
-	if (!new_node)
-	{
-		//free(new_redir->filename);
-		//free(new_redir);
-		return;
-	}
-	if (!cmd->redir_list)
-		cmd->redir_list = new_node;
-	else
-		ft_lstadd_back(&cmd->redir_list, new_node);
-
-}
 
 
 
@@ -83,9 +88,18 @@ void add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
 
 
 
-// Duplica un descriptor de archivo al descriptor de entrada o salida correspondiente
-// Luego cierra el descriptor original para evitar fugas de recursos
-void redirect_file(int fd, int target_fd)
+
+
+//CODIGO QUE NO SE USA///
+
+
+
+
+
+// // Duplica un descriptor de archivo al descriptor de entrada o salida correspondiente
+// // Luego cierra el descriptor original para evitar fugas de recursos
+
+void	redirect_file(int fd, int target_fd)
 {
 	if (dup2(fd, target_fd) == -1)
 	{
@@ -99,49 +113,9 @@ void redirect_file(int fd, int target_fd)
 	}
 }
 
-// Maneja la redirección de entrada con un valor predeterminado
-// Si el archivo de entrada no existe, crea un pipe vacío para continuar la ejecución
-// Devuelve 0 si la redirección es exitosa y 1 si se usa un flujo vacío
-int input_redirect_with_default(char *file, t_cmd *cmd)
-{
-	int fd;
-	int p_empty_fd[2];
-
-	// Intentar abrir el archivo en modo lectura
-	fd = open(file, O_RDONLY);
-	if (fd == -1) {
-		if (pipe(p_empty_fd) == -1) {
-			perror("Error creating pipe");
-			exit(1);
-		}
-
-		// Redirigir la entrada al pipe vacío
-		if (dup2(p_empty_fd[0], cmd->input_fd) == -1) {
-			perror("Error duplicating pipe");
-			exit(1);
-		}
-
-		close(p_empty_fd[0]);
-		close(p_empty_fd[1]);
-
-		free(file);
-		return 1;    // Continuar la ejecución con un flujo vacío
-	}
-
-	// Si el archivo existe, redirigir normalmente
-	if (dup2(fd, cmd->input_fd) == -1)
-	{
-		perror("Error dup");
-		exit(1);
-	}
-	close(fd);
-	free(file);
-	return 0;
-}
-
-// Maneja la redirección de entrada o salida de un comando
-// Abre el archivo correspondiente, redirige el descriptor de archivo y lo cierra
-void handle_redirection(char *file, t_cmd *cmd, int type)
+// // Maneja la redirección de entrada o salida de un comando
+// // Abre el archivo correspondiente, redirige el descriptor de archivo y lo cierra
+void	handle_redirection(char *file, t_cmd *cmd, int type)
 {
 	int fd;
 	int target_fd;

@@ -121,25 +121,7 @@ void	builtin_export(t_mini *mini)
 		return;
 }
 
-/*
-enviar a un file echo 
-*/
-/*void	ft_echo(t_cmd *cmd)
-{
-	int i;
 
-	i = 1;
-	printf("[");
-	while (cmd->cmd_args[i])
-	{
-		printf("%s", cmd->cmd_args[i]);
-		i ++;
-		if (cmd->cmd_args[i])
-			printf(" ");
-	}
-	printf("]");
-	printf("\n");
-}*/
 
 
 void	ft_echo(t_cmd *cmd)

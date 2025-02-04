@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/30 19:27:54 by dasalaza         ###   ########.fr        #
+#    Updated: 2025/01/23 13:23:51 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_tab.c \
 		$(SRC_PARSER)/parser_tokens.c \
 		$(SRC_PARSER)/parser_utils.c \
+		$(SRC_PARSER)/parser_input.c \
 		$(SRC_PARSER)/parser_handle_not_expand.c \
 		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_env.c \
@@ -77,6 +78,10 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/get_input.c \
+		$(SRC_EXECUTE)/tests.c \
+		$(SRC_REDIR)/redir_file.c \
+		$(SRC_REDIR)/redir_init.c \
+		$(SRC_REDIR)/redir_syntax.c
 		$(SRC_EXECUTE)/tests.c \
 		$(SRC_FREE)/free_cmd.c \
 		$(SRC_FREE)/free_env.c \
@@ -126,6 +131,8 @@ $(LIBFT):
 obj/testing/%.o: testing/%.c $(TESTING_H)
 	@mkdir -p $(dir $@)
 	$(CC)  -c $< -o $@
+	#$(CC) $(CFLAGS) -c $< -o $@
+
 
 test: $(OBJ_TEST) $(OBJ_TESTING)
 	$(CC) -o testing_shell -Iincludes -I$(LIBFT_DIR) \
