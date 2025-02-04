@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:13:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:45:19 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,41 @@ t_list	*create_cmd_list(t_list *token_list, char **paths, int *cmd_id)
 	return (commands_list);
 }
 
+int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
+{
+	t_list		*current;
+	t_list		*cmd_node;
+	t_cmd		*cmd;
+	t_tokens	*token;
+
+	current = token_list;
+	while (current)
+	{
+		token = (t_tokens *)current->content;
+		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
+		{
+			cmd_node = commands_list;
+			while (cmd_node)
+			{
+				cmd = (t_cmd *)cmd_node->content;
+				if (ft_strcmp(cmd->cmd, token->str) == 0)
+				{
+					count_args(current, cmd);
+					add_args(&cmd, current);
+					break ;
+				}
+				cmd_node = cmd_node->next;
+			}
+			if (!cmd_node)
+			{
+				fprintf(stderr, "Error: Comando '%s' no encontrado en la lista de comandos.\n", token->str);
+				return (-1);
+			}
+		}
+		current = current->next;
+	}
+	return (0);
+}
 /*
  * ORIGINAL
 t_list	*create_cmd_list(t_list *token_list, char **paths)
@@ -184,39 +219,4 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	}
 	return (commands_list);
 }
-
-int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
-{
-	t_list		*current;
-	t_list		*cmd_node;
-	t_cmd		*cmd;
-	t_tokens	*token;
-
-	current = token_list;
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
-		{
-			cmd_node = commands_list;
-			while (cmd_node)
-			{
-				cmd = (t_cmd *)cmd_node->content;
-				if (ft_strcmp(cmd->cmd, token->str) == 0)
-				{
-					count_args(current, cmd);
-					add_args(&cmd, current);
-					break ;
-				}
-				cmd_node = cmd_node->next;
-			}
-			if (!cmd_node)
-			{
-				fprintf(stderr, "Error: Comando '%s' no encontrado en la lista de comandos.\n", token->str);
-				return (-1);
-			}
-		}
-		current = current->next;
-	}
-	return (0);
-}
+*/

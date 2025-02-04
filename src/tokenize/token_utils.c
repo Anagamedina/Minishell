@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:51:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:28:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ t_list	*generate_token_list(char *line)
 	processed_line = remove_consecutive_quotes(line);
 	if (!processed_line)
 		return (NULL);
-	printf("Processed line: [%s]\n", processed_line);
+	// printf("Processed line: [%s]\n", processed_line);
 	tokens_array = ft_split_quotes(processed_line);
 	free(processed_line);
 	if (!tokens_array)

@@ -81,8 +81,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
 		$(SRC_REDIR)/redir_init.c \
-		$(SRC_REDIR)/redir_syntax.c
-		$(SRC_EXECUTE)/tests.c \
+		$(SRC_REDIR)/redir_syntax.c \
 		$(SRC_FREE)/free_cmd.c \
 		$(SRC_FREE)/free_env.c \
 		$(SRC_FREE)/free_exec.c \
@@ -91,6 +90,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_FREE)/free_split.c \
 		$(SRC_FREE)/free_tokens.c
 
+#		$(SRC_EXECUTE)/tests.c \
 #		$(SRC_REDIR)/heredoc.c
 #		$(SRC_EXECUTE)/get_inputc \
 #		$(SRC_REDIR)/redir_syntax.c \

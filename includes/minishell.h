@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 10:19:35 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/04 17:43:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum e_type_token
 	NULL_TYPE,
 	PIPE,
 	HEREDOC,
+	FILENAME,
 }					t_type_token;
 
 /*

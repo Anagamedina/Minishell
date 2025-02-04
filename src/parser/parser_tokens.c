@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:04:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:43:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,3 +186,4 @@ void	parser_tokens(t_mini *mini)
 			token_list = token_list->next;
 	}
 }
+*/

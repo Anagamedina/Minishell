@@ -1,6 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   built_in_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/04 18:06:08 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   built-in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
@@ -76,14 +88,14 @@ void	create_new_key(char *line, char *key, char *value, t_list **env_list)
 }
 
 
-void	only_export(t_list *env_list)
+void	print_export(t_list *env_list)
 {
 	t_env	*env_var;
 
 	while (env_list != NULL)
 	{
 		env_var = (t_env *)env_list->content;
-		if (env_var && env_var->key) // Asegúrate de que `env_var` y su `key` no sean NULL
+		if (env_var && env_var->key)
 		{
 			printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value ? env_var->value : "");
 		}

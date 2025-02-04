@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/04 12:55:45 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:39:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int parse_redir(t_mini *mini)
 {
-	t_list *token_list = mini->token;
+	t_list *token_list = mini->tokens;
 	t_tokens *curr_token;
 	t_cmd *last_cmd = NULL;  // Para asociar redirecciones al último comando encontrado
 

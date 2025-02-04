@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2024/12/03 16:48:54 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/04 18:39:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ ana=
  * Un nombre válido comienza con una letra o un guion bajo ('_')
  * y solo puede contener caracteres alfanuméricos.
  * Retorna 1 si es válido, 0 si no lo es.
+ * Verificar primer carácter si es a-zA-Z o '_'
+ * agregar caso de '_' da error !!!
 */
 int	validate_var_name(const char *line)
 {
 	int i;
 
-	// Verificar primer carácter si es a-zA-Z o '_'
-	// agregar caso de '_' da error !!!
 	if (!(ft_isalpha(line[0])) || ft_isdigit(line[0]))
-		return (FALSE);	//0
+		return (FALSE);
 	i = 1;
 	while (line[i] != '\0' && line[i] != '=')
 	{
@@ -37,8 +37,7 @@ int	validate_var_name(const char *line)
 	}
 	if (line[i] == '=')
 		return (TRUE);
-	else
-		return (FALSE);
+	return (FALSE);
 }
 
 /*
@@ -47,6 +46,7 @@ int	validate_var_name(const char *line)
  * solo contiene caracteres alfanuméricos.
  * Retorna 1 si es válido, 0 si no lo es.
  */
+
 int	validate_var_value(const char *line)
 {
 	int i;
@@ -79,7 +79,7 @@ char	*get_var_name(char *line)
 
 	i = 0;
 	while (line[i] != '\0' && line[i] != '=')
-		i++;
+		i ++;
 	len = i;
 	var_name = malloc(sizeof(char) * (len + 1));
 	if (!var_name)
@@ -88,7 +88,7 @@ char	*get_var_name(char *line)
 	while (i < len)
 	{
 		var_name[i] = line[i];
-		i++;
+		i ++;
 	}
 	var_name[i] = '\0';
 	return (var_name);
@@ -123,7 +123,7 @@ char	*get_var_value(char *line)
 		i++;
 		j++;
 	}
-	var_value[j] = '\0'; // Corrige el índice aquí para terminar correctamente la cadena
+	var_value[j] = '\0';
 	return (var_value);
 }
 

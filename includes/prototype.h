@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/28 11:04:19 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/04 18:43:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void		parser_tokens(t_mini *mini);
 
 void		add_env_back(t_env **env_list, t_env *new_node);
 void		update_var(char *line, t_list **env_list);
-void		only_export(t_list *env_list);
-void		init_process_export(t_list *tokens, t_list *env_list);
+void		print_export(t_list *env_list);
+void		init_process_export(t_cmd* curr_command, t_list *env_list);
 void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
@@ -240,6 +240,10 @@ t_list		*create_cmd_list(t_list *token_list, char **paths, int *cmd_id);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
+
+//************** BUILT_INS_UTILS.C ********/
+
+void		create_new_key(char *line, char *key, char *value, t_list **env_list);
 
 //************** ERRORS_COMMAND.C ********/
 

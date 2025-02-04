@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/29 12:36:05 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/04 18:55:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,29 @@
  * case 03:
  * error
  */
-void	init_process_export(t_list *tokens, t_list *env_list)
+void	init_process_export(t_cmd *curr_command, t_list *env_list)
 {
-	t_tokens	*next_token;
-	// t_tokens	*token_first;
+	char	*name_and_value;
+	char	*var_name;
+	char	*var_value;
 
-	next_token = tokens->next->content;
-	// token_first = tokens->content;
-	// printf("----------%s\n", token_first->str);
-	//		caso 02: line = export
-	// if (token_first)
-	// {
-	// 	printf("entra en only export\n");
-	// 	only_export(env_list);
-	// 	return;
-	// }
-	if (validate_var_name(next_token->str) && validate_var_value(next_token->str))
+	name_and_value = curr_command->cmd_args[1];
+
+	// printf("curr_command->cmd_args[1]: [%s]\n", name_and_value);
+	var_name = get_var_name(name_and_value);
+	var_value = get_var_value(name_and_value);
+
+	printf("var_name: [%s]\n", var_name);
+	printf("var_value: [%s]\n", var_value);
+	int		condition1 = validate_var_name(name_and_value);
+	int		condition2 = validate_var_value(name_and_value);
+
+	// if (validate_var_name(var_name) == 1 && validate_var_value(var_value) == 1)
+	if (condition1 == TRUE && condition2 == TRUE)
 	{
-		update_var(next_token->str, &env_list);
-		return;
+		create_new_key(name_and_value, var_name, var_value, &env_list);
+		// update_var(var_name, &env_list);
 	}
-	
 	else
 	{
 		printf("Error: formato no válido para 'export'.\n");
@@ -88,41 +90,20 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
 
 // **************** MAIN FUNCTION ******************
 
+/*
 void	builtin_export(t_mini *mini)
 {
-	t_cmd	*cmd_01;
+	t_cmd		*cmd_01;
 	t_tokens 	*first_token;
 
 	first_token = mini->tokens->content;
 	cmd_01 = mini->exec->first_cmd->content;
-	if ((ft_strcmp((char *)cmd_01->cmd, "export") == 0))
+	if ((ft_strcmp(cmd_01->cmd, "export") == 0))
 	{
-		if (first_token->next == NULL)
-		{
-			printf("entro en export sin variable\n");
-			only_export(mini->env);
-		}
-		else
-		{
-			printf("entro en export con variable\n");
-			init_process_export(mini->tokens, mini->env);
-		}
-		
+		only_export(mini->env);
 	}
-	/*else if ((ft_strcmp((char *)cmd_01->cmd, "unset") == 0))
-	{
-
-	}
-	else if ((ft_strcmp((char *)cmd_01->cmd, "env") == 0))
-	{
-		print_env_list(mini->env);
-	}*/
-	else
-		return;
 }
-
-
-
+*/
 
 void	ft_echo(t_cmd *cmd)
 {
