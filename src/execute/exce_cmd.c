@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 13:27:30 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:32:20 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	execute_commands(t_mini *mini)
 	
 		
 		//PIPE
-        if (t_list_exec_cmd->next)
+        // if (t_list_exec_cmd->next)
+        if (t_list_exec_cmd->next && curr_cmd->output_fd == STDOUT_FILENO)
         {
             if (pipe(pipe_fd) == -1)
             {
@@ -140,6 +141,7 @@ int	execute_commands(t_mini *mini)
 
     return (TRUE);
 }
+
 
 
 

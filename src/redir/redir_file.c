@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/02 13:59:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:30:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ int open_file(char *file, int type)
 		 perror("Error al abrir el archivo");
 	return (fd);
 }
-
-
-
 
 int apply_redirections(t_cmd *cmd)
 {
@@ -79,7 +76,6 @@ int apply_redirections(t_cmd *cmd)
 	}
 	return redirection_applied;
 }
-
 
 
 
