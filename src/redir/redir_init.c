@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 12:55:26 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/01 21:19:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:54:54 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ t_redir *init_redirection(t_tokens *token, t_tokens* next_token)
 		new_redir->filename = ft_strdup(next_token->str);
 	else
 		new_redir->filename = NULL;
-
-	// new_redir->filename = ft_strdup(token->str);
-	printf("new_redir->filename: [%s]\n", new_redir->filename);
 
 	if (!new_redir->filename)
 	{

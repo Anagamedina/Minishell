@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/01 23:04:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:54:20 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ int	main(int argc, char** argv, char** envp)
 			break;
 		}
 		minishell->token = generate_token_list(input);
-		// print_list_token_str(minishell->token);
-
 		if (minishell->token == NULL)
 		{
 			printf("Error al generar la lista de tokens.\n");
 			continue;
 		}
-		// print_list_token_str(minishell->token);
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
