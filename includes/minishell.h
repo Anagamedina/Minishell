@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 17:43:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:45:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,6 @@ typedef struct s_env
 	struct s_env    *next;
 }				t_env;
 
-typedef struct	s_redir
-{
-	int				fd_input;
-	int				fd_output;
-	int				type;
-	char			*filename;
-	struct s_redir	*next;
-} 				t_redir;
-
-
 typedef struct s_split_data
 {
 	char	**out;
@@ -89,6 +79,15 @@ typedef struct s_split_data
 	int		k;       // index of current token
 	int		wc;
 }				t_split_data;
+
+typedef struct	s_redir
+{
+	int				fd_input;
+	int				fd_output;
+	int				type;
+	char			*filename;
+	struct s_redir	*next;
+} 				t_redir;
 
 typedef struct s_cmd
 {

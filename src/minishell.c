@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 13:40:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 19:22:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 
 		parser_tokens(minishell);
+
 		if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
@@ -66,12 +67,13 @@ int	main(int argc, char **argv, char **envp)
 		if (!minishell->exec)
 		{
 			perror("Error al inicializar t_exec");
-			return 1;
+			return (1);
 		}
 
 		if (minishell->exec->first_cmd)
             free_cmd_list(minishell->exec->first_cmd);
 
+		// error aqui with input: ls  no init first_cmd
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 
 		if (!minishell->exec->first_cmd)
@@ -82,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
 
-		print_list_commands(minishell->exec->first_cmd);
+		// print_list_commands(minishell->exec->first_cmd);
 
 		if (execute_commands(minishell) != TRUE)
 		{

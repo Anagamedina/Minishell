@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 12:41:55 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:33:59 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,172 @@ void	execute_external(t_cmd *cmd, char **envp)
 }
 
 
-
-
 int	execute_commands(t_mini *mini)
 {
-    t_list *t_list_exec_cmd = mini->exec->first_cmd;
-    t_cmd *curr_cmd;
-    pid_t pid;
-    int input_fd = STDIN_FILENO;
-    int pipe_fd[2];
-    int i = 0;
-    int len_t_list_exec_cmd = ft_lstsize(t_list_exec_cmd);
+	t_list	*t_list_exec_cmd;
+	t_cmd	*curr_cmd;
+	pid_t	pid;
+	int		input_fd;
+	int		pipe_fd[2];
+	int		i;
+	int		len_t_list_exec_cmd;
 
+	t_list_exec_cmd = mini->exec->first_cmd;
+	input_fd = STDIN_FILENO;
+	i = 0;
+	len_t_list_exec_cmd = ft_lstsize(t_list_exec_cmd);
+
+	// RECORRER LA LISTA DE COMANDOS
+	while (t_list_exec_cmd)
+	{
+		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
+		curr_cmd->cmd_id = i++;
+
+		// APLICAR REDIRECCIONES SI EXISTEN
+		if (apply_redirections(curr_cmd) == TRUE && curr_cmd->input_fd != STDIN_FILENO)
+			curr_cmd->input_fd = input_fd;
+
+		// GESTIONAR PIPES SI HAY MÁS COMANDOS
+		if (t_list_exec_cmd->next)
+		{
+			// SI HAY REDIRECCIÓN DE SALIDA (>) NO SE CREA UN PIPE
+			if (curr_cmd->redir_list != NULL)
+			{
+				// SI EL COMANDO NO TIENE ENTRADA, ASIGNAR UN `STDIN` VACÍO
+				if (curr_cmd->cmd_id > 0 && curr_cmd->input_fd == STDIN_FILENO)
+				{
+					int p_empty_fd[2];
+
+					if (pipe(p_empty_fd) == -1)
+					{
+						perror("Error creando pipe vacío");
+						exit(EXIT_FAILURE);
+					}
+					curr_cmd->input_fd = p_empty_fd[0];
+					close(p_empty_fd[1]);
+				}
+			}
+			else
+			{
+				// CREAR UN PIPE NORMAL SI NO HAY REDIRECCIÓN DE SALIDA
+				if (pipe(pipe_fd) == -1)
+				{
+					perror("Error creando pipe");
+					exit(EXIT_FAILURE);
+				}
+				curr_cmd->output_fd = pipe_fd[1];
+			}
+		}
+		else if (curr_cmd->output_fd == -1)
+		{
+			// SI NO HAY MÁS COMANDOS, USAR `STDOUT_FILENO`
+			curr_cmd->output_fd = STDOUT_FILENO;
+		}
+
+		curr_cmd->input_fd = input_fd;
+
+		// CREAR PROCESO HIJO PARA EJECUTAR EL COMANDO
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("Error creando proceso hijo");
+			exit(EXIT_FAILURE);
+		}
+
+		// PROCESO HIJO: REDIRIGIR ENTRADA Y SALIDA, Y EJECUTAR COMANDO
+		if (pid == 0)
+		{
+			// REDIRECCIÓN DE ENTRADA SI ES NECESARIO
+			if (curr_cmd->input_fd != STDIN_FILENO)
+			{
+				if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
+				{
+					perror("Error redirigiendo entrada");
+					exit(EXIT_FAILURE);
+				}
+				close(curr_cmd->input_fd);
+			}
+
+			// REDIRECCIÓN DE SALIDA SI ES NECESARIO
+			if (curr_cmd->output_fd != STDOUT_FILENO)
+			{
+				if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
+				{
+					perror("Error redirigiendo salida");
+					exit(EXIT_FAILURE);
+				}
+				close(curr_cmd->output_fd);
+			}
+
+			// EJECUTAR EL COMANDO (EXTERNO O BUILTIN)
+			char **envp = lst_to_arr(mini->env);
+			if (curr_cmd->is_external == 1)
+				execute_external(curr_cmd, envp);
+			else if (curr_cmd->is_builtin == 1)
+				cases_builtins(mini);
+
+			exit(EXIT_FAILURE);
+		}
+
+		// PROCESO PADRE: CERRAR DESCRIPTORES Y GESTIONAR EL PIPE SIGUIENTE
+		else
+		{
+			if (curr_cmd->output_fd != STDOUT_FILENO)
+				close(curr_cmd->output_fd);
+			if (curr_cmd->input_fd != STDIN_FILENO)
+				close(curr_cmd->input_fd);
+
+			// ACTUALIZAR EL INPUT PARA EL SIGUIENTE COMANDO
+			if (t_list_exec_cmd->next)
+				input_fd = pipe_fd[0];
+		}
+
+		t_list_exec_cmd = t_list_exec_cmd->next;
+	}
+
+	// CERRAR EL ÚLTIMO INPUT SI NO ES `STDIN_FILENO`
+	if (input_fd != STDIN_FILENO)
+		close(input_fd);
+
+	// ESPERAR A QUE TODOS LOS PROCESOS HIJOS TERMINEN
+	int num_children = len_t_list_exec_cmd;
+	while (num_children > 0)
+	{
+		if (wait(NULL) == -1)
+			perror("Error esperando proceso hijo");
+		else
+			num_children--;
+	}
+
+	return (TRUE);
+}
+
+
+/*
+ *05/02/2025 16:30
+int	execute_commands(t_mini *mini)
+{
+    t_list	*t_list_exec_cmd;
+    t_cmd	*curr_cmd;
+    pid_t	pid;
+    int		input_fd;
+    int		pipe_fd[2];
+    int		i;
+    int		len_t_list_exec_cmd;
+	int		redirection_applied;
+
+    t_list_exec_cmd = mini->exec->first_cmd;
+    input_fd = STDIN_FILENO;
+    i = 1;
+    len_t_list_exec_cmd = ft_lstsize(t_list_exec_cmd);
     while (t_list_exec_cmd)
     {
         curr_cmd = (t_cmd *)t_list_exec_cmd->content;
         curr_cmd->cmd_id = i++;
-
-    	int redirection_applied = apply_redirections(curr_cmd);
+    	redirection_applied = apply_redirections(curr_cmd);
 
 		if (redirection_applied == TRUE && curr_cmd->input_fd != STDIN_FILENO)
         	curr_cmd->input_fd = input_fd;
-
-	
 
 		//PIPE
         if (t_list_exec_cmd->next)
@@ -156,6 +299,7 @@ int	execute_commands(t_mini *mini)
 
     return (TRUE);
 }
+*/
 
 
 
