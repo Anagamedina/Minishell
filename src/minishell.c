@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 19:22:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:15:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			break ;
 		}
+		if ((ft_strcmp(input, "") == 0))
+		{
+			free(input);
+			continue ;
+		}
+
 
 		//	TOKENS
 		//echo $DISPLAY $USERNAME "123" $HOME 'abc' '$HOME'
@@ -52,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 
+		update_words_in_tokens(minishell);
 		parser_tokens(minishell);
 
 		if(parse_redir(minishell) == FALSE)

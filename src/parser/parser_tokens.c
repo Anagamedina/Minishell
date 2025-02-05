@@ -125,7 +125,7 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*curr_token;
 	t_tokens	*next_token;
 
-	update_words_in_tokens(mini);
+	// update_words_in_tokens(mini);
 
 	token_list = mini->tokens;
 	env_list = mini->env;

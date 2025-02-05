@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/30 12:14:30 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/05 23:08:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,25 @@ int	is_builtin_command(char *cmd)
 		strcmp(cmd, EXIT) == 0);
 }
 
-int is_cmd_external(t_mini *mini, t_tokens *token)
+int	is_cmd_external(t_mini *mini, t_tokens *token)
 {
+	char		**paths;
+	char		**env_var_array;
 	char		*cmd_path;
 
 	if (!mini || !mini->tokens)
 		return FALSE;
-
-	if (!mini->exec || !mini->exec->paths)
-		return FALSE;
-
-	cmd_path = get_cmd_path(token, mini->exec->paths);
+	env_var_array = lst_to_arr(mini->env);
+	paths = get_path(env_var_array);
+	// if get_cmd path encuentra el token en las vars de entorno es por q existe
+	if (env_var_array != NULL)
+	{
+		free_string_array(env_var_array);
+	}
+	cmd_path = get_cmd_path(token, paths);
 	if (cmd_path != NULL)
 	{
-		//mini->exec->first_cmd = cmd_path;
-		// printf("--------cmd_path: [%s]\n", cmd_path);
-		//free(cmd_path);
+		free(cmd_path);
 		return (TRUE);
 	}
 	return (FALSE);

@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/17 17:48:05 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/05 23:04:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 		free(full_path);
 
 		if (access(cmd_path, X_OK) == 0)
-			return cmd_path;
+			return (cmd_path);
 		free(cmd_path);
 		i++;
 	}

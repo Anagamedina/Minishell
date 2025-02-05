@@ -104,7 +104,7 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	if (!token_list)
 		return NULL;
 
-	cmd_id = 0;
+	cmd_id = 1;
 	commands_list = NULL;
 	new_node = NULL;
 	new_cmd = NULL;

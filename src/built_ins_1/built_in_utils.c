@@ -80,6 +80,8 @@ t_list* create_new_key(char* line, char* key, char* value)
 		free_env(new_var);
 		return (NULL);
 	}
+	// Creemos que no hay que freir new_var porque new_node apunta a new_var.
+	// free_env(new_var);
 	return (new_node);
 }
 
