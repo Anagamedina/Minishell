@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
 
-		// print_list_commands(minishell->exec->first_cmd);
+		print_list_commands(minishell->exec->first_cmd);
 
 		if (execute_commands(minishell) != TRUE)
 		{
