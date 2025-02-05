@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 18:43:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:21:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		parser_tokens(t_mini *mini);
 void		add_env_back(t_env **env_list, t_env *new_node);
 void		update_var(char *line, t_list **env_list);
 void		print_export(t_list *env_list);
-void		init_process_export(t_cmd* curr_command, t_list *env_list);
+void		init_process_export(t_cmd* curr_command, t_list** env_list);
 void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
@@ -236,14 +236,14 @@ int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);
 t_cmd 		*create_new_command(t_tokens *current_token, char **paths);
-t_list		*create_cmd_list(t_list *token_list, char **paths, int *cmd_id);
+t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** BUILT_INS_UTILS.C ********/
 
-void		create_new_key(char *line, char *key, char *value, t_list **env_list);
+t_list* create_new_key(char* line, char* key, char* value);
 
 //************** ERRORS_COMMAND.C ********/
 

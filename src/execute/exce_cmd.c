@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 16:32:20 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:41:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,15 @@ int	execute_commands(t_mini *mini)
         curr_cmd->cmd_id = i++;
 
     	int redirection_applied = apply_redirections(curr_cmd);
+
 		if (redirection_applied == TRUE && curr_cmd->input_fd != STDIN_FILENO)
         	curr_cmd->input_fd = input_fd;
 
 	
-		
+
 		//PIPE
-        // if (t_list_exec_cmd->next)
-        if (t_list_exec_cmd->next && curr_cmd->output_fd == STDOUT_FILENO)
+        if (t_list_exec_cmd->next)
+        // if (t_list_exec_cmd->next && curr_cmd->output_fd == STDOUT_FILENO)
         {
             if (pipe(pipe_fd) == -1)
             {
@@ -76,7 +77,21 @@ int	execute_commands(t_mini *mini)
 
         if (pid == 0)
         {
-			
+        	// if (curr_cmd->input_fd == -1 || curr_cmd->input_fd == STDIN_FILENO)
+        	if (curr_cmd->input_fd == -1)
+        	{
+        		int p_empty_fd[2];
+        		if (pipe(p_empty_fd) == -1)
+        		{
+        			perror("Error creando pipe vacío");
+        			exit(EXIT_FAILURE);
+        		}
+        		// Redirigir entrada estándar al pipe vacío
+        		dup2(p_empty_fd[0], STDIN_FILENO);
+        		close(p_empty_fd[0]);
+        		close(p_empty_fd[1]);
+        	}
+
 			if (curr_cmd->input_fd != STDIN_FILENO )
 			{
 				if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)

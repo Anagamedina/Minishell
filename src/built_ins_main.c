@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 18:58:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:56:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    cases_builtins(t_mini *mini)
     {
 		ft_echo(curr_cmd);
     }
-	if (ft_strcmp(curr_cmd->cmd, "export") == 0 && \
+	else if (ft_strcmp(curr_cmd->cmd, "export") == 0 && \
 		curr_cmd->cmd_args[1] == NULL)
 	{
 		print_export(mini->env);
@@ -31,17 +31,16 @@ void    cases_builtins(t_mini *mini)
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
 		// TODO: gestionar bien la funcion
-		init_process_export(curr_cmd, mini->env);
+		init_process_export(curr_cmd, &(mini->env));
 	}
-	if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
+	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 	{
-
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
 	{
 		print_env_list(mini->env);
 	}
-
+}
     /*
     if ((ft_strcmp((char *)current_command->cmd, "export") == 0))
     {
@@ -53,5 +52,3 @@ void    cases_builtins(t_mini *mini)
 		get_current_directory(mini);
 	}
 */
-	return ;
-}

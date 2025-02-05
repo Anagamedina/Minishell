@@ -100,7 +100,8 @@ void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
 // // Maneja la redirección de entrada con un valor predeterminado
 // // Si el archivo de entrada no existe, crea un pipe vacío para continuar la ejecución
 // // Devuelve 0 si la redirección es exitosa y 1 si se usa un flujo vacío
-/*int input_redirect_with_default(char *file, t_cmd *cmd)
+/*
+int input_redirect_with_default(char *file, t_cmd *cmd)
 {
 	int fd;
 	int p_empty_fd[2];
@@ -135,6 +136,7 @@ void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *token)
 	close(fd);
 	free(file);
 	return 0;
-}*/
+}
+*/
 
 

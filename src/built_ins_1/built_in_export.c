@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 18:55:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:01:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,54 @@
  * case 03:
  * error
  */
-void	init_process_export(t_cmd *curr_command, t_list *env_list)
+
+
+static int update_var_exist(char *key, char *value, t_list **env_list)
+{
+	t_list *temp = *env_list;
+	t_env *env_var;
+
+	while (temp)
+	{
+		env_var = (t_env *)temp->content;
+		if (ft_strcmp(env_var->key, key) == 0) // Si la variable ya existe
+		{
+			free(env_var->value);
+			env_var->value = ft_strdup(value); // Actualiza el valor
+			return (1);
+		}
+		temp = temp->next;
+	}
+	return (0); // No se encontró, debe agregarse una nueva variable
+}
+void	init_process_export(t_cmd *curr_command, t_list** env_list)
 {
 	char	*name_and_value;
 	char	*var_name;
 	char	*var_value;
+	t_list	*new_var_env;
 
 	name_and_value = curr_command->cmd_args[1];
+	new_var_env = NULL;
 
 	// printf("curr_command->cmd_args[1]: [%s]\n", name_and_value);
 	var_name = get_var_name(name_and_value);
 	var_value = get_var_value(name_and_value);
 
-	printf("var_name: [%s]\n", var_name);
-	printf("var_value: [%s]\n", var_value);
+	// printf("var_name: [%s]\n", var_name);
+	// printf("var_value: [%s]\n", var_value);
 	int		condition1 = validate_var_name(name_and_value);
 	int		condition2 = validate_var_value(name_and_value);
 
 	// if (validate_var_name(var_name) == 1 && validate_var_value(var_value) == 1)
 	if (condition1 == TRUE && condition2 == TRUE)
 	{
-		create_new_key(name_and_value, var_name, var_value, &env_list);
-		// update_var(var_name, &env_list);
+		if (!update_var_exist(var_name, var_value, env_list)) // Si no existe, se crea
+		{
+			new_var_env = create_new_key(name_and_value, var_name, var_value);
+			if (new_var_env)
+				ft_lstadd_back(env_list, new_var_env);
+		}
 	}
 	else
 	{

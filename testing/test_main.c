@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/25 23:27:51 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:26:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ void	test_extract_var_name(void)
 }
 */
 
-/*zoom*
+/*
  * @see get_and_
  */
 /*

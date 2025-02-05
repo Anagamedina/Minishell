@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 18:06:08 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:22:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_value(char *value, char *line, t_env *env_var)
 		env_var->value = ft_strdup("");
 }
 
-void	create_new_key(char *line, char *key, char *value, t_list **env_list)
+t_list* create_new_key(char* line, char* key, char* value)
 {
 	t_env	*new_var;
 	t_list	*new_node;
@@ -68,23 +68,19 @@ void	create_new_key(char *line, char *key, char *value, t_list **env_list)
 		fprintf(stderr, "Error: no se pudo crear la variable\n");
 		free(key);
 		free(value);
-		return;
+		return(NULL);
 	}
 	new_var->key = key;
 	new_var->value = value;
 	new_var->full_var = line;
-
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 	{
 		fprintf(stderr, "Error: no se pudo crear el nodo de la lista\n");
 		free_env(new_var);
-		return;
+		return (NULL);
 	}
-//	add node to env_list with ft_lstadd_back
-	ft_lstadd_back(env_list, new_node); 
-	printf("AFTER LST ADD_BACK\n");
-	print_env_list(*env_list);
+	return (new_node);
 }
 
 
@@ -122,7 +118,7 @@ void	update_var(char *line, t_list **env_list)
 	if (env_var == NULL)
 	{
 		printf("create new key^^^^^^^^^^^^^^^^^^^\n");
-		create_new_key(line, key, value, env_list);
+		create_new_key(line, key, value);
 	}
 	else
 	{
