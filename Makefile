@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/23 13:23:51 by anamedin         ###   ########.fr        #
+#    Updated: 2025/02/06 13:59:21 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_BUILTINS2 = $(SRC_DIR)/built_ins_2
 SRC_CMD = $(SRC_DIR)/commands
 SRC_EXPAND= $(SRC_DIR)/expand
 SRC_FREE= $(SRC_DIR)/free
+SRC_SIGNALS= $(SRC_DIR)/signals
 
 OBJ_DIR = obj
 LIBFT_DIR = libft
@@ -88,7 +89,8 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_FREE)/free_mini.c \
 		$(SRC_FREE)/free_redir.c \
 		$(SRC_FREE)/free_split.c \
-		$(SRC_FREE)/free_tokens.c
+		$(SRC_FREE)/free_tokens.c \
+		$(SRC_SIGNALS)/signals.c
 
 #		$(SRC_EXECUTE)/tests.c \
 #		$(SRC_REDIR)/heredoc.c
