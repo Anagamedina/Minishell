@@ -6,11 +6,62 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/05 18:17:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:28:06 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+
+
+int apply_redirections(t_cmd *cmd)
+{
+    t_list	*redir_node;
+    t_redir	*curr_redir;
+    int		redirection_applied;
+
+    redir_node = cmd->redir_list;
+	redirection_applied = 0;
+    while (redir_node)
+    {
+        curr_redir = (t_redir *)redir_node->content;
+        if (curr_redir->type == REDIR_OUT) // >
+        {
+			//fd =  curr_redir->fd_output;
+            curr_redir->fd_output = open(curr_redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (curr_redir->fd_output == -1)
+            {
+                perror("Error abriendo archivo de salida");
+                return FALSE;
+            }
+			//???
+            if (cmd->output_fd != STDOUT_FILENO)
+                close(cmd->output_fd);
+            cmd->output_fd = curr_redir->fd_output;
+        }
+        redirection_applied = 1;
+        redir_node = redir_node->next;
+    }
+    return (redirection_applied);
+}
+
+        /*if (curr_redir->type == REDIR_IN) // <
+        {
+            curr_redir->fd_input = open(curr_redir->filename, O_RDONLY);
+            if (curr_redir->fd_input == -1)
+            {
+                perror("Error abriendo archivo de entrada");
+                return FALSE;
+            }
+            if (cmd->input_fd != STDIN_FILENO)
+                close(cmd->input_fd);
+            cmd->input_fd = curr_redir->fd_input;
+        }*/
+
+
+
+
+//??
 
 // Abre un archivo según el tipo de redirección especificado
 // type puede ser REDIR_IN (<), REDIR_OUT (>), o REDIR_APPEND (>>)
@@ -71,47 +122,21 @@ int	apply_redirections(t_cmd *cmd)
 	return (TRUE);
 }*/
 
-int apply_redirections(t_cmd *cmd)
-{
-    t_list	*redir_node;
-    t_redir	*curr_redir;
-    int		redirection_applied;
 
-    redir_node = cmd->redir_list;
-	redirection_applied = 0;
-    while (redir_node)
-    {
-        curr_redir = (t_redir *)redir_node->content;
-        if (curr_redir->type == REDIR_OUT) // >
-        {
-            curr_redir->fd_output = open(curr_redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-            if (curr_redir->fd_output == -1)
-            {
-                perror("Error abriendo archivo de salida");
-                return FALSE;
-            }
-            if (cmd->output_fd != STDOUT_FILENO)
-                close(cmd->output_fd);
-            cmd->output_fd = curr_redir->fd_output;
-        }
-        redirection_applied = 1;
-        redir_node = redir_node->next;
-    }
-    return (redirection_applied);
-}
 
-        /*if (curr_redir->type == REDIR_IN) // <
-        {
-            curr_redir->fd_input = open(curr_redir->filename, O_RDONLY);
-            if (curr_redir->fd_input == -1)
-            {
-                perror("Error abriendo archivo de entrada");
-                return FALSE;
-            }
-            if (cmd->input_fd != STDIN_FILENO)
-                close(cmd->input_fd);
-            cmd->input_fd = curr_redir->fd_input;
-        }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 int apply_redirections(t_cmd *cmd)

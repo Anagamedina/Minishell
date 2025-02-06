@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/06 00:23:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:07:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	execute_external(t_cmd *cmd, char **envp)
 	perror("Error ejecutando comando externo con execve");
 	exit(EXIT_FAILURE);
 }
-
 
 int	execute_commands(t_mini *mini)
 {
@@ -64,7 +63,7 @@ int	execute_commands(t_mini *mini)
 				if (curr_cmd->redir_list != NULL)
 				{
 					// SI EL COMANDO NO TIENE ENTRADA, ASIGNAR UN `STDIN` VACÍO
-					if (curr_cmd->cmd_id > 0 && curr_cmd->input_fd == STDIN_FILENO)
+					if (curr_cmd->input_fd == STDIN_FILENO)
 					{
 						int p_empty_fd[2];
 
@@ -75,6 +74,7 @@ int	execute_commands(t_mini *mini)
 						}
 						curr_cmd->input_fd = p_empty_fd[0];
 						close(p_empty_fd[1]);
+						
 					}
 				}
 				else
@@ -106,7 +106,20 @@ int	execute_commands(t_mini *mini)
 			if (pid == 0)
 			{
 				// TODO: Agregar caso pipe vacia.
-				// REDIRECCIÓN DE ENTRADA SI ES NECESARIO
+				// REDIRECCIÓN DE ENTRADA SI ES NECESAiRIO
+				// CASO DE PIPE VACÍA
+				if (curr_cmd->input_fd == STDIN_FILENO && curr_cmd->cmd_id > 0)
+				{
+					int p_empty_fd[2];
+					if (pipe(p_empty_fd) == -1)
+					{
+						perror("Error creando pipe vacío");
+						exit(EXIT_FAILURE);
+					}
+					curr_cmd->input_fd = p_empty_fd[0];
+					close(p_empty_fd[1]); // Se cierra el lado de escritura para enviar EOF
+				}
+
 				if (curr_cmd->input_fd != STDIN_FILENO)
 				{
 					if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
@@ -139,7 +152,11 @@ int	execute_commands(t_mini *mini)
 				if (curr_cmd->output_fd != STDOUT_FILENO)
 					close(curr_cmd->output_fd);
 				if (curr_cmd->input_fd != STDIN_FILENO)
+				{
 					close(curr_cmd->input_fd);
+					// close(pipe_fd[0]);
+					
+				}
 
 				// ACTUALIZAR EL INPUT PARA EL SIGUIENTE COMANDO
 				if (t_list_exec_cmd->next)
@@ -169,6 +186,45 @@ int	execute_commands(t_mini *mini)
 	}
 	return (TRUE);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
