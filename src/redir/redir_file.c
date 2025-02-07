@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/06 16:33:27 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:02:51 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int apply_redirections(t_cmd *cmd)
                 printf("Error: No se pudo abrir '%s'.\n", curr_redir->filename);
                 return FALSE;
             }
-            redirection_applied = 1;
+            redirection_applied ++;
 		}
 		else if (curr_redir->type == REDIR_APPEND)
 		{

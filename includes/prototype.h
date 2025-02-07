@@ -267,7 +267,7 @@ void		execute_external(t_cmd *cmd, char **envp);
 void		process_flags(t_cmd *cmd, char *cmd_str);
 t_cmd		*init_command(void);
 t_cmd		*handle_cmd_error(t_cmd *new);
-void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
+void		handle_child(t_cmd *curr_cmd, t_mini *mini);
 //t_pipe		*init_pipe(void);
 //t_pipe 		*create_pipe(int is_last);
 int 		count_pipes(t_list *token_list);
