@@ -5,28 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 13:22:23 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built-in_utils.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/29 12:30:04 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/10 23:12:49 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
- * Buscar una variable por clave en la lista
-*/
 
 t_env	*find_env_var(t_list *env_list, char *key)
 {
@@ -57,7 +41,7 @@ void	check_value(char *value, char *line, t_env *env_var)
 		env_var->value = ft_strdup("");
 }
 
-t_list* create_new_key(char* line, char* key, char* value)
+t_list*	create_new_key(char* line, char* key, char* value)
 {
 	t_env	*new_var;
 	t_list	*new_node;
@@ -65,10 +49,10 @@ t_list* create_new_key(char* line, char* key, char* value)
 	new_var = init_empty_env_node();
 	if (!new_var)
 	{
-		fprintf(stderr, "Error: no se pudo crear la variable\n");
+		fprintf(stderr, "Error: cant create new variable\n");
 		free(key);
 		free(value);
-		return(NULL);
+		return (NULL);
 	}
 	new_var->key = key;
 	new_var->value = value;
@@ -86,22 +70,27 @@ t_list* create_new_key(char* line, char* key, char* value)
 }
 
 
-void	print_export(t_list *env_list)
+void	print_export(t_list **env_list)
 {
+	t_list	*tmp;
 	t_env	*env_var;
 
-	while (env_list != NULL)
+	if (!env_list || !*env_list)
+		return ;
+	tmp = *env_list;
+	while (tmp != NULL)
 	{
-		env_var = (t_env *)env_list->content;
-		if (env_var && env_var->key)
+		env_var = (t_env *)(tmp->content);
+		if (env_var)	//&& env_var->key)
 		{
-			printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value ? env_var->value : "");
+			if (env_var->value)
+				printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value);
+			else
+				printf("declare -x %s=\"\"\n", env_var->key);
 		}
-		env_list = env_list->next;
+		tmp = tmp->next;
 	}
 }
-
-
 
 //**********MAIN FUNCTION********** */
 
@@ -119,14 +108,11 @@ void	update_var(char *line, t_list **env_list)
 	env_var = find_env_var(*env_list, key);
 	if (env_var == NULL)
 	{
-		printf("create new key^^^^^^^^^^^^^^^^^^^\n");
+		printf("create new key\n");
 		create_new_key(line, key, value);
 	}
 	else
-	{
-		// Si ya existe, actualizar su valor
 		check_value(value, line, env_var);
-	}
 	free(key);
 	if (!env_var)
 		free(value);

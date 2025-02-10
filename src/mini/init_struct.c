@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/30 19:19:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:50:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_mini	*init_mini_list(char **envp)
     minishell = malloc(sizeof(t_mini));
     if (!minishell)
         return (NULL);
-    minishell->bash_lvl = 0;
+    minishell->bash_lvl = 1;
     minishell->chars_in_line = -1;
     minishell->env = init_env_list(envp);
     if (minishell->env == NULL)

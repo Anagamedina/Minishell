@@ -6,10 +6,12 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/04 18:39:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 21:15:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+#include <errno.h>
 
 #include "../../includes/minishell.h"
 
@@ -22,22 +24,41 @@ ana=
  * Verificar primer carácter si es a-zA-Z o '_'
  * agregar caso de '_' da error !!!
 */
+
+/*
+daruuu@pop-os:~/CLionProjects/Minishell$ export 1
+bash: export: `1': not a valid identifier
+*/
+
+/*
+ * start with (a-z, A-Z) o _ (guion bajo).
+ * Solo puede contener letras, números (0-9) y _.
+ * No puede contener espacios ni caracteres especiales (!@#$%^&* etc.).
+ * No puede comenzar con un número.
+*/
+
 int	validate_var_name(const char *line)
 {
 	int i;
 
-	if (!(ft_isalpha(line[0])) || ft_isdigit(line[0]))
+	if (!line || !(ft_isalpha(line[0]) || line[0] == '_'))
+	{
+		errno = EINVAL;
+		perror("bash: export");
 		return (FALSE);
+	}
 	i = 1;
 	while (line[i] != '\0' && line[i] != '=')
 	{
 		if (!(ft_isalnum(line[i]) || line[i] == '_'))
+		{
+			errno = EINVAL;
+			perror("bash: export");
 			return (FALSE);
-		i++;
+		}
+		i ++;
 	}
-	if (line[i] == '=')
-		return (TRUE);
-	return (FALSE);
+	return (TRUE);
 }
 
 /*
@@ -47,21 +68,38 @@ int	validate_var_name(const char *line)
  * Retorna 1 si es válido, 0 si no lo es.
  */
 
+/*
+ * Debe comenzar con una letra (a-z, A-Z) o _ (guion bajo).
+ * Solo puede contener letras, números (0-9) y _.
+ * No puede contener espacios ni caracteres especiales (!@#$%^&* etc.).
+ * No puede comenzar con un número.
+*/
+
 int	validate_var_value(const char *line)
 {
-	int i;
+	int	i;
 
+	if (!line)
+	{
+		errno = EINVAL;
+		perror("bash: export");
+		return (FALSE);
+	}
 	i = 0;
 	while (line[i] != '=' && line[i] != '\0')
-		i++;
-	if (line[i] != '=')
-		return (FALSE);
-	i++;
+		i ++;
+	if (line[i] == '\0')
+		return (TRUE);
+	i ++;
 	while (line[i] != '\0')
 	{
 		if (!(ft_isascii(line[i])))
+		{
+			errno = EINVAL;
+			perror("bash: export");
 			return (FALSE);
-		i++;
+		}
+		i ++;
 	}
 	return (TRUE);
 }
@@ -77,13 +115,28 @@ char	*get_var_name(char *line)
 	int		len;
 	char	*var_name;
 
+	if (!line || line[0] == '=' || line[0] == '\0')
+	{
+		errno = EINVAL;
+		perror("bash: export");
+		return (NULL);
+	}
 	i = 0;
 	while (line[i] != '\0' && line[i] != '=')
 		i ++;
 	len = i;
+	if (len == 0)
+	{
+		errno = EINVAL;
+		perror("bash: export");
+		return (NULL);
+	}
 	var_name = malloc(sizeof(char) * (len + 1));
 	if (!var_name)
+	{
+		perror("bash: export");
 		return (NULL);
+	}
 	i = 0;
 	while (i < len)
 	{
@@ -108,20 +161,29 @@ char	*get_var_value(char *line)
 	int		len;
 	char	*var_value;
 
-	len = ft_strlen(line);
+	if (!line)
+	{
+		errno = EINVAL;
+		perror("bash: export");
+		return (NULL);
+	}
+	len = (int) ft_strlen(line);
 	i = len - 1;
 	while (i >= 0 && line[i] != '=')
-		i--;
-	var_value = malloc(sizeof(char) * (len - i + 1));
+		i --;
+	if (i < 0)
+		return (ft_strdup(""));
+	var_value = malloc(sizeof(char) * (len - i));
 	if (!var_value)
+	{
+		perror("bash: export");
 		return (NULL);
-	i = i + 1;
+	}
+	i ++;
 	j = 0;
 	while (i < len)
 	{
-		var_value[j] = line[i];
-		i++;
-		j++;
+		var_value[j++] = line[i++];
 	}
 	var_value[j] = '\0';
 	return (var_value);

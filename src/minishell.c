@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 23:15:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 23:07:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char **argv, char **envp)
 		echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc $'tab\there'
 		echo $'hello\t' ana is a te\\nst in minishell
 		*/
-
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);
 		minishell->tokens = generate_token_list(input);

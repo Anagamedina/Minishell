@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/06 13:54:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 23:23:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		print_env_list(t_list *env_list);
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);
 void		free_env(t_env *env);
-t_env		*init_env(char *line);
+t_env		*init_env_var(char *key_value_var);
 
 //************** ENV_LOCALS ************/
 int			validate_var_name(const char *line);
@@ -56,16 +56,18 @@ void		parser_tokens(t_mini *mini);
 
 void		add_env_back(t_env **env_list, t_env *new_node);
 void		update_var(char *line, t_list **env_list);
-void		print_export(t_list *env_list);
-void		init_process_export(t_cmd *curr_command, t_list **env_list);
+void		print_export(t_list** env_list);
+void		export_variable(t_cmd *curr_command, t_list **env_list);
 void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
 
 //************ MAIN BUILTINS ********/
-
 void		cases_builtins(t_mini *mini);
+
+//************ BUILTIN_ECHO.c ************/
 void		ft_echo(t_cmd *cmd);
+void		echo_with_args(t_cmd *cmd);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

@@ -57,6 +57,7 @@ add_executable(minishell
         ${FREE_DIR}
         ${REDIR_DIR}
 		${SIGNALS_DIR}
+        src/built_ins_1/builtin_echo.c
 )
 # link with readline library
 target_link_libraries(minishell readline)

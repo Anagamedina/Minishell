@@ -55,6 +55,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_CMD)/print_cmd.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
+		$(SRC_BUILTINS1)/builtin_echo.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/07 17:20:14 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:32:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
     curr_cmd->input_fd = *input_fd;
 }
 
-void handle_child(t_cmd *curr_cmd, t_mini *mini)
+void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
+	char	**envp;
     // Redirigir entrada si no es el primer comando
     if (curr_cmd->input_fd != STDIN_FILENO)
     {
@@ -88,19 +89,21 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
     }
 
     // Convertir variables de entorno a array
-    char **envp = lst_to_arr(mini->env);
-
+    envp = lst_to_arr(mini->env);
+	if (!envp)
+	{
+		perror("Error: fallo al convertir env a array");
+		exit(EXIT_FAILURE);
+	}
     // Ejecutar el comando
-    if (curr_cmd->is_external == 1)
+    if (curr_cmd->is_builtin == 1)
+        cases_builtins(mini);
+    else if (curr_cmd->is_external == 1)
     {
         execute_external(curr_cmd, envp);
     }
-    else if (curr_cmd->is_builtin == 1)
-    {
-        cases_builtins(mini);
-    }
-
-    exit(EXIT_FAILURE); // Si llega aquí, algo falló
+	// ft_free_array(envp);
+	exit(EXIT_FAILURE); // Si llega aquí, algo falló
 }
 
 static void handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)

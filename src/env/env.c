@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/30 19:32:59 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:15:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_env	*init_env(char *line)
+t_env	*init_env_var(char *key_value_var)
 {
 	t_env	*new_env;
 	char	**split_var;
@@ -20,13 +20,13 @@ t_env	*init_env(char *line)
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
-	new_env->full_var = ft_strdup(line);
+	new_env->full_var = ft_strdup(key_value_var);
 	if (!new_env->full_var)
 	{
 		free(new_env);
 		return (NULL);
 	}
-	split_var = ft_split(line, '=');
+	split_var = ft_split(key_value_var, '=');
 	new_env->key = ft_strdup(split_var[0]);
 	if (split_var[1])
 		 new_env->value = ft_strdup(split_var[1]);
@@ -68,10 +68,10 @@ t_list	*init_env_list(char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		new_env = init_env(envp[i]);
+		new_env = init_env_var(envp[i]);
 		if (!new_env)
 		{
-			fprintf(stderr, "Error: No se pudo inicializar la variable de entorno [%s]\n", envp[i]);
+			fprintf(stderr, "Error: Can't init env variable: [%s]\n", envp[i]);
 			ft_lstclear(&env_list, (void (*)(void *))free_env);
 			return (NULL);
 		}
@@ -90,8 +90,8 @@ t_list	*init_env_list(char **envp)
 
 void	print_env_list(t_list *env_list)
 {
-	t_list *current;
-	t_env  *env;
+	t_list	*current;
+	t_env	*env;
 
 	if (!env_list)
 	{

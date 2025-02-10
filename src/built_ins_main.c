@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 11:45:57 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/11 00:21:01 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_ins_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
@@ -21,23 +33,23 @@ void	cases_builtins(t_mini *mini)
 	{
 		ft_echo(curr_cmd);
 	}
-	else if (ft_strcmp(curr_cmd->cmd, "export") == 0 && \
-		curr_cmd->cmd_args[1] == NULL)
+	else if (ft_strcmp(curr_cmd->cmd, "export"))
 	{
-		print_export(mini->env);
-	}
-	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
-	{
-		init_process_export(curr_cmd, &(mini->env));
+		if (curr_cmd->cmd_args[1] != NULL)
+			export_variable(curr_cmd, &(mini->env));
+		else
+			print_env_list(mini->env);
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 	{
+		// TODO: update unset function
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
 	{
 		print_env_list(mini->env);
 	}
 }
+
 /*
     if ((ft_strcmp((char *)current_command->cmd, "export") == 0))
     {
