@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/07 17:02:51 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:47:49 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int open_file(char *file, int type)
 {
 	int fd;
 
-	if (type == REDIR_IN)
-		fd = open(file, O_RDONLY);
+	/*if (type == REDIR_IN)
+		fd = open(file, O_RDONLY);*/
 	if (type == REDIR_OUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIR_APPEND)
@@ -59,38 +59,30 @@ int apply_redirections(t_cmd *cmd)
 	{
 		curr_redir = (t_redir *)redir_node->content;
 
-		if (curr_redir->type == REDIR_IN)
+		/*if (curr_redir->type == REDIR_IN)
 		{
+			if (cmd->input_fd != STDIN_FILENO)
+				close(cmd->input_fd);
 			cmd->input_fd = open_file(curr_redir->filename, REDIR_IN);
+			if (cmd->input_fd == -1)
+			{
+				perror("Error abriendo archivo de entrada");
+				return FALSE;
+			}
 			redirection_applied = 1;
-		}
-		//CASO ACTUAL ES REDIR_OUT
-		if (curr_redir->type == REDIR_OUT)
-		{
-			//Si ya hay una redirección de salida abierta y no es la salida estandar
-			//PROTECCION 
-			// if (cmd->output_fd != STDOUT_FILENO && cmd->output_fd != -1)
-			if (cmd->output_fd != STDOUT_FILENO)
-                close(cmd->output_fd); // Cerrar anterior si había otra redirección
+		}*/
 
-            cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
-            if (cmd->output_fd == -1)
-            {
-                printf("Error: No se pudo abrir '%s'.\n", curr_redir->filename);
-                return FALSE;
-            }
-            redirection_applied ++;
-		}
-		else if (curr_redir->type == REDIR_APPEND)
+		if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
 		{
-			cmd->output_fd = open_file(curr_redir->filename, REDIR_APPEND);
+			if (cmd->output_fd != STDOUT_FILENO)
+				close(cmd->output_fd);
+			cmd->output_fd = open_file(curr_redir->filename, curr_redir->type);
+			if (cmd->output_fd == -1)
+			{
+				perror("Error abriendo archivo de salida");
+				return FALSE;
+			}
 			redirection_applied = 1;
-		
-		}
-		if (cmd->input_fd == -1 && cmd->output_fd == -1)
-		{
-			printf("Error: No se pudo abrir el archivo '%s'.\n", curr_redir->filename);
-			return (0);
 		}
 
 		redir_node = redir_node->next;
