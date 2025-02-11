@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/10 21:15:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:57:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,21 @@ char	*get_var_value(char *line)
 	return (var_value);
 }
 
+//	before was get_env_var();
+char	*get_variable_in_envlist(t_list *env_list, char *key_to_find)
+{
+	t_list	*curr_node;
+	t_env	*curr_env;
 
-
+	if (!key_to_find || !env_list)
+		return (NULL);
+	curr_node = env_list;
+	while (curr_node)
+	{
+		curr_env = (t_env *) curr_node->content;
+		if (ft_strcmp(key_to_find, curr_env->key) == 0)
+			return (curr_env->value);
+		curr_node = curr_node->next;
+	}
+	return (NULL);
+}

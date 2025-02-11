@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:30:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/30 17:05:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:13:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void			ft_putstr_fd(char *s, int fd);
 char			**ft_split(const char *s, char c);
 char			*ft_strdup(const char *s1);
 char			*ft_strjoin(const char *s1, const char *s2);
+int				ft_atoi(const char *str);
+char			*ft_itoa(int n);
 size_t			ft_strlen(const char *str);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 char			*ft_substr(const char *s, unsigned int start, size_t len);

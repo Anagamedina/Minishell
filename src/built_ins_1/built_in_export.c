@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/10 23:13:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:39:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,9 @@
  * Puede listar variables de entorno o agregar/modificar una.
  * caso 01:
  * line = export key=value
- * caso 02:
- * line = export
- * case 03:
- * error
  */
 
-static int update_var_exist(char *var_name, char *new_value, t_list **env_list)
+int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
 {
 	t_list	*current_node;
 	t_env	*current_var;
@@ -58,6 +54,24 @@ static int update_var_exist(char *var_name, char *new_value, t_list **env_list)
 	return (0);
 }
 
+int	check_if_var_name_exist(char *var_name, t_list *env_list)
+{
+	t_list	*current_node;
+	t_env	*current_var;
+
+	if (!var_name || !env_list)
+		return (0);
+	current_node = env_list;
+	while (current_node)
+	{
+		current_var = (t_env *) current_node->content;
+		if (ft_strcmp(var_name, current_var->key) == 0)
+			return (1);
+		current_node = current_node->next;
+	}
+	return (FALSE);
+}
+
 void	export_variable(t_cmd *curr_command, t_list** env_list)
 {
 	char	*key_value;
@@ -75,7 +89,7 @@ void	export_variable(t_cmd *curr_command, t_list** env_list)
 	{
 		if (!update_var_exist(var_name, var_value, env_list))
 		{
-			new_var_env = create_new_key(key_value, var_name, var_value);
+			new_var_env = create_new_env_node(key_value, var_name, var_value);
 			if (new_var_env)
 			{
 				if (*env_list == NULL)

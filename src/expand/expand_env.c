@@ -6,12 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:43:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:30:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// TODO: possible cambio a utlizar la funcion get_env_value
 char	*find_value_in_env(t_list *env_list, char *var_name_token)
 {
 	t_list	*curr_env_list;

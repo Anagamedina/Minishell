@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/10 12:15:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:15:58 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_env	*init_env_var(char *key_value_var)
 	}
 	split_var = ft_split(key_value_var, '=');
 	new_env->key = ft_strdup(split_var[0]);
-	if (split_var[1])
+	if (split_var[1] != NULL)
 		 new_env->value = ft_strdup(split_var[1]);
 	else
 		new_env->value = ft_strdup("");
@@ -71,7 +71,7 @@ t_list	*init_env_list(char **envp)
 		new_env = init_env_var(envp[i]);
 		if (!new_env)
 		{
-			fprintf(stderr, "Error: Can't init env variable: [%s]\n", envp[i]);
+			// fprintf(stderr, "Error: Can't init env variable: [%s]\n", envp[i]);
 			ft_lstclear(&env_list, (void (*)(void *))free_env);
 			return (NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/10 23:23:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ t_env		*init_struct_env(void);
 void		free_env(t_env *env);
 t_env		*init_env_var(char *key_value_var);
 
-//************** ENV_LOCALS ************/
+//************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
 char		*get_var_name(char *line);
 char		*get_var_value(char *line);
+char		*get_variable_in_envlist(t_list *env_list, char *key_to_find);
+
+//************** ENV_LOCALS_list.c ************/
+
 t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
 
 //*************INPUT***********/
@@ -57,10 +61,16 @@ void		parser_tokens(t_mini *mini);
 void		add_env_back(t_env **env_list, t_env *new_node);
 void		update_var(char *line, t_list **env_list);
 void		print_export(t_list** env_list);
-void		export_variable(t_cmd *curr_command, t_list **env_list);
+
 void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
+
+//************** BUILT_IN_export.c********/
+
+int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
+int			check_if_var_name_exist(char *var_name, t_list *env_list);
+void		export_variable(t_cmd *curr_command, t_list **env_list);
 
 //************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini);
@@ -215,7 +225,7 @@ int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** BUILT_INS_UTILS.C ********/
 
-t_list		*create_new_key(char* line, char* key, char* value);
+t_list		*create_new_env_node(char* line, char* key, char* value);
 
 //************** ERRORS_COMMAND.C ********/
 
