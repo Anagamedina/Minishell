@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/10 11:48:10 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/12 13:28:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 
 void handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
+	char	**envp_to_array;
+
 	// Si hay redirección `>`, la aplicamos primero
 	if (apply_redirections(curr_cmd) > 0)
 	{
@@ -79,8 +81,15 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 	}
 
 	// Ejecutar comando
-	char **envp = lst_to_arr(mini->env);
-	execute_external(curr_cmd, envp);
+	envp_to_array = lst_to_arr(mini->env);
+	if (curr_cmd->is_external == 1)
+	{
+		execute_external(curr_cmd, envp_to_array);
+	}
+	else if (curr_cmd->is_builtin == 1)
+	{
+		cases_builtins(mini);
+	}
 	exit(EXIT_FAILURE);
 }
 
