@@ -29,7 +29,6 @@ void	cases_builtins(t_mini *mini)
 	t_cmd	*curr_cmd;
 
 	curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
-
 	if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 	{
 		ft_echo(curr_cmd);
