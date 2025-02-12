@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 23:35:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:56:15 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 
 /**
  *
- * @param env_list
- * @param shell_level
- *
- * call macros of PWD, OLDPWD, HOME, SHLVL
- *
- * la idea de esta funcion es actualizar el nivel de shell
- * actualizar el valor de SHLVL en env_list
- * actualizar el valor de PWD en env_list
- * actualizar el valor de OLDPWD en env_list si no existe
- * actualizar el valor de HOME en env_list
+ * update the level of shell
+ * update the value of SHLVL in env_list
+ * update the value of PWD in env_list
+ * update the value of OLDPWD in env_list si no existe
+ * update the value of HOME in env_list
  */
 // TODO: refactorizar esta función para que sea más legible
 

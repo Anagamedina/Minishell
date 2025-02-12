@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/10 23:07:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:35:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		/*TOKENS
 		echo $DISPLAY $USERNAME "123" $HOME 'abc' '$HOME'
 		echo $DISPLAY $USERNAME "123" $HOME 'abc' $SHELL """abcd""" $123456 incomplete$HOMEabc $'tab\there'
-		echo $'hello\t' ana is a te\\nst in minishell
+		echo $'hello\t' abcde is a te\\nst in minishell
 		*/
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);

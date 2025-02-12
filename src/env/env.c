@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/11 15:15:58 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:51:49 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_list	*init_env_list(char **envp)
 	}
 	return (env_list);
 }
-
+/*
 void	print_env_list(t_list *env_list)
 {
 	t_list	*current;
@@ -95,7 +95,7 @@ void	print_env_list(t_list *env_list)
 
 	if (!env_list)
 	{
-		printf("La lista de variables de entorno está vacía o no fue inicializada.\n");
+		printf("empty list.\n");
 		return ;
 	}
 	current = env_list;
@@ -105,10 +105,8 @@ void	print_env_list(t_list *env_list)
 		{
 			env = (t_env *)current->content;
 			if (env->key)
-				printf("%s=", env->key);
-			else
-				printf("(null)=");
-
+				printf("%s", env->key);
+			printf("=");
 			if (env->value)
 				printf("%s\n", env->value);
 			else
@@ -116,5 +114,29 @@ void	print_env_list(t_list *env_list)
 		}
 		current = current->next;
 	}
+}
+*/
+
+
+void print_env_list(t_list *env_list)
+{
+    t_list *current = env_list;
+    t_env *env_var;
+
+    current = env_list;
+    while (current)
+    {
+        env_var = (t_env *)current->content;
+        if (env_var->key && env_var->value)
+		{
+			if (ft_strcmp(env_var->value, "") == 0)
+			{
+				break ;
+			}
+			else
+            	printf("%s=%s\n", env_var->key, env_var->value);
+		}
+        current = current->next;
+    }
 }
 

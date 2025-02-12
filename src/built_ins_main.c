@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:45:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 20:05:14 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:21:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ void	cases_builtins(t_mini *mini)
 		if (curr_cmd->cmd_args[1] == NULL)
 			print_export(&mini->env);
 		else
+		{
 			export_variable(curr_cmd, &(mini->env));
+			printf("--------------PRINT ENV LIST---------------------------\n");
+			print_env_list(mini->env);
+			printf("\n-----------------------------------------\n");
+		}
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 	{
