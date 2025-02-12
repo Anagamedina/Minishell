@@ -24,6 +24,7 @@ file(GLOB UNIT_C_TESTING testing/*.c)
 file(GLOB EXECUTE_DIR src/execute/*.c)
 file(GLOB REDIR_DIR src/redir/*.c)
 file(GLOB FREE_DIR src/free/*.c)
+file(GLOB SIGNALS_DIR src/signals/*.c)
 
 # include the headers
 include_directories(includes)
@@ -55,8 +56,8 @@ add_executable(minishell
         ${EXECUTE_DIR}
         ${FREE_DIR}
         ${REDIR_DIR}
-
-
+		${SIGNALS_DIR}
+        src/built_ins_1/builtin_echo.c
 )
 # link with readline library
 target_link_libraries(minishell readline)
@@ -80,6 +81,7 @@ add_executable(testing_shell
         ${PARSER_DIR}
         ${EXECUTE_DIR}
         ${FREE_DIR}
+		${SIGNALS_DIR}
 )
 # link with readline library
 target_link_libraries(testing_shell readline)

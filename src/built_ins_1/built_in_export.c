@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 12:01:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:39:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,64 +29,78 @@
  * Puede listar variables de entorno o agregar/modificar una.
  * caso 01:
  * line = export key=value
- * caso 02:
- * line = export
- * case 03:
- * error
  */
 
-
-static int update_var_exist(char *key, char *value, t_list **env_list)
+int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
 {
-	t_list *temp = *env_list;
-	t_env *env_var;
+	t_list	*current_node;
+	t_env	*current_var;
 
-	while (temp)
+	current_node = *env_list;
+	while (current_node)
 	{
-		env_var = (t_env *)temp->content;
-		if (ft_strcmp(env_var->key, key) == 0) // Si la variable ya existe
+		current_var = (t_env *)current_node->content;
+		if (ft_strcmp(current_var->key, var_name) == 0)
 		{
-			free(env_var->value);
-			env_var->value = ft_strdup(value); // Actualiza el valor
-			return (1);
+			free(current_var->value);
+			if (new_value != NULL)
+				current_var->value = ft_strdup(new_value);
+			else
+				current_var->value = ft_strdup("");
+			return (TRUE);
 		}
-		temp = temp->next;
+		current_node = current_node->next;
 	}
-	return (0); // No se encontró, debe agregarse una nueva variable
+	return (0);
 }
-void	init_process_export(t_cmd *curr_command, t_list** env_list)
+
+int	check_if_var_name_exist(char *var_name, t_list *env_list)
 {
-	char	*name_and_value;
+	t_list	*current_node;
+	t_env	*current_var;
+
+	if (!var_name || !env_list)
+		return (0);
+	current_node = env_list;
+	while (current_node)
+	{
+		current_var = (t_env *) current_node->content;
+		if (ft_strcmp(var_name, current_var->key) == 0)
+			return (1);
+		current_node = current_node->next;
+	}
+	return (FALSE);
+}
+
+void	export_variable(t_cmd *curr_command, t_list** env_list)
+{
+	char	*key_value;
 	char	*var_name;
 	char	*var_value;
 	t_list	*new_var_env;
 
-	name_and_value = curr_command->cmd_args[1];
+	if (!curr_command->cmd_args[1] || !curr_command->cmd_args[1] || !env_list)
+		return ;
+	key_value = curr_command->cmd_args[1];
 	new_var_env = NULL;
-
-	// printf("curr_command->cmd_args[1]: [%s]\n", name_and_value);
-	var_name = get_var_name(name_and_value);
-	var_value = get_var_value(name_and_value);
-
-	// printf("var_name: [%s]\n", var_name);
-	// printf("var_value: [%s]\n", var_value);
-	int		condition1 = validate_var_name(name_and_value);
-	int		condition2 = validate_var_value(name_and_value);
-
-	// if (validate_var_name(var_name) == 1 && validate_var_value(var_value) == 1)
-	if (condition1 == TRUE && condition2 == TRUE)
+	var_name = get_var_name(key_value);
+	var_value = get_var_value(key_value);
+	if (validate_var_name(var_name) == 1 && validate_var_value(var_value) == 1)
 	{
-		if (!update_var_exist(var_name, var_value, env_list)) // Si no existe, se crea
+		if (!update_var_exist(var_name, var_value, env_list))
 		{
-			new_var_env = create_new_key(name_and_value, var_name, var_value);
+			new_var_env = create_new_env_node(key_value, var_name, var_value);
 			if (new_var_env)
-				ft_lstadd_back(env_list, new_var_env);
+			{
+				if (*env_list == NULL)
+					*env_list = new_var_env;
+				else
+					ft_lstadd_back(env_list, new_var_env);
+			}
 		}
 	}
 	else
-	{
 		printf("Error: formato no válido para 'export'.\n");
-	}
 }
 
 /*
@@ -95,6 +109,7 @@ void	init_process_export(t_cmd *curr_command, t_list** env_list)
  * key=value
  * key=
  */
+/*
 void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
 {
 	char	*line;
@@ -108,50 +123,4 @@ void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
 	else
 		printf("Error: comando no reconocido.\n");
 }
-
-/*
- * Gestiona el comando ingresado por el usuario.
- * Verifica si el primer token es "export" o "key=value" y delega a las funciones correspondientes.
- */
-
-// **************** MAIN FUNCTION ******************
-
-/*
-void	builtin_export(t_mini *mini)
-{
-	t_cmd		*cmd_01;
-	t_tokens 	*first_token;
-
-	first_token = mini->tokens->content;
-	cmd_01 = mini->exec->first_cmd->content;
-	if ((ft_strcmp(cmd_01->cmd, "export") == 0))
-	{
-		only_export(mini->env);
-	}
-}
 */
-
-void	ft_echo(t_cmd *cmd)
-{
-	int	i;
-	int	first_arg;
-
-	i = 1;
-	first_arg = 1; // Usamos esta variable para evitar agregar un espacio antes del primer argumento
-
-	//printf("[");
-	while (cmd->cmd_args[i])
-	{
-		if (cmd->cmd_args[i][0] != first_arg)
-		{
-			printf("%s", cmd->cmd_args[i]);
-			if (cmd->cmd_args[i][0] != '\0' && cmd->cmd_args[i + 1]) // Verifica si hay un siguiente argumento()
-				printf(" ");
-		//	first_arg = 0; // Después del primer argumento, se agregan espacios
-
-		}
-
-		i++;
-	}
-	printf("\n");
-}

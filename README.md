@@ -48,6 +48,52 @@ El shell incluye los comandos internos esenciales:
 ## Estructura del Proyecto
 El proyecto cuenta con un **Makefile** para facilitar la compilación, y cada funcionalidad está organizada en archivos `.h` y `.c` que garantizan una estructura clara y modular.
 
+Aquí tienes la sección organizada para tu **README** con un formato claro y estructurado:
+
+---
+
+## 📌 **Notas Importantes & Comandos Útiles**
+
+### 🔹 **Ejecutar Bash sin variables de entorno ni configuraciones**
+
+``` plaintext 
+env -i bash --noprofile --norc
+```
+
+**¿Qué hace este comando?**  
+Ejecuta **Bash en un entorno limpio**, sin cargar configuraciones ni heredar variables del entorno actual.
+
+#### **📌 Desglose del comando:**
+- **`env -i`** (`--ignore-environment`)
+    - Inicia un nuevo entorno **vacío**, sin heredar variables como `PATH`, `HOME`, `USER`.
+    - Útil para pruebas o depuración sin configuraciones heredadas.
+
+- **`bash --noprofile --norc`**
+    - **`--noprofile`** → No carga `~/.bash_profile`, `~/.bash_login` ni `/etc/profile`.
+    - **`--norc`** → No ejecuta `~/.bashrc`, evitando configuraciones personalizadas.
+
+### **📌 Ejemplo de uso**
+
+Para verificar que el entorno realmente está vacío, ejecuta:
+
+```sh
+  env -i bash --noprofile --norc
+  env
+```
+
+**Salida esperada:** (Sin variables de entorno cargadas)
+```sh
+  # No muestra ninguna variable de entorno
+```
+
+---
+
+🚀 **Este comando es útil para depuración, pruebas y asegurarse de que un script no dependa de variables externas.**
+
+---
+
+💡 **Esta versión mejora la organización, el formato y la claridad para que sea fácil de entender en el README.** 📄✨
+
 **Esperamos que este shell se convierta en una herramienta eficaz y amigable para interactuar con el sistema.**
 
 ¡Gracias por revisar nuestro proyecto y no dudes en contactarnos para cualquier pregunta o sugerencia!

@@ -52,7 +52,7 @@ t_list	*create_local_vars_list(char *line, t_list *local_vars_list)
 		printf("Error: invalid local variable syntax: %s\n", line);
 		return (local_vars_list); // Devuelve la lista sin cambios
 	}
-	local_vars = init_env(line);
+	local_vars = init_env_var(line);
 	if (!local_vars)
 	{
 		printf("Error: failed to initialize local variable: %s\n", line);

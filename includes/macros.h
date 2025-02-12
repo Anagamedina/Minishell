@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/31 19:06:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:34:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,19 @@
 # define PWD "pwd"
 # define EXIT "exit"
 
+# define PWD_ENV "PWD"
+# define HOME_ENV "HOME"
+# define USER_ENV "USER"
+# define PATH_ENV "PATH"
+# define PATH_VALUE "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
+# define OLDPWD_ENV "OLDPWD"
+# define SHLVL "SHLVL"
+
 /*--------------------Error messages-------------------*/
 # define PRINT_SYNTAX_ERR_1 "syntax error near unexpected token `|'\n"
 # define PRINT_SYNTAX_ERR_2 "syntax error near unexpected token `newline'\n"
 # define PRINT_SYNTAX_ERR_3 "syntax error\n"
+
+# define SHELL_LVL_WARNING "mini: warning: shell level too high, reset to 1\n"
 
 #endif

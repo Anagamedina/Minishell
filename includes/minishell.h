@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 15:45:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:02:10 by  dasalaza        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>   // open
 # include <sys/wait.h>  // wait, waitid
 # include <sys/types.h>  // pid_t
+# include <signal.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>

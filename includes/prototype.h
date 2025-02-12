@@ -5,32 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 17:04:14 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/05 13:21:18 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 17:18:52 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/22 17:20:48 by  dasalaza        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2024/12/27 16:00:03 by  dasalaza        ###   ########.fr       */
+/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +25,7 @@ typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 typedef struct s_exec		t_exec;
 typedef struct s_redir		t_redir;
-
-typedef struct s_exec t_exec;
+typedef struct s_exec		t_exec;
 
 //typedef struct s_pipe t_pipe;
 
@@ -62,37 +37,47 @@ void		print_env_list(t_list *env_list);
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);
 void		free_env(t_env *env);
-t_env		*init_env(char *line);
+t_env		*init_env_var(char *key_value_var);
 
-//************** ENV_LOCALS ************/
+//************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
 char		*get_var_name(char *line);
 char		*get_var_value(char *line);
+char		*get_variable_in_envlist(t_list *env_list, char *key_to_find);
+
+//************** ENV_LOCALS_list.c ************/
+
 t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
 
 //*************INPUT***********/
 char		*read_input(void);
 int			check_quotes_line(const char *line);
-void		get_size_words_with_pivote(const char* line);
+void		get_size_words_with_pivote(const char *line);
 void		parser_tokens(t_mini *mini);
-
-
 
 //**************BUILTINS-1********/
 
 void		add_env_back(t_env **env_list, t_env *new_node);
 void		update_var(char *line, t_list **env_list);
-void		print_export(t_list *env_list);
-void		init_process_export(t_cmd* curr_command, t_list** env_list);
+void		print_export(t_list** env_list);
+
 void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
 void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
 
-//************ MAIN BUILTINS ********/
+//************** BUILT_IN_export.c********/
 
+int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
+int			check_if_var_name_exist(char *var_name, t_list *env_list);
+void		export_variable(t_cmd *curr_command, t_list **env_list);
+
+//************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini);
+
+//************ BUILTIN_ECHO.c ************/
 void		ft_echo(t_cmd *cmd);
+void		echo_with_args(t_cmd *cmd);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
@@ -144,7 +129,7 @@ t_list		*generate_token_list(char *line);
 
 //************** TOKEN_UTILS_WORD_COUNT.c ********************/
 
-int			count_words_split(char* str);
+int			count_words_split(char *str);
 int			is_quote(char c);
 
 //************** TOKEN_SPLIT.c ********************/
@@ -153,7 +138,7 @@ char		**ft_split_quotes(char *str);
 
 //************** TOKEN_UTILS_QUOTES.c ********************/
 
-char	*remove_consecutive_quotes(char *line);
+char		*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
 //
@@ -162,7 +147,7 @@ char	*remove_consecutive_quotes(char *line);
 int			check_special_c(char c);
 char		*remove_quotes_str(const char *str, char c);
 int			handle_special_balanced_dquotes(t_tokens *token);
-void	remove_and_replace_quotes(t_tokens *token, char quote_type);
+void		remove_and_replace_quotes(t_tokens *token, char quote_type);
 
 //************** parser_syntax_quotes.c ********************/
 
@@ -174,13 +159,13 @@ char		*remove_d_quote_and_s_quotes_str(char *str);
 //************** parser_syntax_expand.c ********************/
 
 int			check_dquote_dollar_and_squotes(const char *str);
-void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens* next_token);
+void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
 //int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
-void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens* next_token);
+void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token);
 int			has_string_before_dollar(const char *str);
 int			check_dquote_squote_dollar_case(char *str);
-int			handle_no_expand_cases(t_tokens *token, t_tokens* next_token);
+int			handle_no_expand_cases(t_tokens *token, t_tokens *next_token);
 int			has_consecutives_env_variables_in_token(t_tokens *token);
 char		*expand_consecutives_variables(t_tokens *token, t_list *env_list);
 int			handle_single_quotes_after_dollar(t_tokens *token);
@@ -190,13 +175,12 @@ int			handle_digit_and_more_after_dollar(t_tokens *token);
 
 //************** parser_not_expand.c ********************/
 
-int			check_dollar_and_next_token(char** str, t_tokens* next_token);
+int			check_dollar_and_next_token(char **str, t_tokens *next_token);
 int			has_only_one_digit_after_dollar(const char *str);
 char		*convert_escape_sequences(const char *str);
 int			has_dollar_followed_by_digit(const char *str);
 
 //************** parser_func.c ********************/
-
 
 //************** EXPAND.c ********************/
 
@@ -208,10 +192,9 @@ void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 //************** expand_token_utils.c ********************/
 
 char		*extract_var_name(const char *str);
-int			update_token_str(t_tokens* token, char** split_word);
+int			update_token_str(t_tokens *token, char **split_word);
 char		*get_and_reconstruct_token(char *split_word, const char *var_value, int i);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
-
 
 //************** expand_split.c ********************/
 
@@ -228,22 +211,21 @@ char		*find_value_in_env(t_list *env_list, char *var_name_token);
 // void		replace_dollar_variable(char **split_word, t_list *env_list);
 // char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 
-
 //************** INIT_COMMAND.C ********/
 
 int			is_type_of_operator(t_tokens *token);
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);
-t_cmd 		*create_new_command(t_tokens *current_token, char **paths);
+t_cmd		*create_new_command(t_tokens *current_token, char **paths);
 t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
-int 		add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
+int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** BUILT_INS_UTILS.C ********/
 
-t_list* create_new_key(char* line, char* key, char* value);
+t_list		*create_new_env_node(char* line, char* key, char* value);
 
 //************** ERRORS_COMMAND.C ********/
 
@@ -261,7 +243,7 @@ void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**lst_to_arr(t_list *env_list);
-int 		is_cmd_external(t_mini *mini, t_tokens *token);
+int			is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 void		process_flags(t_cmd *cmd, char *cmd_str);
@@ -270,23 +252,26 @@ t_cmd		*handle_cmd_error(t_cmd *new);
 void		handle_child(t_cmd *curr_cmd, t_mini *mini);
 //t_pipe		*init_pipe(void);
 //t_pipe 		*create_pipe(int is_last);
-int 		count_pipes(t_list *token_list);
+int			count_pipes(t_list *token_list);
 //void		setup_pipes(t_pipe *pipe_info, int cmd_id);
 
 //*************redis**************/
 
 void		update_words_in_tokens(t_mini *mini);
 int			parse_redir(t_mini *mini);
-int 		check_file(t_mini *mini, t_tokens *token);
-int 		check_repeat_redir(t_list *tokens);
+int			check_file(t_mini *mini, t_tokens *token);
+int			check_repeat_redir(t_list *tokens);
 int			open_file(char *file, int type);
-void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_token);
+void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens *file_token);
 void		redirect_file(int fd, int target_fd);
-int apply_redirections(t_cmd* cmd);
-int			is_redir(t_tokens* token);
-void handle_redirection(char *file, t_cmd *cmd, int type);
-t_redir		*init_redirection(t_tokens *token, t_tokens* next_token);
+int			apply_redirections(t_cmd *cmd);
+int			is_redir(t_tokens *token);
+void		handle_redirection(char *file, t_cmd *cmd, int type);
+t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
 
+//*************SIGNALS**************/
 
+//*************signals.c**************/
+void		handle_signal_ctrl_c(int sig);
 
 #endif

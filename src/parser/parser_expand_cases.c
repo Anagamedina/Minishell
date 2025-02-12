@@ -13,7 +13,6 @@
 #include "../../includes/minishell.h"
 //archivo: parser_expand_cases.c
 
-
 static char	*append_result(char *result, char *to_append)
 {
 	char	*updated;
@@ -89,8 +88,6 @@ static int	is_valid_input(t_tokens *token, t_list *env_list)
 {
 	return (token && token->str && env_list);
 }
-
-
 
 char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 {
