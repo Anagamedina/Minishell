@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 13:28:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:00:08 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	execute_external(t_cmd *cmd, char **envp)
 	exit(EXIT_FAILURE);
 }
 
+
 static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	// Si no es el último comando, crear un pipe
-	if (!curr_cmd->last_cmd)
+	if (!curr_cmd->last_cmd && curr_cmd->next)
 	{
 		if (pipe(pipe_fd) == -1)
 		{
@@ -48,12 +49,26 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 	// Si hay redirección `>`, la aplicamos primero
 	if (apply_redirections(curr_cmd) > 0)
 	{
-		if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
+
+		// Si hay redirección de entrada `< archivo`
+		if (curr_cmd->input_fd != STDIN_FILENO)
 		{
-			perror("Error redirigiendo salida a archivo");
-			exit(EXIT_FAILURE);
+			if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
+			{
+				perror("Error redirigiendo entrada");
+				exit(EXIT_FAILURE);
+			}
+			close(curr_cmd->input_fd);
 		}
-		close(curr_cmd->output_fd);
+		if (curr_cmd->output_fd!= STDOUT_FILENO)
+		{
+			if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
+			{
+				perror("Error redirigiendo salida a archivo");
+				exit(EXIT_FAILURE);
+			}
+			close(curr_cmd->output_fd);
+		}
 	}
 	else
 	{
@@ -67,17 +82,16 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 			}
 			close(curr_cmd->output_fd);
 		}
-	}
-
-	// Redirigir la entrada si no es `STDIN_FILENO`
-	if (curr_cmd->input_fd != STDIN_FILENO)
-	{
-		if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
+		// Redirigir la entrada si no es `STDIN_FILENO`
+		if (curr_cmd->input_fd != STDIN_FILENO)
 		{
-			perror("Error redirigiendo entrada");
-			exit(EXIT_FAILURE);
+			if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
+			{
+				perror("Error redirigiendo entrada");
+				exit(EXIT_FAILURE);
+			}
+			close(curr_cmd->input_fd);
 		}
-		close(curr_cmd->input_fd);
 	}
 
 	// Ejecutar comando
@@ -95,22 +109,24 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 
 static void handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
+	if (curr_cmd->input_fd != STDIN_FILENO && curr_cmd->input_fd != pipe_fd[0])
+		close(curr_cmd->input_fd);
 	// Cerrar extremos de pipe en el padre para evitar bloqueos
 	if (curr_cmd->output_fd != STDOUT_FILENO)
 		close(curr_cmd->output_fd);
 
-	if (curr_cmd->input_fd != STDIN_FILENO)
-		close(curr_cmd->input_fd);
+	/*if (curr_cmd->input_fd != STDIN_FILENO)
+		close(curr_cmd->input_fd);*/
 
 	// Si hay un siguiente comando, pasamos `pipe_fd[0]` como nueva entrada
 	if (!curr_cmd->last_cmd)
 	{
-		close(pipe_fd[1]); // Cerrar escritura del pipe en el padre
-		*input_fd = pipe_fd[0]; // Pasar la lectura del pipe al siguiente comando
+		close(pipe_fd[1]);
+		*input_fd = pipe_fd[0];
 	}
 	else
 	{
-		close(pipe_fd[0]); // Si es el último comando, cerrar lectura
+		close(pipe_fd[0]);
 	}
 }
 

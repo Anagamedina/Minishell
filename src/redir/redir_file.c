@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/10 11:47:49 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/12 14:55:48 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,23 @@ int open_file(char *file, int type)
 {
 	int fd;
 
-	/*if (type == REDIR_IN)
-		fd = open(file, O_RDONLY);*/
-	if (type == REDIR_OUT)
+	if (type == REDIR_IN)
+		fd = open(file, O_RDONLY);
+	else if (type == REDIR_OUT)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIR_APPEND)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		return (-1);
+
 	if (fd == -1)
-		 perror("Error al abrir el archivo");
+	{
+		fprintf(stderr, "Error al abrir '%s': ", file);
+		perror("");
+	}
+	else
+		printf("Archivo abierto: %s, fd: %d\n", file, fd); // 📌 Imprimir el fd
+
 	return (fd);
 }
 
@@ -59,18 +66,18 @@ int apply_redirections(t_cmd *cmd)
 	{
 		curr_redir = (t_redir *)redir_node->content;
 
-		/*if (curr_redir->type == REDIR_IN)
+		if (curr_redir->type == REDIR_IN)
 		{
 			if (cmd->input_fd != STDIN_FILENO)
 				close(cmd->input_fd);
-			cmd->input_fd = open_file(curr_redir->filename, REDIR_IN);
+			cmd->input_fd = open_file(curr_redir->filename, curr_redir->type);
 			if (cmd->input_fd == -1)
 			{
 				perror("Error abriendo archivo de entrada");
 				return FALSE;
 			}
 			redirection_applied = 1;
-		}*/
+		}
 
 		if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
 		{

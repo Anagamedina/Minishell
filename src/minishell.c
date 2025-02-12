@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 13:01:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:49:22 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		update_words_in_tokens(minishell);
 		parser_tokens(minishell);
-		if(parse_redir(minishell) == FALSE)
+		/*if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
 			continue ;
-		}
+		}*/
 		//	INIT EXEC
 		if (minishell->exec)
 			free_exec(minishell->exec);
