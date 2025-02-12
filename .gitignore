@@ -54,6 +54,7 @@ dkms.conf
 
 # add by ana and daru
 cmake-build-debug/
+cmake-build-debug-event-trace/
 build/
 /testing_shell
 /minishell
