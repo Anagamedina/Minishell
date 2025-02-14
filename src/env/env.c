@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/14 15:20:26 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
@@ -32,7 +44,8 @@ t_env	*init_env_var(char *key_value_var)
 		 new_env->value = ft_strdup(split_var[1]);
 	else
 		new_env->value = ft_strdup("");
-	free_string_array(split_var);
+		// new_env->value = "";
+	free_string_matrix(split_var);
 	if (!new_env->key || !new_env->value)
 	{
 		free_env(new_env);
@@ -87,56 +100,20 @@ t_list	*init_env_list(char **envp)
 	}
 	return (env_list);
 }
-/*
+
 void	print_env_list(t_list *env_list)
 {
 	t_list	*current;
-	t_env	*env;
-
-	if (!env_list)
-	{
-		printf("empty list.\n");
-		return ;
-	}
-	current = env_list;
-	while (current != NULL)
-	{
-		if (current->content)
-		{
-			env = (t_env *)current->content;
-			if (env->key)
-				printf("%s", env->key);
-			printf("=");
-			if (env->value)
-				printf("%s\n", env->value);
-			else
-				printf("(null)\n");
-		}
-		current = current->next;
-	}
-}
-*/
-
-
-void print_env_list(t_list *env_list)
-{
-    t_list *current = env_list;
-    t_env *env_var;
+    t_env	*env_var;
 
     current = env_list;
     while (current)
     {
-        env_var = (t_env *)current->content;
+        env_var = (t_env *) current->content;
         if (env_var->key && env_var->value)
 		{
-			if (ft_strcmp(env_var->value, "") == 0)
-			{
-				break ;
-			}
-			else
-            	printf("%s=%s\n", env_var->key, env_var->value);
+        	printf("%s=%s\n", env_var->key, env_var->value);
 		}
         current = current->next;
     }
 }
-

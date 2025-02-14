@@ -81,7 +81,17 @@ add_executable(testing_shell
         ${PARSER_DIR}
         ${EXECUTE_DIR}
         ${FREE_DIR}
+        ${REDIR_DIR}
 		${SIGNALS_DIR}
 )
+
 # link with readline library
 target_link_libraries(testing_shell readline)
+
+# *********** Ejecutar Minishell con env -i **********
+add_custom_target(run_minishell
+        COMMAND env -i ./minishell
+        DEPENDS minishell
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Ejecutando Minishell con env -i"
+)

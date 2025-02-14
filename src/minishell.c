@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 13:01:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:38:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,22 @@
 
 #include "../includes/minishell.h"
 
+	/*
+	if (!envp || !*envp)
+	{
+		write(2, "Warning: No environment variables found. Initializing default env.", 65);
+		write(2, "\n", 1);
+		char *default_env[] = {
+			"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
+			"HOME=/home/user",
+			"SHLVL=1",
+			"OLDPWD=",
+			NULL
+		};
+		envp = default_env;
+	}
+	*/
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
@@ -32,10 +48,13 @@ int	main(int argc, char **argv, char **envp)
 	t_mini	*minishell;
 
 	minishell = init_mini_list(envp);
+
+	// print_env_list(minishell->env);
+
 	if (!minishell)
 	{
 		perror("Error: init minishell.\n");
-		free(minishell);
+		// free(minishell);
 		return (1);
 	}
 	while (1)
@@ -69,19 +88,23 @@ int	main(int argc, char **argv, char **envp)
 		}
 		update_words_in_tokens(minishell);
 		parser_tokens(minishell);
-		if(parse_redir(minishell) == FALSE)
+		if (parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
+			free(input);
 			continue ;
 		}
+
 		//	INIT EXEC
 		if (minishell->exec)
 			free_exec(minishell->exec);
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
-			perror("Error al inicializar t_exec");
-			return (1);
+			perror("Error: init exec.\n");
+			free(input);
+			break ;
+			// return (1);
 		}
 		//	INIT EXEC FIRST CMD
 		if (minishell->exec->first_cmd)
@@ -93,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
+
 		//	ADD ARGUMENTS TO CMDs
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
 

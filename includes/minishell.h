@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/14 14:16:41 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:08:32 by dasalaza          #+#    #+#             */
@@ -117,12 +129,12 @@ typedef struct s_exec
 	int             cmd_count;
 }				t_exec;
 
-
 typedef struct s_mini
 {
 	int             bash_lvl;       // Nivel de la shell
 	int             chars_in_line;  // Contador de caracteres en línea de entrada
 	t_list          *env;           // Variables de entorno
+	char			**envp_to_array; // Array de `env` para `execve()`
 	t_list          *tokens;         // Lista de tokens
 	t_exec			*exec;
 	int             exit_status;    // Estado de salida del último comando ejecutado

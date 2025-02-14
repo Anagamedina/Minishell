@@ -6,29 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/11 17:57:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:33:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <errno.h>
-
 #include "../../includes/minishell.h"
-
-/*
-ana=
- * Valida si el nombre de una variable es correcto.
- * Un nombre válido comienza con una letra o un guion bajo ('_')
- * y solo puede contener caracteres alfanuméricos.
- * Retorna 1 si es válido, 0 si no lo es.
- * Verificar primer carácter si es a-zA-Z o '_'
- * agregar caso de '_' da error !!!
-*/
-
-/*
-daruuu@pop-os:~/CLionProjects/Minishell$ export 1
-bash: export: `1': not a valid identifier
-*/
 
 /*
  * start with (a-z, A-Z) o _ (guion bajo).
@@ -41,10 +23,12 @@ int	validate_var_name(const char *line)
 {
 	int i;
 
-	if (!line || !(ft_isalpha(line[0]) || line[0] == '_'))
+	// if (!line || !(ft_isalpha(line[0]) || line[0] == '_'))
+	if (!(ft_isalpha(line[0]) || line[0] == '_'))
 	{
-		errno = EINVAL;
-		perror("bash: export");
+		// errno = EINVAL;
+		// perror("bash: export");
+		write(2, "bash: export: invalid variable name\n", 36);
 		return (FALSE);
 	}
 	i = 1;
@@ -52,21 +36,13 @@ int	validate_var_name(const char *line)
 	{
 		if (!(ft_isalnum(line[i]) || line[i] == '_'))
 		{
-			errno = EINVAL;
-			perror("bash: export");
+			write(2, "bash: export: invalid variable name\n", 36);
 			return (FALSE);
 		}
 		i ++;
 	}
 	return (TRUE);
 }
-
-/*
- * Valida si el valor de una variable es correcto.
- * Un valor válido está después del carácter '=' y
- * solo contiene caracteres alfanuméricos.
- * Retorna 1 si es válido, 0 si no lo es.
- */
 
 /*
  * Debe comenzar con una letra (a-z, A-Z) o _ (guion bajo).
@@ -81,8 +57,7 @@ int	validate_var_value(const char *line)
 
 	if (!line)
 	{
-		errno = EINVAL;
-		perror("bash: export");
+		perror("bash: export: NULL value");
 		return (FALSE);
 	}
 	i = 0;
@@ -95,8 +70,7 @@ int	validate_var_value(const char *line)
 	{
 		if (!(ft_isascii(line[i])))
 		{
-			errno = EINVAL;
-			perror("bash: export");
+			write(2, "bash: export: invalid character in value\n", 42);
 			return (FALSE);
 		}
 		i ++;
@@ -109,7 +83,7 @@ int	validate_var_value(const char *line)
  * Retorna una nueva cadena con el nombre de la variable.
  * Si ocurre un error de memoria, retorna NULL.
  */
-char	*get_var_name(char *line)
+char	*get_var_name(const char *line)
 {
 	int		i;
 	int		len;
@@ -117,7 +91,7 @@ char	*get_var_name(char *line)
 
 	if (!line || line[0] == '=' || line[0] == '\0')
 	{
-		errno = EINVAL;
+		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}
@@ -127,7 +101,7 @@ char	*get_var_name(char *line)
 	len = i;
 	if (len == 0)
 	{
-		errno = EINVAL;
+		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}
@@ -147,14 +121,12 @@ char	*get_var_name(char *line)
 	return (var_name);
 }
 
-
-
 /*
  * Obtiene el valor de la variable a partir de una línea en formato NOMBRE=VALOR.
  * Retorna una nueva cadena con el valor de la variable.
  * Si ocurre un error de memoria, retorna NULL.
  */
-char	*get_var_value(char *line)
+char	*get_var_value(char* line)
 {
 	int		i;
 	int		j;
@@ -163,7 +135,7 @@ char	*get_var_value(char *line)
 
 	if (!line)
 	{
-		errno = EINVAL;
+		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}

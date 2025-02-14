@@ -20,7 +20,7 @@ t_exec	*init_exec(t_list *env_list)
 	if (!exec_info)
 		return NULL;
 	exec_info->first_cmd = NULL;
-	exec_info->env_vars = lst_to_arr(env_list);
+	exec_info->env_vars = env_list_to_array(env_list);
 	exec_info->pipe_input_fd = -1;
 	exec_info->pipe_output_fd = -1;
 	exec_info->cmd_count = 0;

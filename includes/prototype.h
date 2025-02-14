@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:34:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ t_env		*init_env_var(char *key_value_var);
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
-char		*get_var_name(char *line);
+char		*get_var_name(const char *line);
 char		*get_var_value(char *line);
 char		*get_variable_in_envlist(t_list *env_list, char *key_to_find);
 
 //************** ENV_LOCALS_list.c ************/
 
 t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
+int			validate_syntax_name_value(char *new_local_var);
 
 //*************INPUT***********/
 char		*read_input(void);
@@ -70,7 +71,7 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
 int			check_if_var_name_exist(char *var_name, t_list *env_list);
-void		export_variable(t_cmd *curr_command, t_list **env_list);
+void		export_variable(t_cmd *curr_cmd, t_mini* mini);
 
 //************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini);
@@ -242,7 +243,7 @@ void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
-char		**lst_to_arr(t_list *env_list);
+char		**env_list_to_array(t_list *env_list);
 int			is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);

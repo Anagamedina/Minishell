@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 13:28:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:58:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	curr_cmd->input_fd = *input_fd;
 }
 
-void handle_child(t_cmd *curr_cmd, t_mini *mini)
+void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
-	char	**envp_to_array;
-
 	// Si hay redirección `>`, la aplicamos primero
 	if (apply_redirections(curr_cmd) > 0)
 	{
@@ -80,15 +78,18 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 		close(curr_cmd->input_fd);
 	}
 
-	// Ejecutar comando
-	envp_to_array = lst_to_arr(mini->env);
+	// printf("-----------PRINTING ENV LIST IN HANDLE CHILD---------------\n");
+	// print_env_list(mini->env);
+	printf("-----------------------------------\n");
+
 	if (curr_cmd->is_external == 1)
 	{
-		execute_external(curr_cmd, envp_to_array);
+		execute_external(curr_cmd, mini->envp_to_array);
 	}
 	else if (curr_cmd->is_builtin == 1)
 	{
 		cases_builtins(mini);
+		exit(0);
 	}
 	exit(EXIT_FAILURE);
 }
@@ -131,18 +132,20 @@ static void wait_for_children(int num_children)
 
 int execute_commands(t_mini *mini)
 {
-	t_list *t_list_exec_cmd = mini->exec->first_cmd;
-	t_cmd  *curr_cmd;
-	pid_t  pid;
-	int    input_fd = STDIN_FILENO;
-	int    pipe_fd[2];
-	int    i = 0;
+	t_list	*t_list_exec_cmd;
+	t_cmd	*curr_cmd;
+	pid_t	pid;
+	int		input_fd;
+	int		pipe_fd[2];
+	int		i;
 
+	i = 0;
+	input_fd = STDIN_FILENO;
+	t_list_exec_cmd = mini->exec->first_cmd;
 	while (t_list_exec_cmd)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)
@@ -150,7 +153,6 @@ int execute_commands(t_mini *mini)
 			perror("Error creando proceso hijo");
 			exit(EXIT_FAILURE);
 		}
-
 		if (pid == 0)
 		{
 			handle_child(curr_cmd, mini);
@@ -159,10 +161,8 @@ int execute_commands(t_mini *mini)
 		{
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
 		}
-
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
-
 	wait_for_children(i);
 	return (TRUE);
 }

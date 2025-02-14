@@ -23,7 +23,7 @@ void	free_cmd(t_cmd *cmd)
 		if (cmd->cmd)
 			free(cmd->cmd);
 		if (cmd->cmd_args)
-			free_string_array(cmd->cmd_args);
+			free_string_matrix(cmd->cmd_args);
 		if (cmd->cmd_path)
 			free(cmd->cmd_path);
 		// if (cmd->redir_list)
@@ -37,6 +37,6 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 {
 	perror("Error: Command not found here!!");
 	if (new->cmd_args)
-		free_string_array(new->cmd_args);
+		free_string_matrix(new->cmd_args);
 	return (NULL);
 }

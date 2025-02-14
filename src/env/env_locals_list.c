@@ -6,28 +6,29 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:34:31 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/07 13:35:45 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:24:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * validar el nombre de la variable
- * validar el valor de la variable
- * ana=bonita
+ *
+ * @param new_local_var
+ * @see validate_var_name
+ * @see validate_var_value
+ * @return
  */
-
-int	validate_local_var_syntax(char *new_local_var)
+int	validate_syntax_name_value(char *new_local_var)
 {
 	if (!(validate_var_name(new_local_var)))
 	{
-		printf("Error validating var_name\n");
+		// printf("Error validating var_name\n");
 		return (FALSE);
 	}
 	if (!(validate_var_value(new_local_var)))
 	{
-		printf("Error validating var_value\n");
+		// printf("Error validating var_value\n");
 		return (FALSE);
 	}
 	return (TRUE);
@@ -47,7 +48,7 @@ t_list	*create_local_vars_list(char *line, t_list *local_vars_list)
 	t_env	*local_vars;
 	t_list	*new_node;
 
-	if (!(validate_local_var_syntax(line)))
+	if (!(validate_syntax_name_value(line)))
 	{
 		printf("Error: invalid local variable syntax: %s\n", line);
 		return (local_vars_list); // Devuelve la lista sin cambios

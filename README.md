@@ -88,11 +88,65 @@ Para verificar que el entorno realmente está vacío, ejecuta:
 
 ---
 
-🚀 **Este comando es útil para depuración, pruebas y asegurarse de que un script no dependa de variables externas.**
+## VARIABLES DE ENTORNO A INICIALIZAR
+
+### **📌 Configuración del Entorno en Minishell**
+
+Esta sección describe las **variables de entorno** que se inicializan si no existen al ejecutar **Minishell**, basándonos en nuestra función `configure_shell_env()`.
 
 ---
 
-💡 **Esta versión mejora la organización, el formato y la claridad para que sea fácil de entender en el README.** 📄✨
+## **🔹 Variables de entorno inicializadas**
+Minishell verifica y crea las siguientes variables si no existen en el entorno:
+
+| **Variable** | **Propósito** | **Valor predeterminado si no existe** |
+|-------------|--------------|----------------------------------------|
+| `OLDPWD` | Guarda el directorio anterior para `cd -` | `""` (vacío hasta que `cd` lo modifique) |
+| `PATH` | Define los directorios donde buscar comandos ejecutables | `"/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"` |
+| `HOME` | Directorio home del usuario | Valor de `getenv("HOME")` o `"/home/"` si no existe |
+| `USER` | Nombre del usuario actual | `getenv("USER")` o `"unknown"` si no existe |
+| `SHLVL` | Nivel del shell, aumenta con cada nueva instancia | Si `SHLVL >= 100`, se reinicia a `"1"` |
+
+---
+
+## **🔹 Manejo especial de `OLDPWD` y `PWD`**
+### **¿Debe `OLDPWD` reiniciarse a `""` o mantenerse?**
+Si `OLDPWD` ya existe con una ruta válida, **se deja intacto**.  
+Si `OLDPWD` no existe, **se inicializa en `""` (vacío)** hasta que `cd` lo actualice.
+
+### **¿Cómo afecta `PWD`?**
+- `PWD` **se mantiene como está** porque representa el directorio actual.
+- Bash también lo mantiene si existe en `env`.
+
+---
+
+## **🔹 Manejo de `SHLVL`**
+1. Si `SHLVL` **no existe o es negativo**, se inicializa en `0`.
+2. Si `SHLVL >= 100`, **se muestra una advertencia y se reinicia a `1`**.
+3. En otros casos, **se incrementa en `+1`**.
+
+Ejemplo de mensaje de advertencia si `SHLVL >= 100`:
+```sh
+mish: warning: shell level (100) too high, resetting to 1
+```
+
+---
+
+## **📌 ¿Cómo se comporta esto en Bash?**
+Ejecutando **Bash en un entorno vacío** (`env -i bash --noprofile --norc`), obtenemos:
+```sh
+PWD=/home/user
+SHLVL=1
+_=/usr/bin/env
+```
+➡️ **Minishell replica este comportamiento, asegurando compatibilidad.**
+
+---
+
+🚀 **Con esta implementación, Minishell maneja el entorno de forma eficiente y compatible con Bash.**
+
+---
+
 
 **Esperamos que este shell se convierta en una herramienta eficaz y amigable para interactuar con el sistema.**
 

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/12 18:43:27 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
@@ -45,7 +57,8 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 
 	if (!check_if_var_name_exist(PATH_ENV, *env_list))
 	{
-		new_node = create_new_env_node(PATH_ENV, PATH_ENV, PATH_VALUE);
+		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup("PATH"),
+		ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
