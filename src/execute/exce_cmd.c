@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 11:15:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:06:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	if (curr_cmd->is_external == 1)
 	{
 		execute_external(curr_cmd, mini->envp_to_array);
+		exit(EXIT_FAILURE);
 	}
 	else if (curr_cmd->is_builtin == 1)
 	{
 		cases_builtins(mini);
-		// return ;
 		exit(0);
 	}
 	exit(EXIT_FAILURE);
@@ -147,6 +147,13 @@ int execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
+
+		if (curr_cmd->is_builtin == 1 && curr_cmd->last_cmd && input_fd == STDIN_FILENO)
+		{
+			cases_builtins(mini);
+			return (TRUE);
+		}
+
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)

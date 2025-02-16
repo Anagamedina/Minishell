@@ -162,7 +162,7 @@ char	*get_var_value(char* line)
 }
 
 //	before was get_env_var();
-char	*get_variable_in_envlist(t_list *env_list, char *key_to_find)
+char	*get_variable_in_env_list(t_list *env_list, char *key_to_find)
 {
 	t_list	*curr_node;
 	t_env	*curr_env;

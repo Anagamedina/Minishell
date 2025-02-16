@@ -67,7 +67,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	if (!check_if_var_name_exist(HOME_ENV, *env_list))
 	{
 		// home = getenv("HOME");
-		home_dir = get_variable_in_envlist(*env_list, HOME_ENV);
+		home_dir = get_variable_in_env_list(*env_list, HOME_ENV);
 		if (home_dir)
 			home_dir = ft_strdup(home_dir);
 		else
@@ -149,7 +149,7 @@ t_mini	*init_mini_list(char **envp)
     minishell->tokens = NULL;
     minishell->exec = NULL;
     minishell->exit_status = -1;
-	shlvl = get_variable_in_envlist(minishell->env, SHLVL);
+	shlvl = get_variable_in_env_list(minishell->env, SHLVL);
 	configure_shell_env(&minishell->env, shlvl);
     return (minishell);
 }

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 13:43:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 20:01:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	// IF ARGS NOT EQUAL TO 1
 	if (!cmd->cmd_args[1])
 	{
-		path_home = (char *)find_env_var(mini->env, "HOME");
+		path_home = get_variable_in_env_list(mini->env, "HOME");
 		if (!path_home)
 		{
 			// ft_putstr_fd("cd: HOME not set\n", 2);
@@ -40,12 +40,13 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	}
 	// IF ARG EQUAL TO 1 AND IS '-'
 	// WE NEED TO USE 'OLDPWD'
+	// else if (cmd->cmd_args[1][0] == '-' && cmd->cmd_args[2] == NULL)
 	else if (cmd->cmd_args[1][0] == '-')
 	{
-		path_home = (char *)find_env_var(mini->env, "OLDPWD");
+		// TODO: change this function
+		path_home = get_variable_in_env_list(mini->env, "OLDPWD");
 		if (!path_home)
 		{
-			// ft_putstr_fd("cd: OLDPWD not set\n", 2);
 			write(2, "cd: OLDPWD not set\n", 20);
 			return ;
 		}
@@ -54,6 +55,7 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	}
 	else
 		path_home = cmd->cmd_args[1];
+
 	// GET CURRENT WORKING DIRECTORY BEFORE CHANGE DIRECTORY
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
@@ -61,7 +63,26 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 		perror("cd");
 		return ;
 	}
+	// CHANGE DIRECTORY
+	if (chdir(path_home) == -1)
+	{
+		perror("cd");
+		free(old_pwd);
+		return ;
+	}
+	// UPDATE OLDPWD
+	update_var_exist("OLDPWD", old_pwd, &(mini->env));
 
-	printf("PATH_HOME: [%s]\n", path_home);
-
+	// UPDATE PWD
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+	{
+		perror("cd");
+		free(old_pwd);
+		return ;
+	}
+	update_var_exist("PWD", new_pwd, &(mini->env));
+	free(new_pwd);
+	free(old_pwd);
+	// printf("PATH_HOME: [%s]\n", path_home);
 }

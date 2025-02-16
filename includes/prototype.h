@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 12:14:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:35:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
 char		*get_var_name(const char *line);
 char		*get_var_value(char *line);
-char		*get_variable_in_envlist(t_list *env_list, char *key_to_find);
+char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //************** ENV_LOCALS_list.c ************/
 
@@ -80,6 +80,13 @@ void		cases_builtins(t_mini *mini);
 //************ BUILTIN_ECHO.c ************/
 void		ft_echo(t_cmd *cmd);
 void		echo_with_args(t_cmd *cmd);
+
+//************ BUILTIN_PWD.c ************/
+int			ft_pwd(t_mini *mini);
+
+//************ BUILTIN_CD.c ************/
+void		ft_cd(t_mini *mini, t_cmd *cmd);
+
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

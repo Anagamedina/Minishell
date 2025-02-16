@@ -59,6 +59,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
+		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_PARSER)/parser_check_quotes_dollar.c \
 		$(SRC_PARSER)/parser_expand_cases.c \
 		$(SRC_PARSER)/parser_expand_dollar.c \
