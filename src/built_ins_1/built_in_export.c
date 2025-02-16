@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/14 15:41:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:12:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
 		write(2, "export: invalid variable name\n", 31);
 		return ;
 	}
-	if (update_var_exist(var_name, var_value, &(mini->env)) == 0)
+	if (update_var_exist(var_name, var_value, &(mini->env)) == TRUE)
 	{
 		free(var_name);
 		free(var_value);
 		return ;
 	}
 
-	new_var_env = create_new_env_node(curr_cmd->cmd_args[1], var_name, var_value);
+	new_var_env = create_new_env_node(var_name, var_value);
 
 	if (!new_var_env)
 	{
@@ -119,6 +119,61 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
         free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 }
+
+/**
+ * ft_strjoin_export - concat two strings with a character separator.
+ *
+ * - `c`: character separator (default: `=`).
+ *
+ * @return:
+ * A string in the format `s1=c+s2`.
+ */
+char	*ft_strjoin_export(char *s1, char *s2, char c)
+{
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	size_t	j;
+
+	if (s1)
+		len1 = ft_strlen(s1);
+	else
+		len1 = 0;
+	if (s2)
+		len2 = ft_strlen(s2);
+	else
+		len2 = 0;
+	result = malloc(sizeof(char) * (len1 + len2 + 2));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	result[i++] = c;
+	j = 0;
+	while (j < len2)
+		result[i++] = s2[j++];
+	result[i] = '\0';
+	return (result);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * Maneja el caso donde el primer token es una asignación local

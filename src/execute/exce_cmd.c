@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/14 14:58:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:15:36 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	else if (curr_cmd->is_builtin == 1)
 	{
 		cases_builtins(mini);
+		// return ;
 		exit(0);
 	}
 	exit(EXIT_FAILURE);

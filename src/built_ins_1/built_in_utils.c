@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/11 18:33:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:13:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	check_value(char *value, char *line, t_env *env_var)
 		env_var->value = ft_strdup("");
 }
 
-t_list	*create_new_env_node(char *line, char *key, char *value)
+t_list	*create_new_env_node(char *key, char *value)
 {
 	t_env	*new_var;
 	t_list	*new_node;
@@ -59,8 +59,7 @@ t_list	*create_new_env_node(char *line, char *key, char *value)
 		new_var->value = ft_strdup("");
 	else
 		new_var->value = value;
-	new_var->full_var = line;
-
+	new_var->full_var = ft_strjoin_export(key, value, '=');
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 	{
@@ -107,7 +106,7 @@ void	update_var(char *line, t_list **env_list)
 	env_var = find_env_var(*env_list, key);
 	if (env_var == NULL)
 	{
-		create_new_env_node(line, key, value);
+		create_new_env_node(key, value);
 	}
 	else
 		check_value(value, line, env_var);

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/14 15:20:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:13:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_list	*init_env_list(char **envp)
 	return (env_list);
 }
 
+/*
 void	print_env_list(t_list *env_list)
 {
 	t_list	*current;
@@ -114,6 +115,34 @@ void	print_env_list(t_list *env_list)
 		{
         	printf("%s=%s\n", env_var->key, env_var->value);
 		}
+    	else
+        {
+            printf("%s\n", env_var->key);
+        }
         current = current->next;
     }
+}
+*/
+
+void print_env_list(t_list *env_list)
+{
+	t_list *current = env_list;
+	t_env *env_var;
+
+	while (current)
+	{
+		env_var = (t_env *)current->content;
+		if (!env_var || !env_var->key)
+		{
+			write(2, "Warning: Variable de entorno inválida\n", 38);
+			current = current->next;
+			continue;
+		}
+
+		if (env_var->value)
+			printf("%s=%s\n", env_var->key, env_var->value);
+		else
+			printf("%s\n", env_var->key);
+		current = current->next;
+	}
 }

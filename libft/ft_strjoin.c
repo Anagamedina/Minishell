@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 19:35:48 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/30 12:53:00 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 12:08:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ptr[i] = '\0';
 	return (ptr);
 }
+
 
 /*
 char	*ft_strjoin(char const *s1, char const *s2)

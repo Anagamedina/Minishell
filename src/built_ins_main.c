@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/14 14:59:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:17:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,16 @@ void	cases_builtins(t_mini *mini)
 
 	i = 0;
 	curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
-	if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
+	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
+    {
+        ft_pwd(mini);
+    }
+	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 	{
 		ft_echo(curr_cmd);
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
-		// TODO: falta rellenar la variable full en la lista de env
 		if (curr_cmd->cmd_args[1] != NULL)
 			export_variable(curr_cmd, mini);
 		else

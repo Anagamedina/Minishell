@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 22:38:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/14 20:35:30 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 	if (!envp || !*envp)
 	{
 		write(2, "Warning: No environment variables found. Initializing default env.", 65);
-		write(2, "\n", 1);
+		// write(2, "\n", 1);
+		printf("\n");
 		char *default_env[] = {
 			"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
 			"HOME=/home/user",
@@ -50,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 	minishell = init_mini_list(envp);
 
 	// print_env_list(minishell->env);
-
 	if (!minishell)
 	{
 		perror("Error: init minishell.\n");

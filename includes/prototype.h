@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/14 15:34:32 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:14:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_env		*find_env_var(t_list *env_list, char *key);
 int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
 int			check_if_var_name_exist(char *var_name, t_list *env_list);
 void		export_variable(t_cmd *curr_cmd, t_mini* mini);
+char		*ft_strjoin_export(char *s1, char *s2, char c);
 
 //************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini);
@@ -88,7 +89,7 @@ void		print_mini(t_mini *mini);
 //************************* BUILTINS-2 ***********************/
 
 //************** builtin_pwd.c ********************/
-void		get_current_directory(t_mini *mini);
+int ft_pwd(t_mini* mini);
 
 //************************* TOKENIZE ************************/
 
@@ -226,7 +227,7 @@ int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** BUILT_INS_UTILS.C ********/
 
-t_list		*create_new_env_node(char* line, char* key, char* value);
+t_list		*create_new_env_node(char* key, char* value);
 
 //************** ERRORS_COMMAND.C ********/
 
