@@ -14,10 +14,10 @@
 
 int	is_builtin_command(char *cmd)
 {
-	return (strcmp(cmd, ECHO) == 0 || strcmp(cmd, EXPORT) == 0 || \
-		strcmp(cmd, UNSET) == 0 || strcmp(cmd, ENV) == 0 || \
-		strcmp(cmd, CD) == 0 || strcmp(cmd, PWD) == 0 || \
-		strcmp(cmd, EXIT) == 0);
+	return (ft_strcmp(cmd, ECHO) == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
+		ft_strcmp(cmd, UNSET) == 0 || ft_strcmp(cmd, ENV) == 0 || \
+		ft_strcmp(cmd, CD) == 0 || ft_strcmp(cmd, PWD) == 0 || \
+		ft_strcmp(cmd, EXIT) == 0);
 }
 
 int	is_cmd_external(t_mini *mini, t_tokens *token)

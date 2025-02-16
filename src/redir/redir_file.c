@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-// Abre un archivo según el tipo de redirección especificado
-// type puede ser REDIR_IN (<), REDIR_OUT (>), o REDIR_APPEND (>>)
-// Retorna el descriptor de archivo (fd) abierto o -1 si ocurre un error
 
 int open_file(char *file, int type)
 {
@@ -25,9 +22,9 @@ int open_file(char *file, int type)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (type == REDIR_APPEND) // >>
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (type == HEREDOC) // << Crear archivo temporal para heredoc
+	else if (type == HEREDOC)
 	{
-		unlink(file); // 🔹 Eliminar cualquier versión previa del archivo
+		unlink(file);
 		fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	}
 	else

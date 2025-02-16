@@ -79,10 +79,11 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
-		$(SRC_EXECUTE)/get_input.c \
+		$(SRC_EXECUTE)/exce_utils.c \
 		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
 		$(SRC_REDIR)/redir_init.c \
+		$(SRC_REDIR)/heredoc.c \
 		$(SRC_REDIR)/redir_syntax.c \
 		$(SRC_FREE)/free_cmd.c \
 		$(SRC_FREE)/free_env.c \

@@ -12,31 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-/*
-char	*get_cmd_path(t_tokens *token, char **paths)
-{
-	char		*cmd_path;
-	char		*full_path;
-	int 		i;
-
-	if (access(token->str, X_OK) == 0)
-		return ft_strdup(token->str);
-
-	i = 0;
-	while (paths && paths[i])
-	{
-		full_path = ft_strjoin(paths[i], "/");
-		cmd_path = ft_strjoin(full_path, token->str);
-		free(full_path);
-
-		if (access(cmd_path, X_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
-		i++;
-	}
-	return (NULL);
-}
-*/
 char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
@@ -68,12 +43,9 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 		free(cmd_path);
 		i++;
 	}
-
-	// No encontramos el comando en `PATH`
 	return (NULL);
 }
 
-//char **paths = { "/usr/bin", "/bin", "/usr/local/bin", NULL };
 char	**get_path(char **env)
 {
 	char	**paths;
