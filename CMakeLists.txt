@@ -9,6 +9,7 @@ set(CMAKE_C_STANDARD 99)
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=[sanitizer_name] [additional_options] [-g] [-OX]")
+
 # setup the dirs and files here:
 file(GLOB INPUT_DIR src/input/*.c)
 file(GLOB TOKENIZE_DIR src/tokenize/*.c)
@@ -81,7 +82,17 @@ add_executable(testing_shell
         ${PARSER_DIR}
         ${EXECUTE_DIR}
         ${FREE_DIR}
+        ${REDIR_DIR}
 		${SIGNALS_DIR}
 )
+
 # link with readline library
 target_link_libraries(testing_shell readline)
+
+# *********** Ejecutar Minishell con env -i **********
+add_custom_target(run_minishell
+        COMMAND env -i ./minishell
+        DEPENDS minishell
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Ejecutando Minishell con env -i"
+)

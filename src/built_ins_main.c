@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/16 19:37:52 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_ins_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:45:57 by dasalaza          #+#    #+#             */
@@ -24,76 +36,157 @@
 
 #include "../includes/minishell.h"
 
+static void	unset_variable(t_list **env_list, char *var_name)
+{
+	t_list	*current;
+	t_list	*prev;
+	t_env	*env_var;
+
+	if (!env_list || !*env_list || !var_name)
+		return;
+
+	current = *env_list;
+	prev = NULL;
+
+	while (current)
+	{
+		env_var = (t_env *) current->content;
+		if (ft_strcmp(env_var->key, var_name) == 0)
+		{
+			if (prev) // No es el primer nodo
+				prev->next = current->next;
+			else // Es el primer nodo de la lista
+				*env_list = current->next;
+
+			// Liberar la memoria del nodo eliminado
+			free_env(env_var);
+			free(current);
+			return;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+
 void	cases_builtins(t_mini *mini)
 {
 	t_cmd	*curr_cmd;
+	int		i;
 
+	i = 0;
 	curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
-	if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
+
+	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
+    {
+        ft_pwd(mini);
+    }
+	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 	{
 		ft_echo(curr_cmd);
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
-		if (curr_cmd->cmd_args[1] == NULL)
-			print_export(&mini->env);
+		if (curr_cmd->cmd_args[1] != NULL)
+			export_variable(curr_cmd, mini);
 		else
-		{
-			export_variable(curr_cmd, &(mini->env));
-			printf("--------------PRINT ENV LIST---------------------------\n");
-			print_env_list(mini->env);
-			printf("\n-----------------------------------------\n");
-		}
+			print_export(&mini->env);
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 	{
-		// TODO: update unset function
+		i = 0;
+		while (curr_cmd->cmd_args[i] != NULL)
+		{
+			unset_variable(&(mini->env), curr_cmd->cmd_args[i]);
+			i ++;
+		}
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
 		print_env_list(mini->env);
-}
-
-/*
-int	set_env(t_list **env_list, char *key, char *value)
-{
-	t_list	*current_node;
-	t_env	*current_env;
-
-	if (!key || !env_list)
-		return (1);
-
-	current_node = *env_list;
-	while (current_node)
+	else if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
 	{
-		current_env = (t_env *)current_node->content;
-		if (ft_strcmp(key, current_env->key) == 0) // Si la variable ya existe
-		{
-			free(current_env->value);
-			current_env->value = value ? ft_strdup(value) : ft_strdup("");
-			return (0);
-		}
-		current_node = current_node->next;
+		ft_cd(mini, curr_cmd);
 	}
-
-	// Si la variable no existe, la creamos
-	// t_env *new_env = init_env_var(key, value);
-	char	*tmp =  ft_strjoin(key, "=");
-	// t_env	*new_env = create_new_env_node(ft_strjoin(tmp, value), key, value);
-	// if (!new_env)
-	// 	return (1);
-	// ft_lstadd_back(env_list, ft_lstnew(new_env));
-
-	return (0);
 }
-*/
+
 /*
     if ((ft_strcmp((char *)current_command->cmd, "export") == 0))
     {
 		builtin_export(mini);
     }
-    else if (ft_strcmp((char *)current_command->cmd, "cd") == 0)
-	{
-		printf("enmtra caso cd\n");
-		get_current_directory(mini);
-	}
+*/
+
+/*
+ * ft_cd - Implementa el comando `cd` en Minishell.
+ *
+ * - `cd` sin argumentos -> cambia a `$HOME`
+ * - `cd -` -> cambia a `$OLDPWD` y lo imprime
+ * - Si el directorio no existe, muestra un error con `perror()`
+ *
+ * Parámetros:
+ * - `cmd` (t_cmd *): Contiene los argumentos de `cd`.
+ * - `mini` (t_mini *): Estructura principal del shell.
+ */
+/*
+void ft_cd(t_cmd *cmd, t_mini *mini)
+{
+    char *path;
+    char *old_pwd;
+    char *new_pwd;
+
+    if (!mini || !mini->env)
+        return;
+
+    // Si no hay argumentos, usar `HOME`
+    if (!cmd->cmd_args[1])
+    {
+        path = get_variable_in_env_list(mini->env, "HOME");
+        if (!path)
+        {
+            write(2, "cd: HOME not set\n", 17);
+            return;
+        }
+    }
+    // Si el argumento es `-`, usar `OLDPWD`
+    else if (ft_strcmp(cmd->cmd_args[1], "-") == 0)
+    {
+        path = get_variable_in_env_list(mini->env, "OLDPWD");
+        if (!path)
+        {
+            write(2, "cd: OLDPWD not set\n", 19);
+            return;
+        }
+        write(1, path, ft_strlen(path));
+        write(1, "\n", 1);
+    }
+    else
+        path = cmd->cmd_args[1];
+
+    // Obtener el directorio actual antes de cambiar
+    old_pwd = getcwd(NULL, 0);
+    if (!old_pwd)
+    {
+        perror("cd");
+        return;
+    }
+
+    // Intentar cambiar de directorio
+    if (chdir(path) == -1)
+    {
+        perror("cd");
+        free(old_pwd);
+        return;
+    }
+
+    // Actualizar `OLDPWD`
+    update_var_exist("OLDPWD", old_pwd, &(mini->env));
+
+    // Actualizar `PWD`
+    new_pwd = getcwd(NULL, 0);
+    if (new_pwd)
+    {
+        update_var_exist("PWD", new_pwd, &(mini->env));
+        free(new_pwd);
+    }
+    free(old_pwd);
+}
 */

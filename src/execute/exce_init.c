@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/21 18:35:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:39:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ t_exec	*init_exec(t_list *env_list)
 	if (!exec_info)
 		return NULL;
 	exec_info->first_cmd = NULL;
-	exec_info->env_vars = lst_to_arr(env_list);
+	// exec_info->env_vars = env_list_to_array(env_list);
+	exec_info->env_vars = env_list_to_array(env_list);
+	// print_env_list((t_list *)exec_info->env_vars);
 	exec_info->pipe_input_fd = -1;
 	exec_info->pipe_output_fd = -1;
 	exec_info->cmd_count = 0;
 	exec_info->paths = get_path(exec_info->env_vars);
 
-	return exec_info;
+	return (exec_info);
 }
 
 /*// Initialize the first pipe

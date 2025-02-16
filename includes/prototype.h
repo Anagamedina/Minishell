@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 19:43:36 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_tokens		t_tokens;
 typedef struct s_cmd		t_cmd;
 typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
-typedef struct s_exec		t_exec;
 typedef struct s_redir		t_redir;
 typedef struct s_exec		t_exec;
 
@@ -42,13 +41,14 @@ t_env		*init_env_var(char *key_value_var);
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
-char		*get_var_name(char *line);
+char		*get_var_name(const char *line);
 char		*get_var_value(char *line);
-char		*get_variable_in_envlist(t_list *env_list, char *key_to_find);
+char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //************** ENV_LOCALS_list.c ************/
 
 t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
+int			validate_syntax_name_value(char *new_local_var);
 
 //*************INPUT***********/
 char		*read_input(void);
@@ -70,7 +70,8 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
 int			check_if_var_name_exist(char *var_name, t_list *env_list);
-void		export_variable(t_cmd *curr_command, t_list **env_list);
+void		export_variable(t_cmd *curr_cmd, t_mini* mini);
+char		*ft_strjoin_export(char *s1, char *s2, char c);
 
 //************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini);
@@ -78,6 +79,13 @@ void		cases_builtins(t_mini *mini);
 //************ BUILTIN_ECHO.c ************/
 void		ft_echo(t_cmd *cmd);
 void		echo_with_args(t_cmd *cmd);
+
+//************ BUILTIN_PWD.c ************/
+int			ft_pwd(t_mini *mini);
+
+//************ BUILTIN_CD.c ************/
+void		ft_cd(t_mini *mini, t_cmd *cmd);
+
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
@@ -87,7 +95,7 @@ void		print_mini(t_mini *mini);
 //************************* BUILTINS-2 ***********************/
 
 //************** builtin_pwd.c ********************/
-void		get_current_directory(t_mini *mini);
+int ft_pwd(t_mini* mini);
 
 //************************* TOKENIZE ************************/
 
@@ -225,7 +233,7 @@ int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
 
 //************** BUILT_INS_UTILS.C ********/
 
-t_list		*create_new_env_node(char* line, char* key, char* value);
+t_list		*create_new_env_node(char* key, char* value);
 
 //************** ERRORS_COMMAND.C ********/
 
@@ -242,7 +250,7 @@ void 		free_cmd(t_cmd *cmd);
 void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
-char		**lst_to_arr(t_list *env_list);
+char		**env_list_to_array(t_list *env_list);
 int			is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
@@ -277,6 +285,7 @@ void redirect_out(int output_fd);
 void redirect_in(int input_fd);
 int create_heredoc(t_redir *redir, int nbr_heredoc);
 //*************SIGNALS**************/
+
 //*************signals.c**************/
 void		handle_signal_ctrl_c(int sig);
 

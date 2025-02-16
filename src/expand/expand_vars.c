@@ -58,10 +58,10 @@ static int	process_token(t_tokens *curr_token, t_list *env_list)
 	process_split_words(split_word, env_list);
 	if (!update_token_str(curr_token, split_word))
 	{
-		free_string_array(split_word);
+		free_string_matrix(split_word);
 		return (0);
 	}
-	free_string_array(split_word);
+	free_string_matrix(split_word);
 	return (1);
 }
 
@@ -108,10 +108,10 @@ void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 			process_split_words(split_word, env_list);
 			if (!update_token_str(curr_token, split_word))
 			{
-				free_string_array(split_word);
+				free_string_matrix(split_word);
 				return ;
 			}
-			free_string_array(split_word);
+			free_string_matrix(split_word);
 		}
 		curr_token = curr_token->next;
 	}

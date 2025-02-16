@@ -12,19 +12,19 @@
 
 #include "../../includes/minishell.h"
 
-void	free_string_array(char **array)
+void	free_string_matrix(char **matrix_2d)
 {
 	int	i;
 
-	if (!array)
+	if (!matrix_2d)
 		return ;
 	i = 0;
-	while (array[i])
+	while (matrix_2d[i])
 	{
-		free(array[i]);
+		free(matrix_2d[i]);
 		i ++;
 	}
-	free(array);
+	free(matrix_2d);
 }
 
 void	free_split_data(t_split_data *split_data)
@@ -33,7 +33,7 @@ void	free_split_data(t_split_data *split_data)
 		return ;
 	if (split_data->out)
 	{
-		free_string_array(split_data->out);
+		free_string_matrix(split_data->out);
 	}
 	if (split_data->str)
 		free(split_data->str);

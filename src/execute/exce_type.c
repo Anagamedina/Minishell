@@ -28,12 +28,12 @@ int	is_cmd_external(t_mini *mini, t_tokens *token)
 
 	if (!mini || !mini->tokens)
 		return FALSE;
-	env_var_array = lst_to_arr(mini->env);
+	env_var_array = env_list_to_array(mini->env);
 	paths = get_path(env_var_array);
 	// if get_cmd path encuentra el token en las vars de entorno es por q existe
 	if (env_var_array != NULL)
 	{
-		free_string_array(env_var_array);
+		free_string_matrix(env_var_array);
 	}
 	cmd_path = get_cmd_path(token, paths);
 	if (cmd_path != NULL)

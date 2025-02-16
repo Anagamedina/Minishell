@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 13:49:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 20:32:30 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,23 @@
 
 #include "../includes/minishell.h"
 
+	/*
+	if (!envp || !*envp)
+	{
+		write(2, "Warning: No environment variables found. Initializing default env.", 65);
+		// write(2, "\n", 1);
+		printf("\n");
+		char *default_env[] = {
+			"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
+			"HOME=/home/user",
+			"SHLVL=1",
+			"OLDPWD=",
+			NULL
+		};
+		envp = default_env;
+	}
+	*/
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
@@ -35,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!minishell)
 	{
 		perror("Error: init minishell.\n");
-		free(minishell);
+		// free(minishell);
 		return (1);
 	}
 	while (1)
@@ -72,16 +89,20 @@ int	main(int argc, char **argv, char **envp)
 		/*if(parse_redir(minishell) == FALSE)
 		{
 			printf("Error al parsear las redirecciones.\n");
+			free(input);
 			continue ;
 		}*/
+
 		//	INIT EXEC
 		if (minishell->exec)
 			free_exec(minishell->exec);
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
-			perror("Error al inicializar t_exec");
-			return (1);
+			perror("Error: init exec.\n");
+			free(input);
+			break ;
+			// return (1);
 		}
 		//	INIT EXEC FIRST CMD
 		if (minishell->exec->first_cmd)
@@ -93,6 +114,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
+
 		//	ADD ARGUMENTS TO CMDs
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
 
@@ -111,101 +133,3 @@ int	main(int argc, char **argv, char **envp)
 	free_mini(minishell);
 	return (0);
 }
-
-
-
-/*
-printf("PID PADRE: [%d]\n", getpid());
-int pipe_fd[2];
-if  (pipe(pipe_fd) == -1)
-{
-	perror("Pipe");
-	exit(EXIT_FAILURE);
-}
-
-int i = 0;
-while (i < 2)
-{
-	pid_t pid = fork();
-
-	if (pid < 0)
-	{
-		perror("Error creando proceso hijo");
-		exit(EXIT_FAILURE);
-	}
-
-	if (pid == 0)
-	{
-		// Proceso hijo
-		printf("Proceso hijo ejecutándose\n");
-		printf("PID HIJO: %d\n", getpid());
-		if (i == 0)
-		{
-			if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
-			{
-				char message[256];
-				snprintf(message, sizeof(message), "Error redirigiendo salida hijo PID: %d", getpid());
-				perror(message);
-				exit(EXIT_FAILURE);
-			}
-			// Cerrar descriptores no necesarios
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			char *args[] = {"ls",  NULL};
-			if (execve("/usr/bin/ls", args, envp) == -1)
-			{
-				perror("Error mutando a ls");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else if (i == 1)
-		{
-			if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
-			{
-				char message[256];
-				snprintf(message, sizeof(message), "Error redirigiendo salida hijo PID: %d", getpid());
-				perror(message);
-				exit(EXIT_FAILURE);
-			}
-			// Cerrar descriptores no necesarios
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-			char *args[] = {"wc",  NULL};
-			if (execve("/usr/bin/wc", args, envp) == -1)
-			{
-				perror("Error mutando a wc");
-				exit(EXIT_FAILURE);
-			}
-		}
-	}
-	i++;
-}
-
-// Cerrar descriptores no necesarios en el proceso padre
-close(pipe_fd[0]);
-close(pipe_fd[1]);
-
-// Proceso padre
-waitpid(-1, NULL, 0);
-
-return 1;
-*/
-
-
-/*static void free_token_list(t_list *tokens) {
-	t_list *current = NULL;
-	t_tokens *token_data;
-
-	while (current->next != NULL)
-	{
-		token_data = (t_tokens *)tokens->content;
-		if (token_data->next) // Si hay siguiente token
-		{
-			free(token_data->str);// Libera la cadena asociada al token
-		}
-		free(token_data); // Libera el nodo actual
-		current = current->next; // Avanza al siguiente token
-	}
-}*/
-
-

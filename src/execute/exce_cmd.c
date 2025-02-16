@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 19:42:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 20:35:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	execute_external(t_cmd *cmd, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-
 static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
+	// Si no es el último comando, crear un pipe
 	if (!curr_cmd->last_cmd)
 	{
 		if (pipe(pipe_fd) == -1)
@@ -63,13 +63,16 @@ void redirect_out(int output_fd)
 
 void execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 {
-	char	**envp_to_array;
-
-	envp_to_array = lst_to_arr(mini->env);
 	if (curr_cmd->is_external == 1)
-		execute_external(curr_cmd, envp_to_array);
+	{
+		execute_external(curr_cmd, mini->envp_to_array);
+		exit(EXIT_FAILURE);
+	}
 	else if (curr_cmd->is_builtin == 1)
+	{
 		cases_builtins(mini);
+		exit(0);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -126,17 +129,27 @@ static void wait_for_children(int num_children)
 
 int execute_commands(t_mini *mini)
 {
-	t_list	*t_list_exec_cmd = mini->exec->first_cmd;
+	t_list	*t_list_exec_cmd;
 	t_cmd	*curr_cmd;
 	pid_t	pid;
-	int		input_fd = STDIN_FILENO;
+	int		input_fd;
 	int		pipe_fd[2];
-	int		i = 0;
+	int		i;
 
+	i = 0;
+	input_fd = STDIN_FILENO;
+	t_list_exec_cmd = mini->exec->first_cmd;
 	while (t_list_exec_cmd)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
+
+		if (curr_cmd->is_builtin == 1 && curr_cmd->last_cmd && input_fd == STDIN_FILENO)
+		{
+			cases_builtins(mini);
+			return (TRUE);
+		}
+
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)

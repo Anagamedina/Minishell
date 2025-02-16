@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/12 18:43:27 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
@@ -36,7 +48,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	// si OLD PWD no existe, se crea y se agrega a la lista de environment
 	if (!check_if_var_name_exist(OLDPWD_ENV, *env_list))
 	{
-		new_node = create_new_env_node(OLDPWD_ENV, OLDPWD_ENV, NULL);
+		new_node = create_new_env_node(OLDPWD_ENV, NULL);
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
@@ -45,7 +57,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 
 	if (!check_if_var_name_exist(PATH_ENV, *env_list))
 	{
-		new_node = create_new_env_node(PATH_ENV, PATH_ENV, PATH_VALUE);
+		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
@@ -55,7 +67,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	if (!check_if_var_name_exist(HOME_ENV, *env_list))
 	{
 		// home = getenv("HOME");
-		home_dir = get_variable_in_envlist(*env_list, HOME_ENV);
+		home_dir = get_variable_in_env_list(*env_list, HOME_ENV);
 		if (home_dir)
 			home_dir = ft_strdup(home_dir);
 		else
@@ -66,7 +78,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 			else
 				home_dir = ft_strdup("/home/");
 		}
-		new_node = create_new_env_node(HOME_ENV, HOME_ENV, home_dir);
+		new_node = create_new_env_node(HOME_ENV, home_dir);
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
@@ -79,7 +91,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 		user = getenv("USER");
 		if (!user)
 			user = "unknown";
-		new_node = create_new_env_node(USER_ENV, USER_ENV, ft_strdup(user));
+		new_node = create_new_env_node(USER_ENV, ft_strdup(user));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
@@ -90,7 +102,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	{
 		if (!update_var_exist(SHLVL, "0", env_list))
 		{
-			new_node = create_new_env_node(SHLVL, SHLVL, "0");
+			new_node = create_new_env_node(SHLVL, "0");
 			if (new_node)
 				ft_lstadd_back(env_list, new_node);
 			else
@@ -127,6 +139,7 @@ t_mini	*init_mini_list(char **envp)
     minishell->bash_lvl = -1;
     minishell->chars_in_line = -1;
     minishell->env = init_env_list(envp);
+	minishell->envp_to_array = env_list_to_array(minishell->env);
     if (minishell->env == NULL)
     {
     	// fprintf(stderr, "Error: No se pudo inicializar la lista de variables de entorno.\n");
@@ -136,7 +149,7 @@ t_mini	*init_mini_list(char **envp)
     minishell->tokens = NULL;
     minishell->exec = NULL;
     minishell->exit_status = -1;
-	shlvl = get_variable_in_envlist(minishell->env, SHLVL);
+	shlvl = get_variable_in_env_list(minishell->env, SHLVL);
 	configure_shell_env(&minishell->env, shlvl);
     return (minishell);
 }

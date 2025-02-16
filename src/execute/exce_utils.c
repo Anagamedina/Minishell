@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 23:48:37 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/26 00:45:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:43:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,61 @@
 
 #include "../../includes/minishell.h"
 
-char	**lst_to_arr(t_list *env_list)
+static int	count_env_variables(t_list *env_list)
 {
-	t_list	*node;
-	t_env	*current;
-	char	**arr;
-	int		count = 0;
+	t_list	*curr_node;
+	int		env_count;
 
-	node = env_list;
-	while (node)
+	curr_node = env_list;
+	env_count = 0;
+	while (curr_node)
 	{
-		count++;
-		node = node->next;
+		env_count ++;
+		curr_node = curr_node->next;
 	}
+	return (env_count);
+}
 
-	arr = ft_calloc(count + 1, sizeof(char *)); // +1 para NULL final
-	if (!arr)
-		return NULL;
-	node = env_list;
-	count = 0;
-	while (node)
+void	free_env_array(char **env_array, int allocated)
+{
+	while (allocated > 0)
 	{
-		current = (t_env *)node->content;
-		arr[count] = ft_strdup(current->full_var);
-		if (!arr[count])
+		free(env_array[allocated]);
+		allocated--;
+	}
+	free(env_array);
+}
+
+char	**env_list_to_array(t_list *env_list)
+{
+	t_list	*curr_node;
+	t_env	*curr_env_var;
+	char	**env_array;
+	int		env_count;
+	int		i;
+
+	env_count = count_env_variables(env_list);
+	env_array = ft_calloc(env_count + 1, sizeof(char *));
+	if (!env_array)
+	{
+		perror("Error: cant assign memory to env_list_to_array");
+		return (NULL);
+	}
+	curr_node = env_list;
+	i = 0;
+	while (i < env_count)
+	{
+		curr_env_var = (t_env *)curr_node->content;
+		env_array[i] = ft_strdup(curr_env_var->full_var);
+		if (!env_array[i])
 		{
-			while (count > 0)
-				free(arr[--count]);
-			free(arr);
-			return NULL;
+			perror("Error: No se pudo duplicar variable de entorno");
+			free_env_array(env_array, i);
+			return (NULL);
 		}
-		count++;
-		node = node->next;
+		curr_node = curr_node->next;
+		i ++;
 	}
-	arr[count] = NULL; // Terminar el array con NULL
-	return arr;
+	env_array[env_count] = NULL;
+	return (env_array);
 }

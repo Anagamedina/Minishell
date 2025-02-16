@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 19:39:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:12:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,36 +72,108 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 	return (FALSE);
 }
 
-void	export_variable(t_cmd *curr_command, t_list** env_list)
+// TODO: hacerlo en un loop dado que es posible agregar mas de una variable
+
+void	export_variable(t_cmd *curr_cmd, t_mini* mini)
 {
-	char	*key_value;
 	char	*var_name;
 	char	*var_value;
 	t_list	*new_var_env;
 
-	if (!curr_command->cmd_args[1] || !curr_command->cmd_args[1] || !env_list)
+	if (!curr_cmd->cmd_args[1])
 		return ;
-	key_value = curr_command->cmd_args[1];
-	new_var_env = NULL;
-	var_name = get_var_name(key_value);
-	var_value = get_var_value(key_value);
-	if (validate_var_name(var_name) == 1 && validate_var_value(var_value) == 1)
+
+	if (validate_syntax_name_value(curr_cmd->cmd_args[1]) == FALSE)
+    {
+        write(2, "export: invalid syntax\n", 24);
+        return ;
+    }
+
+	var_name = get_var_name(curr_cmd->cmd_args[1]);
+	var_value = get_var_value(curr_cmd->cmd_args[1]);
+
+	if (!var_name)
 	{
-		if (!update_var_exist(var_name, var_value, env_list))
-		{
-			new_var_env = create_new_env_node(key_value, var_name, var_value);
-			if (new_var_env)
-			{
-				if (*env_list == NULL)
-					*env_list = new_var_env;
-				else
-					ft_lstadd_back(env_list, new_var_env);
-			}
-		}
+		write(2, "export: invalid variable name\n", 31);
+		return ;
 	}
-	else
-		printf("Error: formato no válido para 'export'.\n");
+	if (update_var_exist(var_name, var_value, &(mini->env)) == TRUE)
+	{
+		free(var_name);
+		free(var_value);
+		return ;
+	}
+
+	new_var_env = create_new_env_node(var_name, var_value);
+
+	if (!new_var_env)
+	{
+		write(2, "Error: Failed to export variable\n", 34);
+		free(var_name);
+		free(var_value);
+		return ;
+	}
+	ft_lstadd_back(&(mini->env), new_var_env);
+
+	if (mini->envp_to_array)
+        free_string_matrix(mini->envp_to_array);
+	mini->envp_to_array = env_list_to_array(mini->env);
 }
+
+/**
+ * ft_strjoin_export - concat two strings with a character separator.
+ *
+ * - `c`: character separator (default: `=`).
+ *
+ * @return:
+ * A string in the format `s1=c+s2`.
+ */
+char	*ft_strjoin_export(char *s1, char *s2, char c)
+{
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	size_t	j;
+
+	if (s1)
+		len1 = ft_strlen(s1);
+	else
+		len1 = 0;
+	if (s2)
+		len2 = ft_strlen(s2);
+	else
+		len2 = 0;
+	result = malloc(sizeof(char) * (len1 + len2 + 2));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	result[i++] = c;
+	j = 0;
+	while (j < len2)
+		result[i++] = s2[j++];
+	result[i] = '\0';
+	return (result);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * Maneja el caso donde el primer token es una asignación local
