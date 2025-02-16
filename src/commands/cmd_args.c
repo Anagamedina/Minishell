@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/31 18:40:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/16 17:48:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void count_args(t_list *token_list, t_cmd *cmd)
 			cmd->count_args = 1;
 		}
 			// Si encontramos un delimitador (PIPE), detenemos el procesamiento del comando actual
-		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND)
+		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND || token->type_token == HEREDOC)
 		{
 			break;
 		}
@@ -48,7 +48,6 @@ void count_args(t_list *token_list, t_cmd *cmd)
 			// Si es un argumento válido, lo contamos
 			cmd->count_args ++;
 		}
-
 		current = current->next;
 	}
 }

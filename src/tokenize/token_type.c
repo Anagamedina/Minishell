@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/01/24 15:14:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:14:50 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ int	is_redir(t_tokens* token)
 {
 	return (token->type_token == REDIR_IN || \
 		token->type_token == REDIR_OUT || \
-		token->type_token == REDIR_APPEND);
+		token->type_token == REDIR_APPEND || token->type_token == HEREDOC);
 }

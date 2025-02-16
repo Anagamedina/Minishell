@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 10:57:34 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/16 17:26:15 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 17:53:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 
 	// 📌 Generar nombre único del archivo heredoc
 	num_str = ft_itoa(nbr_heredoc);
-	tmp_name = ft_strjoin("/Users/catalinaburgos/CLionProjects/Minishell/heredoc", num_str);
+	tmp_name = ft_strjoin("/tmp/heredoc", num_str);
 	free(num_str);
 
 	// 📌 Crear archivo temporal con `open_file()`
@@ -31,17 +31,17 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 		free(tmp_name);
 		return (-1);
 	}
-
+	line = readline("> ");
 	// 📌 Leer entrada del usuario y escribir en el archivo temporal
-while (line && ft_strcmp(line, redir->filename) != 0)
+	while (line && ft_strcmp(line, redir->filename) != 0)
 	{
 		write(fd_tmp, line, ft_strlen(line));
 		write(fd_tmp, "\n", 1);
 		free(line);
 		line = readline("> ");
 	}
-	free(line);
 	close(fd_tmp);
+	free(line);
 
 	// 📌 Guardar el nombre del archivo temporal en `redir`
 	free(redir->filename);

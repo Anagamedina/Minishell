@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 13:26:10 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 18:16:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 	char	**envp_to_array;
 
 
+	// print_list_commands(mini->exec->first_cmd);
+	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
 		if (curr_cmd->input_fd != STDIN_FILENO)
