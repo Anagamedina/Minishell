@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 16:38:38 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 13:26:10 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	execute_external(t_cmd *cmd, char **envp)
 
 static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
-	// Si no es el último comando, crear un pipe
 	if (!curr_cmd->last_cmd)
 	{
 		if (pipe(pipe_fd) == -1)
@@ -37,8 +36,29 @@ static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		curr_cmd->output_fd = STDOUT_FILENO; // Último comando: salida a STDOUT
 	}
 
-	// Asignar la entrada del comando al input actual del pipeline
 	curr_cmd->input_fd = *input_fd;
+}
+
+
+
+void redirect_open(int input_fd)
+{
+	if (dup2(input_fd, STDIN_FILENO) == -1)
+	{
+		perror("Error redirigiendo entrada");
+		exit(EXIT_FAILURE);
+	}
+	close(input_fd);
+}
+
+void redirect_close(int output_fd)
+{
+	if (dup2(output_fd, STDOUT_FILENO) == -1)
+	{
+		perror("Error redirigiendo salida a archivo");
+		exit(EXIT_FAILURE);
+	}
+	close(output_fd);
 }
 
 
@@ -46,64 +66,26 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
 	char	**envp_to_array;
 
-	// Si hay redirección `>`, la aplicamos primero
+
 	if (apply_redirections(curr_cmd) > 0)
 	{
-
-		// Si hay redirección de entrada `< archivo`
 		if (curr_cmd->input_fd != STDIN_FILENO)
-		{
-			if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
-			{
-				perror("Error redirigiendo entrada");
-				exit(EXIT_FAILURE);
-			}
-			close(curr_cmd->input_fd);
-		}
+		    redirect_open(curr_cmd->input_fd);
 		if (curr_cmd->output_fd!= STDOUT_FILENO)
-		{
-			if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
-			{
-				perror("Error redirigiendo salida a archivo");
-				exit(EXIT_FAILURE);
-			}
-			close(curr_cmd->output_fd);
-		}
+		    redirect_close(curr_cmd->output_fd);
 	}
 	else //PIPE
 	{
 		if (curr_cmd->output_fd != STDOUT_FILENO)
-		{
-			printf("output_fd: %d\n", curr_cmd->output_fd);
-			if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
-			{
-				perror("Error redirigiendo salida al pipe");
-				exit(EXIT_FAILURE);
-			}
-			close(curr_cmd->output_fd);
-		}
+		    redirect_close(curr_cmd->output_fd);
 		if (curr_cmd->input_fd != STDIN_FILENO)
-		{
-			printf("input_fd: %d\n", curr_cmd->input_fd);
-			if (dup2(curr_cmd->input_fd, STDIN_FILENO) == -1)
-			{
-				perror("Error redirigiendo entrada");
-				exit(EXIT_FAILURE);
-			}
-			close(curr_cmd->input_fd);
-		}
+		    redirect_open(curr_cmd->input_fd);
 	}
-
-	// Ejecutar comando
 	envp_to_array = lst_to_arr(mini->env);
 	if (curr_cmd->is_external == 1)
-	{
 		execute_external(curr_cmd, envp_to_array);
-	}
 	else if (curr_cmd->is_builtin == 1)
-	{
 		cases_builtins(mini);
-	}
 	exit(EXIT_FAILURE);
 }
 
@@ -174,7 +156,15 @@ int execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-
+		// 🔹 1️⃣ **Procesar todos los heredocs antes de ejecutar comandos**
+		/*t_list *temp_cmd = t_list_exec_cmd;
+		while (temp_cmd)
+		{
+			curr_cmd = (t_cmd *)temp_cmd->content;
+			heredoc(curr_cmd);  // 👈 Llamamos a heredoc antes de ejecutar
+			temp_cmd = temp_cmd->next;
+		}*/
+	//	heredoc(curr_cmd);
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)

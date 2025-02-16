@@ -87,6 +87,7 @@ typedef struct	s_redir
 	int				fd_output;
 	int				type;
 	char			*filename;
+	char			*delimiter;
 	struct s_redir	*next;
 } 				t_redir;
 

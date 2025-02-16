@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/12 14:55:48 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/16 13:46:26 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@ int open_file(char *file, int type)
 {
 	int fd;
 
-	if (type == REDIR_IN)
+	if (type == REDIR_IN) // <
 		fd = open(file, O_RDONLY);
-	else if (type == REDIR_OUT)
+	else if (type == REDIR_OUT) // >
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == REDIR_APPEND)
+	else if (type == REDIR_APPEND) // >>
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == HEREDOC) // << Crear archivo temporal para heredoc
+	{
+		unlink(file); // 🔹 Eliminar cualquier versión previa del archivo
+		fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	}
 	else
 		return (-1);
 
@@ -39,23 +44,6 @@ int open_file(char *file, int type)
 	return (fd);
 }
 
-
-/**
- * @brief Aplica las redirecciones especificadas en la lista de redirecciones de un comando.
- * 
- * Itera sobre la lista de redirecciones de un comando y aplica cada redirección.
- * Si se encuentra una redirección de entrada, se abre el archivo especificado y se
- * asigna el descriptor de archivo a input_fd.
- * Si se encuentra una redirección de salida, se abre el archivo especificado y se
- * asigna el descriptor de archivo a output_fd. Si ya existía una redirección de
- * salida anterior, se cierra el descriptor de archivo anterior.
- * Si se encuentra una redirección de appending, se abre el archivo especificado en
- * modo de appending y se asigna el descriptor de archivo a output_fd.
- * 
- * @param cmd El comando al que se le aplicarán las redirecciones.
- * 
- * @return 1 si se aplicaron redirecciones, 0 en caso contrario.
- */
 int apply_redirections(t_cmd *cmd)
 {
 	t_list *redir_node = cmd->redir_list;
@@ -66,6 +54,19 @@ int apply_redirections(t_cmd *cmd)
 	{
 		curr_redir = (t_redir *)redir_node->content;
 
+		if (curr_redir->type == HEREDOC)
+		{
+			if (cmd->input_fd != STDIN_FILENO)
+				close(cmd->input_fd);
+
+			cmd->input_fd = open_file(curr_redir->filename, REDIR_IN); // 📌 Abrir en modo lectura
+			if (cmd->input_fd == -1)
+			{
+				perror("Error abriendo archivo heredoc");
+				return FALSE;
+			}
+			redirection_applied = 1;
+		}
 		if (curr_redir->type == REDIR_IN)
 		{
 			if (cmd->input_fd != STDIN_FILENO)

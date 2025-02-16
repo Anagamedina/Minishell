@@ -1,97 +1,83 @@
-/*
- *
-void redirect_file(int fd, int target_fd)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/26 10:57:34 by catalinab         #+#    #+#             */
+/*   Updated: 2025/02/16 13:25:09 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../includes/minishell.h"
+
+int create_heredoc(t_redir *redir, int nbr_heredoc)
 {
-    if (dup2(fd, target_fd) == -1)
-    {
-        perror("Error duplicando descriptor");
-        close(fd);
-        exit(EXIT_FAILURE);
-    }
-    close(fd);
+	int   fd_tmp;
+	char *tmp_name;
+	char *num_str;
+	char *line;
+
+	// 📌 Generar nombre único del archivo heredoc
+	num_str = ft_itoa(nbr_heredoc);
+	tmp_name = ft_strjoin("/tmp/heredoc", num_str);
+	free(num_str);
+
+	// 📌 Crear archivo temporal con `open_file()`
+	fd_tmp = open_file(tmp_name, HEREDOC);
+	if (fd_tmp == -1)
+	{
+		free(tmp_name);
+		return (-1);
+	}
+
+	// 📌 Leer entrada del usuario y escribir en el archivo temporal
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || ft_strcmp(line, redir->delimiter) == 0) // 📌 Comparar con `delimiter`
+			break;
+		write(fd_tmp, line, ft_strlen(line));
+		write(fd_tmp, "\n", 1);
+		free(line);
+	}
+	free(line);
+	close(fd_tmp);
+
+	// 📌 Guardar el nombre del archivo temporal en `redir`
+	free(redir->filename);
+	redir->filename = ft_strdup(tmp_name);
+	free(tmp_name);
+
+	return (0);
 }
 
 
+//manejar multiples heredocs en una linia de comandos
+//perite que multiples heredocs en un solo comando o en varios comandos
+//se gestionen correctamente
 
-
- int handle_empty_input(t_cmd *cmd)
+int heredoc(t_cmd *cmd)
 {
-    int pipe_fd[2];
+	t_list  *redir_node = cmd->redir_list;
+	t_redir *curr_redir;
+	int      nbr_heredoc = 0;
 
-    if (pipe(pipe_fd) == -1)
-    {
-        perror("Error creando pipe vacío");
-        exit(EXIT_FAILURE);
-    }
+	while (redir_node)
+	{
+		curr_redir = (t_redir *)redir_node->content;
 
-    redirect_file(pipe_fd[0], STDIN_FILENO);
-    close(pipe_fd[1]);
-    return (0);
+		if (curr_redir->type == HEREDOC)
+		{
+			if (create_heredoc(curr_redir, nbr_heredoc) == -1)
+			{
+				perror("Error creando heredoc");
+				return (-1);
+			}
+			nbr_heredoc++;
+		}
+		redir_node = redir_node->next;
+	}
+	return (0);
 }
-
-void process_redirections(t_cmd *cmd)
-{
-    t_list *current = cmd->redir_list;
-
-    while (current)
-    {
-        t_redir *redir = (t_redir *)current->content;
-        int fd = open_file(redir->filename, redir->type);
-
-        // Si la redirección es de entrada y el archivo no existe, usa un flujo vacío
-        if (fd == -1 && redir->type == REDIR_IN)
-        {
-            fprintf(stderr, "Advertencia: Archivo '%s' no encontrado. Usando entrada vacía.\n", redir->filename);
-            handle_empty_input(cmd);
-            current = current->next;
-            continue;
-        }
-
-        // Manejar redirecciones normales
-        if (redir->type == REDIR_IN)
-        {
-            if (cmd->input_fd != -1)
-                close(cmd->input_fd);
-            cmd->input_fd = fd;
-        }
-        else if (redir->type == REDIR_OUT || redir->type == REDIR_APPEND)
-        {
-            if (cmd->output_fd != -1)
-                close(cmd->output_fd);
-            cmd->output_fd = fd;
-        }
-
-        current = current->next;
-    }
-
-    // Aplicar las redirecciones configuradas a stdin y stdout
-    if (cmd->input_fd != -1)
-        redirect_file(cmd->input_fd, STDIN_FILENO);
-    if (cmd->output_fd != -1)
-        redirect_file(cmd->output_fd, STDOUT_FILENO);
-}
-
- void execute_command(t_cmd *cmd)
-{
-    pid_t pid = fork();
-
-    if (pid == 0)
-    {
-        // Proceso hijo
-        process_redirections(cmd); // Configurar redirecciones
-        execve(cmd->cmd, cmd->cmd_args, NULL);
-        perror("Error ejecutando el comando");
-        exit(EXIT_FAILURE);
-    }
-    else if (pid < 0)
-    {
-        perror("Error al crear proceso");
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        // Proceso padre
-        wait(NULL); // Esperar al hijo
-    }
-}
- */

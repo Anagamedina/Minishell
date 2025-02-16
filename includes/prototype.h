@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:37:17 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,8 +269,13 @@ int			is_redir(t_tokens *token);
 void		handle_redirection(char *file, t_cmd *cmd, int type);
 t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
 
-//*************SIGNALS**************/
 
+//*************HEREDOC**************/
+int heredoc(t_cmd *cmd);
+void redirect_close(int output_fd);
+void redirect_open(int input_fd);
+int create_heredoc(t_redir *redir, int nbr_heredoc);
+//*************SIGNALS**************/
 //*************signals.c**************/
 void		handle_signal_ctrl_c(int sig);
 
