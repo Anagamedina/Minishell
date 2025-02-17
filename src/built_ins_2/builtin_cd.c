@@ -6,19 +6,21 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 20:01:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:49:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/minishell.h"
+#include "../includes/minishell.h"
 
 /**
  *
  * we need to handle the following cases:
  * 1. cd with no arguments: change to the user's home directory
  * 2. cd with a path: change to the specified directory
- * 3. cd with a relative path: change to the specified directory relative to the current working directory
+ * 3. cd with a relative path: change to the specified directory relative
+ * to the current working directory
  */
+
 void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
 	char	*path_home;
@@ -33,17 +35,15 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 		path_home = get_variable_in_env_list(mini->env, "HOME");
 		if (!path_home)
 		{
-			// ft_putstr_fd("cd: HOME not set\n", 2);
 			write(2, "cd: HOME not set\n", 17);
 			return ;
 		}
 	}
 	// IF ARG EQUAL TO 1 AND IS '-'
 	// WE NEED TO USE 'OLDPWD'
-	// else if (cmd->cmd_args[1][0] == '-' && cmd->cmd_args[2] == NULL)
-	else if (cmd->cmd_args[1][0] == '-')
+	//else if (cmd->cmd_args[1][0] == '-')
+	else if (cmd->cmd_args[1][0] == '-' && cmd->cmd_args[2] == NULL)
 	{
-		// TODO: change this function
 		path_home = get_variable_in_env_list(mini->env, "OLDPWD");
 		if (!path_home)
 		{

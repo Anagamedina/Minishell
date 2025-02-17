@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/16 13:13:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:46:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_value(char *value, char *line, t_env *env_var)
 		free(env_var->value);
 		env_var->value = value;
 	}
-	else if(!value)
+	else if (!value)
 		env_var->value = ft_strdup("");
 }
 
@@ -81,7 +81,7 @@ void	print_export(t_list **env_list)
 	while (tmp != NULL)
 	{
 		env_var = (t_env *)(tmp->content);
-		if (env_var)	//&& env_var->key)
+		if (env_var)
 		{
 			if (env_var->value)
 				printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value);
@@ -100,7 +100,6 @@ void	update_var(char *line, t_list **env_list)
 	char	*value;
 	t_env	*env_var;
 
-	// Obtener la clave y el valor de la línea
 	key = get_var_name(line);
 	value = get_var_value(line);
 	env_var = find_env_var(*env_list, key);
