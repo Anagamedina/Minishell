@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 20:35:07 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/17 20:48:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static void setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	curr_cmd->input_fd = *input_fd;
 }
 
-
-
 void redirect_in(int input_fd)
 {
 	if (dup2(input_fd, STDIN_FILENO) == -1)
@@ -59,19 +57,21 @@ void redirect_out(int output_fd)
 		exit(EXIT_FAILURE);
 	}
 	close(output_fd);
+
 }
 
-void execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
+void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 {
+
+	if (curr_cmd->is_builtin == 1)
+	{
+		cases_builtins(mini, curr_cmd);
+		exit(0);
+	}
 	if (curr_cmd->is_external == 1)
 	{
 		execute_external(curr_cmd, mini->envp_to_array);
 		exit(EXIT_FAILURE);
-	}
-	else if (curr_cmd->is_builtin == 1)
-	{
-		cases_builtins(mini);
-		exit(0);
 	}
 	exit(EXIT_FAILURE);
 }
@@ -79,6 +79,7 @@ void execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 
 void handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
+
 	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
@@ -98,6 +99,7 @@ void handle_child(t_cmd *curr_cmd, t_mini *mini)
 }
 
 
+
 static void handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO)
@@ -105,6 +107,7 @@ static void handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	if (curr_cmd->output_fd != STDOUT_FILENO)
 		close(curr_cmd->output_fd);
 
+	// si no eres el ultimo y no eres un archivo , cierra todos los descriptores
 	if (!curr_cmd->last_cmd)
 	{
 		close(pipe_fd[1]);
@@ -144,12 +147,11 @@ int execute_commands(t_mini *mini)
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
 
-		if (curr_cmd->is_builtin == 1 && curr_cmd->last_cmd && input_fd == STDIN_FILENO)
+		if (curr_cmd->is_builtin == 1 && curr_cmd->next == NULL)
 		{
-			cases_builtins(mini);
-			return (TRUE);
+			cases_builtins(mini, curr_cmd);
+			// return (TRUE);
 		}
-
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)
@@ -158,9 +160,15 @@ int execute_commands(t_mini *mini)
 			exit(EXIT_FAILURE);
 		}
 		if (pid == 0)
+		{
+			printf("PROCESO HIJO: %d\n", getpid());
 			handle_child(curr_cmd, mini);
+		}
 		else
+		{
+			printf("PROCESO PADRE: %d\n", getpid());
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
+		}
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
 	wait_for_children(i);

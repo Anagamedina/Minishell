@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 19:37:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:54:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,15 @@ static void	unset_variable(t_list **env_list, char *var_name)
 	}
 }
 
-void	cases_builtins(t_mini *mini)
+void	cases_builtins(t_mini *mini, t_cmd* curr_cmd)
 {
-	t_cmd	*curr_cmd;
+	// t_cmd	*curr_cmd
 	int		i;
 
 	i = 0;
-	curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
+	// curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
 
+	// env
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
     {
         ft_pwd(mini);

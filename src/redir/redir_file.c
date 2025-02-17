@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/16 13:46:26 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/17 18:56:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int open_file(char *file, int type)
 		fprintf(stderr, "Error al abrir '%s': ", file);
 		perror("");
 	}
-	else
-		printf("Archivo abierto: %s, fd: %d\n", file, fd); // 📌 Imprimir el fd
+	// else
+	// 	printf("Archivo abierto: %s, fd: %d\n", file, fd); // 📌 Imprimir el fd
 
 	return (fd);
 }
@@ -50,7 +50,6 @@ int apply_redirections(t_cmd *cmd)
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
-
 		if (curr_redir->type == HEREDOC)
 		{
 			if (cmd->input_fd != STDIN_FILENO)

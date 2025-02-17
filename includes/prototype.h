@@ -74,7 +74,7 @@ void		export_variable(t_cmd *curr_cmd, t_mini* mini);
 char		*ft_strjoin_export(char *s1, char *s2, char c);
 
 //************ MAIN BUILTINS ********/
-void		cases_builtins(t_mini *mini);
+void		cases_builtins(t_mini *mini, t_cmd* curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
 void		ft_echo(t_cmd *cmd);
