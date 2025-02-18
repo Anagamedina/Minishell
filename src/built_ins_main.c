@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 19:37:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:59:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,3 +190,6 @@ void ft_cd(t_cmd *cmd, t_mini *mini)
     free(old_pwd);
 }
 */
+
+
+

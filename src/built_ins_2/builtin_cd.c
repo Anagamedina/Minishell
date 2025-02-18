@@ -6,90 +6,126 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 11:49:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:53:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-//	1. cd with no arguments: change to the user's home directory
 static void	cd_without_arguments(t_list *env_list, char **path_home)
 {
 	*path_home = get_variable_in_env_list(env_list, "HOME");
 	if (!(*path_home))
 	{
-		// write(2, "cd: HOME not set\n", 17);
 		ft_putstr_fd("cd: HOME not set\n", 2);
 	}
-	return ;
+	else
+	{
+		*path_home = ft_strdup(*path_home);
+	}
 }
+
+static void	cd_with_dash(t_list *env_list, char **path_home)
+{
+	*path_home = get_variable_in_env_list(env_list, "OLDPWD");
+	if (!(*path_home))
+	{
+		ft_putstr_fd("cd: OLDPWD not set\n", 2);
+		return ;
+	}
+	ft_putstr_fd(*path_home, 1);
+	write(1, "\n", 1);
+	*path_home = ft_strdup(*path_home);
+}
+
+void	check_pwd_exist(char **pwd)
+{
+	if (!(*pwd))
+	{
+		perror("cd");
+	}
+	// return ;
+}
+
+static void	cd_change_directory(char *new_path, t_mini *mini)
+{
+	char	*new_pwd;
+	char	*old_pwd;
+
+	old_pwd = getcwd(NULL, 0);
+	check_pwd_exist(&old_pwd);
+
+	// change directory
+	if (chdir(new_path) == -1)
+	{
+		perror("cd");
+		free(old_pwd);
+		free(new_path);
+		return ;
+	}
+
+	update_var_exist("OLDPWD", old_pwd, &(mini->env));
+	free(old_pwd);
+
+	new_pwd = getcwd(NULL, 0);
+	check_pwd_exist(&new_pwd);
+
+	update_var_exist("PWD", new_pwd, &(mini->env));
+	free(new_pwd);
+	free(new_path);
+}
+
 /**
- * we need to handle the following cases:
- * 1. cd with no arguments: change to the user's home directory
- * 2. cd with a path: change to the specified directory
- * 3. cd with a relative path: change to the specified directory relative
- * to the current working directory
+ * handle cases:
+ * 
+ * 1. "cd" with no arguments: change to the user's home directory | chdir("..")
+ * 2. "cd ../dir_anterior" navegar al directorio padre | chdir("../dir_anterior")
+ * 3. "cd /path_x" with a path: change to absolute path | chdir("/path_x") 
+ * 4. "cd ruta_x" relative path: | chdir("./ruta_x")
+ * 5. "cd -" change to $OLDPWD | chdir("-")
  */
+
 void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
-	char	*path_home;
-	char	*old_pwd;
-	char	*new_pwd;
+	char	*new_path;
+	// char	*old_pwd;
+	// char	*new_pwd;
 
 	if (!mini || !mini->env)
 		return ;
-	// IF ARGS NOT EQUAL TO 1
-	// if (cmd->count_args == 1)
-	path_home = NULL;
-	if (cmd->cmd_args[0] != NULL && cmd->cmd_args[1] == NULL)
+	new_path = NULL;
+
+	if (!cmd->cmd_args[1])
 	{
-		cd_without_arguments(mini->env, &path_home);
-		// return ;
+		cd_without_arguments(mini->env, &new_path);
 	}
-	// IF ARG EQUAL TO 1 AND IS '-'
-	// WE NEED TO USE 'OLDPWD'
-	//else if (cmd->cmd_args[1][0] == '-')
 	else if ((ft_strcmp(cmd->cmd_args[1], "-") == TRUE) && !cmd->cmd_args[2])
 	{
-		path_home = get_variable_in_env_list(mini->env, "OLDPWD=");
-		if (!path_home)
-		{
-			write(2, "cd: OLDPWD not set\n", 20);
-			return ;
-		}
-		ft_putstr_fd(path_home, 1);
-		write(1, "\n", 1);
+		cd_with_dash(mini->env, &new_path);
 	}
 	else
-		path_home = cmd->cmd_args[1];
-
-	// GET CURRENT WORKING DIRECTORY BEFORE CHANGE DIRECTORY
-	old_pwd = getcwd(NULL, 0);
-	if (!old_pwd)
 	{
-		perror("cd");
-		return ;
+    	// if is  `..`, `../dir_anterior`, `/ruta_x` o `ruta_x`
+		new_path = cmd->cmd_args[1];
 	}
-	// CHANGE DIRECTORY
-	if (chdir(path_home) == -1)
-	{
-		perror("cd");
-		free(old_pwd);
-		return ;
-	}
-	// UPDATE OLDPWD
-	update_var_exist("OLDPWD", old_pwd, &(mini->env));
-
-	// UPDATE PWD
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		perror("cd");
-		free(old_pwd);
-		return ;
-	}
-	update_var_exist("PWD", new_pwd, &(mini->env));
-	free(new_pwd);
-	free(old_pwd);
-	// printf("PATH_HOME: [%s]\n", path_home);
+	cd_change_directory(new_path, mini);
 }
+
+	// old_pwd = getcwd(NULL, 0);
+	// check_pwd_exist(&old_pwd);
+	// // change directory
+	// if (chdir(new_path) == -1)
+	// {
+	// 	perror("cd");
+	// 	free(old_pwd);
+	// 	return ;
+	// }
+	// update_var_exist("OLDPWD", old_pwd, &(mini->env));
+	// free(old_pwd);
+
+	// new_pwd = getcwd(NULL, 0);
+	// check_pwd_exist(&new_pwd);
+
+	// update_var_exist("PWD", new_pwd, &(mini->env));
+	// free(new_pwd);
+
