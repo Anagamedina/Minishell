@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 20:32:30 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/18 13:49:16 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("Error: fail reading input.\n");
 			free(input);
-			break ;
+		//	break ;
+			continue ;
 		}
 		// handle_signal_ctrl_c(SIGINT);
 		if ((ft_strcmp(input, "") == 0))

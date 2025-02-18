@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/17 18:56:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:00:35 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,34 @@ int open_file(char *file, int type)
 		fprintf(stderr, "Error al abrir '%s': ", file);
 		perror("");
 	}
-	// else
-	// 	printf("Archivo abierto: %s, fd: %d\n", file, fd); // 📌 Imprimir el fd
-
 	return (fd);
+}
+
+
+int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
+{
+	if (cmd->input_fd != STDIN_FILENO)
+		close(cmd->input_fd);
+	cmd->input_fd = open_file(curr_redir->filename, REDIR_IN);
+	if (cmd->input_fd == -1)
+	{
+		perror("Error abriendo archivo de entrada");
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
+{
+	if (cmd->output_fd != STDIN_FILENO)
+		close(cmd->output_fd);
+	cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
+	if (cmd->output_fd == -1)
+	{
+		perror("Error abriendo archivo de SALIDA");
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 int apply_redirections(t_cmd *cmd)
@@ -52,43 +76,19 @@ int apply_redirections(t_cmd *cmd)
 		curr_redir = (t_redir *)redir_node->content;
 		if (curr_redir->type == HEREDOC)
 		{
-			if (cmd->input_fd != STDIN_FILENO)
-				close(cmd->input_fd);
-
-			cmd->input_fd = open_file(curr_redir->filename, REDIR_IN); // 📌 Abrir en modo lectura
-			if (cmd->input_fd == -1)
-			{
-				perror("Error abriendo archivo heredoc");
-				return FALSE;
-			}
-			redirection_applied = 1;
+			if (handle_input_redirection(cmd, curr_redir) == TRUE)
+				redirection_applied = 1;
 		}
 		if (curr_redir->type == REDIR_IN)
 		{
-			if (cmd->input_fd != STDIN_FILENO)
-				close(cmd->input_fd);
-			cmd->input_fd = open_file(curr_redir->filename, curr_redir->type);
-			if (cmd->input_fd == -1)
-			{
-				perror("Error abriendo archivo de entrada");
-				return FALSE;
-			}
-			redirection_applied = 1;
+			if (handle_input_redirection(cmd, curr_redir) == TRUE)
+				redirection_applied = 1;
 		}
-
 		if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
 		{
-			if (cmd->output_fd != STDOUT_FILENO)
-				close(cmd->output_fd);
-			cmd->output_fd = open_file(curr_redir->filename, curr_redir->type);
-			if (cmd->output_fd == -1)
-			{
-				perror("Error abriendo archivo de salida");
-				return FALSE;
-			}
-			redirection_applied = 1;
+			if (handle_output_redirection(cmd, curr_redir) == TRUE)
+				redirection_applied = 1;
 		}
-
 		redir_node = redir_node->next;
 	}
 	return redirection_applied;

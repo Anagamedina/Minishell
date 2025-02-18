@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/10 11:29:58 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/18 12:04:03 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,20 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 	char		*full_path;
 	int 		i;
 
-	// Si el comando ya es un path absoluto o relativo
 	if (token->str[0] == '/' || token->str[0] == '.')
 	{
 		if (access(token->str, X_OK) == 0)
 			return ft_strdup(token->str);
 		return (NULL);
 	}
-
-	// Buscar en `paths`
 	i = 0;
 	while (paths && paths[i])
 	{
 		full_path = ft_strjoin(paths[i], "/");
 		cmd_path = ft_strjoin(full_path, token->str);
 		free(full_path);
-
-		// Si encontramos el comando en `PATH`, retornamos la ruta
 		if (access(cmd_path, X_OK) == 0)
-		{
-		//	printf("--------cmd_path: [%s]\n", cmd_path);
 			return (cmd_path);
-		}
 		free(cmd_path);
 		i++;
 	}

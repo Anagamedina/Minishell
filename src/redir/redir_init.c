@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 12:55:26 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 12:54:54 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:05:49 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ t_redir *init_redirection(t_tokens *token, t_tokens* next_token)
 	new_redir = malloc(sizeof(t_redir));
 	if (!new_redir)
 		return (NULL);
-
 	if (next_token && next_token->type_token == FILENAME)
 		new_redir->filename = ft_strdup(next_token->str);
 	else
 		new_redir->filename = NULL;
-
 	if (!new_redir->filename)
 	{
 		perror("Error: al duplicar el nombre del archivo");

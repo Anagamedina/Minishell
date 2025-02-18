@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 10:57:34 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 10:28:20 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:04:20 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 	}
 	close(fd_tmp);
 	free(line);
-
 	free(redir->filename);
 	redir->filename = ft_strdup(tmp_name);
 	free(tmp_name);
-
 	return (0);
 }
 

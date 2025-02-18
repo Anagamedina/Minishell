@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 11:54:44 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:23:58 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ int			apply_redirections(t_cmd *cmd);
 int			is_redir(t_tokens *token);
 void		handle_redirection(char *file, t_cmd *cmd, int type);
 t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
-void execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
+void 		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
 
 
 //*************HEREDOC**************/

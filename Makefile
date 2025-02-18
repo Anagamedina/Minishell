@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/02/18 11:16:45 by anamedin         ###   ########.fr        #
+#    Updated: 2025/02/18 12:29:22 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
+		$(SRC_EXECUTE)/exce_cmd_utils.c \
 		$(SRC_EXECUTE)/exce_utils.c \
 		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
