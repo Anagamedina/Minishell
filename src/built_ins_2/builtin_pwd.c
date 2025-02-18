@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 12:49:24 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 13:15:59 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:30:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include "../../includes/minishell.h"
 
+// TODO: norminette
 int	ft_pwd(t_mini *mini)
 {
 	char	*curr_dir;

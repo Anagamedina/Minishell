@@ -3,24 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/17 11:49:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:49:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+//	1. cd with no arguments: change to the user's home directory
+static void	cd_without_arguments(t_list *env_list, char **path_home)
+{
+	*path_home = get_variable_in_env_list(env_list, "HOME");
+	if (!(*path_home))
+	{
+		// write(2, "cd: HOME not set\n", 17);
+		ft_putstr_fd("cd: HOME not set\n", 2);
+	}
+	return ;
+}
 /**
- *
  * we need to handle the following cases:
  * 1. cd with no arguments: change to the user's home directory
  * 2. cd with a path: change to the specified directory
  * 3. cd with a relative path: change to the specified directory relative
  * to the current working directory
  */
-
 void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
 	char	*path_home;
@@ -30,21 +39,19 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 	if (!mini || !mini->env)
 		return ;
 	// IF ARGS NOT EQUAL TO 1
-	if (!cmd->cmd_args[1])
+	// if (cmd->count_args == 1)
+	path_home = NULL;
+	if (cmd->cmd_args[0] != NULL && cmd->cmd_args[1] == NULL)
 	{
-		path_home = get_variable_in_env_list(mini->env, "HOME");
-		if (!path_home)
-		{
-			write(2, "cd: HOME not set\n", 17);
-			return ;
-		}
+		cd_without_arguments(mini->env, &path_home);
+		// return ;
 	}
 	// IF ARG EQUAL TO 1 AND IS '-'
 	// WE NEED TO USE 'OLDPWD'
 	//else if (cmd->cmd_args[1][0] == '-')
-	else if (cmd->cmd_args[1][0] == '-' && cmd->cmd_args[2] == NULL)
+	else if ((ft_strcmp(cmd->cmd_args[1], "-") == TRUE) && !cmd->cmd_args[2])
 	{
-		path_home = get_variable_in_env_list(mini->env, "OLDPWD");
+		path_home = get_variable_in_env_list(mini->env, "OLDPWD=");
 		if (!path_home)
 		{
 			write(2, "cd: OLDPWD not set\n", 20);

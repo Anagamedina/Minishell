@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/17 11:45:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:32:59 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 }
 
 // TODO: hacerlo en un loop dado que es posible agregar mas de una variable
-
 void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
 	char	*var_name;
@@ -106,10 +105,10 @@ void	export_variable(t_cmd *curr_cmd, t_mini *mini)
  * ft_strjoin_export - concat two strings with a character separator.
  *
  * - `c`: character separator (default: `=`).
- *
- * @return:
  * A string in the format `s1=c+s2`.
  */
+
+// TODO: refactorize this function
 char	*ft_strjoin_export(char *s1, char *s2, char c)
 {
 	char	*result;
