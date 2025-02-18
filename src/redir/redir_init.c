@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 12:55:26 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 14:05:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:18:40 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_to
 
 	if (!cmd || !redir_token || !file_token)
         return;
-
     new_redir = init_redirection(redir_token, file_token);
     if (!new_redir)
         return;
-
     new_node = ft_lstnew(new_redir);
     if (!new_node)
     {
@@ -58,7 +56,6 @@ void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_to
         free(new_redir);
         return;
     }
-
     if (!cmd->redir_list)
         cmd->redir_list = new_node;
     else
