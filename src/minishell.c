@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 21:37:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 22:42:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		update_words_in_tokens(minishell);
-		print_list_token_str(minishell->tokens);
+		// print_list_token_str(minishell->tokens);
 
 		parser_tokens(minishell);
 		/*if(parse_redir(minishell) == FALSE)

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/18 22:59:06 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_ins_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
@@ -77,13 +89,9 @@ void	cases_builtins(t_mini *mini)
 	curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
 
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
-    {
         ft_pwd(mini);
-    }
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
-	{
 		ft_echo(curr_cmd);
-	}
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
 		if (curr_cmd->cmd_args[1] != NULL)
