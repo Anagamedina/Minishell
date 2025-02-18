@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 14:42:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:00:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void	update_words_in_tokens(t_mini *mini)
 			if (curr_next_token->type_token == WORD)
 				curr_next_token->type_token = FILENAME;
 		}
-
 		token_list = token_list->next;
 	}
 }

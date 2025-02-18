@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:22:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,6 @@ t_list	*generate_token_list(char *line)
 	if (!tokens_array)
 		return (NULL);
 	tokens_list = convert_tokens_to_list(tokens_array);
-
-	// print_list_token_str(tokens_list);
-
 	free_split_result_struct(tokens_array, count_words(tokens_array));
 	free(tokens_array);
 	return (tokens_list);

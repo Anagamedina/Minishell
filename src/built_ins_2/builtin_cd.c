@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/18 20:00:45 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 16:18:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:53:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	cd_without_arguments(t_list *env_list, char **path_home)
+static void	cd_handle_no_args(t_list *env_list, char **path_home)
 {
 	*path_home = get_variable_in_env_list(env_list, "HOME");
 	if (!(*path_home))
@@ -44,36 +56,59 @@ void	check_pwd_exist(char **pwd)
 	{
 		perror("cd");
 	}
-	// return ;
 }
 
+
+static int	handle_cd_errors(char *new_path, char *old_pwd)
+{
+	if (chdir(new_path) == -1)
+	{
+		perror("cd");
+		free(old_pwd);
+		free(new_path);
+		return (1);
+	}
+	return (0);
+}
+
+/**
+ * cd_change_directory - change the current directory and udpate `PWD` y `OLDPWD`.
+ * @param new_path
+ * @param mini
+ */
 static void	cd_change_directory(char *new_path, t_mini *mini)
 {
 	char	*new_pwd;
 	char	*old_pwd;
 
 	old_pwd = getcwd(NULL, 0);
-	check_pwd_exist(&old_pwd);
-
-	// change directory
-	if (chdir(new_path) == -1)
+	if (!old_pwd)
 	{
 		perror("cd");
-		free(old_pwd);
 		free(new_path);
 		return ;
 	}
-
+	if (handle_cd_errors(new_path, old_pwd))
+        return ;
 	update_var_exist("OLDPWD", old_pwd, &(mini->env));
 	free(old_pwd);
-
 	new_pwd = getcwd(NULL, 0);
-	check_pwd_exist(&new_pwd);
-
+	if (!new_pwd)
+	{
+		perror("cd");
+		return ;
+	}
 	update_var_exist("PWD", new_pwd, &(mini->env));
 	free(new_pwd);
-	free(new_path);
 }
+	// change directory
+	// if (chdir(new_path) == -1)
+	// {
+	// 	perror("cd");
+	// 	free(old_pwd);
+	// 	free(new_path);
+	// 	return ;
+	// }
 
 /**
  * handle cases:
@@ -88,52 +123,45 @@ static void	cd_change_directory(char *new_path, t_mini *mini)
 void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
 	char	*new_path;
-	// char	*old_pwd;
-	// char	*new_pwd;
 
 	if (!mini || !mini->env)
 		return ;
+
 	new_path = NULL;
-
-	printf("cmd->cmd_arg[0] = %s\n", cmd->cmd_args[0]);
-	printf("cmd->cmd_arg[1] = %s\n", cmd->cmd_args[1]);
-
-	int condition1 = (ft_strcmp(cmd->cmd_args[1], "-"));
-
-	printf("condition1 = %d\n", condition1);
 
 	if (!cmd->cmd_args[1])
 	{
-		cd_without_arguments(mini->env, &new_path);
+		cd_handle_no_args(mini->env, &new_path);
 	}
-	// else if ((ft_strcmp(cmd->cmd_args[1], "-") == TRUE) && !cmd->cmd_args[2])
-	if (condition1 == 0)// && !cmd->cmd_args[2])
+	else if ((ft_strcmp(cmd->cmd_args[1], "-") == 0) && !cmd->cmd_args[2])
 	{
 		cd_with_dash(mini->env, &new_path);
 	}
 	else
 	{
-    	// if is  `..`, `../dir_anterior`, `/ruta_x` o `ruta_x`
-		new_path = cmd->cmd_args[1];
+		// if is  `..`, `../dir_forward`, `/path_x` o `path_x`
+		new_path = ft_strdup(cmd->cmd_args[1]);
 	}
 	cd_change_directory(new_path, mini);
 }
 
-	// old_pwd = getcwd(NULL, 0);
-	// check_pwd_exist(&old_pwd);
-	// // change directory
-	// if (chdir(new_path) == -1)
-	// {
-	// 	perror("cd");
-	// 	free(old_pwd);
-	// 	return ;
-	// }
-	// update_var_exist("OLDPWD", old_pwd, &(mini->env));
-	// free(old_pwd);
+	/*
+	old_pwd = getcwd(NULL, 0);
+	check_pwd_exist(&old_pwd);
+	// change directory
+	if (chdir(new_path) == -1)
+	{
+		perror("cd");
+		free(old_pwd);
+		return ;
+	}
+	update_var_exist("OLDPWD", old_pwd, &(mini->env));
+	free(old_pwd);
 
-	// new_pwd = getcwd(NULL, 0);
-	// check_pwd_exist(&new_pwd);
+	new_pwd = getcwd(NULL, 0);
+	check_pwd_exist(&new_pwd);
 
-	// update_var_exist("PWD", new_pwd, &(mini->env));
-	// free(new_pwd);
-
+	update_var_exist("PWD", new_pwd, &(mini->env));
+	free(new_pwd);
+}
+*/

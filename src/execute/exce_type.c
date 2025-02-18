@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/05 23:08:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 21:24:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,27 @@ int	is_builtin_command(char *cmd)
 int	is_cmd_external(t_mini *mini, t_tokens *token)
 {
 	char		**paths;
-	char		**env_var_array;
+	// char		**env_var_array;
 	char		*cmd_path;
 
 	if (!mini || !mini->tokens)
 		return FALSE;
-	env_var_array = env_list_to_array(mini->env);
-	paths = get_path(env_var_array);
-	// if get_cmd path encuentra el token en las vars de entorno es por q existe
-	if (env_var_array != NULL)
+	// env_var_array = env_list_to_array(mini->env);
+	// paths = get_path(env_var_array);
+	paths = get_path(mini->envp_to_array);
+	/*
+	int i = 0;
+	while (paths != NULL && paths[i] != NULL)
 	{
-		free_string_matrix(env_var_array);
+		printf("PATH: %s\n", paths[i]);
+		i ++;
 	}
+	*/
+	// if get_cmd path encuentra el token en las vars de entorno es por q existe
+	// if (env_var_array != NULL)
+	// {
+	// 	free_string_matrix(env_var_array);
+	// }
 	cmd_path = get_cmd_path(token, paths);
 	if (cmd_path != NULL)
 	{
