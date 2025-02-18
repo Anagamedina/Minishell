@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 10:57:34 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/16 17:53:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:28:20 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,10 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 	char *num_str;
 	char *line;
 
-	// 📌 Generar nombre único del archivo heredoc
 	num_str = ft_itoa(nbr_heredoc);
 	tmp_name = ft_strjoin("/tmp/heredoc", num_str);
 	free(num_str);
 
-	// 📌 Crear archivo temporal con `open_file()`
 	fd_tmp = open_file(tmp_name, HEREDOC);
 	if (fd_tmp == -1)
 	{
@@ -32,7 +30,6 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 		return (-1);
 	}
 	line = readline("> ");
-	// 📌 Leer entrada del usuario y escribir en el archivo temporal
 	while (line && ft_strcmp(line, redir->filename) != 0)
 	{
 		write(fd_tmp, line, ft_strlen(line));
@@ -43,18 +40,12 @@ int create_heredoc(t_redir *redir, int nbr_heredoc)
 	close(fd_tmp);
 	free(line);
 
-	// 📌 Guardar el nombre del archivo temporal en `redir`
 	free(redir->filename);
 	redir->filename = ft_strdup(tmp_name);
 	free(tmp_name);
 
 	return (0);
 }
-
-
-//manejar multiples heredocs en una linia de comandos
-//perite que multiples heredocs en un solo comando o en varios comandos
-//se gestionen correctamente
 
 int heredoc(t_cmd *cmd)
 {

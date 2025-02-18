@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/16 17:48:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:57:39 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,73 +27,46 @@ void count_args(t_list *token_list, t_cmd *cmd)
 	{
 		token = (t_tokens *)current->content;
 
-		// Si encontramos un comando externo o un built-in
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
-			// Si ya se procesó un comando, detente (esto sucede después de un PIPE)
 			if (cmd->count_args > 0)
 				break;
-
-			// Guardamos el comando y lo contamos como el primer argumento
 			cmd->cmd = token->str;
 			cmd->count_args = 1;
 		}
-			// Si encontramos un delimitador (PIPE), detenemos el procesamiento del comando actual
 		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND || token->type_token == HEREDOC)
-		{
 			break;
-		}
 		else if (token->type_token == WORD)
-		{
-			// Si es un argumento válido, lo contamos
 			cmd->count_args ++;
-		}
 		current = current->next;
 	}
 }
 
-void add_args(t_cmd **cmd, t_list *token_list)
+int	init_cmd_args(t_cmd **cmd)
 {
-	t_list      *current;
-	t_tokens    *token;
-	int         j = 0;
-
 	if (!cmd || (*cmd)->count_args <= 0)
-		return;
-
-	// Reserva memoria para cmd_args con un tamaño adecuado
+		return (0);
 	(*cmd)->cmd_args = ft_calloc((*cmd)->count_args + 1, sizeof(char *));
 	if (!(*cmd)->cmd_args)
-		return;
+		return (0);
+	return (1);
+}
 
-	current = token_list;
-	// Primero, agrega el comando (que es el primer token)
-	token = (t_tokens *)current->content;
-	if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
-	{
-		(*cmd)->cmd_args[j] = ft_strdup(token->str);
-		if (!(*cmd)->cmd_args[j])
-		{
-			perror("Error al duplicar el comando");
-			while (--j >= 0)
-				free((*cmd)->cmd_args[j]);
-			free((*cmd)->cmd_args);
-			return;
-		}
-		j++;
-	}
+void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
+{
+	t_list		*current = token_list;
+	t_tokens	*token;
+	int			j = 0;
 
-	// Ahora, agrega los argumentos (tokens de tipo WORD)
-	current = current->next; // Avanza al siguiente token
 	while (current && j < (*cmd)->count_args)
 	{
 		token = (t_tokens *)current->content;
-		if (token->type_token == WORD)
+		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS || token->type_token == WORD)
 		{
 			(*cmd)->cmd_args[j] = ft_strdup(token->str);
 			if (!(*cmd)->cmd_args[j])
 			{
-				perror("Error al duplicar el argumento");
+				perror("Error al duplicar argumento");
 				while (--j >= 0)
 					free((*cmd)->cmd_args[j]);
 				free((*cmd)->cmd_args);
@@ -103,6 +76,12 @@ void add_args(t_cmd **cmd, t_list *token_list)
 		}
 		current = current->next;
 	}
+	(*cmd)->cmd_args[j] = NULL;
+}
 
-	(*cmd)->cmd_args[j] = NULL; // Asegura que el último índice sea NULL
+void	add_args(t_cmd **cmd, t_list *token_list)
+{
+	if (!init_cmd_args(cmd))
+		return;
+	assign_cmd_args(cmd, token_list);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:54:44 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,11 @@ t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
+void		finalize_cmd_list(t_list *commands_list);
+t_cmd		*process_command_token(t_tokens *token, char **paths, int *cmd_id);
+void		add_redirection(t_cmd *cmd, t_list *current);
+void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
+void		process_command_args(t_list *current, t_cmd *cmd);
 
 //************** BUILT_INS_UTILS.C ********/
 
