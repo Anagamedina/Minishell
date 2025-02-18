@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 21:24:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 13:53:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:18:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,19 @@ void	ft_cd(t_mini *mini, t_cmd *cmd)
 		return ;
 	new_path = NULL;
 
+	printf("cmd->cmd_arg[0] = %s\n", cmd->cmd_args[0]);
+	printf("cmd->cmd_arg[1] = %s\n", cmd->cmd_args[1]);
+
+	int condition1 = (ft_strcmp(cmd->cmd_args[1], "-"));
+
+	printf("condition1 = %d\n", condition1);
+
 	if (!cmd->cmd_args[1])
 	{
 		cd_without_arguments(mini->env, &new_path);
 	}
-	else if ((ft_strcmp(cmd->cmd_args[1], "-") == TRUE) && !cmd->cmd_args[2])
+	// else if ((ft_strcmp(cmd->cmd_args[1], "-") == TRUE) && !cmd->cmd_args[2])
+	if (condition1 == 0)// && !cmd->cmd_args[2])
 	{
 		cd_with_dash(mini->env, &new_path);
 	}
