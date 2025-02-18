@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/04 17:43:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:23:20 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void	update_words_in_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
-
 void	parser_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -125,12 +124,10 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*curr_token;
 	t_tokens	*next_token;
 
-	// update_words_in_tokens(mini);
-
 	token_list = mini->tokens;
 	env_list = mini->env;
 
-	if (token_list && is_builtin_or_external((t_tokens *) token_list->content))
+	if ((token_list && is_builtin_or_external((t_tokens *) token_list->content)))
 		token_list = token_list->next;
 	while (token_list != NULL)
 	{
@@ -150,6 +147,43 @@ void	parser_tokens(t_mini *mini)
 		token_list = token_list->next;
 	}
 }
+
+
+/*update original 
+
+void	update_words_in_tokens(t_mini *mini)
+{
+	t_list 		*token_list;
+	t_tokens 	*curr_token;
+	t_tokens 	*curr_next_token;
+
+
+	token_list = mini->tokens;
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *)token_list->content;
+		if (curr_token->type_token == WORD)
+		{
+			if (is_builtin_command(curr_token->str))
+				curr_token->type_token = BUILTINS;
+			else if (is_cmd_external(mini, curr_token))
+				curr_token->type_token = CMD_EXTERNAL;
+			else
+				//continue ;
+				curr_token->type_token = WORD;
+		}
+		else if (is_redir(curr_token) && token_list->next != NULL)
+		{
+			curr_next_token = (t_tokens *)token_list->next->content;
+			if (curr_next_token->type_token == WORD)
+				curr_next_token->type_token = FILENAME;
+		}
+
+		token_list = token_list->next;
+	}
+}*/
+
+
 /*
  * ORIGNAL
 void	parser_tokens(t_mini *mini)

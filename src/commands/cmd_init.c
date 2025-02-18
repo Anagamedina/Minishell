@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 13:26:02 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:39:52 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 
 	while (token_list)
 	{
-		//deberiamos anadir tambien las redirecciones al inicio puede estar 
 		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL
 			|| ((t_tokens *)token_list->content)->type_token == BUILTINS)
 			add_command_to_list(&commands_list, (t_tokens *)token_list->content, paths, &cmd_id);

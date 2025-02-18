@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/17 20:26:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:26:05 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ typedef enum e_type_token
 {
 	WORD = 0,
 	REDIR_IN,    //<     Representa la redirección de entrada '<'
-	REDIR_ERR_OUT, //2>
-	REDIR_ERR_APPEND, //2>>
 	REDIR_APPEND, //>>
 	REDIR_OUT, //>
 	BUILTINS,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/04 18:28:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:40:52 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,27 +103,6 @@ t_list	*convert_tokens_to_list(char **tokens)
 	return (token_list);
 }
 
-//**********MAIN FUNCTION**********************/
-
-/**
- * Splits the input line into tokens, handles quotes,
- * and generates a linked list of tokens.
- *
- * Steps:
- * 1. Clean consecutive quotes in the input line.
- * 2. Split the line into tokens considering quotes and special characters.
- * 3. Tokenize the split tokens into a linked list.
- * 4. Identify and mark commands within the token list.
- *
- * @example [echo ' qwerty' $USER" hello"]
- * @see clean_consecutive_quotes: Function to clean consecutive quotes.
- * @see ft_split_quote: Function to split the input line into tokens.
- * @see tokenize_list: Function to tokenize the input line into a token list.
- * @see identify_commands: Function to classify commands in the token list.
- *
- * @returns A linked list of tokens or NULL on error.
- */
-
 t_list	*generate_token_list(char *line)
 {
 	char	**tokens_array;
@@ -135,7 +114,6 @@ t_list	*generate_token_list(char *line)
 	processed_line = remove_consecutive_quotes(line);
 	if (!processed_line)
 		return (NULL);
-	// printf("Processed line: [%s]\n", processed_line);
 	tokens_array = ft_split_quotes(processed_line);
 	free(processed_line);
 	if (!tokens_array)
