@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/04 17:43:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:42:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	update_words_in_tokens(t_mini *mini)
 	t_tokens 	*curr_token;
 	t_tokens 	*curr_next_token;
 
-
 	token_list = mini->tokens;
 	while (token_list != NULL)
 	{
@@ -125,8 +124,7 @@ void	parser_tokens(t_mini *mini)
 	t_tokens	*curr_token;
 	t_tokens	*next_token;
 
-	// update_words_in_tokens(mini);
-
+	// print_list_token_str(mini->tokens);
 	token_list = mini->tokens;
 	env_list = mini->env;
 

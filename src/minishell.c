@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/18 14:30:31 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
@@ -73,6 +85,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		update_words_in_tokens(minishell);
+		print_list_token_str(minishell->tokens);
+
 		parser_tokens(minishell);
 		/*if(parse_redir(minishell) == FALSE)
 		{
@@ -102,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
+		// print_list_commands(minishell->exec->first_cmd);
 
 		//	ADD ARGUMENTS TO CMDs
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);

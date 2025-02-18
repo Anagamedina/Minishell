@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/10 11:29:58 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/18 14:55:28 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 	char		*full_path;
 	int 		i;
 
+	if (ft_strcmp(token->str, ".") == 0 || ft_strcmp(token->str, "..") == 0)
+		return (NULL);
 	// Si el comando ya es un path absoluto o relativo
 	if (token->str[0] == '/' || token->str[0] == '.')
 	{
@@ -25,7 +27,6 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 			return ft_strdup(token->str);
 		return (NULL);
 	}
-
 	// Buscar en `paths`
 	i = 0;
 	while (paths && paths[i])
@@ -37,7 +38,6 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 		// Si encontramos el comando en `PATH`, retornamos la ruta
 		if (access(cmd_path, X_OK) == 0)
 		{
-		//	printf("--------cmd_path: [%s]\n", cmd_path);
 			return (cmd_path);
 		}
 		free(cmd_path);
