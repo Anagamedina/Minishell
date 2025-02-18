@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 14:05:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 00:25:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@
 
 #include "../../includes/minishell.h"
 
-/*
- * Maneja el caso donde el primer token es "export".
- * Puede listar variables de entorno o agregar/modificar una.
- * caso 01:
- * line = export key=value
+/**
+ * update the value of an existing variable in the environment list.
+ * @param var_name: name of the variable to update.
+ * @param new_value: new value to assign to the variable.
+ * @param env_list: pointer to the environment list.
+ * @return 1 if the variable was updated, 0 otherwise.
  */
 
 int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
