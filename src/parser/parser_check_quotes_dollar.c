@@ -1,10 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_check_quotes_dollar.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:17:43 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:18:04 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
-
-//archivo : paser_check_quotes_dollar.c
-
-// Caso "$ '...'" -> manejar espacio después del dólar
-
-
 
 int	is_dollar_followed_by_squote(const char *str, int i, int len_str)
 {
@@ -46,10 +52,10 @@ int	check_conditions_dquote_squote(char c, int *condition1, int *condition2)
 
 int	check_dquote_squote_dollar_case(char *str)
 {
-	int i;
-	int len_str;
-	int condition1;
-	int condition2;
+	int	i;
+	int	len_str;
+	int	condition1;
+	int	condition2;
 
 	condition1 = FALSE;
 	condition2 = FALSE;

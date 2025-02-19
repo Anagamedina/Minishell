@@ -1,8 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:29:45 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:30:41 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-
 
 int	check_special_c(char c)
 {
@@ -17,8 +25,7 @@ int	check_special_c(char c)
 	return (FALSE);
 }
 
-
-int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
+int	has_dollar_with_only_spaces_or_only_dollar(const char *str)
 {
 	return (
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$' \
@@ -26,9 +33,7 @@ int	has_dollar_with_only_spaces_or_only_dollar(const char* str)
 		(str[0] != '\0' && str[0] == '"' && str[1] != '\0' && str[1] == '$'));
 }
 
-
-
- static int	count_new_length(const char *str, char quote_char)
+static int	count_new_length(const char *str, char quote_char)
 {
 	int	i;
 	int	new_len;
@@ -76,77 +81,3 @@ char	*remove_quotes_str(const char *str, char quote_char)
 	copy_without_quotes(str, new_str, quote_char);
 	return (new_str);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*char	*remove_quotes_str(const char *str, char c)
-{
-	int		i;
-	int		j;
-	int		new_len;
-	char	*new_str;
-
-	i = 0;
-	new_len = 0;
-	while (str[i] != '\0')
-	{
-		if ((str[i] != c && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
-		{
-			new_len ++;
-			i ++;
-		}
-		else
-			i++;
-	}
-
-	new_str = (char *) malloc(sizeof(char) * (new_len + 1));
-	if (new_str == NULL)
-		return (NULL);
-
-	i = 0;
-	j = 0;
-
-	while (str[i] != '\0')
-	{
-		if ((str[i] != c  && (str[i] >= 31 && str[i] <= 126)) || (check_special_c(str[i]) == TRUE))
-		{
-			new_str[j] = str[i];
-			i++;
-			j++;
-		}
-		else
-			i ++;
-	}
-	new_str[j] = '\0';
-	return (new_str);
-}*/

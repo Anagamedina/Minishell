@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redir_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 17:13:24 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 14:00:35 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 15:55:03 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int open_file(char *file, int type)
+int	open_file(char *file, int type)
 {
-	int fd;
+	int	fd;
 
-	if (type == REDIR_IN) // <
+	if (type == REDIR_IN)
 		fd = open(file, O_RDONLY);
-	else if (type == REDIR_OUT) // >
+	else if (type == REDIR_OUT) 
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (type == REDIR_APPEND) // >>
+	else if (type == REDIR_APPEND) 
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (type == HEREDOC)
 	{
@@ -29,7 +29,6 @@ int open_file(char *file, int type)
 	}
 	else
 		return (-1);
-
 	if (fd == -1)
 	{
 		fprintf(stderr, "Error al abrir '%s': ", file);
@@ -37,7 +36,6 @@ int open_file(char *file, int type)
 	}
 	return (fd);
 }
-
 
 int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
@@ -65,12 +63,14 @@ int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
-int apply_redirections(t_cmd *cmd)
+int	apply_redirections(t_cmd *cmd)
 {
-	t_list *redir_node = cmd->redir_list;
-	t_redir *curr_redir;
-	int redirection_applied = 0;
+	t_list	*redir_node;
+	t_redir	*curr_redir;
+	int		redirection_applied;
 
+	redir_node = cmd->redir_list;
+	redirection_applied = 0;
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
@@ -91,5 +91,5 @@ int apply_redirections(t_cmd *cmd)
 		}
 		redir_node = redir_node->next;
 	}
-	return redirection_applied;
+	return (redirection_applied);
 }

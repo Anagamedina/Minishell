@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_errors.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 15:29:09 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 15:29:34 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-// Verifica si el token es nulo. Si lo es, muestra un mensaje de error, libera la lista de comandos y devuelve FALSE.
-int error_empty_token(t_tokens *token, t_list *cmd_list)
+int	error_empty_token(t_tokens *token, t_list *cmd_list)
 {
 	if (!token)
 	{
@@ -12,8 +23,7 @@ int error_empty_token(t_tokens *token, t_list *cmd_list)
 	return (TRUE);
 }
 
-// Verifica si la creación de un comando falló. Si es así, muestra un mensaje de error, libera la lista de comandos y devuelve FALSE.
-int error_cmd_creation(t_cmd *cmd, t_list *cmd_list)
+int	error_cmd_creation(t_cmd *cmd, t_list *cmd_list)
 {
 	if (!cmd)
 	{
@@ -24,8 +34,7 @@ int error_cmd_creation(t_cmd *cmd, t_list *cmd_list)
 	return (TRUE);
 }
 
-// Verifica si la creación de un nodo falló. Si es así, muestra un mensaje de error, libera el comando y la lista de comandos, y devuelve FALSE.
-int error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list)
+int	error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list)
 {
 	if (!node)
 	{

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 15:39:52 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 15:45:16 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
@@ -59,7 +60,7 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 		new_cmd->cmd_path = get_cmd_path(current_token, paths);
 		if (!new_cmd->cmd_path)
 		{
-			fprintf(stderr, "Error: '%s', paths not found\n", current_token->str);
+			printf("Error: '%s', paths not found\n", current_token->str);
 			free_command(new_cmd);
 			return (NULL);
 		}
@@ -79,20 +80,23 @@ t_cmd	*get_last_command(t_list *commands_list)
 
 t_list	*create_cmd_list(t_list *token_list, char **paths)
 {
-	t_list	*commands_list = NULL;
-	int		cmd_id = 1;
+	t_list	*commands_list;
+	int		cmd_id;
 	t_cmd	*last_cmd;
 
+	commands_list = NULL;
+	cmd_id = 1;
 	while (token_list)
 	{
 		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL
 			|| ((t_tokens *)token_list->content)->type_token == BUILTINS)
-			add_command_to_list(&commands_list, (t_tokens *)token_list->content, paths, &cmd_id);
+			add_command_to_list(&commands_list, \
+					(t_tokens *)token_list->content, paths, &cmd_id);
 		else if (commands_list)
-			add_redirection((t_cmd *)(ft_lstlast(commands_list)->content), token_list);
+			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), \
+					token_list);
 		token_list = token_list->next;
 	}
-
 	if (commands_list)
 	{
 		last_cmd = get_last_command(commands_list);
@@ -102,15 +106,14 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	return (commands_list);
 }
 
-
-
 int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 {
-	t_list		*current = token_list;
+	t_list		*current;
 	t_list		*cmd_node;
 	t_cmd		*cmd;
 	t_tokens	*token;
 
+	current = token_list;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
@@ -127,7 +130,8 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 				cmd_node = cmd_node->next;
 			}
 			if (!cmd_node)
-				return (fprintf(stderr, "Error: Comando '%s' no encontrado.\n", token->str), -1);
+				return (printf("Error: Comando '%s' no encontrado.\n", \
+							token->str), -1);
 		}
 		current = current->next;
 	}

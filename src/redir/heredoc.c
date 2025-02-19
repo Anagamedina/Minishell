@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 10:57:34 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:10 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 15:50:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 char	*generate_heredoc_filename(int nbr_heredoc)
 {
@@ -64,17 +63,17 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc)
 	return (0);
 }
 
-
-int heredoc(t_cmd *cmd)
+int	heredoc(t_cmd *cmd)
 {
-	t_list  *redir_node = cmd->redir_list;
-	t_redir *curr_redir;
-	int      nbr_heredoc = 0;
+	t_list		*redir_node;
+	t_redir		*curr_redir;
+	int			nbr_heredoc;
 
+	redir_node = cmd->redir_list;
+	nbr_heredoc = 0;
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
-
 		if (curr_redir->type == HEREDOC)
 		{
 			if (create_heredoc(curr_redir, nbr_heredoc) == -1)

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/04 18:12:51 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 16:26:11 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:26:38 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/minishell.h"
-
 
 int	calculate_result_size(const char *str)
 {
@@ -56,8 +54,6 @@ void	process_string(const char *str, char *result)
 	result[j] = '\0';
 }
 
-
-//echo "$'\n..\t'"-> $'USER'
 char	*convert_escape_sequences(const char *str)
 {
 	char	*result;
@@ -76,16 +72,12 @@ char	*convert_escape_sequences(const char *str)
 	return (result);
 }
 
-
-//******************MAIN FUCNTION***********************/
-// caso $'..'---> \t ... SIN COMILLA DOBLES
 int	handle_single_quotes_after_dollar(t_tokens *token)
 {
 	char	*temp;
 	char	*processed_str;
 
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
-	// printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 	{
 		perror("Error: remove_quotes_str failed");

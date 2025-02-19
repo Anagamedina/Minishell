@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 11:13:53 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 13:01:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/12 11:51:49 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 16:33:15 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:33:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +29,9 @@ t_env	*init_env_var(char *key_value_var)
 	split_var = ft_split(key_value_var, '=');
 	new_env->key = ft_strdup(split_var[0]);
 	if (split_var[1] != NULL)
-		 new_env->value = ft_strdup(split_var[1]);
+		new_env->value = ft_strdup(split_var[1]);
 	else
 		new_env->value = ft_strdup("");
-		// new_env->value = "";
 	free_string_matrix(split_var);
 	if (!new_env->key || !new_env->value)
 	{
@@ -84,7 +71,6 @@ t_list	*init_env_list(char **envp)
 		new_env = init_env_var(envp[i]);
 		if (!new_env)
 		{
-			// fprintf(stderr, "Error: Can't init env variable: [%s]\n", envp[i]);
 			ft_lstclear(&env_list, (void (*)(void *))free_env);
 			return (NULL);
 		}
@@ -100,29 +86,6 @@ t_list	*init_env_list(char **envp)
 	}
 	return (env_list);
 }
-
-/*
-void	print_env_list(t_list *env_list)
-{
-	t_list	*current;
-    t_env	*env_var;
-
-    current = env_list;
-    while (current)
-    {
-        env_var = (t_env *) current->content;
-        if (env_var->key && env_var->value)
-		{
-        	printf("%s=%s\n", env_var->key, env_var->value);
-		}
-    	else
-        {
-            printf("%s\n", env_var->key);
-        }
-        current = current->next;
-    }
-}
-*/
 
 void print_env_list(t_list *env_list)
 {

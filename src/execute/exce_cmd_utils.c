@@ -1,7 +1,16 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exce_cmd_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:12:17 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	execute_external(t_cmd *cmd, char **envp)
 {
@@ -10,7 +19,7 @@ void	execute_external(t_cmd *cmd, char **envp)
 	exit(EXIT_FAILURE);
 }
 
-void redirect_in(int input_fd)
+void	redirect_in(int input_fd)
 {
 	if (dup2(input_fd, STDIN_FILENO) == -1)
 	{
@@ -20,7 +29,7 @@ void redirect_in(int input_fd)
 	close(input_fd);
 }
 
-void redirect_out(int output_fd)
+void	redirect_out(int output_fd)
 {
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
 	{
@@ -28,12 +37,10 @@ void redirect_out(int output_fd)
 		exit(EXIT_FAILURE);
 	}
 	close(output_fd);
-
 }
 
 void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 {
-
 	if (curr_cmd->is_builtin == 1)
 	{
 		cases_builtins(mini, curr_cmd);

@@ -6,33 +6,11 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/24 16:20:56 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/19 16:17:27 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*int	has_dollar_between_double_and_single_quotes(const char *str)
 {
 	int i;
@@ -68,7 +46,8 @@ int	handle_special_balanced_dquotes(t_tokens *token)
 	int	has_dollar;
 	int	count_d_quotes;
 
-	if (!token || token->str[0] != D_QUOTE || token->str[token->length - 1] != D_QUOTE)
+	if (!token || token->str[0] != D_QUOTE \ 
+		|| token->str[token->length - 1] != D_QUOTE)
 		return (FALSE);
 
 	has_dollar = FALSE;

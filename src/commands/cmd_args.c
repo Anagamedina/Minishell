@@ -3,39 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 11:57:39 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 15:33:50 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void count_args(t_list *token_list, t_cmd *cmd)
+void	count_args(t_list *token_list, t_cmd *cmd)
 {
-	t_list      *current;
-	t_tokens    *token;
+	t_list		*current;
+	t_tokens	*token;
 
 	if (!token_list || !cmd)
-		return;
-
+		return ;
 	current = token_list;
 	cmd->count_args = 0;
-
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			if (cmd->count_args > 0)
-				break;
+				break ;
 			cmd->cmd = token->str;
 			cmd->count_args = 1;
 		}
 		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND || token->type_token == HEREDOC)
-			break;
+			break ;
 		else if (token->type_token == WORD)
 			cmd->count_args ++;
 		current = current->next;
@@ -54,14 +51,17 @@ int	init_cmd_args(t_cmd **cmd)
 
 void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 {
-	t_list		*current = token_list;
+	t_list		*current;
 	t_tokens	*token;
-	int			j = 0;
+	int			j;
 
+	j = 0;
+	current = token_list;
 	while (current && j < (*cmd)->count_args)
 	{
 		token = (t_tokens *)current->content;
-		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS || token->type_token == WORD)
+		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS \
+				|| token->type_token == WORD)
 		{
 			(*cmd)->cmd_args[j] = ft_strdup(token->str);
 			if (!(*cmd)->cmd_args[j])
@@ -70,7 +70,7 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 				while (--j >= 0)
 					free((*cmd)->cmd_args[j]);
 				free((*cmd)->cmd_args);
-				return;
+				return ;
 			}
 			j++;
 		}
@@ -82,6 +82,6 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 void	add_args(t_cmd **cmd, t_list *token_list)
 {
 	if (!init_cmd_args(cmd))
-		return;
+		return ;
 	assign_cmd_args(cmd, token_list);
 }

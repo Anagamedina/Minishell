@@ -6,12 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/01/29 17:39:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:19:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-//archivo: parser_expand_cases.c
 
 static char	*append_result(char *result, char *to_append)
 {
@@ -67,7 +66,8 @@ static char	*append_non_dollar_char(char *result, char c)
 	return (result);
 }
 
-static void	handle_dollar_case(t_tokens *token, t_list *env_list, char **result, int *i)
+static void	handle_dollar_case(t_tokens *token, t_list *env_list, \
+		char **result, int *i)
 {
 	int	j;
 
@@ -75,16 +75,17 @@ static void	handle_dollar_case(t_tokens *token, t_list *env_list, char **result,
 	if (token->str[*i] == '\0' || token->str[*i] == SPACE)
 	{
 		*result = handle_dollar_alone(*result);
-		return;
+		return ;
 	}
 	j = *i;
-	while (token->str[j] && token->str[j] != DOLLAR_SIGN && token->str[j] != SPACE)
+	while (token->str[j] && token->str[j] != DOLLAR_SIGN && \
+			token->str[j] != SPACE)
 		j++;
 	*result = expand_variable(*result, env_list, &token->str[*i], j - *i);
 	*i = j;
 }
 
-static int	is_valid_input(t_tokens *token, t_list *env_list)
+static	int	is_valid_input(t_tokens *token, t_list *env_list)
 {
 	return (token && token->str && env_list);
 }

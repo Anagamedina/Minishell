@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 09:54:12 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/19 12:47:44 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 16:13:53 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:14:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_cmd_external(t_mini *mini, t_tokens *token)
 	char		*cmd_path;
 
 	if (!mini || !mini->tokens)
-		return FALSE;
+		return (FALSE);
 	paths = get_path(mini->envp_to_array);
 	cmd_path = get_cmd_path(token, paths);
 	if (cmd_path != NULL)
@@ -36,4 +36,3 @@ int	is_cmd_external(t_mini *mini, t_tokens *token)
 	}
 	return (FALSE);
 }
-

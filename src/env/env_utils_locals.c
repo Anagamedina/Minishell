@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_utils_locals.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/14 15:33:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:35:49 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
- * start with (a-z, A-Z) o _ (guion bajo).
- * Solo puede contener letras, números (0-9) y _.
- * No puede contener espacios ni caracteres especiales (!@#$%^&* etc.).
- * No puede comenzar con un número.
-*/
-
 int	validate_var_name(const char *line)
 {
-	int i;
+	int	i;
 
-	// if (!line || !(ft_isalpha(line[0]) || line[0] == '_'))
 	if (!(ft_isalpha(line[0]) || line[0] == '_'))
 	{
-		// errno = EINVAL;
-		// perror("bash: export");
 		write(2, "bash: export: invalid variable name\n", 36);
 		return (FALSE);
 	}
@@ -43,13 +33,6 @@ int	validate_var_name(const char *line)
 	}
 	return (TRUE);
 }
-
-/*
- * Debe comenzar con una letra (a-z, A-Z) o _ (guion bajo).
- * Solo puede contener letras, números (0-9) y _.
- * No puede contener espacios ni caracteres especiales (!@#$%^&* etc.).
- * No puede comenzar con un número.
-*/
 
 int	validate_var_value(const char *line)
 {
@@ -78,11 +61,6 @@ int	validate_var_value(const char *line)
 	return (TRUE);
 }
 
-/*
- * Obtiene el nombre de la variable a partir de una línea en formato NOMBRE=VALOR.
- * Retorna una nueva cadena con el nombre de la variable.
- * Si ocurre un error de memoria, retorna NULL.
- */
 char	*get_var_name(const char *line)
 {
 	int		i;
@@ -91,7 +69,6 @@ char	*get_var_name(const char *line)
 
 	if (!line || line[0] == '=' || line[0] == '\0')
 	{
-		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}
@@ -101,7 +78,6 @@ char	*get_var_name(const char *line)
 	len = i;
 	if (len == 0)
 	{
-		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}
@@ -121,12 +97,7 @@ char	*get_var_name(const char *line)
 	return (var_name);
 }
 
-/*
- * Obtiene el valor de la variable a partir de una línea en formato NOMBRE=VALOR.
- * Retorna una nueva cadena con el valor de la variable.
- * Si ocurre un error de memoria, retorna NULL.
- */
-char	*get_var_value(char* line)
+char	*get_var_value(char *line)
 {
 	int		i;
 	int		j;
@@ -135,7 +106,6 @@ char	*get_var_value(char* line)
 
 	if (!line)
 	{
-		// errno = EINVAL;
 		perror("bash: export");
 		return (NULL);
 	}
@@ -161,7 +131,6 @@ char	*get_var_value(char* line)
 	return (var_value);
 }
 
-//	before was get_env_var();
 char	*get_variable_in_env_list(t_list *env_list, char *key_to_find)
 {
 	t_list	*curr_node;

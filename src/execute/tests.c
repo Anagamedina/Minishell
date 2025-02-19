@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:15:39 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:15:42 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-
+/*
 void	print_list_token(t_list *tokens_list)
 {
 	t_list		*current;
@@ -82,4 +94,4 @@ void	print_list_token_str_one_line(t_list *tokens_list)
 	}
 	printf("]");
 	printf("\n");
-}
+}*/

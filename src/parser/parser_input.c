@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 15:56:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/19 14:28:39 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:23:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
 
-static void  	check_file(t_tokens *curr_token, t_tokens *curr_next)
+static void	check_file(t_tokens *curr_token, t_tokens *curr_next)
 {
 	int	fd;
 
@@ -22,23 +20,20 @@ static void  	check_file(t_tokens *curr_token, t_tokens *curr_next)
 		return ;
 	if (curr_token->str && curr_next->str)
 	{
-		if(is_redir(curr_token) == TRUE)
+		if (is_redir(curr_token) == TRUE)
 		{
 			if (curr_next->type_token == FILENAME)
 			{
 				fd = open_file(curr_next->str, REDIR_OUT);
-				if (fd  == -1)
+				if (fd == -1)
 				{
 					perror("Error abriendo archivo de SALIDA");
 				}
-			}	
-		}	
+			}
+		}
 	}
 }
 
-
-//*********************MAIN*****************************/
-//> filename  
 void	parse_redir(t_mini *mini)
 {
 	t_list		*token_list;
@@ -54,7 +49,7 @@ void	parse_redir(t_mini *mini)
 		curr_token_next = (t_tokens *)token_list->next->content;
 		if (!curr_token_next || !curr_token_next->str)
 			return ;
-		if(is_redir(curr_token) == TRUE)
+		if (is_redir(curr_token) == TRUE)
 		{
 			if (curr_token_next->type_token != FILENAME)
 				return ;

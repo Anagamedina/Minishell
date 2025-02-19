@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_handle_not_expand.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:21:18 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:21:29 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-//----> \$USER
 int	handle_backslash_after_dollar(t_tokens *token)
 {
 	char	*temp;
@@ -15,14 +26,12 @@ int	handle_backslash_after_dollar(t_tokens *token)
 	return (TRUE);
 }
 
-
 int	handle_one_digit_after_dollar(t_tokens *token)
 {
 	free(token->str);
 	token->str = ft_strdup("");
 	return (TRUE);
 }
-
 
 int	handle_digit_and_more_after_dollar(t_tokens *token)
 {
