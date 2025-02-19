@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/19 20:49:44 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_export.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
@@ -62,6 +74,15 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 }
 
 // TODO: hacerlo en un loop dado que es posible agregar mas de una variable
+/**
+ *
+ * export abc
+ * export abc=123
+ * export abc=123  def=456
+ *
+ * @param curr_cmd
+ * @param mini
+ */
 void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
 	char	*var_name;
@@ -109,36 +130,26 @@ void	export_variable(t_cmd *curr_cmd, t_mini *mini)
  * A string in the format `s1=c+s2`.
  */
 
-// TODO: refactorize this function
-char	*ft_strjoin_export(char *s1, char *s2, char c)
+char	*ft_strjoin_export(const char *s1, const char *s2, char c)
 {
 	char	*result;
 	size_t	len1;
 	size_t	len2;
-	size_t	i;
-	size_t	j;
 
+	if (!s1 && !s2)
+		return (NULL);
 	if (s1)
 		len1 = ft_strlen(s1);
-	else
-		len1 = 0;
 	if (s2)
 		len2 = ft_strlen(s2);
-	else
-		len2 = 0;
 	result = malloc(sizeof(char) * (len1 + len2 + 2));
 	if (!result)
 		return (NULL);
-	i = 0;
-	while (i < len1)
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	result[i++] = c;
-	j = 0;
-	while (j < len2)
-		result[i++] = s2[j++];
-	result[i] = '\0';
+	if (s1)
+		ft_memcpy(result, s1, len1);
+	result[len1] = c;
+	if (s2)
+		ft_memcpy(result, s2, len2);
+	result[len1 + len2 + 1] = '\0';
 	return (result);
 }

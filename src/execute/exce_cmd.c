@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:07:50 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:11:10 by anamedin         ###   ########.fr       */
+/*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/19 14:18:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	{
 		curr_cmd->output_fd = STDOUT_FILENO;
 	}
+
 	curr_cmd->input_fd = *input_fd;
 }
 
