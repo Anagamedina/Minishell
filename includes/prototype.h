@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 14:22:25 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:15:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int			ft_pwd(t_mini *mini);
 //************ BUILTIN_CD.c ************/
 void		ft_cd(t_mini *mini, t_cmd *cmd);
 
+//************ BUILTIN_EXIT.c ************/
+void		builtin_exit(t_cmd *cmd);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

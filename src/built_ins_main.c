@@ -3,34 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:39:00 by anamedin         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_ins_main.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 11:45:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 11:21:48 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_ins_main.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/06 12:55:18 by  dasalaza        ###   ########.fr       */
+/*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/19 16:24:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,42 +19,36 @@ static void	unset_variable(t_list **env_list, char *var_name)
 	t_env	*env_var;
 
 	if (!env_list || !*env_list || !var_name)
-		return;
-
+		return ;
 	current = *env_list;
 	prev = NULL;
-
 	while (current)
 	{
 		env_var = (t_env *) current->content;
 		if (ft_strcmp(env_var->key, var_name) == 0)
 		{
-			if (prev) // No es el primer nodo
+			if (prev)
 				prev->next = current->next;
-			else // Es el primer nodo de la lista
+			else
 				*env_list = current->next;
-
-			// Liberar la memoria del nodo eliminado
 			free_env(env_var);
 			free(current);
-			return;
+			return ;
 		}
 		prev = current;
 		current = current->next;
 	}
 }
 
-void	cases_builtins(t_mini *mini, t_cmd* curr_cmd)
+void	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 {
-	// t_cmd	*curr_cmd
 	int		i;
 
 	i = 0;
-	// curr_cmd = (t_cmd *)mini->exec->first_cmd->content;
-
-	// env
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
-        ft_pwd(mini);
+	{
+		ft_pwd(mini);
+	}
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 		ft_echo(curr_cmd);
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
@@ -98,10 +68,16 @@ void	cases_builtins(t_mini *mini, t_cmd* curr_cmd)
 		}
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
+	{
 		print_env_list(mini->env);
+	}
 	else if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
 	{
 		ft_cd(mini, curr_cmd);
+	}
+	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
+	{
+		builtin_exit(curr_cmd);
 	}
 }
 
