@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 18:43:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:08:50 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,6 @@ void	print_mini(t_mini *mini)
         print_env_list((t_list *)mini->env); 
     else
         printf("No hay variables de entorno.\n");
-
-    // printf("\n--- Tokens ---\n");
     if (mini->tokens)
         print_list_token((t_list *)mini->tokens);
     else

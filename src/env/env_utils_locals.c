@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:35:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:40:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	validate_var_name(const char *line)
 
 	if (!(ft_isalpha(line[0]) || line[0] == '_'))
 	{
-		write(2, "bash: export: invalid variable name\n", 36);
+		// write(2, "bash: export: invalid variable name\n", 36);
 		return (FALSE);
 	}
 	i = 1;
@@ -26,7 +26,7 @@ int	validate_var_name(const char *line)
 	{
 		if (!(ft_isalnum(line[i]) || line[i] == '_'))
 		{
-			write(2, "bash: export: invalid variable name\n", 36);
+			// write(2, "bash: export: invalid variable name\n", 36);
 			return (FALSE);
 		}
 		i ++;

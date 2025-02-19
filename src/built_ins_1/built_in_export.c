@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 20:49:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 23:01:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 	{
 		current_var = (t_env *) current_node->content;
 		if (ft_strcmp(var_name, current_var->key) == 0)
-			return (1);
+			return (TRUE);
 		current_node = current_node->next;
 	}
 	return (FALSE);
@@ -83,6 +83,62 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
  * @param curr_cmd
  * @param mini
  */
+
+void	export_variable(t_cmd *curr_cmd, t_mini *mini)
+{
+	char	*var_name;
+	char	*var_value;
+	t_list	*new_var_env;
+	int		i;
+
+	i = 1;
+	while (curr_cmd->cmd_args[i] != NULL)
+	{
+		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
+		{
+			ft_putstr_fd("bash: export: `", 2);
+			ft_putstr_fd(curr_cmd->cmd_args[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			i ++;
+			continue ;
+		}
+		var_name = get_var_name(curr_cmd->cmd_args[i]);
+		var_value = get_var_value(curr_cmd->cmd_args[i]);
+		if (!var_name)
+		{
+			ft_putstr_fd("bash: export: `", 2);
+			ft_putstr_fd(curr_cmd->cmd_args[i], 2);
+			ft_putstr_fd("`: not a valid identifier\n", 2);
+			i ++;
+			continue ;
+		}
+		if (update_var_exist(var_name, var_value, &(mini->env)) == TRUE)
+		{
+			free(var_name);
+			if (var_value)
+				free(var_value);
+			i ++;
+			continue ;
+		}
+		new_var_env = create_new_env_node(var_name, var_value);
+		if (!new_var_env)
+		{
+			write(2, "Error: Failed to export variable\n", 34);
+			free(var_name);
+			if (var_value)
+				free(var_value);
+			i ++;
+			continue ;
+		}
+		ft_lstadd_back(&(mini->env), new_var_env);
+		i ++;
+	}
+	if (mini->envp_to_array)
+		free_string_matrix(mini->envp_to_array);
+	mini->envp_to_array = env_list_to_array(mini->env);
+}
+
+/*
 void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
 	char	*var_name;
@@ -122,7 +178,7 @@ void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 }
-
+*/
 /**
  * ft_strjoin_export - concat two strings with a character separator.
  *
