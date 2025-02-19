@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 12:23:58 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:22:25 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,8 +271,8 @@ int			count_pipes(t_list *token_list);
 //*************redis**************/
 
 void		update_words_in_tokens(t_mini *mini);
-int			parse_redir(t_mini *mini);
-int			check_file(t_mini *mini, t_tokens *token);
+void		parse_redir(t_mini *mini);
+// int			check_file(t_mini *mini, t_tokens *token);
 int			check_repeat_redir(t_list *tokens);
 int			open_file(char *file, int type);
 void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens *file_token);
