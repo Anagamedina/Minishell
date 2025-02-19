@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/01 12:55:26 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:40 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/19 15:55:30 by anamedin          #+#    #+#             */
+/*   Updated: 2025/02/19 16:02:25 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
 
-
-t_redir *init_redirection(t_tokens *token, t_tokens* next_token)
+t_redir	*init_redirection(t_tokens *token, t_tokens *next_token)
 {
 	t_redir	*new_redir;
 
@@ -39,25 +36,26 @@ t_redir *init_redirection(t_tokens *token, t_tokens* next_token)
 	return (new_redir);
 }
 
-void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens* file_token)
+void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, \
+		t_tokens *file_token)
 {
 	t_redir	*new_redir;
 	t_list	*new_node;
 
 	if (!cmd || !redir_token || !file_token)
-        return;
-    new_redir = init_redirection(redir_token, file_token);
-    if (!new_redir)
-        return;
-    new_node = ft_lstnew(new_redir);
-    if (!new_node)
-    {
-        free(new_redir->filename);
-        free(new_redir);
-        return;
-    }
-    if (!cmd->redir_list)
-        cmd->redir_list = new_node;
-    else
-        ft_lstadd_back(&cmd->redir_list, new_node);
+		return ;
+	new_redir = init_redirection(redir_token, file_token);
+	if (!new_redir)
+		return ;
+	new_node = ft_lstnew(new_redir);
+	if (!new_node)
+	{
+		free(new_redir->filename);
+		free(new_redir);
+		return ;
+	}
+	if (!cmd->redir_list)
+		cmd->redir_list = new_node;
+	else
+		ft_lstadd_back(&cmd->redir_list, new_node);
 }
