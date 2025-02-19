@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:48:27 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:53:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,3 +108,30 @@ t_list	*generate_token_list(char *line)
 	free_split_result_struct(tokens_array, count_words(tokens_array));
 	free(tokens_array);
 	*/
+
+/**
+ * Print all tokens in a linked list (t_list).
+ *
+ * @param tokens_list Pointer to the head of the token list.
+ */
+
+void	print_list_token(t_list *tokens_list)
+{
+	t_list		*current;
+	t_tokens	*token;
+	int			i;
+
+	current = tokens_list;
+	i = 1;
+	while (current != NULL)
+	{
+		token = (t_tokens *)current->content;
+		printf("TOKEN [%i] :\n", i);
+		printf("str: [%s]\n", token->str);
+		printf("type: [%i]\n", token->type_token);
+		printf("len: [%zu]\n", token->length);
+		i ++;
+		current = current->next;
+		printf("-------------------\n");
+	}
+}
