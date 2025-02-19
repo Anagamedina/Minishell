@@ -6,31 +6,14 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:43:27 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:48:27 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 13:29:30 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/24 16:24:54 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
-/**
- * Initializes a new token node (`t_tokens`).
- *
- * @param str The string to store in the token.
- * @param token_type The type of the token.
- * @return A pointer to the new token, or NULL if memory allocation fails.
- */
 
 t_tokens	*init_token(char *str, int token_type)
 {
@@ -67,14 +50,6 @@ static int	count_words(char **tokens_array)
 		count ++;
 	return (count);
 }
-/**
- * Converts a 2D array of strings into a linked list of tokens (`t_list`).
- *
- * @note Each token is initialized with `init_token`
- * and linked using `ft_lstadd_back`.
- * Errors free allocated memory with `ft_lstclear`.
- */
-
 t_list	*convert_tokens_to_list(char **tokens)
 {
 	t_list		*token_list;

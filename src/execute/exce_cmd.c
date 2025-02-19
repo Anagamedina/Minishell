@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:31:13 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:50:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int execute_commands(t_mini *mini)
 
 		if (curr_cmd->is_builtin == 1 && curr_cmd->next == NULL)
 		{
-			printf("excecute builtin 1\n");
 			cases_builtins(mini, curr_cmd);
+			return (TRUE);
 		}
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
@@ -111,12 +111,10 @@ int execute_commands(t_mini *mini)
 		}
 		if (pid == 0)
 		{
-			// printf("PROCESO HIJO: %d\n", getpid());
 			handle_child(curr_cmd, mini);
 		}
 		else
 		{
-			// printf("PROCESO PADRE: %d\n", getpid());
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
 		}
 		t_list_exec_cmd = t_list_exec_cmd->next;

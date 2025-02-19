@@ -36,7 +36,6 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 
 	if (curr_cmd->is_builtin == 1)
 	{
-		printf("excecute builtin 2\n");
 		cases_builtins(mini, curr_cmd);
 		exit(0);
 	}

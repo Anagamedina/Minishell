@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:36:44 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:48:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		update_words_in_tokens(minishell);
-		// printf("update tokens\n");
-		// print_list_token_str(minishell->tokens);
 		parser_tokens(minishell);
 		/*if(parse_redir(minishell) == FALSE)
 		{
@@ -98,7 +96,6 @@ int	main(int argc, char **argv, char **envp)
 			perror("Error: init exec.\n");
 			free(input);
 			break ;
-			// return (1);
 		}
 		if (minishell->exec->first_cmd)
             free_cmd_list(minishell->exec->first_cmd);
