@@ -3,32 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/16 13:12:54 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built-in_export.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 16:53:35 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/29 12:08:36by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/19 10:12:51 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
- * Maneja el caso donde el primer token es "export".
- * Puede listar variables de entorno o agregar/modificar una.
- * caso 01:
- * line = export key=value
+/**
+ * update the value of an existing variable in the environment list.
+ * @param var_name: name of the variable to update.
+ * @param new_value: new value to assign to the variable.
+ * @param env_list: pointer to the environment list.
+ * @return 1 if the variable was updated, 0 otherwise.
  */
 
 int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
@@ -73,8 +62,7 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 }
 
 // TODO: hacerlo en un loop dado que es posible agregar mas de una variable
-
-void	export_variable(t_cmd *curr_cmd, t_mini* mini)
+void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
 	char	*var_name;
 	char	*var_value;
@@ -82,16 +70,13 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
 
 	if (!curr_cmd->cmd_args[1])
 		return ;
-
 	if (validate_syntax_name_value(curr_cmd->cmd_args[1]) == FALSE)
-    {
-        write(2, "export: invalid syntax\n", 24);
-        return ;
-    }
-
+	{
+		write(2, "export: invalid syntax\n", 24);
+		return ;
+	}
 	var_name = get_var_name(curr_cmd->cmd_args[1]);
 	var_value = get_var_value(curr_cmd->cmd_args[1]);
-
 	if (!var_name)
 	{
 		write(2, "export: invalid variable name\n", 31);
@@ -103,9 +88,7 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
 		free(var_value);
 		return ;
 	}
-
 	new_var_env = create_new_env_node(var_name, var_value);
-
 	if (!new_var_env)
 	{
 		write(2, "Error: Failed to export variable\n", 34);
@@ -114,9 +97,8 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
 		return ;
 	}
 	ft_lstadd_back(&(mini->env), new_var_env);
-
 	if (mini->envp_to_array)
-        free_string_matrix(mini->envp_to_array);
+		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 }
 
@@ -124,10 +106,10 @@ void	export_variable(t_cmd *curr_cmd, t_mini* mini)
  * ft_strjoin_export - concat two strings with a character separator.
  *
  * - `c`: character separator (default: `=`).
- *
- * @return:
  * A string in the format `s1=c+s2`.
  */
+
+// TODO: refactorize this function
 char	*ft_strjoin_export(char *s1, char *s2, char c)
 {
 	char	*result;
@@ -160,39 +142,3 @@ char	*ft_strjoin_export(char *s1, char *s2, char c)
 	result[i] = '\0';
 	return (result);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * Maneja el caso donde el primer token es una asignación local
- * o un comando desconocido.
- * key=value
- * key=
- */
-/*
-void	handle_local_or_unknown(t_tokens *first_token, t_list **local_vars_list)
-{
-	char	*line;
-
-	line = first_token->str;
-	if (validate_var_name(line) == TRUE && validate_var_value(line) == TRUE)
-	{
-		create_local_vars_list(line, *local_vars_list);
-		return;
-	}
-	else
-		printf("Error: comando no reconocido.\n");
-}
-*/

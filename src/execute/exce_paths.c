@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 12:04:03 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:41:33 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 	char		*full_path;
 	int 		i;
 
+	if (ft_strcmp(token->str, ".") == 0 || ft_strcmp(token->str, "..") == 0 \
+        || ft_strncmp(token->str, "../", 3) == 0)
+		return (NULL);
+	// Si el comando ya es un path absoluto o relativo
 	if (token->str[0] == '/' || token->str[0] == '.')
 	{
 		if (access(token->str, X_OK) == 0)
-			return ft_strdup(token->str);
+			return (ft_strdup(token->str));
 		return (NULL);
 	}
 	i = 0;

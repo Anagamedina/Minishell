@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/17 18:54:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:39:00 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,9 @@ void	cases_builtins(t_mini *mini, t_cmd* curr_cmd)
 
 	// env
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
-    {
         ft_pwd(mini);
-    }
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
-	{
 		ft_echo(curr_cmd);
-	}
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
 		if (curr_cmd->cmd_args[1] != NULL)
@@ -191,3 +187,6 @@ void ft_cd(t_cmd *cmd, t_mini *mini)
     free(old_pwd);
 }
 */
+
+
+
