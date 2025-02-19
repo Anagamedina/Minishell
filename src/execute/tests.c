@@ -50,6 +50,8 @@ void	print_list_token_str(t_list *tokens_list)
 			printf("(REDIR_IN)");
 		else if (token->type_token == REDIR_OUT)
 			printf("(REDIR_OUT)");
+		else if (token->type_token == FILENAME)
+			printf("(FILENAME)");
 		// Agrega más tipos según lo que hayas definido en tu enum.
 
 		printf("\n");

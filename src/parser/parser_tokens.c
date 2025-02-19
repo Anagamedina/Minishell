@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:38:46 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/18 16:23:20 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:34:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ void	update_words_in_tokens(t_mini *mini)
 			else if (is_cmd_external(mini, curr_token))
 				curr_token->type_token = CMD_EXTERNAL;
 			else
-				//continue ;
 				curr_token->type_token = WORD;
 		}
 		else if (is_redir(curr_token) && token_list->next != NULL)
