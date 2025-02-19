@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 13:42:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 16:24:13 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/19 21:06:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
 	{
-		builtin_exit(curr_cmd);
+		builtin_exit(curr_cmd, mini);
 	}
 }
 
