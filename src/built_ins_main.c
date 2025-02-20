@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 21:06:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:04:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,89 +80,3 @@ void	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 		builtin_exit(curr_cmd, mini);
 	}
 }
-
-/*
-    if ((ft_strcmp((char *)current_command->cmd, "export") == 0))
-    {
-		builtin_export(mini);
-    }
-*/
-
-/*
- * ft_cd - Implementa el comando `cd` en Minishell.
- *
- * - `cd` sin argumentos -> cambia a `$HOME`
- * - `cd -` -> cambia a `$OLDPWD` y lo imprime
- * - Si el directorio no existe, muestra un error con `perror()`
- *
- * Parámetros:
- * - `cmd` (t_cmd *): Contiene los argumentos de `cd`.
- * - `mini` (t_mini *): Estructura principal del shell.
- */
-/*
-void ft_cd(t_cmd *cmd, t_mini *mini)
-{
-    char *path;
-    char *old_pwd;
-    char *new_pwd;
-
-    if (!mini || !mini->env)
-        return;
-
-    // Si no hay argumentos, usar `HOME`
-    if (!cmd->cmd_args[1])
-    {
-        path = get_variable_in_env_list(mini->env, "HOME");
-        if (!path)
-        {
-            write(2, "cd: HOME not set\n", 17);
-            return;
-        }
-    }
-    // Si el argumento es `-`, usar `OLDPWD`
-    else if (ft_strcmp(cmd->cmd_args[1], "-") == 0)
-    {
-        path = get_variable_in_env_list(mini->env, "OLDPWD");
-        if (!path)
-        {
-            write(2, "cd: OLDPWD not set\n", 19);
-            return;
-        }
-        write(1, path, ft_strlen(path));
-        write(1, "\n", 1);
-    }
-    else
-        path = cmd->cmd_args[1];
-
-    // Obtener el directorio actual antes de cambiar
-    old_pwd = getcwd(NULL, 0);
-    if (!old_pwd)
-    {
-        perror("cd");
-        return;
-    }
-
-    // Intentar cambiar de directorio
-    if (chdir(path) == -1)
-    {
-        perror("cd");
-        free(old_pwd);
-        return;
-    }
-
-    // Actualizar `OLDPWD`
-    update_var_exist("OLDPWD", old_pwd, &(mini->env));
-
-    // Actualizar `PWD`
-    new_pwd = getcwd(NULL, 0);
-    if (new_pwd)
-    {
-        update_var_exist("PWD", new_pwd, &(mini->env));
-        free(new_pwd);
-    }
-    free(old_pwd);
-}
-*/
-
-
-
