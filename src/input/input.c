@@ -20,8 +20,6 @@ char	*read_input(void)
 	if (!input)
 	{
 		return (NULL);
-		// printf("exit\n");
-		// exit(0);
 	}
 	if (*input)
 		add_history(input);

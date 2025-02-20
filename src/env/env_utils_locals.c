@@ -124,9 +124,7 @@ char	*get_var_value(char *line)
 	i ++;
 	j = 0;
 	while (i < len)
-	{
 		var_value[j++] = line[i++];
-	}
 	var_value[j] = '\0';
 	return (var_value);
 }

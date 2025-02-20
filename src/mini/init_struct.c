@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 22:08:50 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:00:49 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ t_mini	*init_mini_list(char **envp)
 	minishell->envp_to_array = env_list_to_array(minishell->env);
     if (minishell->env == NULL)
     {
-    	// fprintf(stderr, "Error: No se pudo inicializar la lista de variables de entorno.\n");
     	free(minishell);
         return (NULL);
     }

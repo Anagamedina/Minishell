@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../../includes/minishell.h"
-
 
 t_tokens	*init_token(char *str, int token_type)
 {
