@@ -3,18 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 17:26:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:16:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(int status)
+int 	ft_exit(t_mini *mini, int status)
+{
+	t_list *tmp_excec;
+	t_cmd *tmp_cmd;
+	
+	tmp_excec = mini->exec->first_cmd;
+	tmp_cmd = tmp_excec->content;
+
+	if (tmp_cmd->last_cmd == 1)
+		ft_putstr_fd("exit\n", 1);
+	//freechild
+	//freelistaenv?
+	exit(status);
+}
+
+/*int 	ft_exit(int status)
 {
 	exit(status);
+}
+*/
+#include <limits.h>
+
+static long long	ft_atoll(const char *str)
+{
+	int			i;
+	int			sign;
+	long long	result;
+	long long	prev_result;
+
+	i = 0;
+	sign = 1;
+	result = 0;
+	prev_result = 0;
+	while (str[i] >= 9 && str[i] <= 13)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		prev_result = result;
+		result = (result * 10) + (str[i] - '0');
+		if ((sign == 1 && result < prev_result) || (sign == -1 && result < prev_result))
+		{
+			if (sign == 1)
+				return (LLONG_MAX);
+			else
+				return (LLONG_MIN);
+		}
+		i++;
+	}
+	return (result * sign);
+}
+
+static int	is_numeric(const char *str)
+{
+	int	i = 0;
+
+	if (!str || !str[0])
+		return (0);
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void error_exit(t_mini *mini)
+{
+	ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+	ft_exit(mini, 255);	
 }
 
 /**
@@ -25,53 +100,77 @@ int	ft_exit(int status)
  * 3. exit with a non-numeric argument
  */
 
-// static void	exit_with_one_argument(t_cmd *cmd, int *last_status)
 static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 {
-	int	i;
+	long long	tmp_status;
 
-	i = 0;
-	while (cmd->cmd_args[1][i])
+	if (!is_numeric(cmd->cmd_args[1]))
 	{
-		if (!ft_isdigit(cmd->cmd_args[1][i]))
-		{
-			ft_putstr_fd("exit\nminishell: exit: ", 2);
-			ft_putstr_fd(cmd->cmd_args[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
-			mini->exit_status = 255;
-			ft_exit(255);
-		}
-		i ++;
+		ft_putstr_fd("exit\nminishell: exit: ", 2);
+		ft_putstr_fd(cmd->cmd_args[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		mini->exit_status = 255;
+		exit(mini->exit_status);
 	}
-	mini->exit_status = ft_atoi(cmd->cmd_args[1]);
+
+	tmp_status = ft_atoll(cmd->cmd_args[1]); // cambiar atoi a atol
+
+	//TODO : poner en macro el maximo y minimo de long long
+
+	if (ft_strncmp(ft_itoa(tmp_status), "9223372036854775808", 19) == 0 || \
+		ft_strncmp(ft_itoa(tmp_status), "-9223372036854775809", 20) == 0)
+	{
+		ft_putstr_fd("exit\nminishell: exit: numeric argument required\n", 2);
+		mini->exit_status = 255;
+		exit(255);
+	}
+	mini->exit_status = (unsigned char) tmp_status;
+	ft_exit(mini, mini->exit_status);
 }
 
 void	builtin_exit(t_cmd *cmd, t_mini *mini)
 {
-	if (cmd->cmd_args[2] != NULL)
-	{
-		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
-		ft_exit(1);
-	}
-	else if (cmd->cmd_args[1])
-	{
-		exit_with_one_argument(cmd, mini);
-	}
+	int	arg_count;
 
-	ft_putstr_fd("exit\n", 1);
-	ft_exit(mini->exit_status);
+	while (cmd->cmd_args[arg_count] != NULL)
+		arg_count ++;	
+
+	if (arg_count == 1)
+		ft_exit(mini, mini->exit_status);
+	
+	if (arg_count == 2)
+		exit_with_one_argument(cmd, mini);
+
+	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+	// leaksss 
+	mini->exit_status = 1;
+	// exit(mini->exit_status);
 }
 
+//guarde el codigo de salida 
 
-		// i = 0;
-		// while (cmd->cmd_args[1][i])
-		// {
-		// 	if (!ft_isdigit(cmd->cmd_args[1][i]))
-		// 	{
-		// 		ft_putstr_fd("exit\nminishell: exit: ", 2);
-		// 		ft_putstr_fd(cmd->cmd_args[1], 2);
-		// 		ft_putstr_fd(": numeric argument required\n", 2);
-		// 		ft_exit(255);
-		// 	}
-		// 	i ++;
-		// }
+
+
+
+
+
+//convierte el codigo de salida a un string
+
+
+
+
+
+
+
+
+
+
+
+//obtiene la longitud del codigo de salida 
+
+
+
+
+
+/*************************888 */
+

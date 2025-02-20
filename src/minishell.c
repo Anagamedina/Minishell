@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 21:14:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:30:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = read_input();
-		if (!input || !check_quotes_line(input))
+		if (!input || !check_quotes_line(input))// || minishell->exit_status != 0)
 		{
 			printf("Error: fail reading input.\n");
 			free(input);
