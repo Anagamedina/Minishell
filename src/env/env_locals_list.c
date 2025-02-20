@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_locals_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:34:14 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 23:09:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:07:15 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

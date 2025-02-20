@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 23:01:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:03:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,8 @@ char	*ft_strjoin_export(const char *s1, const char *s2, char c)
 	size_t	len1;
 	size_t	len2;
 
+	len1 = 0;
+	len2 = 0;
 	if (!s1 && !s2)
 		return (NULL);
 	if (s1)
