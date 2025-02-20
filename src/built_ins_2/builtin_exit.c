@@ -6,11 +6,12 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/20 16:16:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:31:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <limits.h>
 
 int 	ft_exit(t_mini *mini, int status)
 {
@@ -27,14 +28,8 @@ int 	ft_exit(t_mini *mini, int status)
 	exit(status);
 }
 
-/*int 	ft_exit(int status)
-{
-	exit(status);
-}
-*/
-#include <limits.h>
 
-static long long	ft_atoll(const char *str)
+static long long 	ft_atoll(const char *str)
 {
 	int			i;
 	int			sign;
@@ -46,7 +41,7 @@ static long long	ft_atoll(const char *str)
 	result = 0;
 	prev_result = 0;
 	while (str[i] >= 9 && str[i] <= 13)
-		i++;
+		i ++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
@@ -59,6 +54,7 @@ static long long	ft_atoll(const char *str)
 		result = (result * 10) + (str[i] - '0');
 		if ((sign == 1 && result < prev_result) || (sign == -1 && result < prev_result))
 		{
+			//TODO: gestionar esto
 			if (sign == 1)
 				return (LLONG_MAX);
 			else
@@ -103,6 +99,8 @@ void error_exit(t_mini *mini)
 static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 {
 	long long	tmp_status;
+	
+	tmp_status = 0;
 
 	if (!is_numeric(cmd->cmd_args[1]))
 	{
@@ -113,12 +111,10 @@ static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 		exit(mini->exit_status);
 	}
 
-	tmp_status = ft_atoll(cmd->cmd_args[1]); // cambiar atoi a atol
+	tmp_status = ft_atoll(cmd->cmd_args[1]);
 
-	//TODO : poner en macro el maximo y minimo de long long
-
-	if (ft_strncmp(ft_itoa(tmp_status), "9223372036854775808", 19) == 0 || \
-		ft_strncmp(ft_itoa(tmp_status), "-9223372036854775809", 20) == 0)
+	if ((cmd->cmd_args[1][0] == '-' && ft_strncmp(&(cmd->cmd_args[1][1]), "9223372036854775808", 19) > 0) ||
+		(cmd->cmd_args[1][0] != '-' && ft_strncmp(cmd->cmd_args[1], "9223372036854775807", 19) > 0))
 	{
 		ft_putstr_fd("exit\nminishell: exit: numeric argument required\n", 2);
 		mini->exit_status = 255;
@@ -132,45 +128,13 @@ void	builtin_exit(t_cmd *cmd, t_mini *mini)
 {
 	int	arg_count;
 
+	arg_count = 0;
 	while (cmd->cmd_args[arg_count] != NULL)
 		arg_count ++;	
-
 	if (arg_count == 1)
 		ft_exit(mini, mini->exit_status);
-	
 	if (arg_count == 2)
 		exit_with_one_argument(cmd, mini);
-
 	ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-	// leaksss 
 	mini->exit_status = 1;
-	// exit(mini->exit_status);
 }
-
-//guarde el codigo de salida 
-
-
-
-
-
-
-//convierte el codigo de salida a un string
-
-
-
-
-
-
-
-
-
-
-
-//obtiene la longitud del codigo de salida 
-
-
-
-
-
-/*************************888 */
-
