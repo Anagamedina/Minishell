@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:11:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 14:36:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:17:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,62 +129,6 @@ void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 }
-
-/**
- *
- * export abc
- * export abc=123
- * export abc=123  def=456
- */
-/*
-void	export_variable(t_cmd *curr_cmd, t_mini *mini)
-{
-	char	*var_name;
-	char	*var_value;
-	t_list	*new_var_env;
-	int		i;
-
-	i = 1;
-	while (curr_cmd->cmd_args[i] != NULL)
-	{
-		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
-		{
-			error_export_syntax(curr_cmd->cmd_args[i++]);
-			continue ;
-		}
-		var_name = get_var_name(curr_cmd->cmd_args[i]);
-		var_value = get_var_value(curr_cmd->cmd_args[i]);
-		if (!var_name)
-		{
-			error_export_syntax(curr_cmd->cmd_args[i++]);
-			continue ;
-		}
-		if (update_var_exist(var_name, var_value, &(mini->env)) == TRUE)
-		{
-			free(var_name);
-			if (var_value)
-				free(var_value);
-			i ++;
-			continue ;
-		}
-		new_var_env = create_new_env_node(var_name, var_value);
-		if (!new_var_env)
-		{
-			write(2, "Error: Failed to export variable\n", 34);
-			free(var_name);
-			if (var_value)
-				free(var_value);
-			i ++;
-			continue ;
-		}
-		ft_lstadd_back(&(mini->env), new_var_env);
-		i ++;
-	}
-	if (mini->envp_to_array)
-		free_string_matrix(mini->envp_to_array);
-	mini->envp_to_array = env_list_to_array(mini->env);
-}
-*/
 
 /**
  * ft_strjoin_export - concat two strings with a character separator.

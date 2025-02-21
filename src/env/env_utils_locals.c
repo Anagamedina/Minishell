@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/21 14:43:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:34:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	validate_var_value(const char *line)
 
 	if (!line)
 	{
-		perror("bash: export: NULL value");
+		// perror("bash: export: NULL value");
 		return (FALSE);
 	}
 	i = 0;
@@ -99,7 +99,7 @@ char	*get_var_name(const char *line)
 
 char	*get_var_value(char *line)
 {
-	int		i;
+	// int		i;
 	int		len;
 	char	*var_value;
 	int		positon_of_equal;
@@ -112,14 +112,11 @@ char	*get_var_value(char *line)
 		return (NULL);
 	if (positon_of_equal == len - 1)
 		return (ft_strdup(""));
+
 	var_value = malloc(sizeof(char) * (len - positon_of_equal));
 	if (!var_value)
 		return (NULL);
-	i = 0;
-	positon_of_equal ++;
-	while (line[positon_of_equal] != '\0')
-		var_value[i++] = line[positon_of_equal++];
-	var_value[i] = '\0';
+	ft_strcpy(var_value, &line[positon_of_equal + 1]);
 	return (var_value);
 }
 
