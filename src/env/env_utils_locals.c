@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_locals.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 22:40:18 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:43:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*get_var_name(const char *line)
 
 	if (!line || line[0] == '=' || line[0] == '\0')
 	{
-		perror("bash: export");
+		// perror("bash: export");
 		return (NULL);
 	}
 	i = 0;
@@ -78,13 +78,13 @@ char	*get_var_name(const char *line)
 	len = i;
 	if (len == 0)
 	{
-		perror("bash: export");
+		// perror("bash: export");
 		return (NULL);
 	}
 	var_name = malloc(sizeof(char) * (len + 1));
 	if (!var_name)
 	{
-		perror("bash: export");
+		// perror("bash: export");
 		return (NULL);
 	}
 	i = 0;
@@ -100,32 +100,26 @@ char	*get_var_name(const char *line)
 char	*get_var_value(char *line)
 {
 	int		i;
-	int		j;
 	int		len;
 	char	*var_value;
+	int		positon_of_equal;
 
 	if (!line)
-	{
-		perror("bash: export");
 		return (NULL);
-	}
 	len = (int) ft_strlen(line);
-	i = len - 1;
-	while (i >= 0 && line[i] != '=')
-		i --;
-	if (i < 0)
-		return (ft_strdup(""));
-	var_value = malloc(sizeof(char) * (len - i));
-	if (!var_value)
-	{
-		perror("bash: export");
+	positon_of_equal = ft_strchr_c(line, '=');
+	if (positon_of_equal == -1)
 		return (NULL);
-	}
-	i ++;
-	j = 0;
-	while (i < len)
-		var_value[j++] = line[i++];
-	var_value[j] = '\0';
+	if (positon_of_equal == len - 1)
+		return (ft_strdup(""));
+	var_value = malloc(sizeof(char) * (len - positon_of_equal));
+	if (!var_value)
+		return (NULL);
+	i = 0;
+	positon_of_equal ++;
+	while (line[positon_of_equal] != '\0')
+		var_value[i++] = line[positon_of_equal++];
+	var_value[i] = '\0';
 	return (var_value);
 }
 
