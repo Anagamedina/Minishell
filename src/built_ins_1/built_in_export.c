@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:11:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/20 11:03:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:48:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/**
- * update the value of an existing variable in the environment list.
- * @param var_name: name of the variable to update.
- * @param new_value: new value to assign to the variable.
- * @param env_list: pointer to the environment list.
- * @return 1 if the variable was updated, 0 otherwise.
- */
 
 int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
 {
@@ -61,30 +53,8 @@ int	check_if_var_name_exist(char *var_name, t_list *env_list)
 	return (FALSE);
 }
 
-static void	error_export_syntax(char *var_name)
+static int	handle_existing_var(char *var_name, char *var_value, t_list **env)
 {
-	ft_putstr_fd("bash: export: `", 2);
-	ft_putstr_fd(var_name, 2);
-	ft_putstr_fd("`: not a valid identifier\n", 2);
-}
-
-//TODO: norminnete this function
-/*
-static int	handle_invalid_variable(char *arg)
-{
-	error_export_syntax(arg);
-	return (FALSE);
-}
-
-static int	process_variable(char *cmd_str, t_list **env)
-{
-	char	*var_name;
-	char	*var_value;
-
-	var_name = get_var_name(cmd_str);
-	var_value = get_var_value(cmd_str);
-	if (!var_name)
-		return (handle_invalid_variable(cmd_str));
 	if (update_var_exist(var_name, var_value, env) == TRUE)
 	{
 		free(var_name);
@@ -92,40 +62,51 @@ static int	process_variable(char *cmd_str, t_list **env)
 			free(var_value);
 		return (TRUE);
 	}
-	if (!ft_lstadd_back(env, create_new_env_node(var_name, var_value)))
+	return (FALSE);
+}
+
+// static void	error_export_syntax(char *var_name)
+void	error_export_syntax(char *var_name)
+{
+	ft_putstr_fd("bash: export: `", 2);
+	ft_putstr_fd(var_name, 2);
+	ft_putstr_fd("`: not a valid identifier\n", 2);
+}
+
+static int	add_new_variable(char *var_name, char *var_value, t_list **env)
+{
+	t_list	*new_var_env;
+
+	new_var_env = create_new_env_node(var_name, var_value);
+	if (!new_var_env)
 	{
 		write(2, "Error: Failed to export variable\n", 34);
 		free(var_name);
-		if (var_name)
+		if (var_value)
 			free(var_value);
 		return (FALSE);
 	}
+	ft_lstadd_back(env, new_var_env);
 	return (TRUE);
 }
 
-void	export_variable(t_cmd *curr_cmd, t_mini *mini)
+static void	process_variable(char *arg, t_list **env)
 {
-	int	i;
+	char	*var_name;
+	char	*var_value;
 
-	i = 1;
-	while (curr_cmd->cmd_args[i] != NULL)
+	// printf("arg: [%s]\n", arg);
+	var_name = get_var_name(arg);
+	// printf(" var_name: [%s]\n", var_name);
+	var_value = get_var_value(arg);
+	if (!var_name)
 	{
-		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
-		{
-			handle_invalid_variable(curr_cmd->cmd_args[i++]);
-			continue;
-		}
-		process_variable(curr_cmd->cmd_args[i], &(mini->env));
-		i++;
+		error_export_syntax(arg);
+		return ;
 	}
-	if (mini->envp_to_array)
-		free_string_matrix(mini->envp_to_array);
-	mini->envp_to_array = env_list_to_array(mini->env);
+	if (!handle_existing_var(var_name, var_value, env))
+		add_new_variable(var_name, var_value, env);
 }
-*/
-
-
-
 
 /**
  *
@@ -136,52 +117,20 @@ void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 
 void	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
-	char	*var_name;
-	char	*var_value;
-	t_list	*new_var_env;
-	int		i;
+	int	i;
 
 	i = 1;
 	while (curr_cmd->cmd_args[i] != NULL)
 	{
 		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
-		{
 			error_export_syntax(curr_cmd->cmd_args[i++]);
-			continue ;
-		}
-		var_name = get_var_name(curr_cmd->cmd_args[i]);
-		var_value = get_var_value(curr_cmd->cmd_args[i]);
-		if (!var_name)
-		{
-			error_export_syntax(curr_cmd->cmd_args[i++]);
-			continue ;
-		}
-		if (update_var_exist(var_name, var_value, &(mini->env)) == TRUE)
-		{
-			free(var_name);
-			if (var_value)
-				free(var_value);
-			i ++;
-			continue ;
-		}
-		new_var_env = create_new_env_node(var_name, var_value);
-		if (!new_var_env)
-		{
-			write(2, "Error: Failed to export variable\n", 34);
-			free(var_name);
-			if (var_value)
-				free(var_value);
-			i ++;
-			continue ;
-		}
-		ft_lstadd_back(&(mini->env), new_var_env);
-		i ++;
+		else
+			process_variable(curr_cmd->cmd_args[i++], &(mini->env));
 	}
 	if (mini->envp_to_array)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 }
-
 
 /**
  * ft_strjoin_export - concat two strings with a character separator.

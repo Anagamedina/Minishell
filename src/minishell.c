@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 19:30:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:30:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("Error: fail reading input.\n");
 			free(input);
+		//	break ;
 			continue ;
 		}
 		// handle_signal_ctrl_c(SIGINT);

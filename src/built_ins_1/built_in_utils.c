@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/18 10:31:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:16:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,13 @@ t_list	*create_new_env_node(char *key, char *value)
 	}
 	new_var->key = key;
 	if (value == NULL)
-		new_var->value = ft_strdup("");
+		new_var->value = ft_strdup("empty");
 	else
 		new_var->value = value;
 	new_var->full_var = ft_strjoin_export(key, value, '=');
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 	{
-		perror("Error: Failed to create environment node");
 		free_env(new_var);
 		return (NULL);
 	}
@@ -83,10 +82,14 @@ void	print_export(t_list **env_list)
 		env_var = (t_env *)(tmp->content);
 		if (env_var)
 		{
-			if (env_var->value)
-				printf("declare -x %s=\"%s\"\n", env_var->key, env_var->value);
+			printf("declare -x %s", env_var->key);
+			if (env_var->value && ft_strcmp(env_var->value, "empty") == 0)
+				printf(" ");
+			else if (env_var->value && ft_strcmp(env_var->value, "") == 0)
+				printf("=\"\"");
 			else
-				printf("declare -x %s=\"\"\n", env_var->key);
+				printf("=\"%s\"", env_var->value);
+			printf("\n");
 		}
 		tmp = tmp->next;
 	}

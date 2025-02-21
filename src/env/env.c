@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:33:15 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:33:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:21:28 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,17 @@ void print_env_list(t_list *env_list)
 		env_var = (t_env *)current->content;
 		if (!env_var || !env_var->key)
 		{
-			write(2, "Warning: Variable de entorno inválida\n", 38);
+			// write(2, "Warning: Variable de entorno inválida\n", 38);
 			current = current->next;
 			continue;
 		}
-
 		if (env_var->value)
-			printf("%s=%s\n", env_var->key, env_var->value);
+		{
+			if (ft_strcmp(env_var->value, "") == 0)
+				break ;
+			else
+				printf("%s=%s\n", env_var->key, env_var->value);
+		}
 		else
 			printf("%s\n", env_var->key);
 		current = current->next;

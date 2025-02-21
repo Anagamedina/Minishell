@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/19 15:36:29 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:53:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
 void	print_list_commands(t_list *cmd_list)
 {
 	t_list	*current;
@@ -64,7 +63,6 @@ void	print_list_commands(t_list *cmd_list)
 		current = current->next;
 	}
 }
-*/
 
 /*void	print_list_commands(t_list *cmd_list)
 {
