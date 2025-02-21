@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 20:45:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:57:16 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,10 +299,14 @@ void 		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
 
 
 //*************HEREDOC**************/
-int heredoc(t_cmd *cmd);
-void redirect_out(int output_fd);
-void redirect_in(int input_fd);
-int create_heredoc(t_redir *redir, int nbr_heredoc);
+int 	heredoc(t_cmd *cmd);
+void 	redirect_out(int output_fd);
+void 	redirect_in(int input_fd);
+int		create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
+int		write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
+char 	*expand_variables(char *line);
+
+
 //*************SIGNALS**************/
 
 //*************signals.c**************/

@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:08:29 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:52:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:00:15 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/**
- * Counts consecutive pairs of quotes (double or single) in a string.
- * @return The number of consecutive quote pairs found.
- */
 
 int	count_consecutive_quotes(const char *line)
 {

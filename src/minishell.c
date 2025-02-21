@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/20 11:30:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:02:27 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("Error: fail reading input.\n");
 			free(input);
-		//	break ;
 			continue ;
 		}
 		// handle_signal_ctrl_c(SIGINT);
@@ -85,7 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		parser_tokens(minishell);
 
 		parse_redir(minishell);
-
 		if (minishell->exec)
 			free_exec(minishell->exec);
 
@@ -106,8 +104,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-		// print_list_token_str(minishell->tokens);
-		// print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);

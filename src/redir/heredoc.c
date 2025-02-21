@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 15:50:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:30:22 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char *expand_variables(char *line)
+{
+    char *expanded_line;
+    char *var_name;
+    char *var_value;
+    char *new_line;
+    int i = 0;
+
+    expanded_line = ft_strdup(line);
+    while (expanded_line[i])
+    {
+        if (expanded_line[i] == '$' && (ft_isalnum(expanded_line[i + 1]) || expanded_line[i + 1] == '_'))
+        {
+            var_name = extract_var_name(&expanded_line[i + 1]);
+            var_value = getenv(var_name);
+
+            if (var_value)
+            {
+                new_line = ft_strjoin(ft_substr(expanded_line, 0, i), var_value);
+                new_line = ft_strjoin(new_line, &expanded_line[i + ft_strlen(var_name) + 1]);
+
+                free(expanded_line);
+                expanded_line = new_line;
+            }
+            free(var_name);
+        }
+        i++;
+    }
+    return (expanded_line);
+}
 
 char	*generate_heredoc_filename(int nbr_heredoc)
 {
@@ -25,15 +56,26 @@ char	*generate_heredoc_filename(int nbr_heredoc)
 	return (tmp_name);
 }
 
-int	write_heredoc_content(int fd_tmp, char *delimiter)
+int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 {
 	char	*line;
+	char 	*expand_line;
 
 	line = readline("> ");
 	while (line && ft_strcmp(line, delimiter) != 0)
 	{
-		write(fd_tmp, line, ft_strlen(line));
-		write(fd_tmp, "\n", 1);
+		if (expand_vars)
+		{
+			expand_line = expand_variables(line);
+		}
+		else
+			expand_line = ft_strdup(line);
+		if (expand_line)
+		{
+			write(fd_tmp, expand_line, ft_strlen(expand_line));
+			write(fd_tmp, "\n", 1);
+			free(expand_line);
+		}
 		free(line);
 		line = readline("> ");
 	}
@@ -41,7 +83,7 @@ int	write_heredoc_content(int fd_tmp, char *delimiter)
 	return (0);
 }
 
-int	create_heredoc(t_redir *redir, int nbr_heredoc)
+int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
 	char	*tmp_name;
@@ -55,7 +97,7 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc)
 		free(tmp_name);
 		return (-1);
 	}
-	write_heredoc_content(fd_tmp, redir->filename);
+	write_heredoc_content(fd_tmp, redir->filename, expand_vars);
 	close(fd_tmp);
 	free(redir->filename);
 	redir->filename = ft_strdup(tmp_name);
@@ -68,7 +110,9 @@ int	heredoc(t_cmd *cmd)
 	t_list		*redir_node;
 	t_redir		*curr_redir;
 	int			nbr_heredoc;
+	int 		expand_vars;
 
+	expand_vars = 0;
 	redir_node = cmd->redir_list;
 	nbr_heredoc = 0;
 	while (redir_node)
@@ -76,7 +120,8 @@ int	heredoc(t_cmd *cmd)
 		curr_redir = (t_redir *)redir_node->content;
 		if (curr_redir->type == HEREDOC)
 		{
-			if (create_heredoc(curr_redir, nbr_heredoc) == -1)
+			expand_vars = !(curr_redir->filename[0] == '"' || curr_redir->filename[0] == '\'');
+			if (create_heredoc(curr_redir, nbr_heredoc, expand_vars) == -1)
 			{
 				perror("Error creando heredoc");
 				return (-1);
