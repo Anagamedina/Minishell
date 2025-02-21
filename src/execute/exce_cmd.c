@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 19:14:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 00:34:15 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL)
+		//caso echo "hello" > file.txt que no funciona bien 
+		if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL && curr_cmd->redir_list != NULL)
 		{
 			cases_builtins(mini, curr_cmd);
 			return (TRUE);
