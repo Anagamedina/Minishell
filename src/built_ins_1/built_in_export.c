@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:11:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 21:17:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:48:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ static void	process_variable(char *arg, t_list **env)
 	char	*var_name;
 	char	*var_value;
 
+	// printf("arg: [%s]\n", arg);
 	var_name = get_var_name(arg);
+	// printf(" var_name: [%s]\n", var_name);
 	var_value = get_var_value(arg);
 	if (!var_name)
 	{

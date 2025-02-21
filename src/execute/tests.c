@@ -3,36 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   tests.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:15:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:15:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:58:36 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
-void	print_list_token(t_list *tokens_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-	int			i;
+// void	print_list_token(t_list *tokens_list)
+// {
+// 	t_list		*current;
+// 	t_tokens	*token;
+// 	int			i;
 
-	current = tokens_list;
-	i = 1;
-	while (current != NULL)
-	{
-		token = (t_tokens *)current->content;
-		printf("TOKEN [%i] :\n", i);
-		printf("str: [%s]\n", token->str);
-		printf("type: [%i]\n", token->type_token);
-		printf("len: [%zu]\n", token->length);
-		i ++;
-		current = current->next;
-		printf("-------------------\n");
-	}
-}
+// 	current = tokens_list;
+// 	i = 1;
+// 	while (current != NULL)
+// 	{
+// 		token = (t_tokens *)current->content;
+// 		printf("TOKEN [%i] :\n", i);
+// 		printf("str: [%s]\n", token->str);
+// 		printf("type: [%i]\n", token->type_token);
+// 		printf("len: [%zu]\n", token->length);
+// 		i ++;
+// 		current = current->next;
+// 		printf("-------------------\n");
+// 	}
+// }
 
 void	print_list_token_str(t_list *tokens_list)
 {
@@ -94,4 +93,4 @@ void	print_list_token_str_one_line(t_list *tokens_list)
 	}
 	printf("]");
 	printf("\n");
-}*/
+}

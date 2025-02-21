@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/21 19:34:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:48:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,11 @@ char	*get_var_value(char *line)
 
 	if (!line)
 		return (NULL);
-	len = (int) ft_strlen(line);
+	// len = (int) ft_strlen(line);
+	len = 0;
+	// printf("line: [%s]\n", line);
+	while(line[len] != '\0')
+		len++;
 	positon_of_equal = ft_strchr_c(line, '=');
 	if (positon_of_equal == -1)
 		return (NULL);
