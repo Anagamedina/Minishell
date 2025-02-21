@@ -3,20 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exce_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:12:17 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:52:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+
+//TODO: ver si se puede usar mini->envp_to_array
 void	execute_external(t_cmd *cmd, char **envp)
 {
-	execve(cmd->cmd_path, cmd->cmd_args, envp);
-	perror("Error ejecutando comando externo con execve");
-	exit(EXIT_FAILURE);
+	int 	err_excec;
+	
+	//set_signals(CHILD);
+	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
+	if (err_excec == -1)
+	{
+		perror("Error ejecutando comando externo con execve");
+		//ft_msgs(0, cmd->cmd);
+		exit(127);
+	}
+	//exit(EXIT_FAILURE);
+	exit(0);
 }
 
 void	redirect_in(int input_fd)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 14:18:17 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:14:38 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(pipe_fd[0]);
 }
 
-static void	wait_for_children(int num_children)
+/*static void	wait_for_children(int num_children)
 {
 	while (num_children > 0)
 	{
@@ -76,7 +76,7 @@ static void	wait_for_children(int num_children)
 			num_children--;
 	}
 }
-
+*/
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;
@@ -85,6 +85,8 @@ int	execute_commands(t_mini *mini)
 	int		input_fd;
 	int		pipe_fd[2];
 	int		i;
+	int 	child_exit_status;
+	int 	status;
 
 	i = 0;
 	input_fd = STDIN_FILENO;
@@ -111,6 +113,14 @@ int	execute_commands(t_mini *mini)
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
-	wait_for_children(i);
+	if (waitpid(pid, &child_exit_status, 0) == -1)
+		return (1);
+	if (WEXITSTATUS(status))
+	{
+		child_exit_status = WEXITSTATUS(child_exit_status);
+		if (child_exit_status != 0)
+			status = child_exit_status;
+	}
+	//wait_for_children(i);
 	return (TRUE);
 }
