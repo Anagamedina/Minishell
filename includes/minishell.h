@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 12:51:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:42:14 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 # include "free_structs.h"
 # include "macros.h"
 
-# include <unistd.h>  // fork, pipe, dup2, execve, close, read, write
-# include <stdlib.h>  // malloc, free, exit
-# include <stdio.h>   // perror, printf
-# include <fcntl.h>   // open
-# include <sys/wait.h>  // wait, waitid
-# include <sys/types.h>  // pid_t
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h> 
+# include <fcntl.h>  
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <signal.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>
