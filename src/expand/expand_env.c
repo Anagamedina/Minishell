@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/11 14:30:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:41:59 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 	return (NULL);
 }
 
-/*
+
 char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, \
 t_list *env_list)
 {
@@ -83,7 +83,7 @@ t_list *env_list)
 	}
 	return (result);
 }
-*/
+
 
 /*
 static void	replace_dollar_variable(char **split_word, t_list *env_list) {

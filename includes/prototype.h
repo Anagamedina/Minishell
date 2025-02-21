@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 13:57:16 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:42:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,7 +231,7 @@ char		*ft_strjoin_char(char *str, char c);
 
 char		*find_value_in_env(t_list *env_list, char *var_name_token);
 // void		replace_dollar_variable(char **split_word, t_list *env_list);
-// char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
+char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 
 //************** INIT_COMMAND.C ********/
 

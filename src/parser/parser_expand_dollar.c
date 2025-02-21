@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 16:21:04 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:04:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 	if (!token || !token->str)
 		return ;
 	processed_str = remove_quotes_str(token->str, D_QUOTE);
+	printf("processed_str: [%s]\n", processed_str);
 	if (!processed_str)
 		return ;
 	if (processed_str != token->str)
@@ -67,6 +68,7 @@ void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 	free(processed_str);
 	token->length = ft_strlen(token->str);
 	expanded_str = expand_consecutives_variables(token, env_list);
+	printf("expanded_str: [%s]\n", expanded_str);
 	if (!expanded_str)
 		return ;
 	if (token->str != expanded_str)
@@ -91,7 +93,13 @@ void	handle_dollar_cases(t_tokens *token, \
 	}
 	if (check_dquote_squote_dollar_case(token->str))
 	{
-		remove_and_replace_quotes(token, D_QUOTE);
+		tmp = remove_quotes_str(token->str, D_QUOTE);
+		token->str = ft_strdup(tmp);
+		
+		char *res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+		token->str = ft_strdup(res);
+		free(res);
+		
 		return ;
 	}
 	if (handle_no_expand_cases(token, next_token) == 0)
