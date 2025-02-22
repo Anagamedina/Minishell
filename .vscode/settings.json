@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "testing.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "macros.h": "c",
+        "free_structs.h": "c",
+        "prototype.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 22:46:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:42:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,14 @@ void	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 	i = 0;
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
 	{
-		ft_pwd(mini);
+		return (ft_pwd(mini));
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
-		ft_echo(curr_cmd);
+	{
+		return (ft_echo(curr_cmd));
+	}
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
-		/*
-		i = 0;
-		printf("----------------------------------------\n");
-		while (curr_cmd->cmd_args[i] != NULL)
-		{
-			printf("arg[%d]: [%s]\n", i, curr_cmd->cmd_args[i]);
-			i ++;
-		}
-		printf("----------------------------------------\n");
-		*/
 		if (curr_cmd->cmd_args[1] != NULL)
 			export_variable(curr_cmd, mini);
 		else

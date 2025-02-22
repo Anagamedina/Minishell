@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 22:23:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:26:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,25 @@ int	ft_pwd(t_mini *mini)
 	char	*curr_dir;
 	char	*env_var;
 
-	if (!mini || mini->env == NULL)
-	{
-		ft_putstr_fd("Error: env not init\n", 2);
-		return (1);
-	}
+	curr_dir = NULL;
 	curr_dir = getcwd(NULL, 0);
 	if (!curr_dir)
 	{
-		env_var = get_variable_in_env_list(mini->env, "PWD");
+		env_var = get_variable_in_env_list(mini->env, "PWD=");
 		if (env_var)
 		{
-			write(1, env_var, ft_strlen(env_var));
+			ft_putstr_fd(env_var, 1);
 			write(1, "\n", 1);
 		}
 		else
 			ft_putstr_fd("Error: PWD not set\n", 2);
-		return (0);
+		return (1);
 	}
-	ft_putstr_fd(curr_dir, 1);
-	write(1, "\n", 1);
+	else
+	{
+		ft_putstr_fd(curr_dir, 1);
+		write(1, "\n", 1);
+	}
 	free(curr_dir);
 	return (0);
 }

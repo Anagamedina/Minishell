@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 20:45:46 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 16:15:14 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 12:38:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +70,14 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
 int			check_if_var_name_exist(char *var_name, t_list *env_list);
-void		export_variable(t_cmd *curr_cmd, t_mini* mini);
+int			export_variable(t_cmd *curr_cmd, t_mini* mini);
 char		*ft_strjoin_export(const char *s1, const char *s2, char c);
 
 //************ MAIN BUILTINS ********/
 void		cases_builtins(t_mini *mini, t_cmd* curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
-void		ft_echo(t_cmd *cmd);
+int			ft_echo(t_cmd *cmd);
 void		echo_with_args(t_cmd *cmd);
 
 //************ BUILTIN_PWD.c ************/
