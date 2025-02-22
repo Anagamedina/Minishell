@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:12:17 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:02:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 {
 	if (curr_cmd->is_builtin == 1)
 	{
-		cases_builtins(mini, curr_cmd);
-		exit(0);
+		mini->exit_status = cases_builtins(mini, curr_cmd);
+		exit(mini->exit_status);
 	}
 	if (curr_cmd->is_external == 1)
 	{

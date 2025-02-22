@@ -59,6 +59,7 @@ add_executable(minishell
         ${REDIR_DIR}
 		${SIGNALS_DIR}
         src/built_ins_1/builtin_echo.c
+        src/built_ins_1/built_in_unset.c
 )
 # link with readline library
 target_link_libraries(minishell readline)

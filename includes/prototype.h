@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 19:06:08 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
@@ -31,7 +43,7 @@ typedef struct s_exec		t_exec;
 //**************ENV************/
 t_list		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
-void		print_env_list(t_list *env_list);
+int print_env_list(t_list* env_list);
 
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);
@@ -74,20 +86,23 @@ int			export_variable(t_cmd *curr_cmd, t_mini* mini);
 char		*ft_strjoin_export(const char *s1, const char *s2, char c);
 
 //************ MAIN BUILTINS ********/
-void		cases_builtins(t_mini *mini, t_cmd* curr_cmd);
+int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
-int			ft_echo(t_cmd *cmd);
-void		echo_with_args(t_cmd *cmd);
+int			ft_echo(t_cmd *cmd, t_mini *mini);
 
 //************ BUILTIN_PWD.c ************/
 int			ft_pwd(t_mini *mini);
 
 //************ BUILTIN_CD.c ************/
-void		ft_cd(t_mini *mini, t_cmd *cmd);
+int			ft_cd(t_mini* mini, t_cmd* cmd);
+
+//************ BUILTIN_UNSET.c ************/
+int			ft_unset(t_list **env_list, t_cmd *cmd);
 
 //************ BUILTIN_EXIT.c ************/
-void		builtin_exit(t_cmd *cmd, t_mini *mini);
+int			builtin_exit(t_cmd* cmd, t_mini* mini);
+void		cleanup_and_exit(t_mini* mini, int status);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 

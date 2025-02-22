@@ -6,47 +6,52 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 23:50:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:23:50 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	cd_handle_no_args(t_list *env_list, char **path_home)
+static int cd_without_args(t_list *env_list, char **path_home)
 {
-	*path_home = get_variable_in_env_list(env_list, "HOME");
-	if (!(*path_home))
+	char	*home;
+
+	home = get_variable_in_env_list(env_list, "HOME");
+	if (!home)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
+		return (1);
 	}
-	else
-	{
-		*path_home = ft_strdup(*path_home);
-	}
+	*path_home = ft_strdup(home);
+	if (!(*path_home))
+		return (1);
+	return (0);
 }
 
-static void	cd_with_dash(t_list *env_list, char **path_home, int has_tilde)
+static int cd_with_dash(t_list* env_list, char** path_home, int has_tilde)
 {
-	*path_home = get_variable_in_env_list(env_list, "OLDPWD");
-	if (!(*path_home))
+	char	*old_pwd;
+
+	old_pwd = get_variable_in_env_list(env_list, "OLDPWD");
+	if (!old_pwd)
 	{
 		ft_putstr_fd("cd: OLDPWD not set\n", 2);
-		return ;
+		return (1);
 	}
+	*path_home = ft_strdup(old_pwd);
 	if (has_tilde == 0)
 	{
 		ft_putstr_fd(*path_home, 1);
 		write(1, "\n", 1);
 	}
-	*path_home = ft_strdup(*path_home);
+	return(0);
 }
 
-static int	handle_cd_errors(char *new_path, char *old_pwd)
+static int	handle_cd_errors(char *new_path)
 {
 	if (chdir(new_path) == -1)
 	{
 		perror("cd");
-		free(old_pwd);
 		free(new_path);
 		return (1);
 	}
@@ -59,7 +64,7 @@ static int	handle_cd_errors(char *new_path, char *old_pwd)
  * @param new_path
  * @param mini
  */
-static void	cd_change_directory(char *new_path, t_mini *mini)
+static int cd_change_directory(char* new_path, t_mini* mini)
 {
 	char	*new_pwd;
 	char	*old_pwd;
@@ -68,21 +73,21 @@ static void	cd_change_directory(char *new_path, t_mini *mini)
 	if (!old_pwd)
 	{
 		perror("cd");
-		free(new_path);
-		return ;
+		return (1);
 	}
-	if (handle_cd_errors(new_path, old_pwd) == 1)
-		return ;
+	if (handle_cd_errors(new_path) == 1)
+		return (free(old_pwd), 1);
 	update_var_exist("OLDPWD", old_pwd, &(mini->env));
 	free(old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
 		perror("cd");
-		return ;
+		return (1);
 	}
 	update_var_exist("PWD", new_pwd, &(mini->env));
 	free(new_pwd);
+	return (0);
 }
 
 /**
@@ -95,30 +100,30 @@ static void	cd_change_directory(char *new_path, t_mini *mini)
  * 5. "cd -" change to $OLDPWD | chdir("-")
  */
 
-void	ft_cd(t_mini *mini, t_cmd *cmd)
+int	ft_cd(t_mini *mini, t_cmd *cmd)
 {
 	char	*new_path;
 	int		is_a_tilde;
+	int		status;
 
-	if (!mini || !mini->env)
-		return ;
 	new_path = NULL;
 	is_a_tilde = 0;
+	status = 0;
 	if (!cmd->cmd_args[1])
-		cd_handle_no_args(mini->env, &new_path);
+		status = cd_without_args(mini->env, &new_path);
 	else if (ft_strcmp(cmd->cmd_args[1], "-") == 0 && !cmd->cmd_args[2])
-		cd_with_dash(mini->env, &new_path, is_a_tilde);
+		status = cd_with_dash(mini->env, &new_path, is_a_tilde);
 	else if (ft_strcmp(cmd->cmd_args[1], "~") == 0 && !cmd->cmd_args[2])
-	{
-		is_a_tilde = 2;
-		cd_with_dash(mini->env, &new_path, is_a_tilde);
-	}
+		status = cd_with_dash(mini->env, &new_path, 2);
 	else
 		new_path = ft_strdup(cmd->cmd_args[1]);
-	if (!new_path)
+	if (status == 1 || !new_path || new_path[0] == '\0')
 	{
-		ft_putstr_fd("Error: invalid path\n", 2);
-		return ;
+		ft_putstr_fd("Error: cd: invalid path\n", 2);
+		free(new_path);
+		return (1);
 	}
-	cd_change_directory(new_path, mini);
+	status = cd_change_directory(new_path, mini);
+	free(new_path);
+	return (status);
 }

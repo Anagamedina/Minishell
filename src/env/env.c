@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 16:23:13 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:33:15 by anamedin          #+#    #+#             */
@@ -87,19 +99,51 @@ t_list	*init_env_list(char **envp)
 	return (env_list);
 }
 
-void print_env_list(t_list *env_list)
+int	print_env_list(t_list* env_list)
 {
-	t_list *current = env_list;
-	t_env *env_var;
+	t_list	*current;
+	t_env	*env_var;
 
+	if (!env_list)
+		return (1);
+	current = env_list;
+	while (current)
+	{
+		env_var = (t_env *) current->content;
+		if (!env_var || !env_var->key)
+		{
+			current = current->next;
+			continue ;
+		}
+		if (env_var->value)
+		{
+			if (ft_strcmp(env_var->value, "") == 0)
+				break ;
+			else
+				printf("%s=%s\n", env_var->key, env_var->value);
+		}
+		else
+			printf("%s\n", env_var->key);
+		current = current->next;
+	}
+	return (0);
+}
+/*
+void	print_env_list(t_list *env_list)
+{
+	t_list	*current;
+	t_env	*env_var;
+
+	if (!env_list)
+		return (1);
+	current = env_list;
 	while (current)
 	{
 		env_var = (t_env *)current->content;
 		if (!env_var || !env_var->key)
 		{
-			// write(2, "Warning: Variable de entorno inválida\n", 38);
 			current = current->next;
-			continue;
+			continue ;
 		}
 		if (env_var->value)
 		{
@@ -113,3 +157,4 @@ void print_env_list(t_list *env_list)
 		current = current->next;
 	}
 }
+*/

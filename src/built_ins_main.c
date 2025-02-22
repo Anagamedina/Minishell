@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 19:14:18 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_ins_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
@@ -12,73 +24,49 @@
 
 #include "../includes/minishell.h"
 
-static void	unset_variable(t_list **env_list, char *var_name)
+int	cases_builtins(t_mini* mini, t_cmd* curr_cmd)
 {
-	t_list	*current;
-	t_list	*prev;
-	t_env	*env_var;
+	int	exit_status;
 
-	if (!env_list || !*env_list || !var_name)
-		return ;
-	current = *env_list;
-	prev = NULL;
-	while (current)
-	{
-		env_var = (t_env *) current->content;
-		if (ft_strcmp(env_var->key, var_name) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				*env_list = current->next;
-			free_env(env_var);
-			free(current);
-			return ;
-		}
-		prev = current;
-		current = current->next;
-	}
-}
-
-void	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
-{
-	int		i;
-
-	i = 0;
+	exit_status = -1;
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
 	{
 		return (ft_pwd(mini));
 	}
-	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
+	if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 	{
-		return (ft_echo(curr_cmd));
+		return (ft_echo(curr_cmd, mini));
 	}
-	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
+	if (ft_strcmp(curr_cmd->cmd, "export") == 0)
 	{
 		if (curr_cmd->cmd_args[1] != NULL)
-			export_variable(curr_cmd, mini);
+			return (export_variable(curr_cmd, mini));
 		else
-			print_export(&mini->env);
-	}
-	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
-	{
-		i = 0;
-		while (curr_cmd->cmd_args[i] != NULL)
 		{
-			unset_variable(&(mini->env), curr_cmd->cmd_args[i]);
-			i ++;
+			print_export(&mini->env);
+			return (0);
 		}
 	}
-	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
+	if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 	{
-		print_env_list(mini->env);
+		return (ft_unset(&(mini->env), curr_cmd));
 	}
-	else if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
+	if (ft_strcmp(curr_cmd->cmd, "env") == 0)
 	{
-		ft_cd(mini, curr_cmd);
+		return (print_env_list(mini->env));
+	}
+	if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
+	{
+		return (ft_cd(mini, curr_cmd));
 	}
 	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
 	{
-		builtin_exit(curr_cmd, mini);
+		exit_status = builtin_exit(curr_cmd, mini);
+		if (exit_status == 255 || exit_status == 1)
+		{
+			cleanup_and_exit(mini, mini->exit_status);
+		}
+		return (exit_status);
 	}
+	return (0);
 }

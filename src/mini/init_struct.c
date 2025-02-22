@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/20 19:00:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:22:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,10 @@ void	print_mini(t_mini *mini)
     //printf("Exit Status: %d\n", mini->exit_status);
 
     printf("\n--- Variables de Entorno ---\n");
-    if (mini->env)
-        print_env_list((t_list *)mini->env); 
-    else
-        printf("No hay variables de entorno.\n");
+    // if (mini->env)
+    //     print_env_list((t_list *)mini->env);
+    // else
+    //     printf("No hay variables de entorno.\n");
     if (mini->tokens)
         print_list_token((t_list *)mini->tokens);
     else
