@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 17:06:44 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:38:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 void	execute_external(t_cmd *cmd, char **envp)
 {
-	int	err_excec;
-
+	int 	err_excec;
+	
+	int i = 0;
+	while(envp[i] != NULL)
+	{
+		
+	}
+	
+	//set_signals(CHILD);
 	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
 	if (err_excec == -1)
 	{
