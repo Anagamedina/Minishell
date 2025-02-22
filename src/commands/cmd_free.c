@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:37:04 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 15:39:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:55:51 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,30 @@ void	free_command(t_cmd *cmd)
 	}
 }
 
+void	free_cmd_args(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd)
+		return ;
+	if (cmd->cmd_args)
+	{
+		while (cmd->cmd_args[i])
+		{
+			free(cmd->cmd_args[i]);
+			i++;
+		}
+		free(cmd->cmd_args);
+		cmd->cmd_args = NULL;
+	}
+}
+
 void	free_cmd_list(t_list *cmd_list)
 {
 	t_list	*tmp;
 	t_cmd	*cmd;
-	int		i;
+	// int		i;
 
 	while (cmd_list)
 	{
@@ -50,13 +69,8 @@ void	free_cmd_list(t_list *cmd_list)
 				free(cmd->cmd);
 			if (cmd->cmd_args)
 			{
-				i = 0;
-				while (cmd->cmd_args[i] != NULL)
-				{
-					free(cmd->cmd_args[i]);
-					i++;
-				}
-				free(cmd->cmd_args);
+				// i = 0;
+				free_cmd_args(cmd);
 			}
 			if (cmd->cmd_path)
 				free(cmd->cmd_path);

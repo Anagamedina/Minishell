@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/02/18 12:29:22 by anamedin         ###   ########.fr        #
+#    Updated: 2025/02/22 18:15:17 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,10 +59,12 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
+		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_PARSER)/parser_check_quotes_dollar.c \
 		$(SRC_PARSER)/parser_expand_cases.c \
 		$(SRC_PARSER)/parser_expand_dollar.c \
+		$(SRC_PARSER)/parser_expand_utils.c \
 		$(SRC_PARSER)/parser_init_quotes.c \
 		$(SRC_PARSER)/parser_not_expand.c \
 		$(SRC_PARSER)/parser_tab.c \
@@ -85,6 +87,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
 		$(SRC_REDIR)/redir_init.c \
+		$(SRC_REDIR)/redir_utils.c \
 		$(SRC_REDIR)/heredoc.c \
 		$(SRC_REDIR)/redir_syntax.c \
 		$(SRC_FREE)/free_cmd.c \

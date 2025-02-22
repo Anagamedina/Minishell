@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 20:42:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:17:48 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ void		ft_cd(t_mini *mini, t_cmd *cmd);
 
 //************ BUILTIN_EXIT.c ************/
 void		builtin_exit(t_cmd *cmd, t_mini *mini);
-
+long long 	ft_atoll(const char *str);
+void 		error_exit(t_mini *mini);
+int			ft_exit(t_mini *mini, int status);
 //************ INIT_STRUCTUC MINISHELL ********/
 
 t_mini		*init_mini_list(char **envp);
@@ -170,6 +172,11 @@ int			check_special_c(char c);
 char		*remove_quotes_str(const char *str, char c);
 int			handle_special_balanced_dquotes(t_tokens *token);
 void		remove_and_replace_quotes(t_tokens *token, char quote_type);
+char		*append_non_dollar_char(char *result, char c);
+int			is_valid_input(t_tokens *token, t_list *env_list);
+char		*handle_dollar_alone(char *result);
+char	*expand_variable(char *result, t_list *env_list, \
+		const char *var, int len);
 
 //************** parser_syntax_quotes.c ********************/
 
@@ -194,6 +201,7 @@ int			handle_single_quotes_after_dollar(t_tokens *token);
 int			handle_backslash_after_dollar(t_tokens *token);
 int			handle_one_digit_after_dollar(t_tokens *token);
 int			handle_digit_and_more_after_dollar(t_tokens *token);
+int			is_valid_input(t_tokens *token, t_list *env_list);
 
 //************** parser_not_expand.c ********************/
 
@@ -249,7 +257,7 @@ t_cmd		*process_command_token(t_tokens *token, char **paths, int *cmd_id);
 void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
 void		process_command_args(t_list *current, t_cmd *cmd);
-
+void 		free_cmd_args(t_cmd *cmd);
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char* key, char* value);
@@ -296,7 +304,8 @@ int			is_redir(t_tokens *token);
 void		handle_redirection(char *file, t_cmd *cmd, int type);
 t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
 void 		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
-
+int			handle_output_redirection(t_cmd *cmd, t_redir *curr_redir);
+int			handle_input_redirection(t_cmd *cmd, t_redir *curr_redir);
 
 //*************HEREDOC**************/
 int 	heredoc(t_cmd *cmd);

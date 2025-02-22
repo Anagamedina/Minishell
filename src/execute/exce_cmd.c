@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 19:14:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:03:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	{
 		curr_cmd->output_fd = STDOUT_FILENO;
 	}
-
 	curr_cmd->input_fd = *input_fd;
 }
 
@@ -66,17 +65,6 @@ static void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(pipe_fd[0]);
 }
 
-/*static void	wait_for_children(int num_children)
-{
-	while (num_children > 0)
-	{
-		if (wait(NULL) == -1)
-			perror("Error esperando proceso hijo");
-		else
-			num_children--;
-	}
-}
-*/
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;
@@ -121,6 +109,5 @@ int	execute_commands(t_mini *mini)
 		if (child_exit_status != 0)
 			status = child_exit_status;
 	}
-	//wait_for_children(i);
 	return (TRUE);
 }

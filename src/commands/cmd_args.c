@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 15:33:50 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:23:24 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../includes/minishell.h"
 
 void	count_args(t_list *token_list, t_cmd *cmd)
 {
@@ -31,7 +31,8 @@ void	count_args(t_list *token_list, t_cmd *cmd)
 			cmd->cmd = token->str;
 			cmd->count_args = 1;
 		}
-		else if (token->type_token == PIPE || token->type_token == DELIMITER || token->type_token == REDIR_IN || token->type_token == REDIR_OUT || token->type_token == REDIR_APPEND || token->type_token == HEREDOC)
+		else if (token->type_token == PIPE || \
+				token->type_token == DELIMITER || is_redir(token))
 			break ;
 		else if (token->type_token == WORD)
 			cmd->count_args ++;
@@ -67,9 +68,7 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 			if (!(*cmd)->cmd_args[j])
 			{
 				perror("Error al duplicar argumento");
-				while (--j >= 0)
-					free((*cmd)->cmd_args[j]);
-				free((*cmd)->cmd_args);
+				free_cmd_args(*cmd);
 				return ;
 			}
 			j++;

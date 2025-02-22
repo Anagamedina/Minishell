@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 22:23:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 16:00:53 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
-t_env *iterate_env(t_list *mini_env, t_env *env_var)
-{
-	while (mini_env)
-	{
-		env_var = (t_env *) mini_env->content;
-		if (ft_strcmp(env_var->key, "PWD") == 0)
-		{
-			write(1, env_var->value, ft_strlen(env_var->value));
-			write(1, "\n", 1);
-			return ;
-		}
-		mini_env = mini_env->next;
-	}
-}
-*/
 
 int	ft_pwd(t_mini *mini)
 {
@@ -57,3 +40,20 @@ int	ft_pwd(t_mini *mini)
 	free(curr_dir);
 	return (0);
 }
+
+/*
+t_env *iterate_env(t_list *mini_env, t_env *env_var)
+{
+	while (mini_env)
+	{
+		env_var = (t_env *) mini_env->content;
+		if (ft_strcmp(env_var->key, "PWD") == 0)
+		{
+			write(1, env_var->value, ft_strlen(env_var->value));
+			write(1, "\n", 1);
+			return ;
+		}
+		mini_env = mini_env->next;
+	}
+}
+*/

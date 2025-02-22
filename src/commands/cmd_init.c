@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 15:45:16 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:01:22 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -67,7 +66,6 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 	}
 	return (new_cmd);
 }
-
 
 t_cmd	*get_last_command(t_list *commands_list)
 {
@@ -130,8 +128,7 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 				cmd_node = cmd_node->next;
 			}
 			if (!cmd_node)
-				return (printf("Error: Comando '%s' no encontrado.\n", \
-							token->str), -1);
+				return (printf("Error: Comando '%s' no encontrado.\n", token->str), -1);
 		}
 		current = current->next;
 	}

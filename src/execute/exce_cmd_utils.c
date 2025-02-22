@@ -6,27 +6,22 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/21 18:52:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:06:44 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-//TODO: ver si se puede usar mini->envp_to_array
 void	execute_external(t_cmd *cmd, char **envp)
 {
-	int 	err_excec;
-	
-	//set_signals(CHILD);
+	int	err_excec;
+
 	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
 	if (err_excec == -1)
 	{
 		perror("Error ejecutando comando externo con execve");
-		//ft_msgs(0, cmd->cmd);
-		exit(127);
+		exit (127);
 	}
-	//exit(EXIT_FAILURE);
 	exit(0);
 }
 

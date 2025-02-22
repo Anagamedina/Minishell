@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 23:50:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:53:58 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,6 @@ static int	handle_cd_errors(char *new_path, char *old_pwd)
 	return (0);
 }
 
-/**
- * cd_change_directory - change the current directory
- * and update `PWD` y `OLDPWD`.
- * @param new_path
- * @param mini
- */
 static void	cd_change_directory(char *new_path, t_mini *mini)
 {
 	char	*new_pwd;
@@ -84,16 +78,6 @@ static void	cd_change_directory(char *new_path, t_mini *mini)
 	update_var_exist("PWD", new_pwd, &(mini->env));
 	free(new_pwd);
 }
-
-/**
- * handle cases:
- * 
- * 1. "cd" with no arguments: change to the user's home directory | chdir("..")
- * 2. "cd ../dir_anterior" navegar al directorio padre | chdir("../dir_anterior")
- * 3. "cd /path_x" with a path: change to absolute path | chdir("/path_x") 
- * 4. "cd ruta_x" relative path: | chdir("./ruta_x")
- * 5. "cd -" change to $OLDPWD | chdir("-")
- */
 
 void	ft_cd(t_mini *mini, t_cmd *cmd)
 {
