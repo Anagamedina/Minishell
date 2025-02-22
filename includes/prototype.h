@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 19:06:08 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:03:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,14 @@ char		*ft_strjoin_export(const char *s1, const char *s2, char c);
 int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
-int			ft_echo(t_cmd *cmd, t_mini *mini);
+int			ft_echo(t_cmd *cmd, t_mini* mini);//, t_mini *mini);
+// int			ft_echo(t_cmd *cmd, t_mini *mini);
 
 //************ BUILTIN_PWD.c ************/
 int			ft_pwd(t_mini *mini);
 
 //************ BUILTIN_CD.c ************/
+int			ft_cd(t_mini* mini, t_cmd* cmd);
 int			ft_cd(t_mini* mini, t_cmd* cmd);
 
 //************ BUILTIN_UNSET.c ************/

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 16:22:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:43:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_mini	*init_mini_list(char **envp)
     }
     minishell->tokens = NULL;
     minishell->exec = NULL;
-    minishell->exit_status = -1;
+    minishell->exit_status = 0;
 	shlvl = get_variable_in_env_list(minishell->env, SHLVL);
 	configure_shell_env(&minishell->env, shlvl);
     return (minishell);

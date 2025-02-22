@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:35:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:13:30 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	{
 		curr_cmd->output_fd = STDOUT_FILENO;
 	}
-
 	curr_cmd->input_fd = *input_fd;
 }
 
