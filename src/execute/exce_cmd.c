@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 12:27:09 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/23 14:06:44 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,13 @@ int	execute_commands(t_mini *mini)
 		if (pid == 0)
 		{
 			handle_child(curr_cmd, mini);
-			printf("Mi PID hijo es: %d\n", getpid());
+			//printf("Mi PID hijo es: %d\n", getpid());
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
-			printf("Mi PID padre es: %d\n", getpid());
+			//printf("Mi PID padre es: %d\n", getpid());
 		}
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
