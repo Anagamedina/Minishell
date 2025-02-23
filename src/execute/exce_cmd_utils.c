@@ -75,3 +75,6 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 	}
 	exit(EXIT_FAILURE);
 }
+
+
+//TODO echo vamos al restaurante > dfe.txt | echo con todos
