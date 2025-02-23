@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/23 18:18:28 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_export.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:11:15 by dasalaza          #+#    #+#             */
@@ -90,7 +102,7 @@ static int	add_new_variable(char *var_name, char *var_value, t_list **env)
 	return (TRUE);
 }
 
-static void	process_variable(char *arg, t_list **env)
+static void	process_variable(char *arg, t_list **env_list)
 {
 	char	*var_name;
 	char	*var_value;
@@ -102,10 +114,11 @@ static void	process_variable(char *arg, t_list **env)
 	if (!var_name)
 	{
 		error_export_syntax(arg);
+		free(var_value);
 		return ;
 	}
-	if (!handle_existing_var(var_name, var_value, env))
-		add_new_variable(var_name, var_value, env);
+	if (!handle_existing_var(var_name, var_value, env_list))
+		add_new_variable(var_name, var_value, env_list);
 }
 
 /**
@@ -128,17 +141,19 @@ int	export_variable(t_cmd *curr_cmd, t_mini *mini)
 		{
 			error_export_syntax(curr_cmd->cmd_args[i]);
 			flag = 1;
-			i ++;
 		}
 		else
-			process_variable(curr_cmd->cmd_args[i++], &(mini->env));
+			process_variable(curr_cmd->cmd_args[i], &(mini->env));
+		i ++;
 	}
 	if (mini->envp_to_array)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
-	if (flag == 1)
+	if (!mini->envp_to_array)
+	{
 		return (1);
-	return (0);
+	}
+	return (flag);
 }
 
 /**

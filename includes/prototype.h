@@ -43,7 +43,7 @@ typedef struct s_exec		t_exec;
 //**************ENV************/
 t_list		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
-int print_env_list(t_list* env_list);
+int ft_env(t_list* env_list);
 
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);

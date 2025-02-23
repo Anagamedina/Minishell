@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/23 18:21:00 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 11:54:28 by anamedin          #+#    #+#             */
@@ -84,7 +96,10 @@ void	print_export(t_list **env_list)
 		{
 			printf("declare -x %s", env_var->key);
 			if (env_var->value && ft_strcmp(env_var->value, "empty") == 0)
-				printf(" ");
+			{
+				continue ;
+				// printf(" ");
+			}
 			else if (env_var->value && ft_strcmp(env_var->value, "") == 0)
 				printf("=\"\"");
 			else

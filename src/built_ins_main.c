@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 12:05:54 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/23 17:53:30 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,20 @@ int	cases_builtins(t_mini* mini, t_cmd* curr_cmd)
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)
 		exit_status = ft_echo(curr_cmd, mini);
 	else if (ft_strcmp(curr_cmd->cmd, "export") == 0)
-		exit_status = curr_cmd->cmd_args[1] ? export_variable(curr_cmd, mini) : (print_export(&mini->env), 0);
+	{
+		if (curr_cmd->cmd_args[1])
+			exit_status = export_variable(curr_cmd, mini);
+		else
+		{
+			print_export(&mini->env);
+			exit_status = 0;
+		}
+
+	}
 	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 		exit_status = ft_unset(&(mini->env), curr_cmd);
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
-		exit_status = print_env_list(mini->env);
+		exit_status = ft_env(mini->env);
 	else if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
 		exit_status = ft_cd(mini, curr_cmd);
 	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
