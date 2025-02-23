@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 20:13:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:27:09 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,6 @@ static void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(pipe_fd[0]);
 }
 
-static void	wait_for_children(int num_children)
-{
-	while (num_children > 0)
-	{
-		if (wait(NULL) == -1)
-			perror("Error esperando proceso hijo");
-		else
-			num_children--;
-	}
-}
-
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;
@@ -84,6 +73,7 @@ int	execute_commands(t_mini *mini)
 	int		input_fd;
 	int		pipe_fd[2];
 	int		i;
+	int		status;
 
 	i = 0;
 	input_fd = STDIN_FILENO;
@@ -92,11 +82,7 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		// if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL)
-		// {
-		// 	cases_builtins(mini, curr_cmd);
-		// 	return (TRUE);
-		// }
+
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)
@@ -105,11 +91,31 @@ int	execute_commands(t_mini *mini)
 			exit(EXIT_FAILURE);
 		}
 		if (pid == 0)
+		{
 			handle_child(curr_cmd, mini);
+			printf("Mi PID hijo es: %d\n", getpid());
+			exit(EXIT_SUCCESS);
+		}
 		else
+		{
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
+			printf("Mi PID padre es: %d\n", getpid());
+		}
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
-	wait_for_children(i);
+
+	// wait all children process
+	while (waitpid(-1, &status, 0) > 0)
+	{
+		if (WIFEXITED(status))
+			mini->exit_status = WEXITSTATUS(status);
+	}
+
 	return (TRUE);
 }
+
+/*
+void	set_exit_status(int n)
+{
+	g_get_signal = n;
+}*/
