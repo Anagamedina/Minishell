@@ -6,30 +6,37 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:12:17 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/23 13:42:49 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// void	execute_external(t_cmd *cmd, char **envp)
+// {
+// 	int 	err_excec;
+//
+// 	int i = 0;
+// 	while(envp[i] != NULL)
+// 	{
+//
+// 	}
+//
+// 	//set_signals(CHILD);
+// 	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
+// 	if (err_excec == -1)
+// 	{
+// 		perror("Error ejecutando comando externo con execve");
+// 		exit (127);
+// 	}
+// 	exit(0);
+// }
+
 void	execute_external(t_cmd *cmd, char **envp)
 {
-	int 	err_excec;
-
-	int i = 0;
-	while(envp[i] != NULL)
-	{
-
-	}
-
-	//set_signals(CHILD);
-	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
-	if (err_excec == -1)
-	{
-		perror("Error ejecutando comando externo con execve");
-		exit (127);
-	}
-	exit(0);
+	execve(cmd->cmd_path, cmd->cmd_args, envp);
+	perror("Error ejecutando comando externo con execve");
+	exit(EXIT_FAILURE);
 }
 
 void	redirect_in(int input_fd)
