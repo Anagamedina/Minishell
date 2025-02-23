@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 18:38:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:12:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	execute_external(t_cmd *cmd, char **envp)
 {
 	int 	err_excec;
-	
+
 	int i = 0;
 	while(envp[i] != NULL)
 	{
-		
+
 	}
-	
+
 	//set_signals(CHILD);
 	err_excec = execve(cmd->cmd_path, cmd->cmd_args, envp);
 	if (err_excec == -1)
@@ -51,15 +51,17 @@ void	redirect_out(int output_fd)
 	}
 	close(output_fd);
 }
-
 void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 {
+	int	tmp_exit_status;
+
 	if (curr_cmd->is_builtin == 1)
 	{
-		cases_builtins(mini, curr_cmd);
-		exit(0);
+		tmp_exit_status = cases_builtins(mini, curr_cmd);
+		mini->exit_status = tmp_exit_status;  // ✅ Solo se actualiza después de ejecutar
+		exit(tmp_exit_status);
 	}
-	if (curr_cmd->is_external == 1)
+	else if (curr_cmd->is_external == 1)
 	{
 		execute_external(curr_cmd, mini->envp_to_array);
 		exit(EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 10:11:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 22:48:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/22 12:40:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,30 @@ static void	process_variable(char *arg, t_list **env)
  * export abc=123  def=456
  */
 
-void	export_variable(t_cmd *curr_cmd, t_mini *mini)
+int	export_variable(t_cmd *curr_cmd, t_mini *mini)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	i = 1;
 	while (curr_cmd->cmd_args[i] != NULL)
 	{
 		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
-			error_export_syntax(curr_cmd->cmd_args[i++]);
+		{
+			error_export_syntax(curr_cmd->cmd_args[i]);
+			flag = 1;
+			i ++;
+		}
 		else
 			process_variable(curr_cmd->cmd_args[i++], &(mini->env));
 	}
 	if (mini->envp_to_array)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
+	if (flag == 1)
+		return (1);
+	return (0);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:38:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/23 12:27:09 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int	execute_commands(t_mini *mini)
 	int		input_fd;
 	int		pipe_fd[2];
 	int		i;
-	int 	child_exit_status = 0;
-	int 	status;
+	int		status;
 
 	i = 0;
 	input_fd = STDIN_FILENO;
@@ -83,7 +82,8 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		// caso echo "hello" > file.txt que no funciona bien 
+
+		// caso echo "hello" > file.txt que no funciona bien
 		// if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL)
 		// {
 		// 	cases_builtins(mini, curr_cmd);
@@ -99,31 +99,26 @@ int	execute_commands(t_mini *mini)
 		if (pid == 0)
 		{
 			handle_child(curr_cmd, mini);
-			printf("Mi PID hijo  es: %d\n", getpid());	
+			printf("Mi PID hijo es: %d\n", getpid());
+			exit(EXIT_SUCCESS);
 		}
-			
 		else
 		{
 			handle_parent(curr_cmd, pipe_fd, &input_fd);
-			printf("Mi PID padre es: %d\n", getpid());	
+			printf("Mi PID padre es: %d\n", getpid());
 		}
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
-	if (waitpid(pid, &child_exit_status, 0) == -1)
-		return (1);
-	if (WEXITSTATUS(status))
+
+	// wait all children process
+	while (waitpid(-1, &status, 0) > 0)
 	{
-		child_exit_status = WEXITSTATUS(child_exit_status);
-		if (child_exit_status != 0)
-			status = child_exit_status;
+		if (WIFEXITED(status))
+			mini->exit_status = WEXITSTATUS(status);
 	}
-	//wait_for_children(i);
-	//llamar funcion de global 
-	//set_exit_status(status);
+
 	return (TRUE);
 }
-
-
 
 /*
 void	set_exit_status(int n)

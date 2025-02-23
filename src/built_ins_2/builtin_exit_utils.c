@@ -6,12 +6,21 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 16:08:32 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/23 13:36:20 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <limits.h>
+
+
+void	cleanup_and_exit(t_mini* mini, int status)
+{
+	// free_env_list(mini->env);
+	free_exec(mini->exec);
+	free_mini(mini);
+	exit(status);
+}
 
 static	void	init_varible_atoll(int *sign, int *i, \
 		long long *result, long long *prev_result)
@@ -46,9 +55,9 @@ long long	ft_atoll(const char *str)
 				(sign == -1 && result < prev_result))
 		{
 			if (sign == 1)
-				return (LLONG_MAX);
+				return (ft_atoll(MY_LLONG_MAX));
 			else
-				return (LLONG_MIN);
+				return (ft_atoll(MY_LLONG_MIN));
 		}
 		i++;
 	}
@@ -58,5 +67,5 @@ long long	ft_atoll(const char *str)
 void	error_exit(t_mini *mini)
 {
 	ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-	ft_exit(mini, 255);
+	cleanup_and_exit(mini, 255);
 }

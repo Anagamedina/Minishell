@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:17:48 by anamedin         ###   ########.fr       */
+/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/23 13:32:18 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 16:15:14 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 12:38:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_exec		t_exec;
 //**************ENV************/
 t_list		*init_env_list(char **envp);
 t_env		*init_empty_env_node(void);
-void		print_env_list(t_list *env_list);
+int print_env_list(t_list* env_list);
 
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);
@@ -82,27 +82,34 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
 int			check_if_var_name_exist(char *var_name, t_list *env_list);
-void		export_variable(t_cmd *curr_cmd, t_mini* mini);
+int			export_variable(t_cmd *curr_cmd, t_mini* mini);
 char		*ft_strjoin_export(const char *s1, const char *s2, char c);
 
 //************ MAIN BUILTINS ********/
-void		cases_builtins(t_mini *mini, t_cmd* curr_cmd);
+int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
-void		ft_echo(t_cmd *cmd);
-void		echo_with_args(t_cmd *cmd);
+char	*expand_exit_status(t_mini *mini, char *str);
+// int			ft_echo(t_cmd *cmd);//, t_mini *mini);
+int			ft_echo(t_cmd *cmd, t_mini *mini);
 
 //************ BUILTIN_PWD.c ************/
 int			ft_pwd(t_mini *mini);
 
 //************ BUILTIN_CD.c ************/
-void		ft_cd(t_mini *mini, t_cmd *cmd);
+int			ft_cd(t_mini* mini, t_cmd* cmd);
+int			ft_cd(t_mini* mini, t_cmd* cmd);
+
+//************ BUILTIN_UNSET.c ************/
+int			ft_unset(t_list **env_list, t_cmd *cmd);
 
 //************ BUILTIN_EXIT.c ************/
-void		builtin_exit(t_cmd *cmd, t_mini *mini);
+int 		builtin_exit(t_cmd *cmd, t_mini *mini);
 long long 	ft_atoll(const char *str);
 void 		error_exit(t_mini *mini);
 int			ft_exit(t_mini *mini, int status);
+void		cleanup_and_exit(t_mini* mini, int status);
+
 //************ INIT_STRUCTUC MINISHELL ********/
 
 t_mini		*init_mini_list(char **envp);
