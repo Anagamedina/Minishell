@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 18:21:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:23:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	print_export(t_list **env_list)
 	}
 }
 
+/*
 void	update_var(char *line, t_list **env_list)
 {
 	char	*key;
@@ -129,3 +130,4 @@ void	update_var(char *line, t_list **env_list)
 	if (!env_var)
 		free(value);
 }
+*/

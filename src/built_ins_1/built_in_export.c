@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 18:18:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:26:15 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,75 +24,76 @@
 
 #include "../../includes/minishell.h"
 
-int	update_var_exist(char *var_name, char *new_value, t_list **env_list)
+int	set_variable_in_env_list(t_list **env_list, char *key, char *new_value)
 {
 	t_list	*current_node;
-	t_env	*current_var;
+	t_env	*var;
 
+	if (!env_list || !key)
+		return (0);
 	current_node = *env_list;
 	while (current_node)
 	{
-		current_var = (t_env *)current_node->content;
-		if (ft_strcmp(current_var->key, var_name) == 0)
+		var = (t_env *) current_node->content;
+		if (ft_strcmp(var->key, key) == 0)
 		{
-			free(current_var->value);
+			free(var->value);
 			if (new_value != NULL)
-				current_var->value = ft_strdup(new_value);
+				var->value = ft_strdup(new_value);
 			else
-				current_var->value = ft_strdup("");
-			return (TRUE);
+				var->value = ft_strdup("");
+			return (1);
 		}
 		current_node = current_node->next;
 	}
 	return (0);
 }
 
-int	check_if_var_name_exist(char *var_name, t_list *env_list)
+int	env_variable_exists(t_list *env_list, char *key_to_find)
 {
 	t_list	*current_node;
 	t_env	*current_var;
 
-	if (!var_name || !env_list)
+	if (!key_to_find || !env_list)
 		return (0);
 	current_node = env_list;
 	while (current_node)
 	{
 		current_var = (t_env *) current_node->content;
-		if (ft_strcmp(var_name, current_var->key) == 0)
+		if (ft_strcmp(current_var->key, key_to_find) == 0)
 			return (TRUE);
 		current_node = current_node->next;
 	}
 	return (FALSE);
 }
 
-static int	handle_existing_var(char *var_name, char *var_value, t_list **env)
+int	update_existing_env_variable(t_list **env_list, char *name, char *value)
 {
-	if (update_var_exist(var_name, var_value, env) == TRUE)
+	if (set_variable_in_env_list(env_list, name, value) == TRUE)
 	{
-		free(var_name);
-		if (var_value)
-			free(var_value);
+		free(name);
+		if (value)
+			free(value);
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-// static void	error_export_syntax(char *var_name)
 void	error_export_syntax(char *var_name)
 {
 	ft_putstr_fd("bash: export: `", 2);
 	ft_putstr_fd(var_name, 2);
-	ft_putstr_fd("`: not a valid identifier\n", 2);
+	ft_putendl_fd("`: not a valid identifier", 2);
 }
 
-static int	add_new_variable(char *var_name, char *var_value, t_list **env)
+static int	add_new_env_variable(t_list **env, char *var_name, char *var_value)
 {
 	t_list	*new_var_env;
 
 	new_var_env = create_new_env_node(var_name, var_value);
 	if (!new_var_env)
 	{
-		write(2, "Error: Failed to export variable\n", 34);
+		ft_putendl_fd("Error: Failed to export variable\n", 2);
 		free(var_name);
 		if (var_value)
 			free(var_value);
@@ -102,14 +103,12 @@ static int	add_new_variable(char *var_name, char *var_value, t_list **env)
 	return (TRUE);
 }
 
-static void	process_variable(char *arg, t_list **env_list)
+static void	add_or_update_env_variable(t_list **env_list, char *arg)
 {
 	char	*var_name;
 	char	*var_value;
 
-	// printf("arg: [%s]\n", arg);
 	var_name = get_var_name(arg);
-	// printf(" var_name: [%s]\n", var_name);
 	var_value = get_var_value(arg);
 	if (!var_name)
 	{
@@ -117,8 +116,8 @@ static void	process_variable(char *arg, t_list **env_list)
 		free(var_value);
 		return ;
 	}
-	if (!handle_existing_var(var_name, var_value, env_list))
-		add_new_variable(var_name, var_value, env_list);
+	if (!update_existing_env_variable(env_list, var_name, var_value))
+		add_new_env_variable(env_list, var_name, var_value);
 }
 
 /**
@@ -128,32 +127,30 @@ static void	process_variable(char *arg, t_list **env_list)
  * export abc=123  def=456
  */
 
-int	export_variable(t_cmd *curr_cmd, t_mini *mini)
+int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 {
 	int	i;
-	int	flag;
+	int	error_flag;
 
-	flag = 0;
+	error_flag = 0;
 	i = 1;
 	while (curr_cmd->cmd_args[i] != NULL)
 	{
-		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == 0)
+		if (!validate_syntax_name_value(curr_cmd->cmd_args[i]))
 		{
 			error_export_syntax(curr_cmd->cmd_args[i]);
-			flag = 1;
+			error_flag = 1;
 		}
 		else
-			process_variable(curr_cmd->cmd_args[i], &(mini->env));
+			add_or_update_env_variable(&(mini->env), curr_cmd->cmd_args[i]);
 		i ++;
 	}
 	if (mini->envp_to_array)
 		free_string_matrix(mini->envp_to_array);
 	mini->envp_to_array = env_list_to_array(mini->env);
 	if (!mini->envp_to_array)
-	{
 		return (1);
-	}
-	return (flag);
+	return (error_flag);
 }
 
 /**

@@ -77,7 +77,7 @@ static int cd_change_directory(char* new_path, t_mini* mini)
 	}
 	if (handle_cd_errors(new_path) == 1)
 		return (free(old_pwd), 1);
-	update_var_exist("OLDPWD", old_pwd, &(mini->env));
+	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
 	free(old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
@@ -85,7 +85,7 @@ static int cd_change_directory(char* new_path, t_mini* mini)
 		perror("cd");
 		return (1);
 	}
-	update_var_exist("PWD", new_pwd, &(mini->env));
+	set_variable_in_env_list(&(mini->env), "PWD", new_pwd);
 	free(new_pwd);
 	return (0);
 }

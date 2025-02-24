@@ -80,9 +80,9 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 //************** BUILT_IN_export.c********/
 
-int			update_var_exist(char *var_name, char *new_value, t_list **env_list);
-int			check_if_var_name_exist(char *var_name, t_list *env_list);
-int			export_variable(t_cmd *curr_cmd, t_mini* mini);
+int			set_variable_in_env_list(t_list **env_list, char *key, char *new_value);
+int			env_variable_exists(t_list *env_list, char *key_to_find);
+int			ft_export(t_cmd *curr_cmd, t_mini* mini);
 char		*ft_strjoin_export(const char *s1, const char *s2, char c);
 
 //************ MAIN BUILTINS ********/

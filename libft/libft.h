@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:30:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/11 19:13:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:05:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void			*ft_memset(void *b, int c, size_t len);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putstr_fd(char *s, int fd);
+void			ft_putendl_fd(char *s, int fd);
 
 /* ************************************************************************** */
 /*                                 STRING                                     */

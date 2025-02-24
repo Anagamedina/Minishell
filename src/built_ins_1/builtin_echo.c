@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 12:04:52 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/24 20:26:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,17 @@ int	ft_echo(t_cmd *cmd, t_mini *mini)
 		expanded_arg = expand_exit_status(mini, cmd->cmd_args[i]);
 		if (expanded_arg)
 		{
-			printf("%s", expanded_arg);
+			// printf("%s", expanded_arg);
+			ft_putstr_fd(expanded_arg, 1);
 			free(expanded_arg);
 		}
 		if (cmd->cmd_args[i + 1])
-			printf(" ");
+			write(1, " ", 1);
+			// printf(" ");
 		i ++;
 	}
 	if (!no_newline)
-		printf("\n");
+		// printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }

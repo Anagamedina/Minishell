@@ -46,7 +46,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	if (!env_list || !*env_list)
 		return ;
 	// si OLD PWD no existe, se crea y se agrega a la lista de environment
-	if (!check_if_var_name_exist(OLDPWD_ENV, *env_list))
+	if (!env_variable_exists(*env_list, OLDPWD_ENV))
 	{
 		new_node = create_new_env_node(OLDPWD_ENV, NULL);
 		if (new_node)
@@ -55,7 +55,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 			perror("Error: Failed to create OLDPWD");
 	}
 
-	if (!check_if_var_name_exist(PATH_ENV, *env_list))
+	if (!env_variable_exists(*env_list, PATH_ENV))
 	{
 		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"));
 		if (new_node)
@@ -64,7 +64,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 			perror("Error: Failed to create PATH");
 	}
 
-	if (!check_if_var_name_exist(HOME_ENV, *env_list))
+	if (!env_variable_exists(*env_list, HOME_ENV))
 	{
 		// home = getenv("HOME");
 		home_dir = get_variable_in_env_list(*env_list, HOME_ENV);
@@ -86,7 +86,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	}
 
 	// Si USER no existe, obtenerlo del sistema
-	if (!check_if_var_name_exist("USER", *env_list))
+	if (!env_variable_exists(*env_list, "USER"))
 	{
 		user = getenv("USER");
 		if (!user)
@@ -100,7 +100,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 
 	if (!shell_level || shell_level[0] == '-')
 	{
-		if (!update_var_exist(SHLVL, "0", env_list))
+		if (!set_variable_in_env_list(env_list, SHLVL, "0"))
 		{
 			new_node = create_new_env_node(SHLVL, "0");
 			if (new_node)
@@ -121,7 +121,7 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
     		new_shlvl = ft_itoa(shlvl + 1);
     	if (new_shlvl)
     	{
-			if (!update_var_exist(SHLVL, new_shlvl, env_list))
+			if (!set_variable_in_env_list(env_list, SHLVL, new_shlvl))
 				perror("Error: Failed to update SHLVL");
     		free(new_shlvl);
     	}
