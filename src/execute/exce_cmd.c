@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 20:35:07 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/24 21:32:42 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,21 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 int	execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd)
 {
 	int saved_stdout = -1;
-
-	// Si hay redirección de salida, redirigir antes de ejecutar el builtin
 	if (curr_cmd->output_fd != STDOUT_FILENO)
 	{
-		saved_stdout = dup(STDOUT_FILENO);  // Guardar stdout original
+		saved_stdout = dup(STDOUT_FILENO);
 		if (saved_stdout == -1)
 			return (perror("Error guardando stdouteooof"), FALSE);
 		if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
 			return (perror("Error redirigiendo salidaeooof"), FALSE);
-		close(curr_cmd->output_fd);  // Cerrar el FD de salida original
+		close(curr_cmd->output_fd);
 	}
-
-	// Ejecutar el builtin normalmente
 	cases_builtins(mini, curr_cmd);
-
-	// Restaurar stdout original si fue cambiado
 	if (saved_stdout != -1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 	}
-
 	return (TRUE);
 }
 
@@ -91,10 +84,7 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		// Si es el último comando y es un builtin, ejecutarlo en el padre con redirecciones
-
-		// Si es el último comando, un builtin y tiene redirección, ejecutarlo con la función nueva
-		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL && curr_cmd->redir_list)
+		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL && curr_cmd->redir_list != NULL)
 			return (execute_builtin_with_redirects(mini, curr_cmd));
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);
