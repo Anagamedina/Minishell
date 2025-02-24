@@ -6,29 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 17:42:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:35:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
-{
-	if (!curr_cmd->last_cmd)
-	{
-		if (pipe(pipe_fd) == -1)
-		{
-			perror("Error creando pipe");
-			exit(EXIT_FAILURE);
-		}
-		curr_cmd->output_fd = pipe_fd[1];
-	}
-	else
-	{
-		curr_cmd->output_fd = STDOUT_FILENO;
-	}
-	curr_cmd->input_fd = *input_fd;
-}
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
@@ -50,7 +32,7 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	execute_builtin_or_external(curr_cmd, mini);
 }
 
-static void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
+void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO)
 		close(curr_cmd->input_fd);
@@ -65,6 +47,65 @@ static void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(pipe_fd[0]);
 }
 
+
+int	execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd)
+{
+	int saved_stdout = -1;
+
+	// Si hay redirección de salida, redirigir antes de ejecutar el builtin
+	if (curr_cmd->output_fd != STDOUT_FILENO)
+	{
+		saved_stdout = dup(STDOUT_FILENO);  // Guardar stdout original
+		if (saved_stdout == -1)
+			return (perror("Error guardando stdouteooof"), FALSE);
+		if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
+			return (perror("Error redirigiendo salidaeooof"), FALSE);
+		close(curr_cmd->output_fd);  // Cerrar el FD de salida original
+	}
+
+	// Ejecutar el builtin normalmente
+	cases_builtins(mini, curr_cmd);
+
+	// Restaurar stdout original si fue cambiado
+	if (saved_stdout != -1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+
+	return (TRUE);
+}
+
+int	execute_commands(t_mini *mini)
+{
+	t_list	*t_list_exec_cmd;
+	t_cmd	*curr_cmd;
+	int		input_fd;
+	int		pipe_fd[2];
+	int		i;
+
+	i = 0;
+	input_fd = STDIN_FILENO;
+	t_list_exec_cmd = mini->exec->first_cmd;
+	while (t_list_exec_cmd)
+	{
+		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
+		curr_cmd->cmd_id = i++;
+		// Si es el último comando y es un builtin, ejecutarlo en el padre con redirecciones
+
+		// Si es el último comando, un builtin y tiene redirección, ejecutarlo con la función nueva
+		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL && curr_cmd->redir_list)
+			return (execute_builtin_with_redirects(mini, curr_cmd));
+		setup_fds(curr_cmd, pipe_fd, &input_fd);
+		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);
+		t_list_exec_cmd = t_list_exec_cmd->next;
+	}
+	wait_children(mini);
+	return (TRUE);
+}
+
+
+/*
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;
@@ -83,14 +124,11 @@ int	execute_commands(t_mini *mini)
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
 
-		// caso no works: echo "hello" > file.txt que no funciona bien
-		/*
 		if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL)
 		{
 			cases_builtins(mini, curr_cmd);
 			return (TRUE);
 		}
-		*/
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		pid = fork();
 		if (pid < 0)
@@ -120,10 +158,4 @@ int	execute_commands(t_mini *mini)
 	}
 
 	return (TRUE);
-}
-
-/*
-void	set_exit_status(int n)
-{
-	g_get_signal = n;
 }*/

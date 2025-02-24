@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 13:32:18 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/24 20:29:35 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,7 @@ t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
 void 		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
 int			handle_output_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			handle_input_redirection(t_cmd *cmd, t_redir *curr_redir);
+int	execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd);
 
 //*************HEREDOC**************/
 int 	heredoc(t_cmd *cmd);
@@ -321,8 +322,10 @@ void 	redirect_in(int input_fd);
 int		create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
 int		write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
 char 	*expand_variables(char *line);
-
-
+void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
+void	wait_children(t_mini *mini);
+void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 //*************SIGNALS**************/
 
 //*************signals.c**************/

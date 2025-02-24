@@ -25,6 +25,7 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
+
 int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
 	if (cmd->output_fd != STDIN_FILENO)
