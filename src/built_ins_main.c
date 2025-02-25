@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 22:42:47 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 12:46:33 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 
 int	cases_builtins(t_mini* mini, t_cmd* curr_cmd)
 {
-	int	exit_status = -5;
+	int	exit_status;
 
+	exit_status = -1;
 	if (ft_strcmp(curr_cmd->cmd, "pwd") == 0)
 		exit_status = ft_pwd(mini);
 	else if (ft_strcmp(curr_cmd->cmd, "echo") == 0)

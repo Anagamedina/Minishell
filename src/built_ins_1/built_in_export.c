@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 00:54:03 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 14:46:33 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,60 @@ static int	add_new_env_variable(t_list **env, char *var_name, char *var_value)
 	return (TRUE);
 }
 
+static char	*get_var_name_append(char *arg)
+{
+	int		i;
+	char	*var_name;
+
+	i = 0;
+	while (arg[i] && arg[i] != '+' && arg[i] != '=')
+		i++;
+
+	var_name = ft_substr(arg, 0, i);
+	return (var_name);
+}
+
+static char	*get_var_value_append(char *arg)
+{
+	char	*value_start;
+	char	*var_value;
+
+	value_start = ft_strchr(arg, '=');
+	if (!value_start)
+		return (NULL);
+	var_value = ft_strdup(value_start + 1);
+	return (var_value);
+}
+
+static void	add_or_update_env_variable(t_list **env_list, char *arg)
+{
+	char	*var_name;
+	char	*var_value;
+	int		append_flag;
+
+	append_flag = 0;
+	var_name = get_var_name(arg);
+	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
+	{
+		append_flag = 1;
+		var_name = get_var_name_append(arg);
+		var_value = get_var_value_append(arg);
+	}
+	else
+		var_value = get_var_value(arg);
+	if (!var_name)
+	{
+		error_export_syntax(arg);
+		free(var_value);
+		return ;
+	}
+	if (append_flag == 1)
+		update_existing_env_variable(env_list, var_name, var_name);
+	else if (!update_existing_env_variable(env_list, var_name, var_value))
+		add_new_env_variable(env_list, var_name, var_value);
+}
+
+/*
 static void	add_or_update_env_variable(t_list **env_list, char *arg)
 {
 	char	*var_name;
@@ -119,7 +173,7 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 	if (!update_existing_env_variable(env_list, var_name, var_value))
 		add_new_env_variable(env_list, var_name, var_value);
 }
-
+*/
 /**
  *
  * export abc

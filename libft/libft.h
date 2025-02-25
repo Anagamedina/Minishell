@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 11:30:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/24 18:05:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:00:41 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int				ft_atoi(const char *str);
 char			*ft_itoa(int n);
 size_t			ft_strlen(const char *str);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+char			*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char			*ft_substr(const char *s, unsigned int start, size_t len);
 char			*ft_strchr(const char *s, int c);
 int				ft_strchr_true(const char *s, char c);
