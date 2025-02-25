@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 21:26:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:54:03 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 	i = 1;
 	while (curr_cmd->cmd_args[i] != NULL)
 	{
-		if (!validate_syntax_name_value(curr_cmd->cmd_args[i]))
+		if (validate_syntax_name_value(curr_cmd->cmd_args[i]) == FALSE)
 		{
 			error_export_syntax(curr_cmd->cmd_args[i]);
 			error_flag = 1;

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/23 18:17:59 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:49:14 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ int	ft_env(t_list* env_list)
 	while (current)
 	{
 		env_var = (t_env *) current->content;
-		// && ft_strcmp(env_var->value, "") == 0)
-		if ((!env_var || !env_var->key || !env_var->value))
+		if ((!env_var || !env_var->key || (ft_strcmp(env_var->value, "") == 0) || !env_var->value))
 		{
 			current = current->next;
 			continue ;

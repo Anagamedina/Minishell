@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 20:23:03 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 01:37:37 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,32 @@ void	print_export(t_list **env_list)
 	t_env	*env_var;
 
 	if (!env_list || !*env_list)
+		return;
+
+	tmp = *env_list;
+	while (tmp)
+	{
+		env_var = (t_env *)(tmp->content);
+		if (env_var && env_var->key)
+		{
+			printf("declare -x %s", env_var->key);
+			if (env_var->value)
+			{
+				if (env_var->value[0] != '\0')
+					printf("=\"%s\"", env_var->value);
+			}
+			printf("\n");
+		}
+		tmp = tmp->next;
+	}
+}
+/*
+void	print_export(t_list **env_list)
+{
+	t_list	*tmp;
+	t_env	*env_var;
+
+	if (!env_list || !*env_list)
 		return ;
 	tmp = *env_list;
 	while (tmp != NULL)
@@ -109,6 +135,7 @@ void	print_export(t_list **env_list)
 		tmp = tmp->next;
 	}
 }
+*/
 
 /*
 void	update_var(char *line, t_list **env_list)

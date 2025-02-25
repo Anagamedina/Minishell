@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:58:35 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 19:41:42 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 14:04:01 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 17:58:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:44:56 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +26,6 @@ t_env *iterate_env(t_list *mini_env, t_env *env_var)
 		}
 		mini_env = mini_env->next;
 	}
-}
-*/
-
-/*
-static void	set_variable_in_env_list(t_list *env_list, char *key, char *new_value)
-{
-	t_list	*curr_node;
-	t_env	*curr_env;
-
-	if (!env_list || !key || !new_value)
-		return ;
-	curr_node = env_list;
-	while (curr_node)
-	{
-		curr_env = (t_env *)curr_node->content;
-		if (ft_strcmp(curr_env->key, key) == 0)
-		{
-			free(curr_env->value);
-			curr_env->value = ft_strdup(new_value);
-			return ;
-		}
-		curr_node = curr_node->next;
-	}
-    // add_env_variable(env_list, key, new_value);
 }
 */
 
@@ -92,11 +56,8 @@ int	ft_pwd(t_mini *mini)
 			ft_putendl_fd(env_pwd, 1);
 			return (1);
 		}
-		else
-		{
-			ft_putendl_fd("Error: PWD not set", 2);
-			return (1);
-		}
+		ft_putendl_fd("Error: PWD not set", 2);
+		return (1);
 	}
 	ft_putendl_fd(curr_dir, 1);
 	set_variable_in_env_list((&mini->env), "PWD", curr_dir);
