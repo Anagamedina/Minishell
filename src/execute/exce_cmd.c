@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 20:35:07 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 10:42:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,45 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 }
 
 
+int handle_redirection_without_command(t_cmd *cmd)
+{
+	t_list *redir_node;
+	t_redir *curr_redir;
+
+	if (!cmd->redir_list)
+		return (FALSE);
+
+	printf("DEBUG: No hay comando, pero hay redirecciones. Creando archivos vacíos...\n");
+
+	redir_node = cmd->redir_list;
+	while (redir_node)
+	{
+		curr_redir = (t_redir *)redir_node->content;
+		if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
+		{
+			int fd = open_file(curr_redir->filename, curr_redir->type);
+			if (fd == -1)
+				perror("Error creando archivo vacío");
+			else
+				close(fd);
+		}
+		redir_node = redir_node->next;
+	}
+	return (TRUE);
+}
+
+
+
 int pre_executor(t_mini *mini, t_cmd *cmd)
 {
 	int saved_stdout = -1;
 
-	// if (!cmd->cmd_args || !cmd->cmd_args[0])
-	// 	return (FALSE);
-	if (!is_builtin_command(cmd->cmd_args[0]))
+	if (!cmd)
+	{
+		if (handle_redirection_without_command(cmd) == TRUE)
+			return (TRUE);
+	}
+	if (!is_builtin_command(cmd->cmd))
 		return (FALSE);
 	if (!cmd->redir_list)
 	{
