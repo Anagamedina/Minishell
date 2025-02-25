@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/24 21:32:42 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/24 20:35:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,72 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 }
 
 
-int	execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd)
+/*void execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd)
 {
-	int saved_stdout = -1;
-	if (curr_cmd->output_fd != STDOUT_FILENO)
+
+	//heredoc(curr_cmd);
+	if (apply_redirections(curr_cmd) > 0)
 	{
-		saved_stdout = dup(STDOUT_FILENO);
+		if (curr_cmd->input_fd != STDIN_FILENO)
+			redirect_in(curr_cmd->input_fd);
+		if (curr_cmd->output_fd != STDOUT_FILENO)
+			redirect_out(curr_cmd->output_fd);
+	}
+	else
+	{
+		saved_stdout = dup(STDOUT_FILENO);  // Guardar stdout original
 		if (saved_stdout == -1)
 			return (perror("Error guardando stdouteooof"), FALSE);
 		if (dup2(curr_cmd->output_fd, STDOUT_FILENO) == -1)
 			return (perror("Error redirigiendo salidaeooof"), FALSE);
-		close(curr_cmd->output_fd);
+		close(curr_cmd->output_fd);  // Cerrar el FD de salida original
 	}
+
+	// Ejecutar el builtin normalmente
 	cases_builtins(mini, curr_cmd);
+
+	// return (TRUE);
+}
+*/
+
+// int execute_builtin_with_redirects(t_mini *mini, t_cmd *curr_cmd)
+// {
+// 	cases_builtins(mini, curr_cmd);
+// 	return (TRUE);
+// }
+
+int pre_executor(t_mini *mini, t_cmd *cmd)
+{
+	int saved_stdout = -1;
+
+	// if (!cmd->cmd_args || !cmd->cmd_args[0])
+	// 	return (FALSE);
+	if (!is_builtin_command(cmd->cmd_args[0]))
+		return (FALSE);
+	if (!cmd->redir_list)
+	{
+		cases_builtins(mini, cmd);
+		return (TRUE);
+	}
+	if (apply_redirections(cmd) == -1)
+		return (FALSE);  // Si falla la redirección, no ejecutar el builtin
+
+	if (cmd->output_fd != STDOUT_FILENO)
+	{
+		saved_stdout = dup(STDOUT_FILENO);
+		if (saved_stdout == -1)
+			return (perror("Error guardando stdout"), FALSE);
+		if (dup2(cmd->output_fd, STDOUT_FILENO) == -1)
+			return (perror("Error redirigiendo salida"), FALSE);
+		close(cmd->output_fd);
+	}
+	cases_builtins(mini, cmd);
 	if (saved_stdout != -1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 	}
+
 	return (TRUE);
 }
 
@@ -84,8 +132,14 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL && curr_cmd->redir_list != NULL)
-			return (execute_builtin_with_redirects(mini, curr_cmd));
+		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL)
+		{
+           if (pre_executor(mini, curr_cmd) == TRUE)
+           {
+	           t_list_exec_cmd = t_list_exec_cmd->next;
+               continue;
+           }
+		}
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);
 		t_list_exec_cmd = t_list_exec_cmd->next;

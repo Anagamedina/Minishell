@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:23:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:58:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	check_file(t_tokens *curr_token, t_tokens *curr_next)
+/*static void	check_file(t_tokens *curr_token, t_tokens *curr_next)
 {
 	int	fd;
 
@@ -49,6 +49,9 @@ void	parse_redir(t_mini *mini)
 		curr_token_next = (t_tokens *)token_list->next->content;
 		if (!curr_token_next || !curr_token_next->str)
 			return ;
+		if (is_builtin_command(curr_token->str) == TRUE && is_redir(curr_token_next) == TRUE)
+			return ;
+		//si funciona hemos de hacer lo mismo con los comandos externos
 		if (is_redir(curr_token) == TRUE)
 		{
 			if (curr_token_next->type_token != FILENAME)
@@ -57,4 +60,6 @@ void	parse_redir(t_mini *mini)
 		}
 		token_list = token_list->next;
 	}
-}
+}*/
+
+
