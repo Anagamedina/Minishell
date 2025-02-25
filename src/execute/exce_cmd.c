@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 10:42:03 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:00:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,34 @@ int pre_executor(t_mini *mini, t_cmd *cmd)
 {
 	int saved_stdout = -1;
 
-	if (!cmd)
+	// Si el comando no tiene argumentos y solo hay redirección, manejarlo sin ejecutar un comando
+	if (!cmd->cmd_args || !cmd->cmd_args[0])
 	{
 		if (handle_redirection_without_command(cmd) == TRUE)
 			return (TRUE);
+		return (FALSE);
 	}
+
+	// Si el comando está en un pipeline, NO ejecutarlo en el padre
+	if (cmd->has_pipe == TRUE)
+		return (FALSE);
+
+	// Si NO es un builtin, continuar con el flujo normal
 	if (!is_builtin_command(cmd->cmd))
 		return (FALSE);
+
+	// Si es un builtin y NO tiene redirección, ejecutarlo directamente
 	if (!cmd->redir_list)
 	{
 		cases_builtins(mini, cmd);
 		return (TRUE);
 	}
+
+	// Si es un builtin y TIENE redirección, manejarlo en el padre
 	if (apply_redirections(cmd) == -1)
 		return (FALSE);
 
+	// Guardar stdout si hay redirección de salida
 	if (cmd->output_fd != STDOUT_FILENO)
 	{
 		saved_stdout = dup(STDOUT_FILENO);
@@ -105,7 +118,11 @@ int pre_executor(t_mini *mini, t_cmd *cmd)
 			return (perror("Error redirigiendo salida"), FALSE);
 		close(cmd->output_fd);
 	}
+
+	// Ejecutar el builtin en el padre
 	cases_builtins(mini, cmd);
+
+	// Restaurar stdout original si fue cambiado
 	if (saved_stdout != -1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
@@ -114,6 +131,7 @@ int pre_executor(t_mini *mini, t_cmd *cmd)
 
 	return (TRUE);
 }
+
 
 int	execute_commands(t_mini *mini)
 {
@@ -130,13 +148,15 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-		if (curr_cmd->is_builtin && t_list_exec_cmd->next == NULL)
+
+		if (curr_cmd->is_builtin == 1 && !curr_cmd->has_pipe)
 		{
-           if (pre_executor(mini, curr_cmd) == TRUE)
-           {
+			// setup_fds(curr_cmd, pipe_fd, &input_fd);
+			if (pre_executor(mini, curr_cmd) == TRUE)
+			{
 	           t_list_exec_cmd = t_list_exec_cmd->next;
                continue;
-           }
+			}
 		}
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);

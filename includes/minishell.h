@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 14:42:14 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:19:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_cmd
 	int				input_fd;
 	int				output_fd;
 	//int			exit_status;
+	int				has_pipe;
 	int				last_cmd;
 	t_list			*redir_list;
 	struct s_cmd	*next;
