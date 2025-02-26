@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:47:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:10:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 
 	append_flag = 0;
 	var_name = get_var_name(arg);
-	var_value = get_var_value(arg);
 	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
 	{
 		append_flag = 1;
 		var_name = get_var_name_append(arg);
 		var_value = get_var_value_append(arg);
 	}
+	var_value = get_var_value(arg);
 	if (!var_name)
 	{
 		error_export_syntax(arg);

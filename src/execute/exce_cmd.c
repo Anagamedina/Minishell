@@ -149,7 +149,7 @@ int	execute_commands(t_mini *mini)
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
 
-		if (curr_cmd->is_builtin == 1 && !curr_cmd->has_pipe)
+		// if (curr_cmd->is_builtin == 1 && !curr_cmd->has_pipe)
 		// caso no works: echo "hello" > file.txt que no funciona bien
 		if (curr_cmd->is_builtin == 1 && t_list_exec_cmd->next == NULL)
 		{
