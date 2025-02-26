@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 00:49:14 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 19:30:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	ft_env(t_list* env_list)
 	while (current)
 	{
 		env_var = (t_env *) current->content;
-		if ((!env_var || !env_var->key || (ft_strcmp(env_var->value, "") == 0) || !env_var->value))
+		if (!env_var || !env_var->key || !env_var->value || ft_strcmp(env_var->value, "") == 0)
 		{
 			current = current->next;
 			continue ;
@@ -120,63 +120,3 @@ int	ft_env(t_list* env_list)
 	}
 	return (0);
 }
-
-
-/*int	print_env_list(t_list* env_list)
-{
-	t_list	*current;
-	t_env	*env_var;
-
-	if (!env_list)
-		return (1);
-	current = env_list;
-	while (current)
-	{
-		env_var = (t_env *) current->content;
-		if (!env_var || !env_var->key)
-		{
-			current = current->next;
-			continue ;
-		}
-		if (env_var->value)
-		{
-			if (ft_strcmp(env_var->value, "") == 0)
-				break ;
-			printf("%s=%s\n", env_var->key, env_var->value);
-		}
-		else
-			printf("%s\n", env_var->key);
-		current = current->next;
-	}
-	return (0);
-}*/
-/*
-void	print_env_list(t_list *env_list)
-{
-	t_list	*current;
-	t_env	*env_var;
-
-	if (!env_list)
-		return (1);
-	current = env_list;
-	while (current)
-	{
-		env_var = (t_env *)current->content;
-		if (!env_var || !env_var->key)
-		{
-			current = current->next;
-			continue ;
-		}
-		if (env_var->value)
-		{
-			if (ft_strcmp(env_var->value, "") == 0)
-				break ;
-			else
-				printf("%s=%s\n", env_var->key, env_var->value);
-		}
-		else
-			printf("%s\n", env_var->key);
-		current = current->next;
-	}
-}
-*/

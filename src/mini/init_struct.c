@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 19:43:14 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_struct.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 21:28:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/12 10:56:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:27:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +29,28 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	char	*new_shlvl;
 	char	*home_dir;
 	char	*user;
+	char	*current_dir;
 
 	new_node = NULL;
 	if (!env_list || !*env_list)
 		return ;
 	// si OLD PWD no existe, se crea y se agrega a la lista de environment
-	if (!env_variable_exists(*env_list, OLDPWD_ENV))
+	if (!env_variable_exists(*env_list, PWD_ENV))
 	{
-		new_node = create_new_env_node(OLDPWD_ENV, NULL);
+		current_dir = getcwd(NULL, 0);
+		if (!current_dir)
+			current_dir = ft_strdup("/");
+		new_node = create_new_env_node(PWD_ENV, current_dir);
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
 			perror("Error: Failed to create OLDPWD");
+		free(current_dir);
 	}
 
 	if (!env_variable_exists(*env_list, PATH_ENV))
 	{
-		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup("/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"));
+		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup(PATH_DEFAULT));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
 		else
@@ -66,7 +59,6 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 
 	if (!env_variable_exists(*env_list, HOME_ENV))
 	{
-		// home = getenv("HOME");
 		home_dir = get_variable_in_env_list(*env_list, HOME_ENV);
 		if (home_dir)
 			home_dir = ft_strdup(home_dir);

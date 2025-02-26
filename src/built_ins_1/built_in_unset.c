@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:55:30 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:49:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:52:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,22 @@ void	unset_variable(t_list **env_list, char *var_name)
 int	ft_unset(t_list **env_list, t_cmd *cmd)
 {
 	int	i;
+	// int	unset_pwd;
+	int	unset_path;
 
+	// unset_pwd = 0;
+	unset_path = 0;
 	i = 1;
 	while (cmd->cmd_args[i])
 	{
+		// if (ft_strcmp(cmd->cmd_args[i], PWD_ENV) == 0)
+		// 	unset_pwd = 1;
+		if (ft_strcmp(cmd->cmd_args[i], PATH_ENV) == 0)
+			unset_path = 1;
 		unset_variable(env_list, cmd->cmd_args[i]);
 		i ++;
 	}
+	if (unset_path)
+		ft_putendl_fd("Warning: PATH variable unset, external may not work", 2);
 	return (0);
 }

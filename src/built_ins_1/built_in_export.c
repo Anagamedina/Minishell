@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 14:46:33 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 23:07:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_variable_in_env_list(t_list **env_list, char *key, char *new_value)
 	t_list	*current_node;
 	t_env	*var;
 
-	if (!env_list || !key)
+	if (!env_list || !key || !new_value)
 		return (0);
 	current_node = *env_list;
 	while (current_node)
@@ -67,15 +67,33 @@ int	env_variable_exists(t_list *env_list, char *key_to_find)
 	return (FALSE);
 }
 
-int	update_existing_env_variable(t_list **env_list, char *name, char *value)
+int	update_existing_env_variable(t_list **env_list, char *name, char *value, int flag_append)
 {
-	if (set_variable_in_env_list(env_list, name, value) == TRUE)
+	char	*new_value;
+	char	*existing_value;
+
+	if (!env_list || !name)
+		return (FALSE);
+	existing_value = get_variable_in_env_list(*env_list, name);
+	if (flag_append == 1 && existing_value)
+	{
+		new_value = ft_strjoin(existing_value, value);
+		if (!new_value)
+			return (FALSE);
+	}
+	else
+		new_value = value;
+	if (set_variable_in_env_list(env_list, name, new_value) == TRUE)
 	{
 		free(name);
-		if (value)
+		if (value && flag_append == 0)
 			free(value);
+		if (flag_append == 1)
+			free(new_value);
 		return (TRUE);
 	}
+	if (flag_append == 1)
+		free(new_value);
 	return (FALSE);
 }
 
@@ -150,30 +168,17 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 		free(var_value);
 		return ;
 	}
+	if (!ft_strchr(arg, '='))
+		var_value = NULL;
 	if (append_flag == 1)
-		update_existing_env_variable(env_list, var_name, var_name);
-	else if (!update_existing_env_variable(env_list, var_name, var_value))
-		add_new_env_variable(env_list, var_name, var_value);
-}
-
-/*
-static void	add_or_update_env_variable(t_list **env_list, char *arg)
-{
-	char	*var_name;
-	char	*var_value;
-
-	var_name = get_var_name(arg);
-	var_value = get_var_value(arg);
-	if (!var_name)
 	{
-		error_export_syntax(arg);
-		free(var_value);
-		return ;
+		if (!update_existing_env_variable(env_list, var_name, var_value, append_flag))
+			add_new_env_variable(env_list, var_name, var_value);
 	}
-	if (!update_existing_env_variable(env_list, var_name, var_value))
+	else if (!update_existing_env_variable(env_list, var_name, var_value, 0))
 		add_new_env_variable(env_list, var_name, var_value);
 }
-*/
+
 /**
  *
  * export abc

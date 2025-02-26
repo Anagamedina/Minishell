@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 22:23:32 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/24 22:23:32 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/25 21:17:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 #include "../../includes/minishell.h"
 
+/*
 int	validate_var_name(const char *line)
 {
 	int	i;
@@ -39,6 +40,31 @@ int	validate_var_name(const char *line)
 	}
 	return (TRUE);
 }
+*/
+
+int	validate_var_name(const char *line)
+{
+	int	i;
+
+	if (line[0] == '+' || line[0] == '=')
+		return (FALSE);
+
+	if (!(ft_isalpha(line[0]) || line[0] == '_'))
+		return (FALSE);
+	i = 1;
+	while (line[i] != '\0' && line[i] != '=' && !(line[i] == '+' && line[i + 1] == '='))
+	{
+		if (!(ft_isalnum(line[i]) || line[i] == '_'))
+			return (FALSE);
+		i ++;
+	}
+	if (line[i] == '+' && line[i + 1] == '=')
+	{
+		if (line[i + 2] == '\0')
+			return (FALSE);
+	}
+	return (TRUE);
+}
 
 int	validate_var_value(const char *line)
 {
@@ -47,7 +73,9 @@ int	validate_var_value(const char *line)
 	if (!line)
 		return (FALSE);
 	i = 0;
-	while (line[i] != '=' && line[i] != '\0')
+	while (line[i] != '=' && line[i] != '+' && line[i] != '\0')
+		i ++;
+	if (line[i] == '+' && line[i + 1] == '=')
 		i ++;
 	if (line[i] == '\0')
 		return (TRUE);

@@ -42,7 +42,7 @@
 # define HOME_ENV "HOME"
 # define USER_ENV "USER"
 # define PATH_ENV "PATH"
-# define PATH_VALUE "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
+# define PATH_DEFAULT "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
 # define OLDPWD_ENV "OLDPWD"
 # define SHLVL "SHLVL"
 
