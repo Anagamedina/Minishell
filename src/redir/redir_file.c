@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 17:43:14 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:37:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,34 +79,3 @@ int	apply_redirections(t_cmd *cmd)
 	}
 	return (redirection_applied);
 }
-
-// int	apply_redirections(t_cmd *cmd)
-// {
-// 	t_list	*redir_node;
-// 	t_redir	*curr_redir;
-// 	int		redirection_applied;
-
-// 	redir_node = cmd->redir_list;
-// 	redirection_applied = 0;
-// 	while (redir_node)
-// 	{
-// 		curr_redir = (t_redir *)redir_node->content;
-// 		if (curr_redir->type == HEREDOC)
-// 		{
-// 			if (handle_input_redirection(cmd, curr_redir) == TRUE)
-// 				redirection_applied = 1;
-// 		}
-// 		if (curr_redir->type == REDIR_IN)
-// 		{
-// 			if (handle_input_redirection(cmd, curr_redir) == TRUE)
-// 				redirection_applied = 1;
-// 		}
-// 		if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
-// 		{
-// 			if (handle_output_redirection(cmd, curr_redir) == TRUE)
-// 				redirection_applied = 1;
-// 		}
-// 		redir_node = redir_node->next;
-// 	}
-// 	return (redirection_applied);
-// }
