@@ -35,7 +35,7 @@ LIBFT_DIR = libft
 MINISHELL_H = includes/minishell.h 
 TESTING_H = testing/testing.h
 
-SRC =	$(SRC_MINI)/init_struct.c \
+SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_MINI)/env_setup.c \
 		$(SRC_INPUT)/input.c \
 		$(SRC_DIR)/ft_string_utils.c \
@@ -58,6 +58,8 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_BUILTINS1)/built_in_unset.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
 		$(SRC_BUILTINS1)/builtin_echo.c \
+		$(SRC_BUILTINS1)/builtin_part_one_utils.c \
+		$(SRC_BUILTINS1)/export_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \

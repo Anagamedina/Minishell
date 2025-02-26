@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:37:51 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:47:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,3 @@ int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 		return (1);
 	return (error_flag);
 }
-

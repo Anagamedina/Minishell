@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 13:40:36 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/26 21:03:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,12 @@ t_list	*create_new_env_node(char *key, char *value)
 	else
 		new_var->value = NULL;
 	if (value != NULL)
-		new_var->full_var = ft_strjoin_export(key, value, '=');
+		new_var->full_var = ft_strjoin_export(key, '=', value);
 	else
-        new_var->full_var = ft_strdup(key);
+		new_var->full_var = ft_strdup(key);
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
-	{
-		free_env(new_var);
-		return (NULL);
-	}
+		return (free_env(new_var), NULL);
 	return (new_node);
 }
 
@@ -65,8 +62,7 @@ void	print_export(t_list **env_list)
 	t_env	*env_var;
 
 	if (!env_list || !*env_list)
-		return;
-
+		return ;
 	tmp = *env_list;
 	while (tmp)
 	{

@@ -83,7 +83,7 @@ t_env		*find_env_var(t_list *env_list, char *key);
 int			set_variable_in_env_list(t_list **env_list, char *key, char *new_value);
 int			env_variable_exists(t_list *env_list, char *key_to_find);
 int			ft_export(t_cmd *curr_cmd, t_mini* mini);
-char		*ft_strjoin_export(const char *s1, const char *s2, char c);
+char		*ft_strjoin_export(const char *s1, char c, const char *s2);
 
 //************ EXPORT_UTILS.C **********/
 
@@ -91,7 +91,7 @@ int			update_env_var_exist(t_list **env_lst, char *name, char *value, int flag);
 int			add_new_env_variable(t_list **env, char *var_name, char *var_value);
 
 //************ BUILTINS_PART_ONE_UTILS.C **********/
-char	*ft_strjoin_export(const char *s1, const char *s2, char c);
+char	*ft_strjoin_export(const char *s1, char c, const char *s2);
 //************ MAIN BUILTINS ********/
 int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
 

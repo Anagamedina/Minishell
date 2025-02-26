@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_part_one_utils.c                          :+:      :+:    :+:   */
+/*   builtin_part_one_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,7 +19,7 @@
  * A string in the format `s1=c+s2`.
  */
 
-char	*ft_strjoin_export(const char *s1, const char *s2, char c)
+char	*ft_strjoin_export(const char *s1, char c, const char *s2)
 {
 	char	*result;
 	size_t	len1;
