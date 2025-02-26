@@ -6,11 +6,24 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 00:27:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:12:38 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	update_last_executed_command(t_list **env_list, char *last_cmd)
+{
+	if (!last_cmd)
+		return ;
+	// Actualizar la variable `_` con el último comando ejecutado
+	set_variable_in_env_list(env_list, "_", last_cmd);
+}
+
+void check_pwd_exist_in_env_list(t_list **env_list)
+{
+
+}
 
 /**
  *
@@ -27,14 +40,13 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 	t_list	*new_node;
 	int		shlvl;
 	char	*new_shlvl;
-	char	*home_dir;
-	char	*user;
 	char	*current_dir;
+	char	*env_value;
 
 	new_node = NULL;
 	if (!env_list || !*env_list)
 		return ;
-	// si OLD PWD no existe, se crea y se agrega a la lista de environment
+
 	if (!env_variable_exists(*env_list, PWD_ENV))
 	{
 		current_dir = getcwd(NULL, 0);
@@ -43,51 +55,32 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 		new_node = create_new_env_node(PWD_ENV, current_dir);
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
-		else
-			perror("Error: Failed to create OLDPWD");
 		free(current_dir);
 	}
 
-	if (!env_variable_exists(*env_list, PATH_ENV))
+	env_value = getenv(PATH_ENV);
+	if (!env_variable_exists(*env_list, PATH_ENV) && env_value)
 	{
-		new_node = create_new_env_node(ft_strdup("PATH"), ft_strdup(PATH_DEFAULT));
+		new_node = create_new_env_node(PATH_ENV, ft_strdup(env_value));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
-		else
-			perror("Error: Failed to create PATH");
 	}
 
-	if (!env_variable_exists(*env_list, HOME_ENV))
+	env_value = getenv(HOME_ENV);
+	if (!env_variable_exists(*env_list, HOME_ENV) && env_value)
 	{
-		home_dir = get_variable_in_env_list(*env_list, HOME_ENV);
-		if (home_dir)
-			home_dir = ft_strdup(home_dir);
-		else
-		{
-			home_dir = getenv("HOME");
-			if (home_dir)
-				home_dir = ft_strdup(home_dir);
-			else
-				home_dir = ft_strdup("/home/");
-		}
-		new_node = create_new_env_node(HOME_ENV, home_dir);
+		new_node = create_new_env_node(HOME_ENV, ft_strdup(env_value));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
-		else
-			perror("Error: Failed to create HOME");
 	}
 
 	// Si USER no existe, obtenerlo del sistema
-	if (!env_variable_exists(*env_list, "USER"))
+	env_value = getenv("USER");
+	if (!env_variable_exists(*env_list, "USER") && env_value)
 	{
-		user = getenv("USER");
-		if (!user)
-			user = "unknown";
-		new_node = create_new_env_node(USER_ENV, ft_strdup(user));
+		new_node = create_new_env_node("USER", ft_strdup(env_value));
 		if (new_node)
 			ft_lstadd_back(env_list, new_node);
-		else
-			perror("Error: Failed to create USER");
 	}
 
 	if (!shell_level || shell_level[0] == '-')
@@ -97,8 +90,6 @@ static void	configure_shell_env(t_list** env_list, char *shell_level)
 			new_node = create_new_env_node(SHLVL, "0");
 			if (new_node)
 				ft_lstadd_back(env_list, new_node);
-			else
-				perror("Error: Failed to create SHLVL=0");
 		}
 	}
     else
@@ -145,6 +136,7 @@ t_mini	*init_mini_list(char **envp)
     return (minishell);
 }
 
+/*
 void	print_mini(t_mini *mini)
 {
     if (!mini)
@@ -175,3 +167,4 @@ void	print_mini(t_mini *mini)
         printf("No hay comandos.\n");
     printf("=== Fin de t_mini ===\n");
 }
+*/

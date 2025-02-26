@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/25 13:16:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:35:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,24 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 	t_cmd		*cmd;
 	t_tokens	*token;
 
+	if (!commands_list || !token_list)
+		return (0);
 	current = token_list;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
+		if (!token)
+		{
+			current = current->next;
+			continue ;
+		}
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			cmd_node = commands_list;
-			while (cmd_node && (cmd = (t_cmd *)cmd_node->content))
+			while (cmd_node)
 			{
-				if (!ft_strcmp(cmd->cmd, token->str))
+				cmd = (t_cmd *) cmd_node->content;
+				if (cmd && cmd->cmd && token->str && !ft_strcmp(cmd->cmd, token->str))
 				{
 					process_command_args(current, cmd);
 					break ;
@@ -129,7 +137,7 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 				cmd_node = cmd_node->next;
 			}
 			if (!cmd_node)
-				return (printf("Error: Comando '%s' no encontrado.\n", token->str), -1);
+				return (printf("Error: Command '%s' not found.\n", token->str), -1);
 		}
 		current = current->next;
 	}

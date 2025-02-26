@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:29:25 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:52:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 		handle_dollar_cases(token, env_list, next_token);
 }
 
+/*
+	TODO: check comands syntax to fix error with more than one type->token the same type
+	echo hello echo
+	while no encuentres un delimitador el 1ro es un BUILTIN or EXTERNAL y despues del limitador
+	un BUILTIN O EXTERNAL
+*/
 void	update_words_in_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -64,6 +70,11 @@ void	update_words_in_tokens(t_mini *mini)
 	token_list = mini->tokens;
 	while (token_list != NULL)
 	{
+		//echo echo | echo hi
+		//echo echo;  echo hi
+		// echo -> builtin
+		// echo -> builtin
+		//despues de la pipe sea un word
 		curr_token = (t_tokens *)token_list->content;
 		if (curr_token->type_token == WORD)
 		{
