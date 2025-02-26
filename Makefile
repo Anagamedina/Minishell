@@ -36,6 +36,7 @@ MINISHELL_H = includes/minishell.h
 TESTING_H = testing/testing.h
 
 SRC =	$(SRC_MINI)/init_struct.c \
+		$(SRC_MINI)/env_setup.c \
 		$(SRC_INPUT)/input.c \
 		$(SRC_DIR)/ft_string_utils.c \
 		$(SRC_ENV)/env.c \

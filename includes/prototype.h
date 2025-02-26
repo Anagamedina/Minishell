@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 00:35:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:53:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void		cleanup_and_exit(t_mini* mini, int status);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
+void		configure_shell_env(t_list** env_list, char *shell_level);
 t_mini		*init_mini_list(char **envp);
 void		print_mini(t_mini *mini);
 

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:19:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:42:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define USER_ENV "USER"
 # define PATH_ENV "PATH"
 # define PATH_DEFAULT "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
+# define HOME_DEFAULT "/home/"
+
 # define OLDPWD_ENV "OLDPWD"
 # define SHLVL "SHLVL"
 

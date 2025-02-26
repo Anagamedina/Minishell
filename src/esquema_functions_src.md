@@ -22,7 +22,7 @@
     └── 📁input
         └── input.c
     └── 📁mini
-        └── init_struct.c
+        └── init_minishell.c
     └── 📁parser
         └── parser_not_expand_utils.c
         └── parser_syntax_dollar.c
