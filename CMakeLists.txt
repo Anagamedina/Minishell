@@ -62,6 +62,7 @@ add_executable(minishell
         src/built_ins_1/built_in_unset.c
         src/built_ins_1/export_utils.c
         src/built_ins_1/builtin_part_one_utils.c
+        src/env/init_env_list.c
 )
 # link with readline library
 target_link_libraries(minishell readline)

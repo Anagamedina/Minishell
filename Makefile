@@ -41,6 +41,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_DIR)/ft_string_utils.c \
 		$(SRC_ENV)/env.c \
 		$(SRC_ENV)/env_utils.c \
+		$(SRC_ENV)/init_env_list.c \
 		$(SRC_TOKENIZE)/token_split.c \
 		$(SRC_TOKENIZE)/token_type.c \
 		$(SRC_TOKENIZE)/token_utils.c \

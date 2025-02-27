@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:13:23 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:05:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,3 +71,36 @@ char	**get_path(char **env)
 	}
 	return (paths);
 }
+
+/*
+char	**get_path(char **env)
+{
+	char	**paths;
+	char	*path_var;
+	int		i;
+
+	paths = NULL;
+	path_var = NULL;
+	i = 0;
+	while (env[i] != NULL)
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			path_var = ft_strdup(env[i] + 5);
+			break ;
+		}
+		i++;
+	}
+	if (path_var)
+	{
+		paths = ft_split(path_var, ':');
+		free(path_var);
+		if (!paths)
+		{
+			perror("Error: No se pudo dividir PATH en subrutas");
+			return (NULL);
+		}
+	}
+	return (paths);
+}
+*/

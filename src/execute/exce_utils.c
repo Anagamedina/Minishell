@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 01:43:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:13:36 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,41 +45,8 @@ char	**env_list_to_array(t_list *env_list)
 	int		env_count;
 	int		i;
 
-	env_count = count_env_variables(env_list);
-	env_array = ft_calloc(env_count + 1, sizeof(char *));
-	if (!env_array)
-	{
-		perror("Error: cant assign memory to env_list_to_array");
+	if (!env_list)
 		return (NULL);
-	}
-	curr_node = env_list;
-	i = 0;
-	while (curr_node && i < env_count)
-	{
-		//TODO: error in this function ?
-		curr_env_var = (t_env *)curr_node->content;
-		env_array[i] = ft_strdup(curr_env_var->full_var);
-		if (!env_array[i])
-		{
-			perror("Error: No se pudo duplicar variable de entorno");
-			free_env_array(env_array, i);
-			return (NULL);
-		}
-		curr_node = curr_node->next;
-		i ++;
-	}
-	env_array[env_count] = NULL;
-	return (env_array);
-}
-/*
-char	**env_list_to_array(t_list *env_list)
-{
-	t_list	*curr_node;
-	t_env	*curr_env_var;
-	char	**env_array;
-	int		env_count;
-	int		i;
-
 	env_count = count_env_variables(env_list);
 	env_array = ft_calloc(env_count + 1, sizeof(char *));
 	if (!env_array)
@@ -105,4 +72,3 @@ char	**env_list_to_array(t_list *env_list)
 	env_array[env_count] = NULL;
 	return (env_array);
 }
-*/

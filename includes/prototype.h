@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:46:46 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 12:38:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:50:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +28,18 @@ typedef struct s_exec		t_exec;
 
 //typedef struct s_pipe t_pipe;
 
-//**************ENV************/
-t_list		*init_env_list(char **envp);
-t_env		*init_empty_env_node(void);
-int ft_env(t_list* env_list);
+//************** INIT_ENV_list ************/
 
-//************** ENV_LIST ************/
-t_env		*init_struct_env(void);
+t_env		*create_env_node(char *key_value_variable);
+t_env		*init_empty_env_node(void);
+
+//************** ENV.C ************/
+
+int			validate_syntax_name_value(char *new_local_var);
+t_list		*init_env_list(char **envp);
+int			ft_env(t_list* env_list);
+
 void		free_env(t_env *env);
-// t_env		*init_env_variable(void);
 
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
@@ -57,10 +48,6 @@ char		*get_var_name(const char *line);
 char		*get_var_value(char *line);
 char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
-//************** ENV_LOCALS_list.c ************/
-
-t_list		*create_local_vars_list(char *line, t_list *local_vars_list);
-int			validate_syntax_name_value(char *new_local_var);
 
 //*************INPUT***********/
 char		*read_input(void);
@@ -334,6 +321,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
 void	wait_children(t_mini *mini);
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+
 //*************SIGNALS**************/
 
 //*************signals.c**************/
