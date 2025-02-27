@@ -6,12 +6,16 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 17:05:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:31:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/**
+ * TODO: this funcion only needd to execute when is a external command
+ * because in the function  create_new_command it is NOT checked
+*/
 char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
