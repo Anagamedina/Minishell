@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 19:50:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 00:47:28 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(input);
 	}
-
 	free_mini(minishell);
 	return (0);
 }

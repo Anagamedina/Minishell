@@ -48,7 +48,7 @@ int ft_env(t_list* env_list);
 //************** ENV_LIST ************/
 t_env		*init_struct_env(void);
 void		free_env(t_env *env);
-t_env		*init_env_var(char *key_value_var);
+// t_env		*init_env_variable(void);
 
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);

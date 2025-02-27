@@ -13,7 +13,7 @@
         └── init_commands.c
     └── 📁env
         └── env_locals_list.c
-        └── env_utils_locals.c
+        └── env_utils.c
         └── env.c
         └── free_env.c
     └── 📁expand

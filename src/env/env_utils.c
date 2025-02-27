@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils_locals.c                                 :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/24 22:23:32 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/25 21:17:18 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/26 12:32:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/27 00:22:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils_locals.c                                 :+:      :+:    :+:   */
+/*   env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 11:04:39 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/24 19:45:23 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/26 12:32:02 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/27 00:20:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/*
-int	validate_var_name(const char *line)
-{
-	int	i;
-
-	if (!(ft_isalpha(line[0]) || line[0] == '_'))
-		return (FALSE);
-	i = 1;
-	while (line[i] != '\0' && line[i] != '=')
-	{
-		if (!(ft_isalnum(line[i]) || line[i] == '_'))
-			return (FALSE);
-		i ++;
-	}
-	return (TRUE);
-}
-*/
 
 int	validate_var_name(const char *line)
 {
@@ -48,11 +30,11 @@ int	validate_var_name(const char *line)
 
 	if (line[0] == '+' || line[0] == '=')
 		return (FALSE);
-
 	if (!(ft_isalpha(line[0]) || line[0] == '_'))
 		return (FALSE);
 	i = 1;
-	while (line[i] != '\0' && line[i] != '=' && !(line[i] == '+' && line[i + 1] == '='))
+	while (line[i] != '\0' && line[i] != '=' && !(line[i] == '+' && \
+		line[i + 1] == '='))
 	{
 		if (!(ft_isalnum(line[i]) || line[i] == '_'))
 			return (FALSE);

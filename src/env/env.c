@@ -6,39 +6,51 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 19:30:39 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:33:15 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/21 13:21:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 01:38:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_env	*init_env_var(char *key_value_var)
+int	validate_syntax_name_value(char *new_local_var)
+{
+	if (!(validate_var_name(new_local_var)))
+		return (FALSE);
+	if (!(validate_var_value(new_local_var)))
+		return (FALSE);
+	return (TRUE);
+}
+
+t_env	*init_empty_env_node(void)
+{
+	t_env	*new_env;
+
+	new_env = NULL;
+	new_env = malloc(sizeof(t_env));
+	if (!new_env)
+		return (NULL);
+	new_env->key = NULL;
+	new_env->value = NULL;
+	new_env->full_var = NULL;
+	new_env->next = NULL;
+	return (new_env);
+}
+
+t_env	*create_env_struct(char *full_var)
 {
 	t_env	*new_env;
 	char	**split_var;
 
-	new_env = malloc(sizeof(t_env));
+	new_env = init_empty_env_node();
 	if (!new_env)
 		return (NULL);
-	new_env->full_var = ft_strdup(key_value_var);
-	if (!new_env->full_var)
+	split_var = ft_split(full_var, '=');
+	if (!split_var || !split_var[0])
 	{
-		free(new_env);
+		free_env(new_env);
+		free_string_matrix(split_var);
 		return (NULL);
 	}
-	split_var = ft_split(key_value_var, '=');
 	new_env->key = ft_strdup(split_var[0]);
 	if (split_var[1] != NULL)
 		new_env->value = ft_strdup(split_var[1]);
@@ -50,22 +62,6 @@ t_env	*init_env_var(char *key_value_var)
 		free_env(new_env);
 		return (NULL);
 	}
-	new_env->next = NULL;
-	return (new_env);
-}
-
-t_env	*init_empty_env_node(void)
-{
-	t_env	*new_env;
-
-	new_env = NULL;
-	new_env = malloc(sizeof(t_env));
-	if (!new_env)
-		return (NULL);
-	new_env->full_var = NULL;
-	new_env->key = NULL;
-	new_env->value = NULL;
-	new_env->next = NULL;
 	return (new_env);
 }
 
@@ -76,11 +72,11 @@ t_list	*init_env_list(char **envp)
 	t_list	*new_node;
 	int		i;
 
-	env_list = NULL;
 	i = 0;
+	env_list = NULL;
 	while (envp[i] != NULL)
 	{
-		new_env = init_env_var(envp[i]);
+		new_env = create_env_struct(envp[i]);
 		if (!new_env)
 		{
 			ft_lstclear(&env_list, (void (*)(void *))free_env);
@@ -99,7 +95,7 @@ t_list	*init_env_list(char **envp)
 	return (env_list);
 }
 
-int	ft_env(t_list* env_list)
+int	ft_env(t_list *env_list)
 {
 	t_list	*current;
 	t_env	*env_var;
@@ -110,6 +106,7 @@ int	ft_env(t_list* env_list)
 	while (current)
 	{
 		env_var = (t_env *) current->content;
+		// if (!env_var || !env_var->key || (env_var->value || ft_strcmp(env_var->value, "") == 0))
 		if (!env_var || !env_var->key || !env_var->value || ft_strcmp(env_var->value, "") == 0)
 		{
 			current = current->next;

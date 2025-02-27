@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 15:47:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 00:45:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	count_words(char **tokens_array)
 		count ++;
 	return (count);
 }
+
 t_list	*convert_tokens_to_list(char **tokens)
 {
 	t_list		*token_list;
@@ -95,22 +96,6 @@ t_list	*generate_token_list(char *line)
 	free(tokens_array);
 	return (tokens_list);
 }
-	/*
-	if (!tokens_list)
-	{
-		free_split_result_struct(tokens_array, count_words(tokens_array));
-		free(tokens_array);
-		return (NULL);
-	}
-	free_split_result_struct(tokens_array, count_words(tokens_array));
-	free(tokens_array);
-	*/
-
-/**
- * Print all tokens in a linked list (t_list).
- *
- * @param tokens_list Pointer to the head of the token list.
- */
 
 void	print_list_token(t_list *tokens_list)
 {
