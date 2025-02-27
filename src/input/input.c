@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 19:45:53 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 21:54:16 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@
 	return (input);
 }*/
 
+void	control_and_d(char *line)
+{
+	if (!line)
+	{
+		if (!isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "exit\n", 5);
+		write(STDOUT_FILENO, "exit\n", 5);
+		exit(EXIT_SUCCESS);
+	}
+}
+
+
 char	*read_input(void)
 {
 	char	*input;
@@ -45,25 +57,19 @@ char	*read_input(void)
 	char	*temp;
 
 	input = readline("minishell> ");
-	if (!input)  // 🔹 Manejo de Ctrl+D en la primera entrada
+	control_and_d(input);
+	while (!check_quotes_line(input))
 	{
-		write(2, "exit\n", 5);
-		return (NULL);
-	}
-
-	// 🔹 Si hay comillas abiertas, pedir más input
-	while (!check_quotes_line(input))  // 🔹 Antes estaba al revés
-	{
-		temp = readline("> ");  // 🔹 Prompt secundario (`>`)
-		if (!temp)  // 🔹 Si Ctrl+D en prompt secundario, error y salida
+		temp = readline("> ");
+		if (!temp)  //Si Ctrl+D en prompt secundario, error y salida
 		{
 			free(input);
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
 			return (NULL);
 		}
-		new_input = ft_strjoin(input, "\n");  // 🔹 Agregar salto de línea
+		new_input = ft_strjoin(input, "\n");
 		free(input);
-		input = ft_strjoin(new_input, temp);  // 🔹 Concatenar nueva entrada
+		input = ft_strjoin(new_input, temp);  //Concatenar nueva entrada
 		free(new_input);
 		free(temp);
 	}
