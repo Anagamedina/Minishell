@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 21:27:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/28 00:29:12 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,5 +339,7 @@ int	is_redir_out(t_tokens* token);
 
 //*************signals.c**************/
 void		handle_signal_ctrl_c(int sig);
+int			setup_signals(int mode);
+int configure_signal_handler(int signal, void (*handler)(int));
 
 #endif

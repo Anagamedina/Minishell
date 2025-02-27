@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:19:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:36:46 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@
 # define PATH_VALUE "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
 # define OLDPWD_ENV "OLDPWD"
 # define SHLVL "SHLVL"
+
+
+/*--------------Signals-------------------*/
+# define CTRL_C SIGINT
+# define CTRL_D SIGQUIT
+# define CTRL_SLASH SIGQUIT
+# define CTRL_Z SIGTSTP
+// Modes signals
+# define PARENT 0
+# define CHILD 1
 
 /*--------------------Error messages-------------------*/
 # define PRINT_SYNTAX_ERR_1 "syntax error near unexpected token `|'\n"

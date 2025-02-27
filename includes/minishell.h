@@ -6,12 +6,16 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 13:19:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:43:14 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# ifndef READLINE_LIBRARY
+#  define READLINE_LIBRARY
+# endif
 
 # include "../libft/libft.h"
 # include "prototype.h"
@@ -33,9 +37,9 @@
 typedef enum e_type_token
 {
 	WORD = 0,
-	REDIR_IN,    //<     Representa la redirección de entrada '<'
-	REDIR_APPEND, //>>
-	REDIR_OUT, //>
+	REDIR_IN,
+	REDIR_APPEND,
+	REDIR_OUT,
 	BUILTINS,
 	CMD_EXTERNAL,
 	DELIMITER,
@@ -51,6 +55,9 @@ typedef enum e_type_token
 	PWD,                // Builtin: pwd
 	EXPORT,             // Builtin: export
 */
+
+
+
 typedef struct s_tokens
 {
     char            *str;
@@ -120,13 +127,13 @@ typedef struct s_exec
 
 typedef struct s_mini
 {
-	int             bash_lvl;       // Nivel de la shell
-	int             chars_in_line;  // Contador de caracteres en línea de entrada
-	t_list          *env;           // Variables de entorno
-	char			**envp_to_array; // Array de `env` para `execve()`
-	t_list          *tokens;         // Lista de tokens
+	int             bash_lvl;
+	int             chars_in_line;
+	t_list          *env;
+	char			**envp_to_array;
+	t_list          *tokens;
 	t_exec			*exec;
-	int             exit_status;    // Estado de salida del último comando ejecutado
+	int             exit_status;
 	// char            *prompt;        // Prompt actual (opcional) ???
 }				t_mini;
 

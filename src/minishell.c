@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 20:02:14 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/28 00:27:46 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 
 #include "../includes/minishell.h"
 
+
+void set_up_signals(int i);
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
@@ -38,6 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
+	setup_signals(PARENT);
 	while (1)
 	{
 		input = read_input();

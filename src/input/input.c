@@ -13,31 +13,6 @@
 #include "../../includes/minishell.h"
 
 
-
-
-/*char	*read_multiline_input(char *input)
-{
-	char	*new_input;
-	char	*temp;
-
-	while (check_quotes_line(input))
-	{
-		temp = readline("> ");  // 🔹 Prompt secundario como Bash
-		if (!temp)  // Si el usuario presiona Ctrl+D, cancelamos
-		{
-			free(input);
-			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
-			return (NULL);
-		}
-		new_input = ft_strjoin(input, "\n");  // Agregar salto de línea
-		free(input);
-		input = ft_strjoin(new_input, temp);  // Concatenar entrada nueva
-		free(new_input);
-		free(temp);
-	}
-	return (input);
-}*/
-
 void	control_and_d(char *line)
 {
 	if (!line)
@@ -126,3 +101,28 @@ int	check_quotes_line(const char *line)
 		return (FALSE);
 	return (TRUE);
 }
+
+
+
+/*char	*read_multiline_input(char *input)
+{
+	char	*new_input;
+	char	*temp;
+
+	while (check_quotes_line(input))
+	{
+		temp = readline("> ");  // 🔹 Prompt secundario como Bash
+		if (!temp)  // Si el usuario presiona Ctrl+D, cancelamos
+		{
+			free(input);
+			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
+			return (NULL);
+		}
+		new_input = ft_strjoin(input, "\n");  // Agregar salto de línea
+		free(input);
+		input = ft_strjoin(new_input, temp);  // Concatenar entrada nueva
+		free(new_input);
+		free(temp);
+	}
+	return (input);
+}*/

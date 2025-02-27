@@ -90,6 +90,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
 	}
 	if (pid == 0)
 	{
+		setup_signals(CHILD);
 		handle_child(cmd, mini);
 		exit(EXIT_SUCCESS);
 	}
