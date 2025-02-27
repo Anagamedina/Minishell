@@ -79,7 +79,7 @@ int	is_builtin_command(char *cmd)
 		ft_strcmp(cmd, EXIT) == 0);
 }
 
-int	is_cmd_external(t_mini *mini, t_tokens *token)
+/*int	is_cmd_external(t_mini *mini, t_tokens *token)
 {
 	char		**paths;
 	char		*cmd_path;
@@ -94,4 +94,17 @@ int	is_cmd_external(t_mini *mini, t_tokens *token)
 		return (TRUE);
 	}
 	return (FALSE);
+}*/
+
+//se podria modificar
+char	*is_cmd_external(t_mini *mini, t_tokens *token)
+{
+	char		**paths;
+	char		*cmd_path;
+
+	if (!mini || !mini->tokens)
+		return (NULL);
+	paths = get_path(mini->envp_to_array);
+	cmd_path = get_cmd_path(token, paths);
+	return (cmd_path);
 }

@@ -55,7 +55,7 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 		handle_dollar_cases(token, env_list, next_token);
 }
 
-void	update_words_in_tokens(t_mini *mini)
+/*void	update_words_in_tokens(t_mini *mini)
 {
 	t_list		*token_list;
 	t_tokens	*curr_token;
@@ -88,28 +88,36 @@ void	update_words_in_tokens(t_mini *mini)
 		}
 		token_list = token_list->next;
 	}
-}
+}*/
 
-/*void	update_words_in_tokens(t_mini *mini)
+void	update_words_in_tokens(t_mini *mini)
 {
 	t_list		*token_list;
 	t_tokens	*curr_token;
 	t_tokens	*curr_next_token;
+	char		*cmd_path;
 
 	token_list = mini->tokens;
-
 
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
-		if (curr_token->type_token == WORD  && curr_token->is_valid_cmd)
+		if (curr_token->type_token == WORD && curr_token->is_valid_cmd)
 		{
 			if (is_builtin_command(curr_token->str))
 				curr_token->type_token = BUILTINS;
-			else if (is_cmd_external(mini, curr_token))
+			else if ((cmd_path = is_cmd_external(mini, curr_token)) != NULL)
+			{
 				curr_token->type_token = CMD_EXTERNAL;
+				free(cmd_path); // Liberar la memoria aquí
+			}
 			else
-				curr_token->type_token = WORD;
+			{
+				write(2, "bash: ", 6);
+				write(2, curr_token->str, ft_strlen(curr_token->str));
+				write(2, ": command not found\n", 20);
+				return; // Detener el parsing, evitando la ejecución
+			}
 		}
 		else if (is_redir(curr_token) && token_list->next != NULL)
 		{
@@ -119,7 +127,8 @@ void	update_words_in_tokens(t_mini *mini)
 		}
 		token_list = token_list->next;
 	}
-} */
+}
+
 
 void	parser_tokens(t_mini *mini)
 {

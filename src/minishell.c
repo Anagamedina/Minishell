@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:54:17 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 20:02:14 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-	/*
-	if (!envp || !*envp)
-	{
-		write(2, "Warning: No environment variables found. Initializing default env.", 65);
-		// write(2, "\n", 1);
-		printf("\n");
-		char *default_env[] = {
-			"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
-			"HOME=/home/user",
-			"SHLVL=1",
-			"OLDPWD=",
-			NULL
-		};
-		envp = default_env;
-	}
-	*/
-
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -77,8 +58,6 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue;
 		}
-
-		// Después de validar, actualizar `WORD` en comandos válidos
 		update_words_in_tokens(minishell);
 		parser_tokens(minishell);
 		parse_redir(minishell);
@@ -102,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		// add_detail return 0 - 1
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-	//	print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
@@ -116,3 +94,22 @@ int	main(int argc, char **argv, char **envp)
 	free_mini(minishell);
 	return (0);
 }
+
+
+/*
+if (!envp || !*envp)
+{
+	write(2, "Warning: No environment variables found. Initializing default env.", 65);
+	// write(2, "\n", 1);
+	printf("\n");
+	char *default_env[] = {
+		"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
+		"HOME=/home/user",
+		"SHLVL=1",
+		"OLDPWD=",
+		NULL
+	};
+	envp = default_env;
+}
+*/
+

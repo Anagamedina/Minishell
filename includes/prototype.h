@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:32:46 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 21:27:22 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,7 @@ void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
 void		process_command_args(t_list *current, t_cmd *cmd);
 void 		free_cmd_args(t_cmd *cmd);
+
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char* key, char* value);
@@ -285,7 +286,8 @@ void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**env_list_to_array(t_list *env_list);
-int			is_cmd_external(t_mini *mini, t_tokens *token);
+//int			is_cmd_external(t_mini *mini, t_tokens *token);
+char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 void		process_flags(t_cmd *cmd, char *cmd_str);
