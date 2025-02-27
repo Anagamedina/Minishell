@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 12:32:19 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 00:42:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>  
 # include <sys/wait.h>
 # include <sys/types.h>
+# include <sys/termios.h>
 # include <signal.h>
 # include "../libft/libft.h"
 # include <readline/readline.h>

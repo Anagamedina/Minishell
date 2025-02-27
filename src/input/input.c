@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/31 00:15:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 00:51:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*read_input(void)
 	input = readline("minishell> ");
 	if (!input)
 	{
-		return (NULL);
+		ft_putendl_fd("exit", 1);
+		exit(0);
+		// return (NULL);
 	}
 	if (*input)
 		add_history(input);
@@ -27,9 +29,31 @@ char	*read_input(void)
 }
 
 /**
+ * @brief configure the terminal
+ * term.c_lflag &= ~ECHOCTL (off the print control characters in the input)
+ * isatty(STDIN_FILENO): Verify if minishell is running in a terminal.
+ * ttyname(STDIN_FILENO): show the name of the terminal.
+ * tcgetattr() and tcsetattr():
+ * modify the terminal attributes to Ctrl+C not to print ^C.
+ *
+ */
+void	configure_terminal(void)
+{
+	struct termios	term;
+
+	if (isatty(STDIN_FILENO))
+		printf("Running in a terminal: %s\n", ttyname(STDIN_FILENO));
+	else
+		printf("Not running in a terminal\n");
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+/**
  * @brief check if the input contains quotes and if the number of quotes is even
  */
-
 int	check_quotes_line(const char *line)
 {
 	int	i;

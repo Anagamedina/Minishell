@@ -325,6 +325,6 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 //*************SIGNALS**************/
 
 //*************signals.c**************/
-void		handle_signal_ctrl_c(int sig);
+void		handle_sigint_ctrl_c(int signal);
 
 #endif
