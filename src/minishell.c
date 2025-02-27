@@ -41,6 +41,8 @@
 	}
 	*/
 
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
@@ -58,13 +60,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = read_input();
-		if (!input || !check_quotes_line(input))// || minishell->exit_status != 0)
-		{
-			printf("Error: fail reading input.\n");
-			free(input);
-		//	break ;
+		if (!input)
 			continue ;
-		}
 		// handle_signal_ctrl_c(SIGINT);
 		if ((ft_strcmp(input, "") == 0))
 		{

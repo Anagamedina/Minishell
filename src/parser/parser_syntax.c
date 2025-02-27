@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:24:43 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/27 19:16:42 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 19:19:46 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,6 @@ int validate_pipes_and_separators(t_list *token_list)
 		return (FALSE);
 	return (TRUE);
 }
-
-/*int validate_syntax(t_list *token_list)
-{
-	if (!check_repeated_redirections(token_list) ||
-		!validate_pipes_and_separators(token_list))
-	{
-		return (FALSE);
-	}
-	return (TRUE);
-}*/
 
 int validate_syntax(t_list *token_list)
 {
