@@ -31,6 +31,7 @@ t_tokens	*init_token(char *str, int token_type)
 	new_token->type_token = token_type;
 	new_token->length = ft_strlen(str);
 	new_token->id_token = -1;
+	new_token->is_valid_cmd = FALSE;
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	return (new_token);

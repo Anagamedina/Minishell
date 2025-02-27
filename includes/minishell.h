@@ -56,6 +56,7 @@ typedef struct s_tokens
     char            *str;
     t_type_token	type_token;
     size_t          length;
+	int				is_valid_cmd;
 	int				id_token;
     struct s_tokens	*next;
     struct s_tokens	*prev;           // Puntero opcional al token anterior

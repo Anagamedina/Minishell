@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 15:00:03 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:31:42 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,38 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	execute_builtin_or_external(curr_cmd, mini);
 }
 
+/*void	handle_child(t_cmd *curr_cmd, t_mini *mini)
+{
+	heredoc(curr_cmd);
+
+	// Depuración de los file descriptors antes de redirigir
+	printf("DEBUG: Redirecciones antes en [%s], ID: %d -> input_fd: %d, output_fd: %d\n",
+		curr_cmd->cmd, curr_cmd->cmd_id, curr_cmd->input_fd, curr_cmd->output_fd);
+
+	if (apply_redirections(curr_cmd) > 0)
+	{
+		if (curr_cmd->input_fd != STDIN_FILENO)
+			redirect_in(curr_cmd->input_fd);
+		if (curr_cmd->output_fd != STDOUT_FILENO)
+			redirect_out(curr_cmd->output_fd);
+	}
+	else
+	{
+		if (curr_cmd->output_fd != STDOUT_FILENO)
+			redirect_out(curr_cmd->output_fd);
+		if (curr_cmd->input_fd != STDIN_FILENO)
+			redirect_in(curr_cmd->input_fd);
+	}
+
+	// Depuración después de redirecciones
+	printf("DEBUG: Redirecciones después en [%s], ID: %d -> input_fd: %d, output_fd: %d\n",
+		curr_cmd->cmd, curr_cmd->cmd_id, curr_cmd->input_fd, curr_cmd->output_fd);
+
+	execute_builtin_or_external(curr_cmd, mini);
+}*/
+
+
+
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO)
@@ -55,8 +87,6 @@ int handle_redirection_without_command(t_cmd *cmd)
 
 	if (!cmd->redir_list)
 		return (FALSE);
-
-	printf("DEBUG: No hay comando, pero hay redirecciones. Creando archivos vacíos...\n");
 
 	redir_node = cmd->redir_list;
 	while (redir_node)

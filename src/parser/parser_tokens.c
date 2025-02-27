@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:29:25 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:52:25 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 		handle_dollar_cases(token, env_list, next_token);
 }
 
+
+
 void	update_words_in_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -62,10 +64,12 @@ void	update_words_in_tokens(t_mini *mini)
 	t_tokens	*curr_next_token;
 
 	token_list = mini->tokens;
+
+
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
-		if (curr_token->type_token == WORD)
+		if (curr_token->type_token == WORD  && curr_token->is_valid_cmd)
 		{
 			if (is_builtin_command(curr_token->str))
 				curr_token->type_token = BUILTINS;
@@ -90,6 +94,7 @@ void	parser_tokens(t_mini *mini)
 	t_list		*env_list;
 	t_tokens	*curr_token;
 	t_tokens	*next_token;
+
 
 	token_list = mini->tokens;
 	env_list = mini->env;

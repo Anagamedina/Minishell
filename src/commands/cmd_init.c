@@ -119,7 +119,7 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			cmd_node = commands_list;
-			while (cmd_node && (cmd = (t_cmd *)cmd_node->content))
+			while (cmd_node && ((cmd = (t_cmd *)cmd_node->content)))
 			{
 				if (!ft_strcmp(cmd->cmd, token->str))
 				{

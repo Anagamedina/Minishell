@@ -66,6 +66,7 @@ SRC =	$(SRC_MINI)/init_struct.c \
 		$(SRC_PARSER)/parser_expand_cases.c \
 		$(SRC_PARSER)/parser_expand_dollar.c \
 		$(SRC_PARSER)/parser_expand_utils.c \
+		$(SRC_PARSER)/parser_syntax.c \
 		$(SRC_PARSER)/parser_init_quotes.c \
 		$(SRC_PARSER)/parser_not_expand.c \
 		$(SRC_PARSER)/parser_tab.c \
