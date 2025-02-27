@@ -6,11 +6,11 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 18:20:59 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:34:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int cd_without_args(t_list *env_list, char **path_home)
 {

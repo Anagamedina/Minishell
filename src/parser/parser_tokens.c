@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/26 17:52:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:08:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,48 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 		handle_dollar_cases(token, env_list, next_token);
 }
 
+//TODO: after merge uncomment lien 71
 /*
-	TODO: check comands syntax to fix error with more than one type->token the same type
-	echo hello echo
-	while no encuentres un delimitador el 1ro es un BUILTIN or EXTERNAL y despues del limitador
-	un BUILTIN O EXTERNAL
+void  update_words_in_tokens(t_mini *mini)
+{
+	t_list    *token_list;
+	t_tokens   *curr_token;
+	t_tokens   *curr_next_token;
+	char      *cmd_path;
+
+	token_list = mini->tokens;
+
+	while (token_list != NULL)
+	{
+		curr_token = (t_tokens *)token_list->content;
+		if (curr_token->type_token == WORD	&& curr_token->is_valid_cmd)
+		{
+			if (is_builtin_command(curr_token->str))
+				curr_token->type_token = BUILTINS;
+			else if ((cmd_path = is_cmd_external(mini, curr_token)) != NULL)
+			{
+				curr_token->type_token = CMD_EXTERNAL;
+				free(cmd_path); // Liberar la memoria aquí
+			}
+			else
+			{
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(curr_token->str, 2);
+				ft_putstr_fd(": command not found\n", 2);
+				return ;
+			}
+		}
+		else if (is_redir(curr_token) && token_list->next != NULL)
+		{
+			curr_next_token = (t_tokens *)token_list->next->content;
+			if (curr_next_token->type_token == WORD)
+				curr_next_token->type_token = FILENAME;
+		}
+		token_list = token_list->next;
+	}
+}
 */
+
 void	update_words_in_tokens(t_mini *mini)
 {
 	t_list		*token_list;
@@ -70,11 +106,6 @@ void	update_words_in_tokens(t_mini *mini)
 	token_list = mini->tokens;
 	while (token_list != NULL)
 	{
-		//echo echo | echo hi
-		//echo echo;  echo hi
-		// echo -> builtin
-		// echo -> builtin
-		//despues de la pipe sea un word
 		curr_token = (t_tokens *)token_list->content;
 		if (curr_token->type_token == WORD)
 		{

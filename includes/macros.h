@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 19:42:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:33:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define HOME_ENV "HOME"
 # define USER_ENV "USER"
 # define PATH_ENV "PATH"
-# define PATH_DEFAULT "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
+# define PATH_DEF "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"
 # define HOME_DEFAULT "/home/"
 
 # define OLDPWD_ENV "OLDPWD"
@@ -55,7 +55,7 @@
 
 # define SHELL_LVL_WARNING "mini: warning: shell level too high, reset to 1\n"
 
-# define MY_LLONG_MAX "9223372036854775807"
-# define MY_LLONG_MIN "-9223372036854775808"
+# define MY_LLONG_MAX 9223372036854775807LL
+# define MY_LLONG_MIN -9223372036854775808LL
 
 #endif

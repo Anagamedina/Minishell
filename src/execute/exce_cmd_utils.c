@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/24 19:26:36 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 21:00:41 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,3 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 	}
 	exit(EXIT_FAILURE);
 }
-
-
-//TODO echo vamos al restaurante > dfe.txt | echo con todos

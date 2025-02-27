@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:41:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:57:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -537,7 +537,6 @@ dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """ ' hello ' $HOME """
 dasalaza@cbr1s2:~/cursus_42/git_daruuu/minishell$ echo """ ' hello ' $HOME """ | cat -e
  ' hello ' /home/dasalaza $
 */
-// TODO: terminar de implementar los casos del squote al final 
 void	test_handle_special_quotes(void)
 {
 	int			i;

@@ -6,12 +6,11 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/12 12:04:36 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 22:36:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /*
 After finishing the execution, we can implement the signals (ctrl + C, ctrl + \, ctrl + D).

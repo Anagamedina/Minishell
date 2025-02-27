@@ -6,23 +6,19 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/23 13:36:20 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 23:45:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-#include <limits.h>
-
+#include "../../includes/minishell.h"
 
 void	cleanup_and_exit(t_mini* mini, int status)
 {
-	// free_env_list(mini->env);
-	free_exec(mini->exec);
 	free_mini(mini);
 	exit(status);
 }
 
-static	void	init_varible_atoll(int *sign, int *i, \
+static void	init_varible_atoll(int *sign, int *i, \
 		long long *result, long long *prev_result)
 {
 	*i = 0;
@@ -45,7 +41,7 @@ long long	ft_atoll(const char *str)
 	{
 		if (str[i] == '-')
 			sign = -1;
-		i++;
+		i ++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -55,11 +51,9 @@ long long	ft_atoll(const char *str)
 				(sign == -1 && result < prev_result))
 		{
 			if (sign == 1)
-				return (ft_atoll(MY_LLONG_MAX));
-			else
-				return (ft_atoll(MY_LLONG_MIN));
+				return (9223372036854775807);
 		}
-		i++;
+		i ++;
 	}
 	return (result * sign);
 }

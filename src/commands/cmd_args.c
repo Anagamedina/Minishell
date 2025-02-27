@@ -6,11 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/25 15:19:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:34:10 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	count_args(t_list *token_list, t_cmd *cmd)
 {

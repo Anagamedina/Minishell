@@ -6,12 +6,11 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/24 21:47:24 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 22:36:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:53 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 13:05:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:58:59 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	is_builtin_command(char *cmd)
 		ft_strcmp(cmd, CD) == 0 || ft_strcmp(cmd, PWD) == 0 || \
 		ft_strcmp(cmd, EXIT) == 0);
 }
-
-//	TODO: segfault
 
 int	is_cmd_external(t_mini *mini, t_tokens *token)
 {

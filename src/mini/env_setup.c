@@ -75,7 +75,7 @@ void	configure_shell_env(t_list **env_list, char *shell_level)
 	if (!env_list || !*env_list)
 		return ;
 	check_pwd_exist_in_env_list(env_list);
-	verify_env_entry(env_list, PATH_ENV, PATH_DEFAULT);
+	verify_env_entry(env_list, PATH_ENV, PATH_DEF);
 	verify_env_entry(env_list, HOME_ENV, HOME_DEFAULT);
 	verify_env_entry(env_list, USER_ENV, "unknown");
 	if (!shell_level || shell_level[0] == '-')
