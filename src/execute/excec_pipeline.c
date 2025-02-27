@@ -42,6 +42,43 @@ void	wait_children(t_mini *mini)
 			mini->exit_status = WEXITSTATUS(status);
 }
 
+void	handle_child(t_cmd *curr_cmd, t_mini *mini)
+{
+	heredoc(curr_cmd);
+	if (apply_redirections(curr_cmd) > 0)
+	{
+		if (curr_cmd->input_fd != STDIN_FILENO)
+			redirect_in(curr_cmd->input_fd);
+		if (curr_cmd->output_fd != STDOUT_FILENO)
+			redirect_out(curr_cmd->output_fd);
+	}
+	else
+	{
+		if (curr_cmd->output_fd != STDOUT_FILENO)
+			redirect_out (curr_cmd->output_fd);
+		if (curr_cmd->input_fd != STDIN_FILENO)
+			redirect_in(curr_cmd->input_fd);
+	}
+	execute_builtin_or_external(curr_cmd, mini);
+}
+
+
+void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
+{
+	if (curr_cmd->input_fd != STDIN_FILENO)
+		close(curr_cmd->input_fd);
+	if (curr_cmd->output_fd != STDOUT_FILENO)
+		close(curr_cmd->output_fd);
+	if (!curr_cmd->last_cmd)
+	{
+		close(pipe_fd[1]);
+		*input_fd = pipe_fd[0];
+	}
+	else
+		close(pipe_fd[0]);
+}
+
+
 void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
 {
 	pid_t	pid;

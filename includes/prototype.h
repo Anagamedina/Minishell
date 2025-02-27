@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 12:32:50 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 17:32:46 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,11 +326,14 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
 void	wait_children(t_mini *mini);
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+int check_repeated_redirections(t_list *token_list);
 //*************SIGNALS**************/
 int	validate_and_prepare_tokens(t_mini *mini);
 int validate_syntax(t_list *token_list);
 int validate_pipes_and_separators(t_list *token_list);
 int validate_and_update_words_positions(t_mini *mini);
+int check_start_and_end_tokens(t_list *token_list);
+int	is_redir_out(t_tokens* token);
 
 //*************signals.c**************/
 void		handle_signal_ctrl_c(int sig);

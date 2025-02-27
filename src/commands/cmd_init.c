@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/25 13:16:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:08:26 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_cmd	*init_command(void)
 	return (new_cmd);
 }
 
-t_cmd	*create_new_command(t_tokens *current_token, char **paths)
+/*t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 {
 	t_cmd	*new_cmd;
 
@@ -64,6 +64,42 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 			free_command(new_cmd);
 			return (NULL);
 		}
+	}
+	return (new_cmd);
+}*/
+
+
+t_cmd	*create_new_command(t_tokens *current_token, char **paths)
+{
+	t_cmd	*new_cmd;
+
+	if (!current_token || !current_token->str)
+		return (NULL);
+	new_cmd = init_command();
+	if (!new_cmd)
+	{
+		write(2, "Error: No se pudo inicializar el comando\n", 41);
+		return (NULL);
+	}
+	new_cmd->cmd = ft_strdup(current_token->str);
+	if (!new_cmd->cmd)
+	{
+		free_command(new_cmd);
+		return (NULL);
+	}
+	if (current_token->type_token == BUILTINS)
+		new_cmd->is_builtin = 1;
+	else if (current_token->type_token == CMD_EXTERNAL)
+	{
+		new_cmd->is_external = 1;
+		new_cmd->cmd_path = get_cmd_path(current_token, paths);
+		/*if (!new_cmd->cmd_path)
+		{
+			write(2, "bash: ", 6);
+			write(2, current_token->str, ft_strlen(current_token->str));
+			write(2, ": command not found\n", 20);
+			new_cmd->cmd_path = NULL; // Permite que el pipe continúe
+		}*/
 	}
 	return (new_cmd);
 }

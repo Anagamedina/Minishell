@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 11:24:43 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/27 13:31:29 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 19:16:42 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,68 +24,30 @@ int validate_and_update_words_positions(t_mini *mini)
 		return (FALSE);
 	current = mini->tokens;
 	prev_token = NULL;
-	command_found = FALSE;  // Indica si ya hemos encontrado un comando en la línea
+	command_found = FALSE;
 
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-
-		// Si encontramos una palabra (`WORD`), verificamos su posición
 		if (token->type_token == WORD)
 		{
-			// Si aún no se ha encontrado un comando en la línea actual, es válido
 			if (!command_found || !prev_token || prev_token->type_token == PIPE ||
 				prev_token->type_token == DELIMITER)
 			{
-				token->is_valid_cmd = TRUE;  // Es un comando válido
-				command_found = TRUE; // Marcamos que ya hay un comando en esta línea
+				token->is_valid_cmd = TRUE;
+				command_found = TRUE;
 			}
 			else
-			{
-				token->is_valid_cmd = FALSE;  // Se mantiene como argumento
-			}
+				token->is_valid_cmd = FALSE;
 		}
 		else if (token->type_token == PIPE || token->type_token == DELIMITER)
-		{
-			command_found = FALSE;  // Reiniciamos para el siguiente segmento de comandos
-		}
-
+			command_found = FALSE;
 		prev_token = token;
 		current = current->next;
 	}
 	return (TRUE);
 }
 
-
-
-/**
- * Verifica si hay redirecciones repetidas seguidas en la lista de tokens.
- */
-int check_repeated_redirections(t_list *token_list)
-{
-	t_list 		*current;
-	t_tokens 	*token;
-    t_tokens 	*next_token;
-
-    current = token_list;
-	while (current && current->next)
-	{
-		token = (t_tokens *)current->content;
-		next_token = (t_tokens *)current->next->content;
-
-       	if (is_redir(token) && is_redir(next_token))
-		{
-       		printf("Error: redirecciones repetidas '%s %s'.\n", token->str, next_token->str);
-			return (FALSE);
-        }
-        current = current->next;
-	}
-	return (TRUE);
-}
-
-/**
- * Verifica si hay operadores consecutivos prohibidos (| | o ; ;).
- */
 int check_consecutive_operators(t_list *token_list)
 {
 	t_list 		*current;
@@ -97,59 +59,55 @@ int check_consecutive_operators(t_list *token_list)
 	while (current)
 	{
 		token = (t_tokens *)current->content;
-
-		// Si hay operadores consecutivos (`| |` o `; ;`), lanzar error
 		if (prev && (prev->type_token == PIPE || prev->type_token == DELIMITER) &&
 				(token->type_token == PIPE || token->type_token == DELIMITER))
 		{
-			printf("Error: operadores consecutivos no permitidos '%s' '%s'.\n",
-				   prev->str, token->str);
+			write(2, "bash: syntax error near unexpected token `", 42);
+			write(2, token->str, ft_strlen(token->str));
+			write(2, "'\n", 2);
 			return (FALSE);
 		}
-
+		if (prev && is_redir(prev) && token->type_token == PIPE)
+		{
+			write(2, "bash: syntax error near unexpected token `|'\n", 45);
+			return (FALSE);
+		}
 		prev = token;
 		current = current->next;
 	}
 	return (TRUE);
 }
 
-/**
- * Verifica si la línea comienza o termina con un operador prohibido.
- */
-int check_start_and_end_tokens(t_list *token_list)
+
+static int	check_redir_after_pipe(t_list *token_list)
 {
-	t_tokens *first;
-	t_tokens *last;
-	t_list *current = token_list;
+	t_tokens	*curr_token;
+	t_tokens	*next_token;
 
-	if (!current)
-		return (FALSE);
-
-	// Verificar el primer token
-	first = (t_tokens *)current->content;
-	if (first->type_token == PIPE || first->type_token == DELIMITER)
+	while (token_list)
 	{
-		printf("Error: '%s' no puede estar al inicio.\n", first->str);
-		return (FALSE);
-	}
+		curr_token = (t_tokens *)token_list->content;
 
-	// Avanzamos hasta el último token
-	while (current->next)
-		current = current->next;
-	last = (t_tokens *)current->content;
+		// Si encontramos un `|`, verificamos el siguiente token
+		if (curr_token->type_token == PIPE && token_list->next)
+		{
+			next_token = (t_tokens *)token_list->next->content;
 
-	// Verificar el último token
-	if (last->type_token == PIPE || last->type_token == DELIMITER || is_redir(last))
-	{
-		printf("Error: '%s' no puede estar al final.\n", last->str);
-		return (FALSE);
+			if (is_redir(next_token))
+			{
+				//write(2, "bash: syntax error near unexpected token `", 42);
+				//write(2, next_token->str, ft_strlen(next_token->str));
+				//write(2, "'\n", 2);
+				return (FALSE);
+			}
+		}
+		token_list = token_list->next;
 	}
 	return (TRUE);
 }
 
-/**
- * Valida la posición de `pipes (|)` y `separadores (;)`
- */
+
+
 int validate_pipes_and_separators(t_list *token_list)
 {
 	if (!check_start_and_end_tokens(token_list) || !check_consecutive_operators(token_list))
@@ -157,18 +115,88 @@ int validate_pipes_and_separators(t_list *token_list)
 	return (TRUE);
 }
 
-
-
-/**
- * Valida la sintaxis general de la línea de comandos antes de procesarla.
- */
-int validate_syntax(t_list *token_list)
+/*int validate_syntax(t_list *token_list)
 {
 	if (!check_repeated_redirections(token_list) ||
 		!validate_pipes_and_separators(token_list))
 	{
-		printf("Error de sintaxis en la entrada.\n");
+		return (FALSE);
+	}
+	return (TRUE);
+}*/
+
+int validate_syntax(t_list *token_list)
+{
+	//Primero, verificamos `| < file.txt`
+	if (!check_redir_after_pipe(token_list))
+		return (FALSE);
+	if (!check_repeated_redirections(token_list) ||
+		!validate_pipes_and_separators(token_list))
+	{
 		return (FALSE);
 	}
 	return (TRUE);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*void init_validation_vars(t_mini *mini, t_list **current,
+						  t_tokens **prev_token, int *command_found)
+{
+	*current = mini->tokens;
+	*prev_token = NULL;
+	*command_found = FALSE;
+}
+
+void update_token_status(t_tokens *token, t_tokens *prev_token, int *command_found)
+{
+	if (token->type_token == WORD)
+	{
+		if (!*command_found || !prev_token || prev_token->type_token == PIPE ||
+			prev_token->type_token == DELIMITER)
+		{
+			token->is_valid_cmd = TRUE;
+			*command_found = TRUE;
+		}
+		else
+			token->is_valid_cmd = FALSE;
+	}
+	else if (token->type_token == PIPE || token->type_token == DELIMITER)
+		*command_found = FALSE;
+}
+
+int validate_and_update_words_positions(t_mini *mini)
+{
+	t_list		*current;
+	t_tokens	*prev_token;
+	t_tokens	*token;
+	int 		command_found;
+
+	if (!mini->tokens)
+		return (FALSE);
+	init_validation_vars(mini, &current, &prev_token, &command_found);
+	while (current)
+	{
+		token = (t_tokens *)current->content;
+		update_token_status(token, prev_token, &command_found);
+		prev_token = token;
+		current = current->next;
+	}
+	return (TRUE);
+}*/
