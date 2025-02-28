@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/31 00:15:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:21:47 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	configure_terminal(void)
 /**
  * @brief check if the input contains quotes and if the number of quotes is even
  */
-int	check_quotes_line(const char *line)
+//int	check_quotes_line(const char *line);
 /*int	check_quotes_line(const char *line)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 17:13:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:25:07 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**env_list_to_array(t_list *env_list)
 
 int	is_builtin_command(char *cmd)
 {
-	return (ft_strcmp(cmd, ECHO) == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
+	return (ft_strcmp(cmd, ECHO_VAR) == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
 		ft_strcmp(cmd, UNSET) == 0 || ft_strcmp(cmd, ENV) == 0 || \
 		ft_strcmp(cmd, CD) == 0 || ft_strcmp(cmd, PWD) == 0 || \
 		ft_strcmp(cmd, EXIT) == 0);

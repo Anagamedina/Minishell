@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:19:46 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,6 @@ void		handle_signal_ctrl_c(int sig);
 int			setup_signals(int mode);
 int configure_signal_handler(int signal, void (*handler)(int));
 
-void		handle_sigint_ctrl_c(int signal);
-void		setup_signals(void);
+//void		handle_sigint_ctrl_c(int signal);
+//void		setup_signals(void);
 #endif

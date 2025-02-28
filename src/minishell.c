@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 12:29:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:25:55 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
-	setup_signals();
+	//setup_signals();
 	configure_terminal();
 	while (1)
 	{
