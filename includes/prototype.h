@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 00:29:12 by catalinab        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prototype.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 12:38:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:50:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +51,7 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
 char		*read_input(void);
+void		configure_terminal(void);
 int			check_quotes_line(const char *line);
 void		get_size_words_with_pivote(const char *line);
 void		parser_tokens(t_mini *mini);
@@ -179,7 +168,10 @@ char		**ft_split_quotes(char *str);
 char		*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
-//
+
+//************** parser_tokens.c ********************/
+void		parser_tokens(t_mini *mini);
+
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
@@ -272,7 +264,6 @@ void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
 void		process_command_args(t_list *current, t_cmd *cmd);
 void 		free_cmd_args(t_cmd *cmd);
-
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char* key, char* value);
@@ -350,4 +341,6 @@ void		handle_signal_ctrl_c(int sig);
 int			setup_signals(int mode);
 int configure_signal_handler(int signal, void (*handler)(int));
 
+void		handle_sigint_ctrl_c(int signal);
+void		setup_signals(void);
 #endif

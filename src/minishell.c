@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 13:02:44 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/02/27 12:29:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
-	setup_signals(PARENT);
+	setup_signals();
+	configure_terminal();
 	while (1)
 	{
+		// handle CTRL + D inside read_input
 		input = read_input();
 		if (!input)
 			continue ;

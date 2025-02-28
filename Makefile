@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = minishell
-CC = cc
+CC = cc #-O1 #-v
 #CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
 SRC_DIR = src

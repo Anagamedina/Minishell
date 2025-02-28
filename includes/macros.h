@@ -30,7 +30,7 @@
 # define TAB '\t'
 # define NEWLINE '\n'
 
-# define ECHO "echo"
+# define ECHO_VAR "echo"
 # define EXPORT "export"
 # define UNSET "unset"
 # define ENV "env"
