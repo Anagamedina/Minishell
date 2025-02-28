@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/25 15:15:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 13:02:44 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
-void set_up_signals(int i);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -46,9 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = read_input();
 		if (!input)
-		{
 			continue ;
-		}
 		// handle_signal_ctrl_c(SIGINT);
 		if ((ft_strcmp(input, "") == 0))
 		{
@@ -77,17 +72,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		if (minishell->exec->first_cmd)
-            free_cmd_list(minishell->exec->first_cmd);
+			free_cmd_list(minishell->exec->first_cmd);
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
-			printf("Error: creating commands list.\n");
+			printf("bash: command not found\n");
 			free(input);
 			continue ;
 		}
 		// add_detail return 0 - 1
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-		// print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
@@ -101,6 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	free_mini(minishell);
 	return (0);
 }
+
 
 
 /*

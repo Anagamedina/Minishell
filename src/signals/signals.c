@@ -6,11 +6,13 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/28 12:21:14 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:59:00 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+//void rl_replace_line(char* str, int i);
 
 void handle_signal_parent(int sig)
 {
@@ -18,7 +20,7 @@ void handle_signal_parent(int sig)
 	{
 		write(2, "\n", 1);
 		rl_on_new_line();       // Indica que estamos en una nueva línea
-		rl_replace_line("", 0); // Borra la línea actual de readline
+		//rl_replace_line("", 0); // Borra la línea actual de readline
 		rl_redisplay();         // Redibuja el prompt
 	}
 }
