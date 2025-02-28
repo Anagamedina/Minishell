@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:13:53 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/28 01:25:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:53:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin_command(char *cmd)
 {
-	return (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
+	return (ft_strcmp(cmd, ECHO_VAR) == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
 		ft_strcmp(cmd, UNSET) == 0 || ft_strcmp(cmd, ENV) == 0 || \
 		ft_strcmp(cmd, CD) == 0 || ft_strcmp(cmd, PWD) == 0 || \
 		ft_strcmp(cmd, EXIT) == 0);
@@ -36,3 +36,16 @@ int	is_cmd_external(t_mini *mini, t_tokens *token)
 	}
 	return (FALSE);
 }
+
+/*
+char	*is_cmd_external(t_mini *mini, t_tokens *token)
+{
+	char      **paths;
+	char      *cmd_path;
+
+	if (!mini || !mini->tokens)
+	   return (NULL);
+	paths = get_path(mini->envp_to_array);
+	cmd_path = get_cmd_path(token, paths);
+	return (cmd_path);
+}*/
