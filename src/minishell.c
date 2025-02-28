@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 01:29:07 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/19 16:33:54 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/28 10:52:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +40,20 @@ int	main(int argc, char **argv, char **envp)
 	if (!minishell)
 	{
 		perror("Error: init minishell.\n");
-		// free(minishell);
 		return (1);
 	}
+	setup_signals();
+	configure_terminal();
 	while (1)
 	{
+		// handle CTRL + D inside read_input
 		input = read_input();
 		if (!input || !check_quotes_line(input))// || minishell->exit_status != 0)
 		{
 			printf("Error: fail reading input.\n");
 			free(input);
-		//	break ;
 			continue ;
 		}
-		// handle_signal_ctrl_c(SIGINT);
 		if ((ft_strcmp(input, "") == 0))
 		{
 			free(input);
@@ -97,13 +85,12 @@ int	main(int argc, char **argv, char **envp)
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
-			// printf("Error: creating commands list.\n");
 			free(input);
 			continue ;
 		}
 		// add_detail return 0 - 1
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-		// print_list_commands(minishell->exec->first_cmd);
+
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:55:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,13 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
 char		*read_input(void);
+void		configure_terminal(void);
 int			check_quotes_line(const char *line);
-void		get_size_words_with_pivote(const char *line);
-void		parser_tokens(t_mini *mini);
 
 //**************BUILTINS-1********/
 
-void		add_env_back(t_env **env_list, t_env *new_node);
-void		update_var(char *line, t_list **env_list);
 void		print_export(t_list** env_list);
 
-void		handle_local_or_unknown(t_tokens *first_token, t_list **local_vars);
-void		builtin_export(t_mini *mini);
 t_env		*find_env_var(t_list *env_list, char *key);
 
 //************** BUILT_IN_export.c********/
@@ -167,7 +162,10 @@ char		**ft_split_quotes(char *str);
 char		*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
-//
+
+//************** parser_tokens.c ********************/
+void		parser_tokens(t_mini *mini);
+
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
@@ -326,5 +324,5 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 
 //*************signals.c**************/
 void		handle_sigint_ctrl_c(int signal);
-
+void		setup_signals(void);
 #endif

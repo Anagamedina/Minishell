@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 00:42:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:29:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 
 # include "../libft/libft.h"
 # include "prototype.h"
-# include "free_structs.h"
 # include "macros.h"
+# include "free_structs.h"
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h> 
 # include <fcntl.h>  
+# include <signal.h>
+# include <termios.h>
+
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/termios.h>
-# include <signal.h>
-# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "macros.h"
 
 typedef enum e_type_token
 {

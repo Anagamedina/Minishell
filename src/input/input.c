@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/28 00:51:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:10:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,26 @@ char	*read_input(void)
 	if (!input)
 	{
 		ft_putendl_fd("exit", 1);
+		// TODO: liberar todo aqui y salir
 		exit(0);
 		// return (NULL);
 	}
-	if (*input)
-		add_history(input);
+	// if (*input)
+	add_history(input);
 	return (input);
 }
 
 /**
  * @brief configure the terminal
+
  * term.c_lflag &= ~ECHOCTL (off the print control characters in the input)
+
  * isatty(STDIN_FILENO): Verify if minishell is running in a terminal.
+
  * ttyname(STDIN_FILENO): show the name of the terminal.
+
  * tcgetattr() and tcsetattr():
+
  * modify the terminal attributes to Ctrl+C not to print ^C.
  *
  */
