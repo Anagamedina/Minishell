@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   comannd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/28 12:46:16 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 int	identify_commands(t_list *tokens_list)
 {
@@ -114,7 +126,8 @@ void	agregar_argumentos_a_comando(t_cmd **cmd, t_list *token_list)
 	}
 	(*cmd)->cmd_args[j] = NULL;
 }*/
-/*t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
+/*
+t_cmd *create_new_command(t_tokens *current_token, char **paths, int cmd_id)
 {
 	t_cmd 	*new_cmd;
 	char 	*cmd_path;

@@ -14,7 +14,6 @@ NAME = minishell
 CC = cc
 #CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
-
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
@@ -69,6 +68,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_PARSER)/parser_expand_cases.c \
 		$(SRC_PARSER)/parser_expand_dollar.c \
 		$(SRC_PARSER)/parser_expand_utils.c \
+		$(SRC_PARSER)/parser_syntax.c \
 		$(SRC_PARSER)/parser_init_quotes.c \
 		$(SRC_PARSER)/parser_not_expand.c \
 		$(SRC_PARSER)/parser_tab.c \
@@ -102,7 +102,8 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_FREE)/free_redir.c \
 		$(SRC_FREE)/free_split.c \
 		$(SRC_FREE)/free_tokens.c \
-		$(SRC_SIGNALS)/signals.c
+		$(SRC_SIGNALS)/signals.c \
+		$(SRC_SIGNALS)/signals_utils.c
 
 #		$(SRC_EXECUTE)/tests.c \
 #		$(SRC_REDIR)/heredoc.c

@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 22:34:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:19:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-void	count_args(t_list *token_list, t_cmd *cmd)
+/*void	count_args(t_list *token_list, t_cmd *cmd)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -42,6 +42,36 @@ void	count_args(t_list *token_list, t_cmd *cmd)
 		}
 		current = current->next;
 	}
+}*/
+
+void count_args(t_list *token_list, t_cmd *cmd)
+{
+	t_list *current;
+	t_tokens *token;
+
+	if (!token_list || !cmd)
+		return;
+
+	current = token_list;
+	cmd->count_args = 0;
+
+	while (current)
+	{
+		token = (t_tokens *)current->content;
+		if (token->type_token == PIPE)
+			break;
+		if ((token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS) && cmd->count_args == 0)
+		{
+			cmd->cmd = ft_strdup(token->str);
+			cmd->count_args++;
+		}
+		else if (token->type_token == WORD)
+		{
+			cmd->count_args++;
+		}
+
+		current = current->next;
+	}
 }
 
 
@@ -62,13 +92,6 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 	int			j;
 
 
-	// if (!cmd || !(*cmd) || (*cmd)->count_args <= 0)
-	// 	return;
-	// Reservar memoria para los argumentos
-	// (*cmd)->cmd_args = ft_calloc((*cmd)->count_args + 1, sizeof(char *));
-	// if (!(*cmd)->cmd_args)
-	// 	return;
-	//
 	j = 0;
 	current = token_list;
 	while (current && j < (*cmd)->count_args)

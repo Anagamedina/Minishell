@@ -6,7 +6,19 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 00:29:12 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/02/22 12:38:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +272,7 @@ void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
 void		process_command_args(t_list *current, t_cmd *cmd);
 void 		free_cmd_args(t_cmd *cmd);
+
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char* key, char* value);
@@ -280,7 +293,8 @@ void 		free_cmd_list(t_list *cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**env_list_to_array(t_list *env_list);
-int			is_cmd_external(t_mini *mini, t_tokens *token);
+//int			is_cmd_external(t_mini *mini, t_tokens *token);
+char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 void		process_flags(t_cmd *cmd, char *cmd_str);
@@ -321,10 +335,19 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
 void	wait_children(t_mini *mini);
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+int check_repeated_redirections(t_list *token_list);
 
 //*************SIGNALS**************/
+int	validate_and_prepare_tokens(t_mini *mini);
+int validate_syntax(t_list *token_list);
+int validate_pipes_and_separators(t_list *token_list);
+int validate_and_update_words_positions(t_mini *mini);
+int check_start_and_end_tokens(t_list *token_list);
+int	is_redir_out(t_tokens* token);
 
 //*************signals.c**************/
 void		handle_signal_ctrl_c(int sig);
+int			setup_signals(int mode);
+int configure_signal_handler(int signal, void (*handler)(int));
 
 #endif

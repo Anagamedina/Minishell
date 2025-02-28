@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 17:44:23 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:16:40 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 	cmd->input_fd = open_file(curr_redir->filename, REDIR_IN);
 	if (cmd->input_fd == -1)
 	{
-		perror("Error abriendo archivo de entrada");
+		write(2, "bash: ", 6);
+		write(2, curr_redir->filename, ft_strlen(curr_redir->filename));
+		write(2, ": No such file or directory\n", 28);
 		return (FALSE);
 	}
 	return (TRUE);
