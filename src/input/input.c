@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/01 19:34:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 21:19:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ char	*read_input(void)
 	}
 	while (!check_quotes_line(input))
 	{
-		// ft_putendl_fd("exit", 1);
-		// exit(0);
-		// return (NULL);
 		temp = readline("> ");
 		if (!temp)  //Si Ctrl+D en prompt secundario, error y salida
 		{
@@ -48,7 +45,8 @@ char	*read_input(void)
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
 			return (NULL);
 		}
-		if (ft_strlen(temp) == 0) // 🔹 Si `Ctrl+C` fue presionado, `readline` devuelve una línea vacía
+		// Si `Ctrl+C` fue presionado, `readline` devuelve una línea vacía
+		if (ft_strlen(temp) == 0)
 		{
 			free(input);
 			free(temp);

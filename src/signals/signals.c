@@ -6,29 +6,30 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/01 20:39:38 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 21:27:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// void	handle_signal_heredoc(int sig)
-// {
-// 	if (sig == SIGINT) // Si se presiona Ctrl+C
-// 	{
-// 		write(2, "\n", 1);
-// 		close(3);
-// 		exit(EXIT_SUCCESS); // Finaliza el proceso del heredoc
-// 	}
-// }
-void handle_signal_parent(int sig)
+void	handle_signal_heredoc(int sig)
 {
-	if (sig == SIGINT) // Ctrl+C en el shell
+	if (sig == SIGINT) // Si se presiona Ctrl+C
 	{
 		write(2, "\n", 1);
-		rl_on_new_line();       // Indica que estamos en una nueva línea
-		rl_replace_line("", 0); // Borra la línea actual de readline
-		rl_redisplay();         // Redibuja el prompt
+		close(3);
+		exit(EXIT_SUCCESS); // Finaliza el proceso del heredoc
+	}
+}
+
+void handle_signal_parent(int sig)
+{
+	if (sig == SIGINT)		// Ctrl+C en el shell
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();		// Indica que estamos en una nueva línea
+		rl_replace_line("", 0);	// Borra la línea actual de readline
+		rl_redisplay();			// Redibuja el prompt
 	}
 }
 
@@ -72,5 +73,6 @@ int setup_signals(int mode)
 		return (setup_parent_signals());
 	else if (mode == CHILD)
 		return (setup_child_signals());
+	else if (mode == HERE_DOC)
 	return (-1);
 }

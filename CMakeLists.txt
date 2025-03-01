@@ -5,6 +5,26 @@ project(minishell C)
 
 set(CMAKE_C_STANDARD 99)
 
+# Habilitar flags de depuración
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall -Wextra -Werror")
+
+# Configurar opciones para el debugger (GDB/LLDB)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")  # Agregar símbolos de depuración
+
+# Configuración para evitar que GDB intercepte señales SIGINT, SIGQUIT, etc.
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -g")
+
+# Agregar una configuración para ejecutar en terminal externa (para CLion)
+set(CMAKE_TERM_PROGRAM "x-terminal-emulator")
+
+# Configurar ejecución en una terminal externa para pruebas (recomendado)
+add_custom_target(debug_minishell
+        COMMAND gnome-terminal -- bash -c "gdb -ex 'handle SIGINT nostop noprint pass' -ex 'run' --args ./minishell"
+        DEPENDS minishell
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        COMMENT "Ejecutando Minishell en modo depuración con manejo de señales"
+)
+
 # Habilitar sanitizers para depuración
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined")
