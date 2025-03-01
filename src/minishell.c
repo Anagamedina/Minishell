@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 13:25:55 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/01 18:36:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
-	setup_signals(PARENT);
 	configure_terminal();
+	setup_signals(PARENT);
+	printf("PID padre: [%d]\n", getpid());
 	while (1)
 	{
 		// handle CTRL + D inside read_input
 		input = read_input();
+		// printf("input: [%s]\n", input);
 		if (!input)
 			continue ;
 		// handle_signal_ctrl_c(SIGINT);

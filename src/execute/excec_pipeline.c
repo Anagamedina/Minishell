@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/01 13:53:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:14:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	wait_children(t_mini *mini)
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
-	heredoc(curr_cmd);
+	heredoc(curr_cmd); // ✅ heredoc()
 	if (apply_redirections(curr_cmd) > 0)
 	{
 		if (curr_cmd->input_fd != STDIN_FILENO)
@@ -88,8 +88,9 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
 	}
 	if (pid == 0)
 	{
+		printf("PID: %d\n", getpid());
 		setup_signals(CHILD);
-		setup_signals(HERE_DOC);
+		// setup_signals(HERE_DOC);
 		handle_child(cmd, mini);
 		exit(EXIT_SUCCESS);
 	}

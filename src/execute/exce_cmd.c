@@ -6,12 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 16:35:44 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/01 19:33:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 int redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 {
@@ -82,7 +81,6 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-
 		if (execute_builtin_if_needed(mini, curr_cmd, &t_list_exec_cmd))
 			continue;
 		setup_fds(curr_cmd, pipe_fd, &input_fd);

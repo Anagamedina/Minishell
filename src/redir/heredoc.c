@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/01 13:31:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 19:32:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,66 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	return (0);
 }
 
+
+
 int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
+{
+	int		fd_tmp;
+	char	*tmp_name;
+	// pid_t	pid;
+	// int		status;
+
+	tmp_name = generate_heredoc_filename(nbr_heredoc);
+	if (!tmp_name)
+		return (-1);
+	fd_tmp = open_file(tmp_name, HEREDOC);
+	if (fd_tmp == -1)
+	{
+		free(tmp_name);
+		return (-1);
+	}
+	setup_signals(HERE_DOC);
+    write_heredoc_content(fd_tmp, redir->filename, expand_vars);
+    close(fd_tmp);
+	close(fd_tmp);
+	free(redir->filename);
+	redir->filename = ft_strdup(tmp_name);
+	free(tmp_name);
+	return (0);
+}
+
+
+    // exit(0);
+
+	// Crear un proceso hijo solo para `heredoc`
+	/*pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		free(tmp_name);
+		return (-1);
+	}
+	if (pid == 0) // Proceso hijo maneja la entrada del heredoc
+	{
+		setup_signals(HERE_DOC);  // ✅ Se configura solo en el hijo
+		write_heredoc_content(fd_tmp, redir->filename, expand_vars);
+		close(fd_tmp);
+		exit(0);
+	}
+	else // 🔥 Proceso padre espera al hijo
+	{
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT) // 🚨 Heredoc interrumpido con Ctrl+C
+		{
+			close(fd_tmp);
+			unlink(tmp_name);
+			free(tmp_name);
+			return (-1);
+		}
+	}*/
+
+
+/*int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
 	char	*tmp_name;
@@ -118,7 +177,7 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 	redir->filename = ft_strdup(tmp_name);
 	free(tmp_name);
 	return (0);
-}
+}*/
 
 int	heredoc(t_cmd *cmd)
 {
