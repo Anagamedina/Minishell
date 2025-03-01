@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/28 11:57:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 13:53:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 	curr_cmd->input_fd = *input_fd;
 }
-
-
 
 void	wait_children(t_mini *mini)
 {
@@ -91,6 +89,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
 	if (pid == 0)
 	{
 		setup_signals(CHILD);
+		setup_signals(HERE_DOC);
 		handle_child(cmd, mini);
 		exit(EXIT_SUCCESS);
 	}

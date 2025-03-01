@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/22 18:19:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 13:18:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@
 # define CTRL_D SIGQUIT
 # define CTRL_SLASH SIGQUIT
 # define CTRL_Z SIGTSTP
-// Modes signals
-# define PARENT 0
-# define CHILD 1
+
+#define PARENT 0  // Indica que `setup_signals(PARENT)` configura señales para el shell
+#define CHILD  1
+#define HERE_DOC 2
+
 
 /*--------------------Error messages-------------------*/
 # define PRINT_SYNTAX_ERR_1 "syntax error near unexpected token `|'\n"

@@ -6,12 +6,11 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/28 13:21:47 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/01 13:15:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 void	control_and_d(char *line)
 {
@@ -24,7 +23,6 @@ void	control_and_d(char *line)
 	}
 }
 
-
 char	*read_input(void)
 {
 	char	*input;
@@ -32,12 +30,16 @@ char	*read_input(void)
 	char	*temp;
 
 	input = readline("minishell> ");
-	control_and_d(input);
+	if (!input) // Si `Ctrl+D` se presiona en el prompt principal
+	{
+		write(2, "exit\n", 5);
+		exit(0);
+	}
+//	control_and_d(input);
 	while (!check_quotes_line(input))
 	{
-		ft_putendl_fd("exit", 1);
-		// TODO: liberar todo aqui y salir
-		exit(0);
+		// ft_putendl_fd("exit", 1);
+		// exit(0);
 		// return (NULL);
 		temp = readline("> ");
 		if (!temp)  //Si Ctrl+D en prompt secundario, error y salida
@@ -48,11 +50,10 @@ char	*read_input(void)
 		}
 		new_input = ft_strjoin(input, "\n");
 		free(input);
-		input = ft_strjoin(new_input, temp);  //Concatenar nueva entrada
+		input = ft_strjoin(new_input, temp);
 		free(new_input);
 		free(temp);
 	}
-
 	if (*input)
 		add_history(input);
 

@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
-	//setup_signals();
+	setup_signals(PARENT);
 	configure_terminal();
 	while (1)
 	{

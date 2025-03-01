@@ -1,8 +1,6 @@
 
 #include "../../includes/minishell.h"
 
-
-
 /* 📌 Configurar un manejador de señal */
 int configure_signal_handler(int signal, void (*handler)(int))
 {
