@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/01 18:36:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:37:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int argc, char **argv, char **envp)
 		// free(minishell);
 		return (1);
 	}
-	configure_terminal();
 	setup_signals(PARENT);
-	printf("PID padre: [%d]\n", getpid());
+	configure_terminal();
+	// printf("PID padre: [%d]\n", getpid());
 	while (1)
 	{
 		// handle CTRL + D inside read_input
@@ -49,11 +49,11 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 			continue ;
 		// handle_signal_ctrl_c(SIGINT);
-		if ((ft_strcmp(input, "") == 0))
+		/*if ((ft_strcmp(input, "") == 0))
 		{
 			free(input);
 			continue ;
-		}
+		}*/
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);
 		minishell->tokens = generate_token_list(input);

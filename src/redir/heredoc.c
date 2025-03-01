@@ -116,7 +116,7 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 		free(tmp_name);
 		return (-1);
 	}
-	setup_signals(HERE_DOC);
+	// setup_signals(HERE_DOC);
     write_heredoc_content(fd_tmp, redir->filename, expand_vars);
     close(fd_tmp);
 	close(fd_tmp);

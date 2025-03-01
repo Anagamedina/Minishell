@@ -29,7 +29,7 @@ char	*read_input(void)
 	char	*new_input;
 	char	*temp;
 
-	printf("entra en read_input()\n");
+	// printf("entra en read_input()\n");
 	input = readline("minishell> ");
 	if (!input) // Si `Ctrl+D` se presiona en el prompt principal
 	{
