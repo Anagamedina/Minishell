@@ -22,7 +22,13 @@ void	free_mini(t_mini *mini)
 		free_string_matrix(mini->envp_to_array);
 	if (mini->tokens)
 		free_tokens(mini->tokens);
+	/*if (mini->exec)
+		free_exec(mini->exec);*/
 	if (mini->exec)
+	{
+		if (mini->exec->first_cmd)
+			free_cmd_list(mini->exec->first_cmd); // ✅ Esto ya maneja `free_redirections()`
 		free_exec(mini->exec);
-	free(mini);
+		free(mini);
+	}
 }

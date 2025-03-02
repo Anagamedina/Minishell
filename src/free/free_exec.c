@@ -43,3 +43,32 @@ void	free_exec(t_exec *exec)
 		close(exec->pipe_output_fd);
 	free(exec);
 }
+
+
+/*int count_env_variables_ia(char **env_vars)
+{
+	int count = 0;
+
+	if (!env_vars)
+		return (0);
+	while (env_vars[count])
+		count++;
+	return (count);
+}
+
+
+void free_exec(t_exec *exec_info)
+{
+	if (!exec_info)
+		return;
+	if (exec_info->env_vars)
+		free_env_array(exec_info->env_vars, count_env_variables_ia(exec_info->env_vars));
+	if (exec_info->paths)
+	{
+		int i = 0;
+		while (exec_info->paths[i])
+			free(exec_info->paths[i++]);
+		free(exec_info->paths);
+	}
+	free(exec_info);
+}*/

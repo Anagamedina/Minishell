@@ -6,20 +6,20 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/02 19:15:59 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/02 19:55:58 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_cmd_path(t_tokens *token, char **paths)
+char *get_cmd_path(t_tokens *token, char **paths)
 {
-	char		*cmd_path;
-	char		*full_path;
-	int			i;
+	char *cmd_path;
+	char *full_path;
+	int i;
 
-	if (ft_strcmp(token->str, ".") == 0 || ft_strcmp(token->str, "..") == 0 \
-			|| ft_strncmp(token->str, "../", 3) == 0)
+	if (ft_strcmp(token->str, ".") == 0 || ft_strcmp(token->str, "..") == 0 ||
+		ft_strncmp(token->str, "../", 3) == 0)
 		return (NULL);
 	if (token->str[0] == '/' || token->str[0] == '.')
 	{
@@ -41,11 +41,11 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 	return (NULL);
 }
 
-char	**get_path(char **env)
+char **get_path(char **env)
 {
-	char	**paths;
-	char	*path_var;
-	int		i;
+	char **paths;
+	char *path_var;
+	int i;
 
 	paths = NULL;
 	path_var = NULL;
@@ -55,7 +55,7 @@ char	**get_path(char **env)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			path_var = ft_strdup(env[i] + 5);
-			break ;
+			break;
 		}
 		i++;
 	}
