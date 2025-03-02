@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:55:30 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:48:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:37:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	unset_variable(t_list **env_list, char *var_name)
 			else
 				*env_list = current->next;
 			free_env(env_var);
-			free(current);
+			// free(current);
 			return ;
 		}
 		prev = current;

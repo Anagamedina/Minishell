@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:37:04 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 17:55:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:50:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,11 @@ void	free_cmd_list(t_list *cmd_list)
 {
 	t_list	*tmp;
 	t_cmd	*cmd;
-	// int		i;
 
 	while (cmd_list)
 	{
 		tmp = cmd_list->next;
-		cmd = (t_cmd *)cmd_list->content;
+		cmd = (t_cmd *) cmd_list->content;
 		if (cmd)
 		{
 			if (cmd->cmd)

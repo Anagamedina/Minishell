@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/02 12:32:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 23:31:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	}
 	execute_builtin_or_external(curr_cmd, mini);
 }
-
 
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
