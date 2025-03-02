@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/01 12:58:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:41:59 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,8 +335,9 @@ int validate_pipes_and_separators(t_list *token_list);
 int validate_and_update_words_positions(t_mini *mini);
 int check_start_and_end_tokens(t_list *token_list);
 int	is_redir_out(t_tokens* token);
+int	count_env_variables_ia(char **env);
 
-//*************signals.c**************/
+//*************signals.c**************/make r
 int			setup_signals(int mode);
 int			configure_signal_handler(int signal, void (*handler)(int));
 int			setup_heredoc_signals(void);

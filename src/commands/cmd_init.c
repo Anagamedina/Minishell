@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/02 23:20:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:47:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,40 +34,6 @@ t_cmd	*init_command(void)
 	return (new_cmd);
 }
 
-/*t_cmd	*create_new_command(t_tokens *current_token, char **paths)
-{
-	t_cmd	*new_cmd;
-
-	if (!current_token || !current_token->str)
-		return (NULL);
-	new_cmd = init_command();
-	if (!new_cmd)
-	{
-		fprintf(stderr, "Error: No se pudo inicializar el comando\n");
-		return (NULL);
-	}
-	new_cmd->cmd = ft_strdup(current_token->str);
-	if (!new_cmd->cmd)
-	{
-		free_command(new_cmd);
-		return (NULL);
-	}
-	if (current_token->type_token == BUILTINS)
-		new_cmd->is_builtin = 1;
-	else if (current_token->type_token == CMD_EXTERNAL)
-	{
-		new_cmd->is_external = 1;
-		new_cmd->cmd_path = get_cmd_path(current_token, paths);
-		if (!new_cmd->cmd_path)
-		{
-			printf("Error: '%s', paths not found\n", current_token->str);
-			free_command(new_cmd);
-			return (NULL);
-		}
-	}
-	return (new_cmd);
-}
-*/
 
 t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 {

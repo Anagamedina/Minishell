@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:22:26 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/02 19:34:54 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int	open_file(char *file, int type)
 	}
 	else
 		return (-1);
-//	if (fd == -1)
-//	{
-//		fprintf(stderr, "Error al abrir '%s': ", file);
-//		perror("");
-//	}
+	if (fd == -1)
+	{
+		fprintf(stderr, "Error al abrir '%s': ", file);
+		perror("");
+	}
 	return (fd);
 }
 
