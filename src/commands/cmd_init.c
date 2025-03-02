@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/28 12:47:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 23:20:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,13 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 	{
 		new_cmd->is_external = 1;
 		new_cmd->cmd_path = get_cmd_path(current_token, paths);
-		/*if (!new_cmd->cmd_path)
+		if (!new_cmd->cmd_path)
 		{
 			write(2, "bash: ", 6);
 			write(2, current_token->str, ft_strlen(current_token->str));
 			write(2, ": command not found\n", 20);
 			new_cmd->cmd_path = NULL; // Permite que el pipe continúe
 		}
-		*/
 	}
 	return (new_cmd);
 }

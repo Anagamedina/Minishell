@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/24 19:26:36 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/02 23:29:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 	}
 	else if (curr_cmd->is_external == 1)
 	{
+		if (curr_cmd->cmd_path == NULL)
+		{
+			return ;
+		}
 		execute_external(curr_cmd, mini->envp_to_array);
 		exit(EXIT_FAILURE);
 	}
