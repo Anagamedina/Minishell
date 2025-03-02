@@ -6,16 +6,12 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:31:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:15:59 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * TODO: this funcion only needd to execute when is a external command
- * because in the function  create_new_command it is NOT checked
-*/
 char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
@@ -75,36 +71,3 @@ char	**get_path(char **env)
 	}
 	return (paths);
 }
-
-/*
-char	**get_path(char **env)
-{
-	char	**paths;
-	char	*path_var;
-	int		i;
-
-	paths = NULL;
-	path_var = NULL;
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path_var = ft_strdup(env[i] + 5);
-			break ;
-		}
-		i++;
-	}
-	if (path_var)
-	{
-		paths = ft_split(path_var, ':');
-		free(path_var);
-		if (!paths)
-		{
-			perror("Error: No se pudo dividir PATH en subrutas");
-			return (NULL);
-		}
-	}
-	return (paths);
-}
-*/

@@ -63,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			break ;
 		}
+
 		if (minishell->exec->first_cmd)
 			free_cmd_list(minishell->exec->first_cmd);
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
@@ -74,12 +75,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		// add_detail return 0 - 1
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
+		// Ejecutar comandos
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
 			free_mini(minishell);
 			free(input);
-			break ;
+			break;
 		}
 		free(input);
 	}

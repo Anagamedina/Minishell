@@ -1,85 +1,83 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/27 10:02:00 by catalinab         #+#    #+#             */
+/*   Updated: 2025/03/02 19:17:06 by catalinab        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "../../includes/minishell.h"
 
-// void	print_list_token(t_list *tokens_list)
-// {
-// 	t_list		*current;
-// 	t_tokens	*token;
-// 	int			i;
 
-// 	current = tokens_list;
-// 	i = 1;
-// 	while (current != NULL)
-// 	{
-// 		token = (t_tokens *)current->content;
-// 		printf("TOKEN [%i] :\n", i);
-// 		printf("str: [%s]\n", token->str);
-// 		printf("type: [%i]\n", token->type_token);
-// 		printf("len: [%zu]\n", token->length);
-// 		i ++;
-// 		current = current->next;
-// 		printf("-------------------\n");
-// 	}
-// }
 
-// void	print_list_token_str(t_list *tokens_list)
-// {
-// 	t_list		*current;
-// 	t_tokens	*token;
-// 	int			i;
+static int	count_env_variables(t_list *env_list)
+{
+	t_list	*curr_node;
+	int		env_count;
 
-// 	current = tokens_list;
-// 	i = 1;
-// 	while (current != NULL)
-// 	{
-// 		token = (t_tokens *)current->content;
-// 		printf("TOKEN [%i] :\n", i);
-// 		printf("str: [%s]\n", token->str);
+	curr_node = env_list;
+	env_count = 0;
+	while (curr_node)
+	{
+		env_count ++;
+		curr_node = curr_node->next;
+	}
+	return (env_count);
+}
 
-// 		// Imprime el tipo del token
-// 		printf("type: [%i] ", token->type_token);
-// 		if (token->type_token == BUILTINS)
-// 			printf("(BUILTIN)");
-// 		else if (token->type_token == CMD_EXTERNAL)
-// 			printf("(EXTERNAL COMMAND)");
-// 		else if (token->type_token == WORD)
-// 			printf("(WORD)");
-// 		else if (token->type_token == PIPE)
-// 			printf("(PIPE)");
-// 		else if (token->type_token == REDIR_IN)
-// 			printf("(REDIR_IN)");
-// 		else if (token->type_token == REDIR_OUT)
-// 			printf("(REDIR_OUT)");
-// 		else if (token->type_token == FILENAME)
-// 			printf("(FILENAME)");
-// 		// Agrega más tipos según lo que hayas definido en tu enum.
+void	free_exec(t_exec *exec_info)
+{
+	if (!exec_info)
+		return;
+	if (exec_info->env_vars)
+		free_env_array(exec_info->env_vars, count_env_variables(exec_info->env_vars));
+	if (exec_info->paths)
+	{
+		int i = 0;
+		while (exec_info->paths[i])
+			free(exec_info->paths[i++]);
+		free(exec_info->paths);
+	}
+	free(exec_info);
+}
 
-// 		printf("\n");
-// 		printf("len: [%zu]\n", token->length);
-// 		i++;
-// 		current = current->next;
-// 		printf("-------------------\n");
-// 	}
-// }
 
-// void	print_list_token_str_one_line(t_list *tokens_list)
-// {
-// 	t_list		*current;
-// 	t_tokens	*token;
+/*void	free_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return;
+	if (cmd->cmd_path)
+		free(cmd->cmd_path);
+	if (cmd->cmd_args)
+	{
+		int i = 0;
+		while (cmd->cmd_args[i])
+			free(cmd->cmd_args[i++]);
+		free(cmd->cmd_args);
+	}
+	if (cmd->redir_list)
+		free(cmd->redir_list);  // Si es una lista dinámica, recorrer y liberar nodos.
+	free(cmd);
+}*/
 
-// 	current = tokens_list;
-// 	printf("[");
-// 	while (current != NULL)
-// 	{
-// 		token = (t_tokens *)current->content;
-// 		if (!is_builtin_command(token->str))
-// 		{
-// 			printf("%s", token->str);
-// 			if (current->next != NULL)
-// 				printf(" ");
-// 		}
-// 		current = current->next;
-// 	}
-// 	printf("]");
-// 	printf("\n");
-// }
+
+void free_cmd(t_cmd *cmd)
+{
+	if (!cmd)
+		return;
+	if (cmd->cmd_path)
+		free(cmd->cmd_path);
+	if (cmd->cmd_args)
+	{
+		int i = 0;
+		while (cmd->cmd_args[i])
+			free(cmd->cmd_args[i++]);
+		free(cmd->cmd_args);
+	}
+	free(cmd);
+}
