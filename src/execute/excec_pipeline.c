@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/01 18:14:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:32:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (!curr_cmd->last_cmd)
 	{
+		curr_cmd->has_pipe = 1;
 		if (pipe(pipe_fd) == -1)
 		{
 			perror("Error creando pipe");

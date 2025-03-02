@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:11 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:26:38 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:53:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	handle_single_quotes_after_dollar(t_tokens *token)
 		return (FALSE);
 	}
 	temp = convert_escape_sequences(processed_str);
-	printf("temp: [%s]\n", temp);
 	if (!temp)
 	{
 		perror("Error: convert_escape_sequences failed");

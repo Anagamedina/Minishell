@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 22:34:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:03:21 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static int	cd_change_directory(char *new_path, t_mini *mini)
 	}
 
 	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
-	free(old_pwd);
+	// free(old_pwd);
 
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)

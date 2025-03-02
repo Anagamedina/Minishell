@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/01 21:27:24 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 11:03:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int setup_signals(int mode)
 		return (setup_parent_signals());
 	else if (mode == CHILD)
 		return (setup_child_signals());
-	else if (mode == HERE_DOC)
+	// else if (mode == HERE_DOC)
+	// 	return (set)
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/01 19:33:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/02 12:39:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int pre_executor(t_mini *mini, t_cmd *cmd)
 
 int execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 {
-	if (cmd->is_builtin == 1 && !cmd->has_pipe)
+	if (cmd->is_builtin == 1 && (*cmd_list)->next == NULL)//&& cmd->has_pipe == -1) ????
 	{
 		if (pre_executor(mini, cmd) == TRUE)
 		{
