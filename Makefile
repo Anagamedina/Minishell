@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/02/22 18:15:17 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/02 23:56:15 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,17 +84,14 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_EXPAND)/expand_vars.c \
 		$(SRC_EXECUTE)/exce_paths.c \
 		$(SRC_EXECUTE)/exce_init.c \
-		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
 		$(SRC_EXECUTE)/excec_pipeline.c \
 		$(SRC_EXECUTE)/exce_cmd_utils.c \
 		$(SRC_EXECUTE)/exce_utils.c \
-		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
 		$(SRC_REDIR)/redir_init.c \
 		$(SRC_REDIR)/redir_utils.c \
 		$(SRC_REDIR)/heredoc.c \
-		$(SRC_REDIR)/redir_syntax.c \
 		$(SRC_FREE)/free_cmd.c \
 		$(SRC_FREE)/free_env.c \
 		$(SRC_FREE)/free_exec.c \

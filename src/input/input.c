@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/01 21:19:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 00:40:33 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ void	control_and_d(char *line)
 char	*read_input(void)
 {
 	char	*input;
-	char	*new_input;
-	char	*temp;
+	// char	*new_input;
+	// char	*temp;
 
-	// printf("entra en read_input()\n");
 	input = readline("minishell> ");
 	if (!input) // Si `Ctrl+D` se presiona en el prompt principal
 	{
 		write(2, "exit\n", 5);
 		exit(0);
 	}
+	/*
 	while (!check_quotes_line(input))
 	{
 		temp = readline("> ");
@@ -48,17 +48,25 @@ char	*read_input(void)
 		// Si `Ctrl+C` fue presionado, `readline` devuelve una línea vacía
 		if (ft_strlen(temp) == 0)
 		{
-			free(input);
 			free(temp);
-			write(2, "\n", 1); // 🔹 Nueva línea antes de redibujar el prompt
-			return (NULL);      // 🔹 Devolver `NULL` para que `main` no procese entrada inválida
+			write(2, "\n", 1);
+			return (NULL);
 		}
 		new_input = ft_strjoin(input, "\n");
+		if (!new_input)
+		{
+			free(input);
+			free(temp);
+			return (NULL);
+		}
 		free(input);
 		input = ft_strjoin(new_input, temp);
 		free(new_input);
 		free(temp);
+		if (!input) // ✅ Verificar que `ft_strjoin()` no haya devuelto `NULL`
+			return (NULL);
 	}
+	*/
 	if (*input)
 		add_history(input);
 	return (input);
@@ -87,37 +95,12 @@ void	configure_terminal(void)
 	else
 		printf("Not running in a terminal\n");
 
-	tcgetattr(STDIN_FILENO, &term);
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+		return ;
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-/**
- * @brief check if the input contains quotes and if the number of quotes is even
- */
-//int	check_quotes_line(const char *line);
-/*int	check_quotes_line(const char *line)
-{
-	int	i;
-	int	double_quotes;
-	int	single_quotes;
-
-	i = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == D_QUOTE)
-			double_quotes ++;
-		else if (line[i] == S_QUOTE)
-			single_quotes ++;
-		i++;
-	}
-	if (double_quotes % 2 != 0 || single_quotes % 2 != 0)
-		return (FALSE);
-	return (TRUE);
-}
-*/
 
 int	check_quotes_line(const char *line)
 {

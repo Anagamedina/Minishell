@@ -69,7 +69,6 @@ void count_args(t_list *token_list, t_cmd *cmd)
 		{
 			cmd->count_args++;
 		}
-
 		current = current->next;
 	}
 }
@@ -91,7 +90,6 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 	t_tokens	*token;
 	int			j;
 
-
 	j = 0;
 	current = token_list;
 	while (current && j < (*cmd)->count_args)
@@ -106,7 +104,8 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 			if (!(*cmd)->cmd_args[j])
 			{
 				perror("Error al duplicar argumento");
-				free_cmd_args(*cmd);
+				// free_cmd(&cmd);
+				// free_cmd_args(*cmd);
 				return ;
 			}
 			j++;

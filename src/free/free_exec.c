@@ -37,10 +37,10 @@ void	free_exec(t_exec *exec)
 		free_string_matrix(exec->env_vars);
 	if (exec->paths)
 		free_string_matrix(exec->paths);
-	if (exec->pipe_input_fd > 0)
-		close(exec->pipe_input_fd);
-	if (exec->pipe_output_fd > 0)
-		close(exec->pipe_output_fd);
+	// if (exec->pipe_input_fd > 0)
+	// 	close(exec->pipe_input_fd);
+	// if (exec->pipe_output_fd > 0)
+	// 	close(exec->pipe_output_fd);
 	free(exec);
 }
 

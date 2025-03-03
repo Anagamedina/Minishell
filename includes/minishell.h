@@ -6,16 +6,16 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 13:22:22 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/03 00:43:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# ifndef READLINE_LIBRARY
-#  define READLINE_LIBRARY
-# endif
+// # ifndef READLINE_LIBRARY
+// #  define READLINE_LIBRARY
+// # endif
 
 # include "../libft/libft.h"
 # include "prototype.h"

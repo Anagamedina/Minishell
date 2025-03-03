@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/02 19:31:39 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/03 00:57:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 
 int pre_executor(t_mini *mini, t_cmd *cmd)
 {
-	int saved_stdout;
-
+	int saved_stdout = -1;
 	if (cmd->has_pipe == TRUE || !is_builtin_command(cmd->cmd))
 		return (FALSE);
 	if (!cmd->redir_list)
@@ -59,7 +58,9 @@ int execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 	{
 		if (pre_executor(mini, cmd) == TRUE)
 		{
-			*cmd_list = (*cmd_list)->next;
+			//*cmd_list = (*cmd_list)->next;
+			if ((*cmd_list)->next)
+				*cmd_list = (*cmd_list)->next;
 			return (TRUE);
 		}
 	}
