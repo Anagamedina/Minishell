@@ -26,8 +26,8 @@ void	control_and_d(char *line)
 char	*read_input(void)
 {
 	char	*input;
-	// char	*new_input;
-	// char	*temp;
+	char	*new_input;
+	char	*temp;
 
 	input = readline("minishell> ");
 	if (!input) // Si `Ctrl+D` se presiona en el prompt principal
@@ -35,7 +35,6 @@ char	*read_input(void)
 		write(2, "exit\n", 5);
 		exit(0);
 	}
-	/*
 	while (!check_quotes_line(input))
 	{
 		temp = readline("> ");
@@ -66,7 +65,6 @@ char	*read_input(void)
 		if (!input) // ✅ Verificar que `ft_strjoin()` no haya devuelto `NULL`
 			return (NULL);
 	}
-	*/
 	if (*input)
 		add_history(input);
 	return (input);

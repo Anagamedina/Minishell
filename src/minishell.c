@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/03 11:08:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:58:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,22 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signals(PARENT);
-	// configure_terminal();
 	while (1)
 	{
 		input = read_input();
-		if (!input)
-			continue ;
+		if (!input) // ✅ Detecta `Ctrl+D`
+		{
+			write(1, "exit\n", 5);
+			free_mini(minishell);
+			rl_clear_history();
+			exit(0);
+		}
+		if (ft_strlen(input) == 0) // ✅ Línea vacía
+		{
+			free(input);
+			continue;
+		}
+
 		if (minishell->tokens)
 			free_tokens(minishell->tokens);
 		minishell->tokens = generate_token_list(input);
@@ -51,7 +61,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			perror("Error: init exec.\n");
 			free(input);
-			break ;
+			free_mini(minishell); // ✅ Libera estructuras antes de salir
+			exit(1);
+			// break ;
 		}
 		if (minishell->exec->first_cmd)
 			free_cmd_list(minishell->exec->first_cmd);
@@ -68,7 +80,8 @@ int	main(int argc, char **argv, char **envp)
 			free_cmd_list(minishell->exec->first_cmd);
 			free_mini(minishell);
 			free(input);
-			break;
+			// break;
+			exit(1);
 		}
 		free(input);
 	}

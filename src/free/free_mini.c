@@ -12,17 +12,17 @@
 
 #include "../../includes/minishell.h"
 
-void	free_mini(t_mini *mini)
-{
-	if (!mini)
-		return ;
-	if (mini->env)
-		free_env((t_env *)mini->env);
-	if (mini->envp_to_array)
-		free_string_matrix(mini->envp_to_array);
-	if (mini->tokens)
-		free_tokens(mini->tokens);
-	if (mini->exec)
-		free_exec(mini->exec);
-	free(mini);
-}
+// void	free_mini(t_mini *mini)
+// {
+// 	if (!mini)
+// 		return ;
+// 	if (mini->env)
+// 		free_env((t_env *)mini->env);
+// 	if (mini->envp_to_array)
+// 		free_string_matrix(mini->envp_to_array);
+// 	if (mini->tokens)
+// 		free_tokens(mini->tokens);
+// 	if (mini->exec)
+// 		free_exec(mini->exec);
+// 	free(mini);
+// }
