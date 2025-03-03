@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/28 12:47:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:50:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 {
 	t_cmd	*new_cmd;
 
+	new_cmd = NULL;
 	if (!current_token || !current_token->str)
 		return (NULL);
 	new_cmd = init_command();
@@ -50,6 +51,8 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 	new_cmd->cmd = ft_strdup(current_token->str);
 	if (!new_cmd->cmd)
 	{
+		// free(new_cmd->cmd);
+		// new_cmd->cmd = NULL;
 		free_command(new_cmd);
 		return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 16:12:00 by anamedin          #+#    #+#             */
-/*   Updated: 2025/01/30 13:28:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:44:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 	char	*duplicate;
 
+	duplicate = NULL;
 	size_s1 = ft_strlen(s1);
 	if (!s1)
 		return (NULL);

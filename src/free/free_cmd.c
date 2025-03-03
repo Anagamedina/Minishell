@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:18 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 22:48:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:17:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,5 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 		redir_list = tmp;
 	}
 }*/
+
+

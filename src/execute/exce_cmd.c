@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/03 11:50:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:42:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ int	execute_commands(t_mini *mini)
 	//mini->exec->first_cmd = NULL;
 
 	// ✅ Evitar doble `free()`
-	if (mini->exec->first_cmd)
+	/*if (mini->exec->first_cmd)
 	{
 		free_cmd_list(mini->exec->first_cmd);
 		mini->exec->first_cmd = NULL;
-	}
+	}*/
 	return (TRUE);
 }

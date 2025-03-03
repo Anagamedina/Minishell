@@ -136,7 +136,6 @@ char		*ft_strncpy(char *s1, const char *s2, int n);
 char		*ft_strcpy(char *dest, const char *src);
 void		free_split_result_struct(char **out, int k);
 int			copy_word(t_split_data *data);
-void		ft_free_array(char **array);
 
 //************** TOKEN_TYPE.c ********************/
 
