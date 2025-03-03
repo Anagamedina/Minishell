@@ -27,7 +27,6 @@ t_env *iterate_env(t_list *mini_env, t_env *env_var)
 		mini_env = mini_env->next;
 	}
 }
-*/
 
 void	update_pwd(t_mini *mini)
 {
@@ -39,6 +38,7 @@ void	update_pwd(t_mini *mini)
 	set_variable_in_env_list((&mini->env), "OLDPWD", new_pwd);
 	free(new_pwd);
 }
+*/
 
 int	ft_pwd(t_mini *mini)
 {

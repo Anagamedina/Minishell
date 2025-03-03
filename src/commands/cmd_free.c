@@ -34,8 +34,6 @@ void	free_command(t_cmd *cmd)
 	}
 }
 
-
-
 void	free_cmd_list(t_list *cmd_list)
 {
 	t_list	*tmp;
@@ -44,15 +42,18 @@ void	free_cmd_list(t_list *cmd_list)
 	while (cmd_list)
 	{
 		tmp = cmd_list->next;
-		cmd = (t_cmd *)cmd_list->content;
-		if (cmd)
+		if (cmd_list->content) // ✅ Protección extra para evitar `segfault`
 		{
-			if (cmd->cmd)
-				free(cmd->cmd);
-			free_string_matrix(cmd->cmd_args); // ✅ Ahora solo se libera una vez
-			if (cmd->cmd_path)
-				free(cmd->cmd_path);
-			free(cmd);
+			cmd = (t_cmd *)cmd_list->content;
+			if (cmd)
+			{
+				if (cmd->cmd)
+					free(cmd->cmd);
+				free_string_matrix(cmd->cmd_args); // ✅ Ahora solo se libera una vez
+				if (cmd->cmd_path)
+					free(cmd->cmd_path);
+				free(cmd);
+			}
 		}
 		free(cmd_list);
 		cmd_list = tmp;
@@ -60,28 +61,30 @@ void	free_cmd_list(t_list *cmd_list)
 }
 
 
+// void	free_cmd_list(t_list *cmd_list)
+// {
+// 	t_list	*tmp;
+// 	t_cmd	*cmd;
+//
+// 	while (cmd_list)
+// 	{
+// 		tmp = cmd_list->next;
+// 		cmd = (t_cmd *)cmd_list->content;
+// 		if (cmd)
+// 		{
+// 			if (cmd->cmd)
+// 				free(cmd->cmd);
+// 			free_string_matrix(cmd->cmd_args); // ✅ Ahora solo se libera una vez
+// 			if (cmd->cmd_path)
+// 				free(cmd->cmd_path);
+// 			free(cmd);
+// 		}
+// 		free(cmd_list);
+// 		cmd_list = tmp;
+// 	}
+// }
+//
 
-
-
-
-void	free_cmd_args(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd)
-		return ;
-	if (cmd->cmd_args)
-	{
-		while (cmd->cmd_args[i])
-		{
-			free(cmd->cmd_args[i]);
-			i++;
-		}
-		free(cmd->cmd_args);
-		cmd->cmd_args = NULL;
-	}
-}
 
 /*
 void	free_cmd_list(t_list *cmd_list)

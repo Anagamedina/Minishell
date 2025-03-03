@@ -12,6 +12,23 @@
 
 #include "../../includes/minishell.h"
 
+// void	free_string_matrix(char **matrix_2d)
+// {
+// 	int	i;
+//
+// 	if (!matrix_2d)
+// 		return ;
+// 	i = 0;
+// 	while (matrix_2d[i])
+// 	{
+// 		free(matrix_2d[i]);
+// 		i ++;
+// 	}
+// 	free(matrix_2d);
+// }
+
+
+
 void	free_string_matrix(char **matrix_2d)
 {
 	int	i;
@@ -22,10 +39,12 @@ void	free_string_matrix(char **matrix_2d)
 	while (matrix_2d[i])
 	{
 		free(matrix_2d[i]);
-		i ++;
+		i++;
 	}
 	free(matrix_2d);
+	matrix_2d = NULL; // ✅ Evita accesos a memoria liberada
 }
+
 
 void	free_split_data(t_split_data *split_data)
 {

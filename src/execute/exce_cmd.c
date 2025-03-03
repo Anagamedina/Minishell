@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/03 00:57:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:50:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,22 @@ int redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 int pre_executor(t_mini *mini, t_cmd *cmd)
 {
 	int saved_stdout = -1;
+
+	//saved_stdout = 0;
 	if (cmd->has_pipe == TRUE || !is_builtin_command(cmd->cmd))
 		return (FALSE);
 	if (!cmd->redir_list)
-		return (cases_builtins(mini, cmd), TRUE);
+	{
+		// return (cases_builtins(mini, cmd));
+		mini->exit_status = cases_builtins(mini, cmd);
+		return (TRUE);
+	}
 	if (apply_redirections(cmd) == -1)
 		return (FALSE);
 	if (!redirect_out_builtin(cmd, &saved_stdout))
 		return (FALSE);
-	cases_builtins(mini, cmd);
+	// cases_builtins(mini, cmd);
+	mini->exit_status = cases_builtins(mini, cmd);
 	if (saved_stdout != -1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
@@ -58,14 +65,14 @@ int execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 	{
 		if (pre_executor(mini, cmd) == TRUE)
 		{
-			//*cmd_list = (*cmd_list)->next;
-			if ((*cmd_list)->next)
-				*cmd_list = (*cmd_list)->next;
+			*cmd_list = (*cmd_list)->next;
 			return (TRUE);
 		}
 	}
 	return (FALSE);
 }
+
+
 
 int	execute_commands(t_mini *mini)
 {
@@ -90,7 +97,14 @@ int	execute_commands(t_mini *mini)
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
 	wait_children(mini);
-	free_cmd_list(mini->exec->first_cmd);
-	mini->exec->first_cmd = NULL;
+	//free_cmd_list(mini->exec->first_cmd);
+	//mini->exec->first_cmd = NULL;
+
+	// ✅ Evitar doble `free()`
+	if (mini->exec->first_cmd)
+	{
+		free_cmd_list(mini->exec->first_cmd);
+		mini->exec->first_cmd = NULL;
+	}
 	return (TRUE);
 }
