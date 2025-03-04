@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 19:54:03 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:20:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,29 @@ static int	cd_without_args(t_list *env_list, char **path_home)
 
 static int	cd_with_dash(t_list *env_list, char **path_home, int has_tilde)
 {
-	char	*old_pwd;
+	char	*tmp_path;
 
-	old_pwd = get_variable_in_env_list(env_list, "OLDPWD");
-	if (!old_pwd)
+	if (has_tilde == 2)
 	{
-		ft_putstr_fd("cd: OLDPWD not set\n", 2);
-		return (1);
+		tmp_path = get_variable_in_env_list(env_list, "HOME");
+		if (!tmp_path)
+			return (1);
 	}
-	if (access(old_pwd, F_OK) == -1)
+	else
 	{
-		ft_putstr_fd("cd: no such file or directory\n", 2);
-		return (1);
+		tmp_path = get_variable_in_env_list(env_list, "OLDPWD");
+		if (!tmp_path)
+			return (1);
 	}
-	*path_home = ft_strdup(old_pwd);
+	*path_home = ft_strdup(tmp_path);
 	if (!(*path_home))
 	{
-		ft_putendl_fd("cd: error: memory allocation failed", 2);
+		ft_putendl_fd("Error: memory allocation failed in cd_with_dash", 2);
 		return (1);
 	}
 	if (has_tilde == 0)
-	{
-		ft_putstr_fd(*path_home, 1);
-		write(1, "\n", 1);
-	}
-	if (has_tilde == 2)
-	{
-		ft_putstr_fd(*path_home, 1);
-		write(1, "\n", 1);
-	}
-	return(0);
+		ft_putendl_fd(*path_home, 1);
+	return (0);
 }
 
 static int	handle_cd_errors(char *new_path)
@@ -113,8 +106,6 @@ static int	cd_change_directory(char *new_path, t_mini *mini)
 	}
 
 	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
-	// free(old_pwd);
-
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
@@ -123,7 +114,6 @@ static int	cd_change_directory(char *new_path, t_mini *mini)
 		set_variable_in_env_list(&(mini->env), "PWD", "/");
 		return (0);
 	}
-
 	set_variable_in_env_list(&(mini->env), "PWD", new_pwd);
 	free(new_pwd);
 	return (0);
