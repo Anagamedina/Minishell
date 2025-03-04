@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 		if (minishell->tokens)
-			free_tokens(&minishell->tokens);
+			free_tokens_list(&minishell->tokens);
 		minishell->tokens = generate_token_list(input);
 		if (!minishell->tokens || !validate_syntax(minishell->tokens) ||
 		!validate_and_update_words_positions(minishell))

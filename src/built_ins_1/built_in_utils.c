@@ -52,7 +52,7 @@ t_list	*create_new_env_node(char *key, char *value)
 		new_var->full_var = ft_strdup(key);
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
-		return (free_env(new_var), NULL);
+		return (free_env_node(new_var), NULL);
 	return (new_node);
 }
 

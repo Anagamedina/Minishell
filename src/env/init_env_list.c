@@ -65,7 +65,7 @@ t_env	*create_env_node(char *key_value_variable)
 	}
 	if (!split_key_value(new_env, key_value_variable))
 	{
-		free_env(new_env);
+		free_env_node(new_env);
 		return (NULL);
 	}
 	return (new_env);

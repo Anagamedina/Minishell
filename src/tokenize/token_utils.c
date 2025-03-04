@@ -93,7 +93,7 @@ t_list	*generate_token_list(char *line)
 	if (!tokens_array)
 		return (NULL);
 	tokens_list = convert_tokens_to_list(tokens_array);
-	free_split_result_struct(tokens_array, count_words(tokens_array));
+	free_partial_split(tokens_array, count_words(tokens_array));
 	free(tokens_array);
 	return (tokens_list);
 }

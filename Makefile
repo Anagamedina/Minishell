@@ -13,7 +13,8 @@
 NAME = minishell
 CC = cc #-O1 #-v
 #CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
+#CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) -fsanitize=address
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
@@ -49,7 +50,6 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_TOKENIZE)/token_utils_word_count.c \
 		$(SRC_CMD)/cmd_init.c \
 		$(SRC_CMD)/cmd_args.c \
-		$(SRC_CMD)/cmd_free.c \
 		$(SRC_CMD)/cmd_errors.c \
 		$(SRC_CMD)/cmd_init_utils.c \
 		$(SRC_CMD)/print_cmd.c \
@@ -101,12 +101,6 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_FREE)/free_tokens.c \
 		$(SRC_SIGNALS)/signals.c \
 		$(SRC_SIGNALS)/signals_utils.c
-
-#		$(SRC_EXECUTE)/tests.c \
-#		$(SRC_REDIR)/heredoc.c
-#		$(SRC_EXECUTE)/get_inputc \
-#		$(SRC_REDIR)/redir_syntax.c \
-#		$(SRC_REDIR)/redir_file.c
 
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))

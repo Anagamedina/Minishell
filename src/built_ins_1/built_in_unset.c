@@ -31,7 +31,7 @@ void	unset_variable(t_list **env_list, char *var_name)
 				prev->next = current->next;
 			else
 				*env_list = current->next;
-			free_env(env_var);
+			free_env_node(env_var);
 			// free(current);
 			return ;
 		}

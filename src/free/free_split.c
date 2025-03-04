@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:54:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:53:50 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:59:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,9 @@ void	free_string_matrix(char **matrix_2d)
 		i++;
 	}
 	free(matrix_2d);
-	matrix_2d = NULL; // ✅ Evita accesos a memoria liberada
 }
 
-
-void	free_split_data(t_split_data *split_data)
-{
-	if (!split_data)
-		return ;
-	if (split_data->out)
-	{
-		free_string_matrix(split_data->out);
-	}
-	if (split_data->str)
-		free(split_data->str);
-	free(split_data);
-}
-
-void	free_split_result_struct(char **out, int k)
+void	free_partial_split(char **out, const int k)
 {
 	int	i;
 

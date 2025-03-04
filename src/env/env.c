@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:46:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:09:28 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static int	add_env_node(t_list **env_list, char *env_var)
 	new_env = create_env_node(env_var);
 	if (!new_env)
 	{
-		ft_lstclear(env_list, (void (*)(void *))free_env);
+		ft_lstclear(env_list, (void (*)(void *))free_env_node);
 		return (FALSE);
 	}
 	new_node = ft_lstnew(new_env);
 	if (!new_node)
 	{
-		free_env(new_env);
-		ft_lstclear(env_list, (void (*)(void *))free_env);
+		free_env_node(new_env);
+		ft_lstclear(env_list, (void (*)(void *))free_env_node);
 		return (FALSE);
 	}
 	ft_lstadd_back(env_list, new_node);
@@ -82,34 +82,3 @@ int	ft_env(t_list *env_list)
 	}
 	return (0);
 }
-/*
-t_list	*init_env_list(char **envp)
-{
-	t_list	*env_list;
-	t_env	*new_env;
-	t_list	*new_node;
-	int		i;
-
-	i = 0;
-	env_list = NULL;
-	while (envp[i] != NULL)
-	{
-		new_env = create_env_node(envp[i]);
-		if (!new_env)
-		{
-			ft_lstclear(&env_list, (void (*)(void *))free_env);
-			return (NULL);
-		}
-		new_node = ft_lstnew(new_env);
-		if (!new_node)
-		{
-			free_env(new_env);
-			ft_lstclear(&env_list, (void (*)(void *))free_env);
-			return (NULL);
-		}
-		ft_lstadd_back(&env_list, new_node);
-		i ++;
-	}
-	return (env_list);
-}
-*/
