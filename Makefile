@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/04 11:50:37 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/04 12:39:50 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,6 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_PARSER)/parser_utils.c \
 		$(SRC_PARSER)/parser_input.c \
 		$(SRC_PARSER)/parser_handle_not_expand.c \
-		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_env.c \
 		$(SRC_EXPAND)/expand_merge.c \
 		$(SRC_EXPAND)/expand_split.c \
@@ -88,11 +87,10 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
-		$(SRC_EXECUTE)/exce_errors.c \
+		$(SRC_EXECUTE)/excec_errors.c \
 		$(SRC_EXECUTE)/excec_pipeline.c \
 		$(SRC_EXECUTE)/exce_cmd_utils.c \
 		$(SRC_EXECUTE)/exce_utils.c \
-		$(SRC_EXECUTE)/tests.c \
 		$(SRC_REDIR)/redir_file.c \
 		$(SRC_REDIR)/redir_init.c \
 		$(SRC_REDIR)/redir_utils.c \
