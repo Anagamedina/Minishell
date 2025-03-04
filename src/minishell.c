@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/01 21:17:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:41:28 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,13 @@ int	main(int argc, char **argv, char **envp)
 	if (!minishell)
 	{
 		perror("Error: init minishell.\n");
-		// free(minishell);
 		return (1);
 	}
 	setup_signals(PARENT);
 	configure_terminal();
-	// printf("PID padre: [%d]\n", getpid());
 	while (1)
 	{
-		// handle CTRL + D inside read_input
 		input = read_input();
-		// printf("input: [%s]\n", input);
 		if (!input)
 			continue ;
 		// handle_signal_ctrl_c(SIGINT);
@@ -73,9 +69,7 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			continue ;
 		}
-		// add_detail return 0 - 1
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-		// Ejecutar comandos
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(minishell->exec->first_cmd);
@@ -89,23 +83,3 @@ int	main(int argc, char **argv, char **envp)
 	free_mini(minishell);
 	return (0);
 }
-
-
-
-/*
-if (!envp || !*envp)
-{
-	write(2, "Warning: No environment variables found. Initializing default env.", 65);
-	// write(2, "\n", 1);
-	printf("\n");
-	char *default_env[] = {
-		"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
-		"HOME=/home/user",
-		"SHLVL=1",
-		"OLDPWD=",
-		NULL
-	};
-	envp = default_env;
-}
-*/
-

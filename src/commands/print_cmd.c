@@ -6,13 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/02/21 21:53:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:52:15 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_list_commands(t_list *cmd_list)
+/*void	print_list_commands(t_list *cmd_list)
 {
 	t_list	*current;
 	t_cmd	*cmd;
@@ -56,7 +56,6 @@ void	print_list_commands(t_list *cmd_list)
 			else if (redir->type == 2)
 				printf("(Append Redirection) ");
 			printf("\n\tFile: [%s]\n", redir->filename);
-
 			redir_node = redir_node->next;
 		}
 		printf("============================\n\n");
@@ -64,7 +63,7 @@ void	print_list_commands(t_list *cmd_list)
 	}
 }
 
-/*void	print_list_commands(t_list *cmd_list)
+void	print_list_commands(t_list *cmd_list)
 {
 	t_list	*current;
 	t_cmd	*cmd;

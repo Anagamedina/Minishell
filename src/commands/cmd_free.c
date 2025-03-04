@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:37:04 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 17:55:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:00:19 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	free_cmd_list(t_list *cmd_list)
 {
 	t_list	*tmp;
 	t_cmd	*cmd;
-	// int		i;
 
 	while (cmd_list)
 	{
@@ -69,7 +68,6 @@ void	free_cmd_list(t_list *cmd_list)
 				free(cmd->cmd);
 			if (cmd->cmd_args)
 			{
-				// i = 0;
 				free_cmd_args(cmd);
 			}
 			if (cmd->cmd_path)

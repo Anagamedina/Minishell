@@ -6,10 +6,9 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/02 12:32:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:30:07 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -43,7 +42,7 @@ void	wait_children(t_mini *mini)
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
-	heredoc(curr_cmd); // ✅ heredoc()
+	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
 		if (curr_cmd->input_fd != STDIN_FILENO)
@@ -61,7 +60,6 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	execute_builtin_or_external(curr_cmd, mini);
 }
 
-
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO)
@@ -77,10 +75,11 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(pipe_fd[0]);
 }
 
-
-void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
+void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
+		int pipe_fd[2], int *input_fd)
 {
 	pid_t	pid;
+
 	pid = fork();
 	if (pid < 0)
 	{

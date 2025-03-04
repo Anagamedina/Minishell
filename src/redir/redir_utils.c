@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:16:40 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/04 10:48:29 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 	}
 	return (TRUE);
 }
-
 
 int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 {

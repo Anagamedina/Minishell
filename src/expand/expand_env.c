@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 21:00:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:09:09 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,81 +34,70 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 	return (NULL);
 }
 
+char	*extract_variable_name(char *str, size_t *i)
+{
+	size_t	start;
+	char	*var_name;
+
+	start = *i;
+	while (str[*i] != '\0' && str[*i] != SPACE && str[*i] != S_QUOTE)
+		(*i)++;
+	var_name = ft_substr(str, start, *i - start);
+	return (var_name);
+}
+
+char	*expand_variable_replace(char *result, \
+		char *var_name, t_list *env_list)
+{
+	char	*var_value;
+	char	*tmp;
+
+	var_value = find_value_in_env(env_list, var_name);
+	free(var_name);
+	tmp = result;
+	if (var_value)
+		result = ft_strjoin(result, var_value);
+	else
+		result = ft_strjoin(result, "");
+	free(tmp);
+	return (result);
+}
+
+char	*append_char_to_result(char *result, char c)
+{
+	char	*tmp;
+
+	tmp = result;
+	result = ft_strjoin_char(result, c);
+	free(tmp);
+	return (result);
+}
 
 char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, \
-t_list *env_list)
+		t_list *env_list)
 {
 	char	*result;
 	char	*var_name;
-	char	*var_value;
-	char	*tmp;
 	size_t	i;
-	int		start;
 
 	if (!token_rm_d_quote || !env_list)
 		return (NULL);
 	result = ft_strdup("");
-	if (result == NULL)
+	if (!result)
 		return (NULL);
 	i = 0;
 	while (token_rm_d_quote[i] != '\0')
 	{
 		if (token_rm_d_quote[i] == DOLLAR_SIGN)
 		{
-			i ++;
-			start = i;
-			while (token_rm_d_quote[i] != '\0' && token_rm_d_quote[i] \
-			!= SPACE && token_rm_d_quote[i] != S_QUOTE)
-				i ++;
-			var_name = ft_substr(token_rm_d_quote, start, i - start);
-			if (var_name == NULL)
-			{
-				free(result);
-				return (NULL);
-			}
-			var_value = find_value_in_env(env_list, var_name);
-			free(var_name);
-			tmp = result;
-			result = ft_strjoin(result, var_value ? var_value : "");
-			free(tmp);
+			i++;
+			var_name = extract_variable_name(token_rm_d_quote, &i);
+			if (!var_name)
+				return (free(result), NULL);
+			result = expand_variable_replace(result, var_name, env_list);
 		}
 		else
-		{
-			tmp = result;
-			result = ft_strjoin_char(result, token_rm_d_quote[i]);
-			free(tmp);
-			i ++;
-		}
+			result = append_char_to_result(result, token_rm_d_quote[i++]);
 	}
 	return (result);
 }
-
-
-/*
-static void	replace_dollar_variable(char **split_word, t_list *env_list) {
-	char	*var_name;
-	char	*var_value;
-	int		i;
-
-	i = 0;
-	while ((*split_word)[i] != '\0')
-	{
-		if ((*split_word)[i] == DOLLAR_SIGN)
-		{
-			var_name = ft_strdup(*split_word + 1);
-			if (var_name == NULL)
-				return ;
-			var_value = find_value_in_env(env_list, var_name);
-			free(*split_word);
-			if (var_value != NULL)
-				*split_word = ft_strdup(var_value);
-			else
-				*split_word = ft_strdup("");
-		}
-		else
-			i ++;
-	}
-	free(var_name);
-	free(var_value);
-}
-*/

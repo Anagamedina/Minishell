@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/02 19:41:59 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/04 11:53:07 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int			ft_pwd(t_mini *mini);
 //************ BUILTIN_CD.c ************/
 int			ft_cd(t_mini* mini, t_cmd* cmd);
 int			ft_cd(t_mini* mini, t_cmd* cmd);
+int			handle_cd_errors(char *new_path);
+int			cd_change_directory(char *new_path, t_mini *mini);
 
 //************ BUILTIN_UNSET.c ************/
 int			ft_unset(t_list **env_list, t_cmd *cmd);
@@ -341,6 +343,13 @@ int	count_env_variables_ia(char **env);
 int			setup_signals(int mode);
 int			configure_signal_handler(int signal, void (*handler)(int));
 int			setup_heredoc_signals(void);
+void		handle_signal_heredoc(int sig);
+void 		handle_signal_parent(int sig);
+void handle_signal_child(int sig);
+
+
+void	handle_env_duplication_error(char **env_array, int index);
+void	handle_memory_allocation_error(void);
 
 //void		handle_sigint_ctrl_c(int signal);
 //void		setup_signals(void);

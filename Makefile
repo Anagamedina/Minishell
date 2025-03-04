@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/02/22 18:15:17 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/04 11:50:37 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_CMD)/cmd_args.c \
 		$(SRC_CMD)/cmd_free.c \
 		$(SRC_CMD)/cmd_errors.c \
+		$(SRC_CMD)/cmd_list.c \
 		$(SRC_CMD)/cmd_init_utils.c \
 		$(SRC_CMD)/print_cmd.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
@@ -62,6 +63,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
+		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_PARSER)/parser_check_quotes_dollar.c \
@@ -86,6 +88,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
+		$(SRC_EXECUTE)/exce_errors.c \
 		$(SRC_EXECUTE)/excec_pipeline.c \
 		$(SRC_EXECUTE)/exce_cmd_utils.c \
 		$(SRC_EXECUTE)/exce_utils.c \

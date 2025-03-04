@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:18 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 22:48:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:40:27 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,38 +43,3 @@ t_cmd	*handle_cmd_error(t_cmd *new)
 		free_string_matrix(new->cmd_args);
 	return (NULL);
 }
-
-
-/*void free_cmd(t_cmd *cmd)
-{
-	if (!cmd)
-		return;
-	if (cmd->cmd_path)
-		free(cmd->cmd_path);
-	if (cmd->cmd_args)
-	{
-		int i = 0;
-		while (cmd->cmd_args[i])
-			free(cmd->cmd_args[i++]);
-		free(cmd->cmd_args);
-	}
-	if (cmd->redir_list) // ✅ Liberar la lista de redirecciones antes de liberar cmd
-		free_redirections(cmd->redir_list);
-	free(cmd);
-}*/
-
-
-/*void free_redirections(t_list *redir_list)
-{
-	t_list *tmp;
-	t_redir *redir;
-
-	while (redir_list)
-	{
-		tmp = redir_list->next;
-		redir = (t_redir *)redir_list->content;
-		free(redir);
-		free(redir_list);
-		redir_list = tmp;
-	}
-}*/

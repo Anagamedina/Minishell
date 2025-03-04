@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 23:51:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:59:07 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static int	is_out_of_llong_range(char *str)
 	while (*str == '0')
 		str++;
 	len = (int) ft_strlen(str);
-
 	if (len > 19)
 		return (1);
 	if (len == 19)
@@ -61,9 +60,10 @@ static int	is_out_of_llong_range(char *str)
 static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 {
 	long long	tmp_status;
-	
+
 	tmp_status = 0;
-	if (!is_numeric(cmd->cmd_args[1]) || is_out_of_llong_range(cmd->cmd_args[1]) == 1)
+	if (!is_numeric(cmd->cmd_args[1]) || \
+			is_out_of_llong_range(cmd->cmd_args[1]) == 1)
 	{
 		ft_putstr_fd("exit\n", 2);
 		ft_putstr_fd("minishell: exit: ", 2);
@@ -76,7 +76,7 @@ static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 	cleanup_and_exit(mini, mini->exit_status);
 }
 
-int	builtin_exit(t_cmd* cmd, t_mini* mini)
+int	builtin_exit(t_cmd *cmd, t_mini *mini)
 {
 	int	arg_count;
 
@@ -84,7 +84,7 @@ int	builtin_exit(t_cmd* cmd, t_mini* mini)
 	while (cmd->cmd_args[arg_count] != NULL)
 		arg_count++;
 	if (arg_count == 1)
-		cleanup_and_exit(mini ,mini->exit_status);
+		cleanup_and_exit(mini, mini->exit_status);
 	if (arg_count == 2)
 	{
 		exit_with_one_argument(cmd, mini);

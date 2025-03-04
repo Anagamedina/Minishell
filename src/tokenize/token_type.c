@@ -6,16 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:56 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:15:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/**
- * Determines the type of a token based on the input string.
- * @param str The input string to evaluate.
- */
 
 int	set_token_type(char *str)
 {
@@ -36,11 +31,6 @@ int	set_token_type(char *str)
 	else
 		return (WORD);
 }
-
-/**
- * chek if a token is an operator (|, <, > o >>).
- * @return TRUE or FALSE
- */
 
 int	is_type_of_operator(t_tokens *token)
 {
@@ -66,10 +56,4 @@ int	is_redir(t_tokens *token)
 	return (token->type_token == REDIR_IN || \
 		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND || token->type_token == HEREDOC);
-}
-
-int	is_redir_out(t_tokens* token)
-{
-	return (token->type_token == REDIR_OUT || \
-		token->type_token == REDIR_APPEND);
 }

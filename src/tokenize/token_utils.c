@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 00:45:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:15:23 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,13 @@ t_list	*generate_token_list(char *line)
 	return (tokens_list);
 }
 
-void	print_list_token(t_list *tokens_list)
+int	is_redir_out(t_tokens *token)
+{
+	return (token->type_token == REDIR_OUT || \
+		token->type_token == REDIR_APPEND);
+}
+
+/*void	print_list_token(t_list *tokens_list)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -117,4 +123,4 @@ void	print_list_token(t_list *tokens_list)
 		current = current->next;
 		printf("-------------------\n");
 	}
-}
+}*/

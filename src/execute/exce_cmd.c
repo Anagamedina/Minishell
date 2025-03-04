@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/02 19:31:39 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/04 11:14:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
+int	redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 {
 	*saved_stdout = -1;
 	if (cmd->output_fd == STDOUT_FILENO)
@@ -32,9 +32,9 @@ int redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 	return (TRUE);
 }
 
-int pre_executor(t_mini *mini, t_cmd *cmd)
+int	pre_executor(t_mini *mini, t_cmd *cmd)
 {
-	int saved_stdout;
+	int	saved_stdout;
 
 	if (cmd->has_pipe == TRUE || !is_builtin_command(cmd->cmd))
 		return (FALSE);
@@ -53,9 +53,9 @@ int pre_executor(t_mini *mini, t_cmd *cmd)
 	return (TRUE);
 }
 
-int execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
+int	execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 {
-	if (cmd->is_builtin == 1 && (*cmd_list)->next == NULL)//&& cmd->has_pipe == -1) ????
+	if (cmd->is_builtin == 1 && (*cmd_list)->next == NULL)
 	{
 		if (pre_executor(mini, cmd) == TRUE)
 		{
@@ -81,9 +81,8 @@ int	execute_commands(t_mini *mini)
 	{
 		curr_cmd = (t_cmd *)t_list_exec_cmd->content;
 		curr_cmd->cmd_id = i++;
-
 		if (execute_builtin_if_needed(mini, curr_cmd, &t_list_exec_cmd))
-			continue;
+			continue ;
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);
 		t_list_exec_cmd = t_list_exec_cmd->next;

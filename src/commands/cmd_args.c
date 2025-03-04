@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/25 15:19:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:11:30 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*void	count_args(t_list *token_list, t_cmd *cmd)
+void	count_args(t_list *token_list, t_cmd *cmd)
 {
 	t_list		*current;
 	t_tokens	*token;
@@ -21,46 +21,13 @@
 		return ;
 	current = token_list;
 	cmd->count_args = 0;
-
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-
-		// Si encontramos un nuevo comando después de `|`, reiniciar el contador
-		if (token->type_token == PIPE)
-			break;
-
-		// Asignar nombre del comando (pero solo si es el primer token del comando)
-		if ((token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS) && cmd->count_args == 0)
-		{
-			cmd->cmd = ft_strdup(token->str);
-			cmd->count_args = 1;
-		}
-		else if (token->type_token == WORD)
-		{
-			cmd->count_args++;
-		}
-		current = current->next;
-	}
-}*/
-
-void count_args(t_list *token_list, t_cmd *cmd)
-{
-	t_list *current;
-	t_tokens *token;
-
-	if (!token_list || !cmd)
-		return;
-
-	current = token_list;
-	cmd->count_args = 0;
-
 	while (current)
 	{
 		token = (t_tokens *)current->content;
 		if (token->type_token == PIPE)
-			break;
-		if ((token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS) && cmd->count_args == 0)
+			break ;
+		if ((token->type_token == CMD_EXTERNAL || \
+					token->type_token == BUILTINS) && cmd->count_args == 0)
 		{
 			cmd->cmd = ft_strdup(token->str);
 			cmd->count_args++;
@@ -69,11 +36,9 @@ void count_args(t_list *token_list, t_cmd *cmd)
 		{
 			cmd->count_args++;
 		}
-
 		current = current->next;
 	}
 }
-
 
 int	init_cmd_args(t_cmd **cmd)
 {
@@ -85,12 +50,17 @@ int	init_cmd_args(t_cmd **cmd)
 	return (1);
 }
 
+void	handle_cmd_args_error(t_cmd *cmd)
+{
+	perror("Error al duplicar argumento");
+	free_cmd_args(cmd);
+}
+
 void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 {
 	t_list		*current;
 	t_tokens	*token;
 	int			j;
-
 
 	j = 0;
 	current = token_list;
@@ -105,8 +75,7 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 			(*cmd)->cmd_args[j] = ft_strdup(token->str);
 			if (!(*cmd)->cmd_args[j])
 			{
-				perror("Error al duplicar argumento");
-				free_cmd_args(*cmd);
+				handle_cmd_args_error(*cmd);
 				return ;
 			}
 			j++;
