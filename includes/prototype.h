@@ -122,9 +122,6 @@ int ft_pwd(t_mini* mini);
 
 t_tokens	*init_token(char *str, int token_type);
 void		print_list_token(t_list *tokens_list);
-void		print_list_token_str(t_list *tokens_list);
-void		print_list_token_str_one_line(t_list *tokens_list);
-int			check_lowercase_tokens(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 char		*clean_consecutive_quotes(const char *line);
 t_list		*tokenize_list(char **tokens);
@@ -279,7 +276,7 @@ char 		**get_path(char **env);
 void 		print_paths(char **paths);
 char 		*get_cmd_path(t_tokens *token, char **paths);
 void 		free_cmd(t_cmd *cmd);
-void 		free_cmd_list(t_list *cmd_list);
+void 		free_cmd_list(t_list** cmd_list);
 void		free_split_result(char **result);
 t_exec 		*init_exec(t_list *env_list);
 char		**env_list_to_array(t_list *env_list);

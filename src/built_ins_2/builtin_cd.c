@@ -6,13 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/02 12:03:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:54:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int cd_without_args(t_list *env_list, char **path_home)
+static int	cd_without_args(t_list *env_list, char **path_home)
 {
 	char	*home;
 
@@ -31,7 +31,7 @@ static int cd_without_args(t_list *env_list, char **path_home)
 	return (0);
 }
 
-static int cd_with_dash(t_list* env_list, char** path_home, int has_tilde)
+static int	cd_with_dash(t_list *env_list, char **path_home, int has_tilde)
 {
 	char	*old_pwd;
 
@@ -53,6 +53,11 @@ static int cd_with_dash(t_list* env_list, char** path_home, int has_tilde)
 		return (1);
 	}
 	if (has_tilde == 0)
+	{
+		ft_putstr_fd(*path_home, 1);
+		write(1, "\n", 1);
+	}
+	if (has_tilde == 2)
 	{
 		ft_putstr_fd(*path_home, 1);
 		write(1, "\n", 1);

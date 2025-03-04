@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/03 14:19:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 00:18:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ t_cmd	*init_command(void)
 	new_cmd->cmd = NULL;
 	new_cmd->cmd_args = NULL;
 	new_cmd->count_args = -1;
+	new_cmd->cmd_path = NULL;
 	new_cmd->cmd_id = 0;
 	new_cmd->is_builtin = -1;
 	new_cmd->is_external = -1;
-	new_cmd->last_cmd = -1;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
 	new_cmd->has_pipe = -1;
+	new_cmd->last_cmd = -1;
 	new_cmd->redir_list = NULL;
 	new_cmd->next = NULL;
 	return (new_cmd);

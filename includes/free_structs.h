@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/01 11:21:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/04 01:03:07 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_structs.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:33:46 by dasalaza          #+#    #+#             */
@@ -14,7 +26,7 @@
 #ifndef FREE_STRUCTS_H
 # define FREE_STRUCTS_H
 
-void	free_tokens(t_list *tokens);
+void	free_tokens(t_list **tokens);
 void	free_env(t_env *env);
 void	free_env_array(char **env_array, int allocated);
 // void	free_redir(t_redir *redir);

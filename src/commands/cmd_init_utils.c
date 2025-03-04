@@ -46,7 +46,7 @@ void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
 	if (!cmd)
 	{
 		// return (free_cmd_list (*cmd_list), (void) NULL);
-		free_cmd_list (*cmd_list);
+		free_cmd_list (cmd_list);
 		return ;
 	}
 	new_node = ft_lstnew(cmd);

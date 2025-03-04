@@ -6,82 +6,71 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:37:04 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/03 12:32:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 01:04:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
-void free_command(t_cmd *cmd)
+void	free_command(t_cmd *cmd)
 {
-    int i = 0;
-
     if (!cmd)
         return;
-
     if (cmd->cmd)
         free(cmd->cmd);
-
     if (cmd->cmd_path)
         free(cmd->cmd_path);
-
     if (cmd->cmd_args)
-    {
-        while (cmd->cmd_args[i])
-            free(cmd->cmd_args[i++]);
-        free(cmd->cmd_args);
-    }
-
+    	free_string_matrix(cmd->cmd_args);
     free(cmd);
 }
 
-void free_cmd_list(t_list *cmd_list)
+void	free_cmd_list(t_list **cmd_list)
 {
+	if (!*cmd_list || !cmd_list)
+		return;
+	ft_lstclear(cmd_list, (void (*) (void *))free_command);
+}
+    /*
     t_list *tmp;
 
     while (cmd_list)
     {
         tmp = cmd_list->next;
-        free_command((t_cmd *)cmd_list->content);
+    	if (cmd_list->content)
+			free_command((t_cmd *)cmd_list->content);
         free(cmd_list);
         cmd_list = tmp;
     }
-}
+*/
 
-void free_exec(t_exec *exec)
+void	free_exec(t_exec *exec)
 {
+	// int	i;
+
     if (!exec)
         return;
-
     if (exec->first_cmd)
-        free_cmd_list(exec->first_cmd);
-
+		ft_lstclear(&exec->first_cmd, (void (*)(void *))free_command);
+        // free_cmd_list(&exec->first_cmd);
     if (exec->env_vars)
     {
-        int i = 0;
-        while (exec->env_vars[i])
-            free(exec->env_vars[i++]);
-        free(exec->env_vars);
+    	free_string_matrix(exec->env_vars);
     }
-
     if (exec->paths)
     {
-        int i = 0;
-        while (exec->paths[i])
-            free(exec->paths[i++]);
-        free(exec->paths);
+		free_string_matrix(exec->paths);
     }
-
+    /*
     if (exec->pipe_input_fd > 0)
         close(exec->pipe_input_fd);
     if (exec->pipe_output_fd > 0)
         close(exec->pipe_output_fd);
-
+    */
     free(exec);
 }
 
-void free_mini(t_mini *mini)
+void	free_mini(t_mini *mini)
 {
     if (!mini)
         return;
