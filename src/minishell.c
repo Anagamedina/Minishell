@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 5);
 			free_mini(minishell);
-			rl_clear_history();
+			//rl_clear_history();
 			exit(0);
 		}
 		if (ft_strlen(input) == 0) // ✅ Línea vacía

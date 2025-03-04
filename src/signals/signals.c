@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/02 11:03:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:36:14 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void handle_signal_parent(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();		// Indica que estamos en una nueva línea
-		rl_replace_line("", 0);	// Borra la línea actual de readline
+		//rl_replace_line("", 0);	// Borra la línea actual de readline
 		rl_redisplay();			// Redibuja el prompt
 	}
 }
