@@ -62,8 +62,8 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_BUILTINS1)/export_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
+		$(SRC_BUILTINS2)/builtin_cd_utils.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
-		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \
 		$(SRC_PARSER)/parser_check_quotes_dollar.c \

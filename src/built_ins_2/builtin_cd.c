@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static	int	cd_without_args(t_list *env_list, char **path_home)
+int	cd_without_args(t_list *env_list, char **path_home)
 {
 	char	*home;
 
@@ -31,7 +31,7 @@ static	int	cd_without_args(t_list *env_list, char **path_home)
 	return (0);
 }
 
-static	int	cd_with_dash(t_list *env_list, char **path_home, int has_tilde)
+int	cd_with_dash(t_list *env_list, char **path_home, int has_tilde)
 {
 	char	*old_pwd;
 

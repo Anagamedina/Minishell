@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 11:53:07 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:37:35 by catalinab        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ int			ft_cd(t_mini* mini, t_cmd* cmd);
 int			ft_cd(t_mini* mini, t_cmd* cmd);
 int			handle_cd_errors(char *new_path);
 int			cd_change_directory(char *new_path, t_mini *mini);
+char		*get_old_pwd(t_mini *mini);
+int	cd_without_args(t_list *env_list, char **path_home);
+int	cd_with_dash(t_list *env_list, char **path_home, int has_tilde);
+
 
 //************ BUILTIN_UNSET.c ************/
 int			ft_unset(t_list **env_list, t_cmd *cmd);
