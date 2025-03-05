@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 20:20:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 02:06:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,25 @@ static int	handle_cd_errors(char *new_path)
  * and update `PWD` y `OLDPWD`.
  * if fail getcwd() try to use `$PWD`
  * if fail $PWD , we show an error and move to `/` (root) with chdir()
- * @param new_path
- * @param mini
  */
+
 static int	cd_change_directory(char *new_path, t_mini *mini)
 {
 	char	*new_pwd;
 	char	*old_pwd;
+	char	*tmp_old_pwd;
 
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
 		old_pwd = get_variable_in_env_list(mini->env, "PWD");
 		if (old_pwd)
-			old_pwd = ft_strdup(old_pwd);
+		{
+			tmp_old_pwd = ft_strdup(old_pwd);
+			if (!tmp_old_pwd)
+				return (1);
+			old_pwd = ft_strdup(tmp_old_pwd);
+		}
 		else
 		{
 			ft_putendl_fd("cd: error: cannot determine current directory", 2);
@@ -104,8 +109,8 @@ static int	cd_change_directory(char *new_path, t_mini *mini)
 			free(old_pwd);
 		return (1);
 	}
-
 	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
+	free(old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{

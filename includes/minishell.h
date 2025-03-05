@@ -125,7 +125,6 @@ typedef struct s_mini
 	t_list          *tokens;
 	t_exec			*exec;
 	int             exit_status;
-	// char            *prompt;        // Prompt actual (opcional) ???
 }				t_mini;
 
 #endif

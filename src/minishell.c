@@ -27,7 +27,9 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signals(PARENT);
-	//	echo helloasjdfksjdfklasdjfljasdfkljasdl;fkja;sldf
+	/*
+		echo helloasjdfksjdfklasdjfljasdfkljasdl;fkja;sldf
+	*/
 	while (1)
 	{
 		input = read_input();
@@ -35,8 +37,8 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 5);
 			last_exit_code = minishell->exit_status;
-			free_mini(minishell);
 			rl_clear_history();
+			free_mini(minishell);
 			exit(last_exit_code);
 		}
 		if (ft_strlen(input) == 0)
