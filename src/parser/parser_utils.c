@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:29:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:30:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:29:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	*remove_quotes_str(const char *str, char quote_char)
 	if (!str)
 		return (NULL);
 	new_len = count_new_length(str, quote_char);
+	if (new_len == 0)
+		return (ft_strdup(""));
 	new_str = (char *)malloc(sizeof(char) * (new_len + 1));
 	if (!new_str)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:11 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/02 12:53:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:51:13 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,19 @@ int	handle_single_quotes_after_dollar(t_tokens *token)
 	processed_str = remove_quotes_str(token->str, S_QUOTE);
 	if (!processed_str)
 	{
-		perror("Error: remove_quotes_str failed");
 		return (FALSE);
 	}
 	temp = convert_escape_sequences(processed_str);
+	free(processed_str);
 	if (!temp)
 	{
-		perror("Error: convert_escape_sequences failed");
 		return (FALSE);
 	}
 	free(token->str);
 	token->str = ft_strdup(temp);
+	free(temp);
 	if (!token->str)
 	{
-		perror("Error: ft_strdup failed");
 		return (FALSE);
 	}
 	return (TRUE);

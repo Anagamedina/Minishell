@@ -28,7 +28,6 @@ static void	handle_dollar_case(t_tokens *token, t_list *env_list, \
 			token->str[j] != SPACE)
 		j++;
 	*result = expand_variable(*result, env_list, &token->str[*i], j - *i);
-	//printf("result: [%s]\n", *result);
 	*i = j;
 }
 char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
