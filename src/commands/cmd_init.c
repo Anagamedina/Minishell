@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/04 00:18:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:44:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,22 @@ t_cmd	*init_command(void)
 	return (new_cmd);
 }
 
-
 t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = NULL;
 	if (!current_token || !current_token->str)
 		return (NULL);
 	new_cmd = init_command();
 	if (!new_cmd)
 	{
-		write(2, "Error: No se pudo inicializar el comando\n", 41);
+		ft_putendl_fd("Error: Cant init command", 2);
 		return (NULL);
 	}
-	new_cmd->cmd = ft_strdup(current_token->str);
+	// new_cmd->cmd = ft_strdup(current_token->str);
+	new_cmd->cmd = current_token->str;
 	if (!new_cmd->cmd)
-	{
-		// free(new_cmd->cmd);
-		// new_cmd->cmd = NULL;
-		// free_command(new_cmd);
-		free(new_cmd);
-		return (NULL);
-	}
+		return (free(new_cmd), NULL);
 	if (current_token->type_token == BUILTINS)
 		new_cmd->is_builtin = 1;
 	else if (current_token->type_token == CMD_EXTERNAL)
@@ -69,10 +62,10 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 			write(2, "bash: ", 6);
 			write(2, current_token->str, ft_strlen(current_token->str));
 			write(2, ": command not found\n", 20);
-			free(new_cmd->cmd);  // ✅ Liberar `cmd` antes de hacer `NULL`
+			// free_command(new_cmd);
+			free(new_cmd->cmd);
 			free(new_cmd);
 			return (NULL);
-			// new_cmd->cmd_path = NULL; // Permite que el pipe continúe
 		}
 	}
 	return (new_cmd);
@@ -97,13 +90,13 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	cmd_id = 1;
 	while (token_list)
 	{
-		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL
+		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL \
 			|| ((t_tokens *)token_list->content)->type_token == BUILTINS)
-			add_command_to_list(&commands_list, \
-					(t_tokens *)token_list->content, paths, &cmd_id);
+		{
+			add_command_to_list(&commands_list, (t_tokens *)token_list->content, paths, &cmd_id);
+		}
 		else if (commands_list)
-			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), \
-					token_list);
+			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), token_list);
 		token_list = token_list->next;
 	}
 	if (commands_list)

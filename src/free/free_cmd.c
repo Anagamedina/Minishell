@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:18 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 23:13:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:04:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	free_cmd_list(t_list **cmd_list)
 {
-	if (!*cmd_list || !cmd_list)
+	if (!*cmd_list)
 		return ;
 	ft_lstclear(cmd_list, (void (*) (void *))free_command);
+	*cmd_list = NULL;
 }
 
 void	free_command(t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 19:28:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:25:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signals(PARENT);
+	//	echo helloasjdfksjdfklasdjfljasdfkljasdl;fkja;sldf
 	while (1)
 	{
 		input = read_input();

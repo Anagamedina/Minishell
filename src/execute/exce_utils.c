@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/03 21:49:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:43:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,17 @@ int	is_builtin_command(char *cmd)
 		ft_strcmp(cmd, EXIT) == 0);
 }
 
-
 char	*is_cmd_external(t_mini *mini, t_tokens *token)
 {
-	char		**paths;
-	char		*cmd_path;
+	char	**paths;
+	char	*cmd_path;
 
 	if (!mini || !mini->tokens)
 		return (NULL);
 	paths = get_path(mini->envp_to_array);
+	if (!paths)
+		return (NULL);
 	cmd_path = get_cmd_path(token, paths);
+	free_string_matrix(paths);
 	return (cmd_path);
 }
