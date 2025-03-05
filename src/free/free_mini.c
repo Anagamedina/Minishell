@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 21:49:36 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 02:29:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:04:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ void	free_mini(t_mini *mini)
 	t_list	*tmp;
 
     if (!mini)
-        return;
-
-    // Liberar env
+    {
+    	return ;
+    }
+	rl_clear_history();
     while (mini->env)
     {
         tmp = mini->env->next;
@@ -68,7 +69,6 @@ void	free_mini(t_mini *mini)
         free(mini->env);
         mini->env = tmp;
     }
-
     // Liberar tokens
     while (mini->tokens)
     {

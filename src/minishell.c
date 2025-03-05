@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 01:25:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:16:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 5);
 			last_exit_code = minishell->exit_status;
-			rl_clear_history();
 			free_mini(minishell);
 			exit(last_exit_code);
 		}
@@ -78,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
+		print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(&minishell->exec->first_cmd);

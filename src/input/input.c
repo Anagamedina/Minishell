@@ -38,13 +38,12 @@ char	*read_input(void)
 	while (!check_quotes_line(input))
 	{
 		temp = readline("> ");
-		if (!temp)  //Si Ctrl+D en prompt secundario, error y salida
+		if (!temp)
 		{
 			free(input);
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
 			return (NULL);
 		}
-		// Si `Ctrl+C` fue presionado, `readline` devuelve una línea vacía
 		if (ft_strlen(temp) == 0)
 		{
 			free(temp);
@@ -62,7 +61,7 @@ char	*read_input(void)
 		input = ft_strjoin(new_input, temp);
 		free(new_input);
 		free(temp);
-		if (!input) // ✅ Verificar que `ft_strjoin()` no haya devuelto `NULL`
+		if (!input)
 			return (NULL);
 	}
 	if (*input)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 01:44:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:20:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,12 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 	t_list		*cmd_node;
 	t_cmd		*cmd;
 	t_tokens	*token;
+	int			cmd_count;
 
 	if (!commands_list || !token_list)
 		return (0);
 	current = token_list;
+	cmd_count = 1;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
@@ -133,9 +135,11 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 			while (cmd_node)
 			{
 				cmd = (t_cmd *) cmd_node->content;
-				if (cmd && cmd->cmd && token->str && !ft_strcmp(cmd->cmd, token->str))
+				// if (cmd && cmd->cmd && token->str && !ft_strcmp(cmd->cmd, token->str))
+				if (cmd && cmd->cmd_id == cmd_count)
 				{
 					process_command_args(current, cmd);
+					cmd_count ++;
 					break ;
 				}
 				cmd_node = cmd_node->next;

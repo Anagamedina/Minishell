@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:21:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:50:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:43:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ static int	split_key_value(t_env *new_env, char *key_value_variable)
 		return (FALSE);
 	}
 	new_env->key = ft_strdup(split_var[0]);
+	// new_env->key = split_var[0];
 	if (split_var[1] != NULL)
 		new_env->value = ft_strdup(split_var[1]);
+		// new_env->value = split_var[1];
 	else
 		new_env->value = ft_strdup("");
 	free_string_matrix(split_var);
@@ -59,10 +61,7 @@ t_env	*create_env_node(char *key_value_variable)
 		return (NULL);
 	new_env->full_var = ft_strdup(key_value_variable);
 	if (!new_env->full_var)
-	{
-		free(new_env);
 		return (NULL);
-	}
 	if (!split_key_value(new_env, key_value_variable))
 	{
 		free_env_node(new_env);

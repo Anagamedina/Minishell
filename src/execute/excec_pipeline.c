@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/02 23:31:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:58:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		close(curr_cmd->output_fd);
 	if (!curr_cmd->last_cmd)
 	{
-		close(pipe_fd[1]);
+		if (pipe_fd[1] >= 0)
+			close(pipe_fd[1]);
 		*input_fd = pipe_fd[0];
 	}
 	else
-		close(pipe_fd[0]);
+	{
+		if (pipe_fd[1] >= 0)
+			close(pipe_fd[0]);
+	}
 }
 
 

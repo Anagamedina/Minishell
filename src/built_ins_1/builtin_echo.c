@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:08:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 19:40:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int	ft_echo(t_cmd *cmd, t_mini *mini)
 	int		no_newline;
 	int		i;
 
+	if (!cmd || !cmd->cmd_args)
+		return (1);
 	i = 1;
 	no_newline = 0;
 	while (cmd->cmd_args[i] && ft_strcmp(cmd->cmd_args[i], "-n") == 0)
 	{
 		no_newline = 1;
-		i ++;
+		i++;
 	}
 	while (cmd->cmd_args[i])
 	{
@@ -42,7 +44,7 @@ int	ft_echo(t_cmd *cmd, t_mini *mini)
 		free(expanded_arg);
 		if (cmd->cmd_args[i + 1])
 			write(1, " ", 1);
-		i ++;
+		i++;
 	}
 	if (!no_newline)
 		write(1, "\n", 1);
