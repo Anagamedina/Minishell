@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 00:08:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:44:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct s_exec
 	int				pipe_input_fd;
 	int				pipe_output_fd;
 	int             cmd_count;
+	int				is_running;
 }				t_exec;
 
 typedef struct s_mini

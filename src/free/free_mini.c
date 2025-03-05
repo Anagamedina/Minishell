@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 21:49:36 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 19:04:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:48:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,11 @@ void	free_mini(t_mini *mini)
 
     // Liberar estructura exec
     if (mini->exec)
+    {
+    	mini->exec->is_running = 0;
         free_exec(mini->exec);
+
+    }
 
     // Liberar la estructura principal
     free(mini);

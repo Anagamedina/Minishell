@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 01:18:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:30:58 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ char	**get_path(char **env)
 	char	*path_var;
 	int		i;
 
+	// if (!env) // ⛔ Evitamos leer memoria NULL
+	// 	return (NULL);
 	paths = NULL;
 	path_var = NULL;
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{

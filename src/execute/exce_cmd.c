@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 20:36:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:48:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ int	execute_commands(t_mini *mini)
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
 	wait_children(mini);
+	mini->exec->is_running = 0;
 	return (TRUE);
 }
