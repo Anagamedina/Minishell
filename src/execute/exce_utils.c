@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 00:43:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:26:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,16 @@ char	**env_list_to_array(t_list *env_list)
 	}
 	curr_node = env_list;
 	i = 0;
+	curr_env_var = NULL;
 	while (curr_node && i < env_count)
 	{
 		curr_env_var = (t_env *)curr_node->content;
-		env_array[i] = ft_strdup(curr_env_var->full_var);
+		// env_array[i] = ft_strdup(curr_env_var->full_var);
+		env_array[i] = curr_env_var->full_var;
 		if (!env_array[i])
 		{
-			perror("Error: No se pudo duplicar variable de entorno");
 			free_env_array(env_array, i);
+			perror("Error: Cant duplicate env variable");
 			return (NULL);
 		}
 		curr_node = curr_node->next;
