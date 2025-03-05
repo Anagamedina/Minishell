@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	free_tokens_list(t_list **tokens)
+/*void	free_tokens_list(t_list **tokens)
 {
 	t_list		*temp;
 	t_tokens	*token;
@@ -33,4 +33,24 @@ void	free_tokens_list(t_list **tokens)
 		*tokens = temp;
 	}
 	*tokens = NULL;
+}
+*/
+
+void	free_tokens_list(t_list **tokens)
+{
+	t_list	*tmp;
+	t_tokens	*token;
+
+	if (!tokens || !*tokens)
+		return;
+	while (*tokens)
+	{
+		tmp = (*tokens)->next;
+		token = (t_tokens *)(*tokens)->content;
+		if (token->str)
+			free(token->str);
+		free(token);
+		free(*tokens);
+		*tokens = tmp;
+	}
 }

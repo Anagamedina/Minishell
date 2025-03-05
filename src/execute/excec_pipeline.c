@@ -61,7 +61,7 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	execute_builtin_or_external(curr_cmd, mini);
 }
 
-void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
+/*void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO)
 		close(curr_cmd->input_fd);
@@ -75,10 +75,30 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 	else
 	{
+		if (pipe_fd[0] >= 0)
+			close(pipe_fd[0]);
+	}
+}*/
+
+void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
+{
+	if (curr_cmd->input_fd != STDIN_FILENO && curr_cmd->input_fd >= 0)
+		close(curr_cmd->input_fd);
+	if (curr_cmd->output_fd != STDOUT_FILENO && curr_cmd->output_fd >= 0)
+		close(curr_cmd->output_fd);
+	if (!curr_cmd->last_cmd)
+	{
 		if (pipe_fd[1] >= 0)
+			close(pipe_fd[1]);
+		*input_fd = pipe_fd[0];
+	}
+	else
+	{
+		if (pipe_fd[0] >= 0)
 			close(pipe_fd[0]);
 	}
 }
+
 
 
 void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
@@ -88,6 +108,8 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
 	if (pid < 0)
 	{
 		perror("Error creando proceso hijo");
+		//añadido ahora
+		free_mini(mini);
 		exit(EXIT_FAILURE);
 	}
 	if (pid == 0)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/03 15:21:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:36:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	execute_commands(t_mini *mini)
 	t_list	*t_list_exec_cmd;
 	t_cmd	*curr_cmd;
 	int		input_fd;
-	int		pipe_fd[2];
+	int		pipe_fd[2] = {-1, -1};
 	int		i;
 
 	i = 0;
