@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/03 14:19:00 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:46:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,36 @@ t_cmd	*init_command(void)
 	new_cmd->cmd = NULL;
 	new_cmd->cmd_args = NULL;
 	new_cmd->count_args = -1;
+	new_cmd->cmd_path = NULL;
 	new_cmd->cmd_id = 0;
 	new_cmd->is_builtin = -1;
 	new_cmd->is_external = -1;
-	new_cmd->last_cmd = -1;
 	new_cmd->input_fd = -1;
 	new_cmd->output_fd = -1;
 	new_cmd->has_pipe = -1;
+	new_cmd->last_cmd = -1;
 	new_cmd->redir_list = NULL;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }
 
-
 t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = NULL;
 	if (!current_token || !current_token->str)
 		return (NULL);
 	new_cmd = init_command();
 	if (!new_cmd)
 	{
-		write(2, "Error: No se pudo inicializar el comando\n", 41);
+		ft_putendl_fd("Error: Cant init command", 2);
 		return (NULL);
 	}
-	new_cmd->cmd = ft_strdup(current_token->str);
+	// new_cmd->cmd = ft_strdup(current_token->str);
+	new_cmd->cmd = current_token->str;
 	if (!new_cmd->cmd)
 	{
-		// free(new_cmd->cmd);
-		// new_cmd->cmd = NULL;
-		// free_command(new_cmd);
-		free(new_cmd);
+		free_command(new_cmd);
 		return (NULL);
 	}
 	if (current_token->type_token == BUILTINS)
@@ -68,10 +65,10 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 			write(2, "bash: ", 6);
 			write(2, current_token->str, ft_strlen(current_token->str));
 			write(2, ": command not found\n", 20);
-			free(new_cmd->cmd);  // ✅ Liberar `cmd` antes de hacer `NULL`
-			free(new_cmd);
+			free_command(new_cmd);
+			// free(new_cmd->cmd);
+			// free(new_cmd->cmd_path);
 			return (NULL);
-			// new_cmd->cmd_path = NULL; // Permite que el pipe continúe
 		}
 	}
 	return (new_cmd);
@@ -96,13 +93,13 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	cmd_id = 1;
 	while (token_list)
 	{
-		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL
+		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL \
 			|| ((t_tokens *)token_list->content)->type_token == BUILTINS)
-			add_command_to_list(&commands_list, \
-					(t_tokens *)token_list->content, paths, &cmd_id);
+		{
+			add_command_to_list(&commands_list, (t_tokens *)token_list->content, paths, &cmd_id);
+		}
 		else if (commands_list)
-			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), \
-					token_list);
+			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), token_list);
 		token_list = token_list->next;
 	}
 	if (commands_list)
@@ -120,10 +117,12 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 	t_list		*cmd_node;
 	t_cmd		*cmd;
 	t_tokens	*token;
+	int			cmd_count;
 
 	if (!commands_list || !token_list)
 		return (0);
 	current = token_list;
+	cmd_count = 1;
 	while (current)
 	{
 		token = (t_tokens *)current->content;
@@ -139,9 +138,10 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 			while (cmd_node)
 			{
 				cmd = (t_cmd *) cmd_node->content;
-				if (cmd && cmd->cmd && token->str && !ft_strcmp(cmd->cmd, token->str))
+				if (cmd && cmd->cmd_id == cmd_count)
 				{
 					process_command_args(current, cmd);
+					cmd_count ++;
 					break ;
 				}
 				cmd_node = cmd_node->next;

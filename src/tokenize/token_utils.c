@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 00:45:21 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 23:17:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_tokens	*init_token(char *str, int token_type)
 
 	if (!str)
 		return (NULL);
-	new_token = NULL;
 	new_token = malloc(sizeof(t_tokens));
 	if (!new_token)
 		return (NULL);
@@ -29,7 +28,7 @@ t_tokens	*init_token(char *str, int token_type)
 		return (NULL);
 	}
 	new_token->type_token = token_type;
-	new_token->length = ft_strlen(str);
+	new_token->length = ft_strlen(new_token->str);
 	new_token->id_token = -1;
 	new_token->is_valid_cmd = FALSE;
 	new_token->next = NULL;
@@ -93,7 +92,7 @@ t_list	*generate_token_list(char *line)
 	if (!tokens_array)
 		return (NULL);
 	tokens_list = convert_tokens_to_list(tokens_array);
-	free_split_result_struct(tokens_array, count_words(tokens_array));
+	free_partial_split(tokens_array, count_words(tokens_array));
 	free(tokens_array);
 	return (tokens_list);
 }

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 20:36:31 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/26 20:44:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:34:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	set_variable_in_env_list(t_list **env_list, char *key, char *new_value)
 	t_list	*current_node;
 	t_env	*var;
 
-	if (!env_list || !key || !new_value)
+	if (!env_list || !key )//|| !new_value)
 		return (0);
 	current_node = *env_list;
 	while (current_node)
@@ -63,9 +63,12 @@ int	env_variable_exists(t_list *env_list, char *key_to_find)
 	return (FALSE);
 }
 
+
 int	add_new_env_variable(t_list **env, char *var_name, char *var_value)
 {
 	t_list	*new_var_env;
+
+	new_var_env = NULL;
 
 	new_var_env = create_new_env_node(var_name, var_value);
 	if (!new_var_env)

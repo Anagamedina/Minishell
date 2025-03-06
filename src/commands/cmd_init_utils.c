@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:45:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/02 20:23:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:42:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_cmd	*process_command_token(t_tokens *token, char **paths, int *cmd_id)
 	new_cmd = create_new_command(token, paths);
 	if (!new_cmd)
 	{
-		printf("Error: Fail creation command '%s'.\n", token->str);
+		free_command(new_cmd);
 		return (NULL);
 	}
 	new_cmd->cmd_id = (*cmd_id)++;
@@ -45,17 +45,16 @@ void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
 	cmd = process_command_token(token, paths, cmd_id);
 	if (!cmd)
 	{
-		// return (free_cmd_list (*cmd_list), (void) NULL);
-		free_cmd_list (*cmd_list);
+		// free_cmd_list (cmd_list);
+		 free_command(cmd);
 		return ;
 	}
 	new_node = ft_lstnew(cmd);
+
 	if (!new_node)
 	{
-		// return (free_command(cmd), free_cmd_list(*cmd_list), (void) NULL);
 		free_command(cmd);
-		// free_cmd_list(*cmd_list);
-		//*cmd_list = NULL;
+		// free_cmd_list(cmd_list);
 		return ;
 	}
 	ft_lstadd_back(cmd_list, new_node);

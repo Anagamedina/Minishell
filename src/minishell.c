@@ -18,6 +18,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	char	*input;
 	t_mini	*minishell;
+	int		last_exit_code;
 
 	minishell = init_mini_list(envp);
 	if (!minishell)
@@ -26,24 +27,27 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signals(PARENT);
+	/*
+		echo helloasjdfksjdfklasdjfljasdfkljasdl;fkja;sldf
+	*/
 	while (1)
 	{
-		input = read_input();
-		if (!input) // ✅ Detecta `Ctrl+D`
+		input = read_input(minishell);
+		if (!input)
 		{
 			write(1, "exit\n", 5);
+			last_exit_code = minishell->exit_status;
+			// rl_clear_history();
 			free_mini(minishell);
-			//rl_clear_history();
-			exit(0);
+			exit(last_exit_code);
 		}
-		if (ft_strlen(input) == 0) // ✅ Línea vacía
+		if (ft_strlen(input) == 0)
 		{
 			free(input);
 			continue;
 		}
-
 		if (minishell->tokens)
-			free_tokens(minishell->tokens);
+			free_tokens_list(&minishell->tokens);
 		minishell->tokens = generate_token_list(input);
 		if (!minishell->tokens || !validate_syntax(minishell->tokens) ||
 		!validate_and_update_words_positions(minishell))
@@ -56,31 +60,33 @@ int	main(int argc, char **argv, char **envp)
 		parse_redir(minishell);
 		if (minishell->exec)
 			free_exec(minishell->exec);
+
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
 			perror("Error: init exec.\n");
 			free(input);
-			free_mini(minishell); // ✅ Libera estructuras antes de salir
+			free_mini(minishell);
 			exit(1);
-			// break ;
 		}
 		if (minishell->exec->first_cmd)
-			free_cmd_list(minishell->exec->first_cmd);
+			free_cmd_list(&minishell->exec->first_cmd);
+
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("bash: command not found\n");
+			free_cmd_list(&minishell->exec->first_cmd);
 			free(input);
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
+		// print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
-			free_cmd_list(minishell->exec->first_cmd);
+			free_cmd_list(&minishell->exec->first_cmd);
 			free_mini(minishell);
 			free(input);
-			// break;
 			exit(1);
 		}
 		free(input);
@@ -88,23 +94,3 @@ int	main(int argc, char **argv, char **envp)
 	free_mini(minishell);
 	return (0);
 }
-
-
-
-/*
-if (!envp || !*envp)
-{
-	write(2, "Warning: No environment variables found. Initializing default env.", 65);
-	// write(2, "\n", 1);
-	printf("\n");
-	char *default_env[] = {
-		"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin",
-		"HOME=/home/user",
-		"SHLVL=1",
-		"OLDPWD=",
-		NULL
-	};
-	envp = default_env;
-}
-*/
-

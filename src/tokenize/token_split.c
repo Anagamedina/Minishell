@@ -38,7 +38,7 @@ int	copy_word(t_split_data *data)
 	data->out[data->k] = (char *) malloc(sizeof(char) * (word_length + 1));
 	if (!data->out[data->k])
 	{
-		free_split_result_struct(data->out, data->k);
+		free_partial_split(data->out, data->k);
 		free(data->out);
 		return (-1);
 	}
@@ -74,7 +74,7 @@ int	process_segment(t_split_data *data)
 	{
 		if (result_copy_word == -1)
 		{
-			free_split_result_struct(data->out, data->k);
+			free_partial_split(data->out, data->k);
 			free(data->out);
 			return (0);
 		}
@@ -99,7 +99,7 @@ char	**ft_split_quotes(char *str)
 		skip_whitespace(data.str, &data.start);
 		if (process_segment(&data) == 0)
 		{
-			free_split_result_struct(data.out, data.k);
+			free_partial_split(data.out, data.k);
 			free(data.out);
 			return (NULL);
 		}

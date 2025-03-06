@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:07:44 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/05 01:47:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	update_words_in_tokens(t_mini *mini)
 	char		*cmd_path;
 
 	token_list = mini->tokens;
-
 	while (token_list != NULL)
 	{
 		curr_token = (t_tokens *)token_list->content;
@@ -109,14 +108,14 @@ void	update_words_in_tokens(t_mini *mini)
 			else if ((cmd_path = is_cmd_external(mini, curr_token)) != NULL)
 			{
 				curr_token->type_token = CMD_EXTERNAL;
-				free(cmd_path); // Liberar la memoria aquí
+				free(cmd_path);
 			}
 			else
 			{
-				write(2, "bash: ", 6);
-				write(2, curr_token->str, ft_strlen(curr_token->str));
-				write(2, ": command not found\n", 20);
-				return; // Detener el parsing, evitando la ejecución
+				ft_putstr_fd("bash: ", 2);
+				ft_putstr_fd(curr_token->str, 2);
+				ft_putendl_fd(": command not found", 2);
+				return ;
 			}
 		}
 		else if (is_redir(curr_token) && token_list->next != NULL)

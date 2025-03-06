@@ -3,27 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 17:33:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/28 10:29:37 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/03/01 11:21:06 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/06 11:07:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef FREE_STRUCTS_H
 # define FREE_STRUCTS_H
 
-void	free_tokens(t_list *tokens);
-void	free_env(t_env *env);
+// free_tokens.c
+void	free_tokens_list(t_list **tokens);
+
+//	free_cmd.c
+void 		free_cmd_list(t_list **cmd_list);
+void		free_command(t_cmd *cmd);
+t_cmd		*handle_cmd_error(t_cmd *new);
+
+//	free_redir.c
+void	free_redir(void *content);
+void free_redir_list(t_list **redir_list);
+void	free_env_list(t_list **env);
+void	free_env_node(t_env *env);
 void	free_env_array(char **env_array, int allocated);
-// void	free_redir(t_redir *redir);
-void	free_split_data(t_split_data *split_data);
-void	free_cmd(t_cmd *cmd);
 
+// free_exec.c
 void	free_exec(t_exec *exec);
-void	free_string_matrix(char **matrix_2d);
 
+// free_split.c
+void	free_string_matrix(char **matrix_2d);
+void	free_partial_split(char **out, const int k);
+
+// free_mini.c
 void	free_mini(t_mini *mini);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:31:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:30:58 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,30 @@ char	**get_path(char **env)
 	char	*path_var;
 	int		i;
 
+	// if (!env) // ⛔ Evitamos leer memoria NULL
+	// 	return (NULL);
 	paths = NULL;
 	path_var = NULL;
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			path_var = ft_strdup(env[i] + 5);
+			if (!path_var)
+				return (NULL);
 			break ;
 		}
-		i++;
+		i ++;
 	}
-	if (path_var)
+	if (!path_var)
+		return (NULL);
+	paths = ft_split(path_var, ':');
+	free(path_var);
+	if (!paths)
 	{
-		paths = ft_split(path_var, ':');
-		free(path_var);
-		if (!paths)
-		{
-			perror("Error: No se pudo dividir PATH en subrutas");
-			return (NULL);
-		}
+		perror("Error: Cant assign memory to paths.");
+		return (NULL);
 	}
 	return (paths);
 }

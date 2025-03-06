@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/03 00:43:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:53:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,6 @@ typedef enum e_type_token
 	FILENAME,
 }					t_type_token;
 
-/*
-	ECHO,               // Builtin: echo
-	CD,                 // Builtin: cd
-	PWD,                // Builtin: pwd
-	EXPORT,             // Builtin: export
-*/
-
-
-
 typedef struct s_tokens
 {
     char            *str;
@@ -67,14 +58,14 @@ typedef struct s_tokens
 	int				is_valid_cmd;
 	int				id_token;
     struct s_tokens	*next;
-    struct s_tokens	*prev;           // Puntero opcional al token anterior
+    struct s_tokens	*prev;
 }                   t_tokens;
 
 typedef struct s_env
 {
 	char            *key;
 	char            *value;
-	char            *full_var;
+	// char            *full_var;
 	struct s_env    *next;
 }				t_env;
 
@@ -109,7 +100,6 @@ typedef struct s_cmd
 	int				is_external;
 	int				input_fd;
 	int				output_fd;
-	//int			exit_status;
 	int				has_pipe;
 	int				last_cmd;
 	t_list			*redir_list;
@@ -124,6 +114,7 @@ typedef struct s_exec
 	int				pipe_input_fd;
 	int				pipe_output_fd;
 	int             cmd_count;
+	int				is_running;
 }				t_exec;
 
 typedef struct s_mini
@@ -135,7 +126,6 @@ typedef struct s_mini
 	t_list          *tokens;
 	t_exec			*exec;
 	int             exit_status;
-	// char            *prompt;        // Prompt actual (opcional) ???
 }				t_mini;
 
 #endif

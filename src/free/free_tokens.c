@@ -3,53 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 21:44:53 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:54:37 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/06 00:29:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tokens(t_list *tokens_list)
+void	free_tokens_void(void *content)
 {
-	t_list		*temp;
-	t_tokens	*token;
+	t_tokens	*tokens;
 
-	if (!tokens_list)
+	if (!content)
 		return ;
-	while (tokens_list)
+	tokens = (t_tokens *)content;
+	if (tokens->str)
 	{
-		temp = tokens_list->next;
-		token = (t_tokens *)tokens_list->content;
-		if (token)
-		{
-			if (token->str)
-				free(token->str);
-			free(token);
-		}
-		free(tokens_list);
-		tokens_list = temp;
+		free(tokens->str);
+		tokens->str = NULL;
 	}
+	free(tokens);
+}
+void	free_tokens_list(t_list **tokens)
+{
+	if (!tokens || !*tokens)
+		return;
+	ft_lstclear(tokens, free_tokens_void);
+	*tokens = NULL;  // ✅ Evita punteros colgantes
 }
 
 /*
-void	free_tokens(t_tokens *tokens)
+void	free_tokens_list(t_list **tokens)
 {
-	t_tokens	*temp;
+	t_list		*tmp;
+	t_tokens	*token;
 
-	if (!tokens)
-		return ;
-	while (tokens)
+	if (!tokens || !*tokens)
+		return;
+	while (*tokens)
 	{
-		temp = tokens->next;
-		if (tokens->str)
-		{
-			free(tokens->str);
-			// tokens->str = NULL;
-		}
-		// free(tokens);
-		tokens = temp;
+		tmp = (*tokens)->next;
+		token = (t_tokens *)(*tokens)->content;
+		if (token->str)
+			free(token->str);
+		free(token);
+		free(*tokens);
+		*tokens = tmp;
 	}
-}*/
+}
+*/
