@@ -60,20 +60,14 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 		error_export_syntax(arg);
 		return ;
 	}
-
 	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
 	{
 		append_flag = 1;
-		// free(var_name);
 		var_name = get_var_name_append(arg);
 		var_value = get_var_value_append(arg);
 	}
 	else
-	{
-		// free(var_value);
 		var_value = get_var_value(arg);
-
-	}
 	if (!var_name)
 	{
 		error_export_syntax(arg);
@@ -81,16 +75,9 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 		return ;
 	}
 	if (!ft_strchr(arg, '='))
-	{
-		// free(var_value);
 		var_value = NULL;
-
-	}
 	if (!update_env_var_exist(env_list, var_name, var_value, append_flag))
 		add_new_env_variable(env_list, var_name, var_value);
-
-	// free(var_name);
-	// free(var_value);
 }
 
 int	ft_export(t_cmd *curr_cmd, t_mini *mini)

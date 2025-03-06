@@ -78,8 +78,6 @@ int execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 	return (FALSE);
 }
 
-
-
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;
