@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 12:31:24 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:45:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	main(int argc, char **argv, char **envp)
 	*/
 	while (1)
 	{
-		input = read_input();
+		input = read_input(minishell);
 		if (!input)
 		{
 			write(1, "exit\n", 5);
 			last_exit_code = minishell->exit_status;
-			rl_clear_history();
+			// rl_clear_history();
 			free_mini(minishell);
 			exit(last_exit_code);
 		}

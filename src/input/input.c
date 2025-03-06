@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/03 00:40:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:42:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	control_and_d(char *line)
 	}
 }
 
-char	*read_input(void)
+/*char	*read_input(void)
 {
 	char	*input;
 	char	*new_input;
@@ -43,6 +43,55 @@ char	*read_input(void)
 			free(input);
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
 			return (NULL);
+		}
+		if (ft_strlen(temp) == 0)
+		{
+			free(temp);
+			write(2, "\n", 1);
+			return (NULL);
+		}
+		new_input = ft_strjoin(input, "\n");
+		if (!new_input)
+		{
+			free(input);
+			free(temp);
+			return (NULL);
+		}
+		free(input);
+		input = ft_strjoin(new_input, temp);
+		free(new_input);
+		free(temp);
+		if (!input)
+			return (NULL);
+	}
+	if (*input)
+		add_history(input);
+	return (input);
+}
+*/
+
+char	*read_input(t_mini *mini)
+{
+	char	*input;
+	char	*new_input;
+	char	*temp;
+
+	input = readline("minishell> ");
+	if (!input) // ✅ Ctrl+D en el prompt principal
+	{
+		write(2, "exit\n", 5);
+		free_mini(mini); // ✅ Liberar memoria antes de salir
+		exit(0);
+	}
+	while (!check_quotes_line(input))
+	{
+		temp = readline("> ");
+		if (!temp) // ✅ Ctrl+D en una línea incompleta
+		{
+			free(input);
+			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
+			free_mini(mini); // ✅ Asegurar que liberamos `mini`
+			exit(1);
 		}
 		if (ft_strlen(temp) == 0)
 		{
