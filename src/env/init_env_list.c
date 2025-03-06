@@ -22,7 +22,7 @@ t_env	*init_empty_env_node(void)
 		return (NULL);
 	new_env->key = NULL;
 	new_env->value = NULL;
-	new_env->full_var = NULL;
+	// new_env->full_var = NULL;
 	new_env->next = NULL;
 	return (new_env);
 }
@@ -97,14 +97,14 @@ t_env	*create_env_node(char *key_value_variable)
 	new_env = init_empty_env_node();
 	if (!new_env)
 		return (NULL);
-	new_env->full_var = ft_strdup(key_value_variable);
-	if (!new_env->full_var)
-	{
+	// new_env->full_var = ft_strdup(key_value_variable);
+	// if (!new_env->full_var)
+	// {
 		//new
-		free_env_node(new_env);
-		return (NULL);
+		// free_env_node(new_env);
+		// return (NULL);
 
-	}
+	// }
 	if (!split_key_value(new_env, key_value_variable))
 	{
 		free_env_node(new_env);
