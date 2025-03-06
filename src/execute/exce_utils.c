@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/06 17:52:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:20:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ char **env_list_to_array(t_list *env_list)
 	{
 		curr_env_var = (t_env *)curr_node->content;
 
-		if (!curr_env_var || !curr_env_var->key || !curr_env_var->value) {
+		if (!curr_env_var || !curr_env_var->key)// || !curr_env_var->value)
+		{
 			free_env_array(env_array, i);
 			perror("Error: Invalid environment variable");
 			return (NULL);

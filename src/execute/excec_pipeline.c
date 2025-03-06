@@ -6,7 +6,7 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/05 19:58:12 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:02:19 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,11 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 		close(curr_cmd->output_fd);
 	if (!curr_cmd->last_cmd)
 	{
-		if (pipe_fd[1] >= 0)
-			close(pipe_fd[1]);
+		close(pipe_fd[1]);
 		*input_fd = pipe_fd[0];
 	}
 	else
 	{
-		if (pipe_fd[0] >= 0)
 			close(pipe_fd[0]);
 	}
 }*/
@@ -98,7 +96,6 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 			close(pipe_fd[0]);
 	}
 }
-
 
 
 void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/27 18:16:40 by catalinab        ###   ########.fr       */
+/*   Updated: 2025/03/06 19:21:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 
 int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
-	if (cmd->output_fd != STDIN_FILENO)
+	// if (cmd->output_fd != STDIN_FILENO)
+	// 	close(cmd->output_fd);
+	// Solo cerramos el fd si es válido (mayor o igual a 0)
+	if (cmd->output_fd >= 0 && cmd->output_fd != STDOUT_FILENO)
 		close(cmd->output_fd);
 	cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
 	if (cmd->output_fd == -1)
