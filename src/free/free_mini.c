@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 21:49:36 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 10:26:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:10:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,11 @@
 
 void	free_mini(t_mini *mini)
 {
-	// t_list	*tmp;
-
     if (!mini)
     {
     	return ;
     }
 	rl_clear_history();
-
-
     if (mini->tokens)
     {
     	free_tokens_list(&mini->tokens);
@@ -68,11 +64,13 @@ void	free_mini(t_mini *mini)
     {
     	mini->exec->is_running = 0;
         free_exec(mini->exec);
+    	// mini->exec = NULL;
     }
 
     if (mini->envp_to_array)
     {
     	free_string_matrix(mini->envp_to_array);
+    	// mini->envp_to_array = NULL;
     }
 
     if (mini->env)

@@ -1,6 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   builtin_part_one_utils.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 12:24:37 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/06 16:21:08 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   builtin_part_one_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
@@ -21,13 +33,13 @@
 
 char	*ft_strjoin_export(const char *s1, char c, const char *s2)
 {
-	char	*result;
+	char	*result = NULL;
 	size_t	len1;
 	size_t	len2;
 
 	len1 = 0;
 	len2 = 0;
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	if (s1)
 		len1 = ft_strlen(s1);

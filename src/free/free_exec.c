@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:18 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 10:29:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:41:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	free_exec(t_exec *exec)
 	{
 		free_cmd_list(&exec->first_cmd);
 	}
-	free(exec);
+	if (exec)
+		free(exec);
 }
 
 

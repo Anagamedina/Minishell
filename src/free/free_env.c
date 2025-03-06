@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 10:18:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:18:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	free_env_void(void *content)
 	if (!content)
 		return ;
 	env = (t_env *)content;
-	if (env->full_var)
-		free(env->full_var);
 	if (env->key)
 		free(env->key);
 	if (env->value)
 		free(env->value);
+	if (env->full_var)
+		free(env->full_var);
 
 	free(env);
 }

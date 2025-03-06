@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:14:26 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 23:04:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:52:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ char	**env_list_to_array(t_list *env_list)
 	while (curr_node && i < env_count)
 	{
 		curr_env_var = (t_env *)curr_node->content;
+		//new
+		if (!curr_env_var || !curr_env_var->full_var) {
+			free_env_array(env_array, i);
+			perror("Error: Invalid environment variable");
+			return (NULL);
+		}
+		// env_array[i] = curr_env_var->full_var;
 		env_array[i] = ft_strdup(curr_env_var->full_var);
 		if (!env_array[i])
 		{

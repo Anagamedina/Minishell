@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 13:24:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:03:28 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,13 @@ static char	*get_var_value_append(char *arg)
 	char	*value_start;
 	char	*var_value;
 
+	value_start = NULL;;
+	var_value = NULL;
 	value_start = ft_strchr(arg, '=');
 	if (!value_start)
 		return (NULL);
 	var_value = ft_strdup(value_start + 1);
+	// free(value_start);
 	return (var_value);
 }
 
@@ -51,13 +54,26 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 
 	append_flag = 0;
 	var_name = get_var_name(arg);
+	var_value = NULL;
+	if (!var_name)
+	{
+		error_export_syntax(arg);
+		return ;
+	}
+
 	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
 	{
 		append_flag = 1;
+		// free(var_name);
 		var_name = get_var_name_append(arg);
 		var_value = get_var_value_append(arg);
 	}
-	var_value = get_var_value(arg);
+	else
+	{
+		// free(var_value);
+		var_value = get_var_value(arg);
+
+	}
 	if (!var_name)
 	{
 		error_export_syntax(arg);
@@ -65,9 +81,16 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 		return ;
 	}
 	if (!ft_strchr(arg, '='))
+	{
+		// free(var_value);
 		var_value = NULL;
+
+	}
 	if (!update_env_var_exist(env_list, var_name, var_value, append_flag))
 		add_new_env_variable(env_list, var_name, var_value);
+
+	// free(var_name);
+	// free(var_value);
 }
 
 int	ft_export(t_cmd *curr_cmd, t_mini *mini)
@@ -90,6 +113,7 @@ int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 	}
 	if (mini->envp_to_array)
 		free_string_matrix(mini->envp_to_array);
+	mini->envp_to_array = NULL;
 	mini->envp_to_array = env_list_to_array(mini->env);
 	if (!mini->envp_to_array)
 		return (1);
