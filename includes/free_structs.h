@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:21:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 20:16:20 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:07:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void		free_command(t_cmd *cmd);
 t_cmd		*handle_cmd_error(t_cmd *new);
 
 //	free_redir.c
-void	free_redir(t_redir *redir);
-
+void	free_redir(void *content);
+void free_redir_list(t_list **redir_list);
+void	free_env_list(t_list **env);
 void	free_env_node(t_env *env);
 void	free_env_array(char **env_array, int allocated);
-void	free_cmd(t_cmd *cmd);
 
 // free_exec.c
 void	free_exec(t_exec *exec);

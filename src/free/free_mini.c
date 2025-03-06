@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 21:49:36 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 22:48:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:26:20 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,51 +48,19 @@
 
 void	free_mini(t_mini *mini)
 {
-	t_list	*tmp;
+	// t_list	*tmp;
 
     if (!mini)
     {
     	return ;
     }
 	rl_clear_history();
-    while (mini->env)
-    {
-        tmp = mini->env->next;
-        t_env *env = (t_env *)mini->env->content;
-        if (env)
-        {
-            free(env->key);
-            free(env->value);
-            free(env->full_var);
-            free(env);
-        }
-        free(mini->env);
-        mini->env = tmp;
-    }
-    // Liberar tokens
-    while (mini->tokens)
-    {
-        tmp = mini->tokens->next;
-        t_tokens *token = (t_tokens *)mini->tokens->content;
-        if (token)
-        {
-            free(token->str);
-            free(token);
-        }
-        free(mini->tokens);
-        mini->tokens = tmp;
-    }
 
-    // Liberar envp_to_array
-    if (mini->envp_to_array)
+
+    if (mini->tokens)
     {
-        int i = 0;
-        while (mini->envp_to_array[i])
-        {
-            free(mini->envp_to_array[i]);
-            i++;
-        }
-        free(mini->envp_to_array);
+    	free_tokens_list(&mini->tokens);
+        // free(mini->tokens);
     }
 
     // Liberar estructura exec
@@ -100,9 +68,18 @@ void	free_mini(t_mini *mini)
     {
     	mini->exec->is_running = 0;
         free_exec(mini->exec);
-
     }
 
+    if (mini->envp_to_array)
+    {
+    	free_string_matrix(mini->envp_to_array);
+    }
+
+    if (mini->env)
+    {
+    	free_env_list(&mini->env);
+        // free(mini->env);
+    }
     // Liberar la estructura principal
     free(mini);
 }

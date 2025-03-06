@@ -69,20 +69,10 @@ char	*read_input(void)
 	return (input);
 }
 
-/**
- * @brief configure the terminal
 
- * term.c_lflag &= ~ECHOCTL (off the print control characters in the input)
 
- * isatty(STDIN_FILENO): Verify if minishell is running in a terminal.
 
- * ttyname(STDIN_FILENO): show the name of the terminal.
 
- * tcgetattr() and tcsetattr():
-
- * modify the terminal attributes to Ctrl+C not to print ^C.
- *
- */
 void	configure_terminal(void)
 {
 	struct termios	term;

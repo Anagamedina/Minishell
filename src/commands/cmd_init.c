@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 20:20:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:46:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 	// new_cmd->cmd = ft_strdup(current_token->str);
 	new_cmd->cmd = current_token->str;
 	if (!new_cmd->cmd)
-		return (free(new_cmd), NULL);
+	{
+		free_command(new_cmd);
+		return (NULL);
+	}
 	if (current_token->type_token == BUILTINS)
 		new_cmd->is_builtin = 1;
 	else if (current_token->type_token == CMD_EXTERNAL)
@@ -62,9 +65,9 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 			write(2, "bash: ", 6);
 			write(2, current_token->str, ft_strlen(current_token->str));
 			write(2, ": command not found\n", 20);
-			// free_command(new_cmd);
-			free(new_cmd->cmd);
-			free(new_cmd);
+			free_command(new_cmd);
+			// free(new_cmd->cmd);
+			// free(new_cmd->cmd_path);
 			return (NULL);
 		}
 	}
@@ -135,7 +138,6 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 			while (cmd_node)
 			{
 				cmd = (t_cmd *) cmd_node->content;
-				// if (cmd && cmd->cmd && token->str && !ft_strcmp(cmd->cmd, token->str))
 				if (cmd && cmd->cmd_id == cmd_count)
 				{
 					process_command_args(current, cmd);

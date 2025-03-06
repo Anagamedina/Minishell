@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 20:24:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:31:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 5);
 			last_exit_code = minishell->exit_status;
+			rl_clear_history();
 			free_mini(minishell);
 			exit(last_exit_code);
 		}
@@ -59,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		parse_redir(minishell);
 		if (minishell->exec)
 			free_exec(minishell->exec);
+
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
@@ -69,10 +71,12 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (minishell->exec->first_cmd)
 			free_cmd_list(&minishell->exec->first_cmd);
+
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
 			printf("bash: command not found\n");
+			free_cmd_list(&minishell->exec->first_cmd);
 			free(input);
 			continue ;
 		}
