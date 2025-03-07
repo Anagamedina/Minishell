@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 14:31:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:45:58 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*read_input(t_mini *mini)
 	return (input);
 }
 
-void	configure_terminal(void)
+/*void	configure_terminal(void)
 {
 	struct termios	term;
 
@@ -131,7 +131,7 @@ void	configure_terminal(void)
 		return ;
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
+}*/
 
 int	check_quotes_line(const char *line)
 {

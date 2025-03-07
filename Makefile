@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/07 20:04:57 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/07 20:40:02 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_PARSER)/parser_check_quotes_dollar.c \
 		$(SRC_PARSER)/parser_expand_cases.c \
 		$(SRC_PARSER)/parser_expand_dollar.c \
+		$(SRC_PARSER)/parser_count_dollar.c \
 		$(SRC_PARSER)/parser_expand_utils.c \
 		$(SRC_PARSER)/parser_syntax.c \
 		$(SRC_PARSER)/parser_syntax_utils.c \

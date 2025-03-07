@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 18:03:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 21:02:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 		minishell->exec->first_cmd = create_cmd_list(minishell->tokens, minishell->exec->paths);
 		if (!minishell->exec->first_cmd)
 		{
-			printf("bash: command not found\n");
+			print_command_not_found(minishell->exec->first_cmd->content);
 			free_cmd_list(&minishell->exec->first_cmd);
 			free(input);
 			continue ;
