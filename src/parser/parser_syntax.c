@@ -6,77 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:50:56 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 19:15:53 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:03:01 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	validate_and_update_words_positions(t_mini *mini)
-{
-	t_list		*current;
-	t_tokens	*prev_token;
-	t_tokens	*token;
-	int			command_found;
-
-	if (!mini->tokens)
-		return (FALSE);
-	current = mini->tokens;
-	prev_token = NULL;
-	command_found = FALSE;
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-		if (token->type_token == WORD)
-		{
-			if (!command_found || !prev_token || \
-					prev_token->type_token == PIPE || \
-					prev_token->type_token == DELIMITER)
-			{
-				token->is_valid_cmd = TRUE;
-				command_found = TRUE;
-			}
-			else
-				token->is_valid_cmd = FALSE;
-		}
-		else if (token->type_token == PIPE || token->type_token == DELIMITER)
-			command_found = FALSE;
-		prev_token = token;
-		current = current->next;
-	}
-	return (TRUE);
-}
-
-int	check_consecutive_operators(t_list *token_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-	t_tokens	*prev;
-
-	current = token_list;
-	prev = NULL;
-	while (current)
-	{
-		token = (t_tokens *)current->content;
-		if (prev && (prev->type_token == PIPE || \
-					prev->type_token == DELIMITER) && \
-				(token->type_token == PIPE || token->type_token == DELIMITER))
-		{
-			write(2, "bash: syntax error near unexpected token `", 42);
-			write(2, token->str, ft_strlen(token->str));
-			write(2, "'\n", 2);
-			return (FALSE);
-		}
-		if (prev && is_redir(prev) && token->type_token == PIPE)
-		{
-			write(2, "bash: syntax error near unexpected token `|'\n", 45);
-			return (FALSE);
-		}
-		prev = token;
-		current = current->next;
-	}
-	return (TRUE);
-}
 
 static int	check_redir_after_pipe(t_list *token_list)
 {
