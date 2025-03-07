@@ -6,13 +6,12 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 23:09:28 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:30:40 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-//	TODO: change of dir of this function
 int	validate_syntax_name_value(char *new_local_var)
 {
 	if (!(validate_var_name(new_local_var)))

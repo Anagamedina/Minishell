@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 16:29:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:21:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,11 @@ t_list	*create_new_env_node(char *key, char *value)
 	t_env	*new_var;
 	t_list	*new_node;
 
-	if (!key) // ✅ Evitar valores no inicializados
+	if (!key)
 		return (NULL);
-
-
 	new_var = init_empty_env_node();
 	if (!new_var)
-	{
-		perror("Error: Failed to create environment variable");
-		// free(key);
-		// free(value);
 		return (NULL);
-	}
 	new_var->key = key;
 	if (!new_var->key)
 	{
@@ -59,22 +52,9 @@ t_list	*create_new_env_node(char *key, char *value)
 			free_env_node(new_var);
 			return (NULL);
 		}
-
 	}
 	else
 		new_var->value = NULL;
-	// if (value != NULL)
-	// {
-	// 	// new_var->full_var = ft_strjoin_export(key, '=', value);
-	// 	// if (!new_var->full_var) // Si falla la asignación, liberar `new_var`
-	// 	// {
-	// 	// 	free_env_node(new_var);
-	// 	// 	return (NULL);
-	// 	// }
-	//
-	// }
-	// else
-	// 	new_var->full_var = ft_strdup(key);
 	new_node = ft_lstnew(new_var);
 	if (!new_node)
 		return (free_env_node(new_var), NULL);
