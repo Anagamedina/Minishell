@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 19:17:05 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:14:34 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,22 @@ void	handle_consecutive_vars(t_tokens *token, t_list *env_list)
 	free(expanded_str);
 }
 
+static void	process_dollar_with_quotes(t_tokens *token, t_list *env_list)
+{
+	char	*tmp;
+	char	*res;
+
+	tmp = remove_quotes_str(token->str, D_QUOTE);
+	token->str = ft_strdup(tmp);
+	res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+	token->str = ft_strdup(res);
+	free(res);
+}
+
 void	handle_dollar_cases(t_tokens *token, \
 								t_list *env_list, t_tokens *next_token)
 {
 	char	*tmp;
-	char	*res;
 
 	if (check_dquote_dollar_and_squotes(token->str))
 	{
@@ -90,11 +101,7 @@ void	handle_dollar_cases(t_tokens *token, \
 	}
 	if (check_dquote_squote_dollar_case(token->str))
 	{
-		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
-		res = replace_dollar_variable_skip_s_quote(token->str, env_list);
-		token->str = ft_strdup(res);
-		free(res);
+		process_dollar_with_quotes(token, env_list);
 		return ;
 	}
 	if (handle_no_expand_cases(token, next_token) == 0)
