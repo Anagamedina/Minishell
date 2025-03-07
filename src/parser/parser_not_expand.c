@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_not_expand.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:24:09 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:25:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:28:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ int	has_dollar_followed_by_digit(const char *str)
 		if (str[i] == '$')
 		{
 			if (ft_isdigit(str[i + 1]) == TRUE)
-			{
 				return (TRUE);
-			}
 		}
 		i++;
 	}

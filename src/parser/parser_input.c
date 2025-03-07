@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 18:50:28 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:36:08 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	print_syntax_error(char *token)
+{
+	write(2, "bash: syntax error near unexpected token `", 42);
+	write(2, token, ft_strlen(token));
+	write(2, "'\n", 2);
+}
 
 int	check_start_and_end_tokens(t_list *token_list)
 {
@@ -24,19 +31,16 @@ int	check_start_and_end_tokens(t_list *token_list)
 	first = (t_tokens *)current->content;
 	if (first->type_token == PIPE || first->type_token == DELIMITER)
 	{
-		write(2, "bash: syntax error near unexpected token `", 42);
-		write(2, first->str, ft_strlen(first->str));
-		write(2, "'\n", 2);
+		print_syntax_error(first->str);
 		return (FALSE);
 	}
 	while (current->next)
 		current = current->next;
 	last = (t_tokens *)current->content;
-	if (last->type_token == PIPE || last->type_token == DELIMITER || is_redir(last))
+	if (last->type_token == PIPE || last->type_token == DELIMITER || \
+	is_redir(last))
 	{
-		write(2, "bash: syntax error near unexpected token `", 42);
-		write(2, last->str, ft_strlen(last->str));
-		write(2, "'\n", 2);
+		print_syntax_error(last->str);
 		return (FALSE);
 	}
 	return (TRUE);
@@ -103,7 +107,8 @@ void	parse_redir(t_mini *mini)
 		}
 		else if (is_redir_out(curr_token))
 		{
-			write(2, "bash: syntax error near unexpected token `newline'\n", 51);
+			write(2, "bash: syntax error near unexpected token `", 42);
+			write(2, "newline'\n", 9);
 			return ;
 		}
 		token_list = token_list->next;

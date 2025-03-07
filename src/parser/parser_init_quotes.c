@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_init_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:21:38 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/19 16:22:32 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:27:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	handle_special_quotes(t_tokens *token)
 		{
 			if (count_d_quotes % 2 != 0 && has_dollar == FALSE)
 				return (TRUE);
-			else
-				return (FALSE);
+			/*else
+				return (FALSE);*/
 		}
 		i ++;
 	}

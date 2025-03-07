@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_quotes_dollar.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:17:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 18:46:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:29:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	check_dquote_dollar_and_squotes(const char *str)
 	{
 		if (str[i] == DOLLAR_SIGN)
 		{
-			if (i + 1 < len_str && is_dollar_followed_by_squote(str, i + 1, len_str))
+			if (i + 1 < len_str && \
+			is_dollar_followed_by_squote(str, i + 1, len_str))
 				return (TRUE);
 		}
 		i++;
