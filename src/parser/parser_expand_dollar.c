@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 19:30:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 19:55:12 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,11 @@ void	handle_dollar_cases(t_tokens *token, \
 	if (check_dquote_squote_dollar_case(token->str))
 	{
 		tmp = remove_quotes_str(token->str, D_QUOTE);
-		token->str = ft_strdup(tmp);
+		// token->str = ft_strdup(tmp);
+		token->str = tmp;
 		char *res = replace_dollar_variable_skip_s_quote(token->str, env_list);
-		token->str = ft_strdup(res);
+		// token->str = ft_strdup(res);
+		token->str = res;
 		free(res);
 		return ;
 	}

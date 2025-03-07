@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 17:57:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:14:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,6 @@ void	free_env_void(void *content)
 		free(env->key);
 	if (env->value)
 		free(env->value);
-	// if (env->full_var)
-		// free(env->full_var);
-
 	free(env);
 }
 
@@ -48,6 +45,7 @@ void	free_env_list(t_list **env)
 	ft_lstclear(env, (void (*)(void *))free_env_void);
 	*env = NULL;
 }
+
 void	free_env_node(t_env *env)
 {
 	if (!env)
@@ -56,7 +54,5 @@ void	free_env_node(t_env *env)
 		free(env->key);
 	if (env->value)
 		free(env->value);
-	// if (env->full_var)
-		// free(env->full_var);
 	free(env);
 }
