@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:53:21 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:26:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,4 +301,7 @@ int	count_env_variables_ia(char **env);
 int			setup_signals(int mode);
 int			configure_signal_handler(int signal, void (*handler)(int));
 
+
+void	handle_memory_allocation_error(void);
+void	handle_env_duplication_error(char **env_array, int index);
 #endif
