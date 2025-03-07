@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 17:36:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:26:29 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,62 +18,6 @@ void	error_export_syntax(char *var_name)
 	ft_putstr_fd(var_name, 2);
 	ft_putendl_fd("`: not a valid identifier", 2);
 }
-
-static char	*get_var_name_append(char *arg)
-{
-	int		i;
-	char	*var_name;
-
-	i = 0;
-	while (arg[i] && arg[i] != '+' && arg[i] != '=')
-		i++;
-	var_name = ft_substr(arg, 0, i);
-	return (var_name);
-}
-
-static char	*get_var_value_append(char *arg)
-{
-	char	*value_start;
-	char	*var_value;
-
-	var_value = NULL;
-	value_start = ft_strchr(arg, '=');
-	if (!value_start)
-		return (NULL);
-	var_value = ft_strdup(value_start + 1);
-	return (var_value);
-}
-/*
-static int	extract_env_var(char *arg, char **var_name, char **var_value)
-{
-	int		append_flag;
-	char	*temp;
-
-	append_flag = 0;
-	*var_name = get_var_name(arg);
-	*var_value = NULL;
-	if (!*var_name)
-		return (error_export_syntax(arg), 0);
-	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
-	{
-		append_flag = 1;
-		temp = *var_name;
-		*var_name = get_var_name_append(arg);
-		free(temp);
-		*var_value = get_var_value_append(arg);
-	}
-	else
-		*var_value = get_var_value(arg);
-	if (!*var_name)
-		return (error_export_syntax(arg), free(*var_value), 0);
-	if (!ft_strchr(arg, '='))
-	{
-		free(*var_value);
-		*var_value = NULL;
-	}
-	return (append_flag);
-}
-*/
 
 static int	handle_append_case(char **var_name, char **var_value, char *arg)
 {
@@ -122,42 +66,6 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 	else
 		var_value = NULL;
 }
-
-/*
-static void	add_or_update_env_variable(t_list **env_list, char *arg)
-{
-	char	*var_name;
-	char	*var_value;
-	int		append_flag;
-
-	append_flag = 0;
-	var_name = get_var_name(arg);
-	var_value = NULL;
-	if (!var_name)
-	{
-		error_export_syntax(arg);
-		return ;
-	}
-	if (ft_strnstr(arg, "+=", ft_strlen(arg)) != NULL)
-	{
-		append_flag = 1;
-		var_name = get_var_name_append(arg);
-		var_value = get_var_value_append(arg);
-	}
-	else
-		var_value = get_var_value(arg);
-	if (!var_name)
-	{
-		error_export_syntax(arg);
-		free(var_value);
-		return ;
-	}
-	if (!ft_strchr(arg, '='))
-		var_value = NULL;
-	if (!update_env_var_exist(env_list, var_name, var_value, append_flag))
-		add_new_env_variable(env_list, var_name, var_value);
-}
-*/
 
 int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 {

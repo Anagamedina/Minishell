@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 14:32:08 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:13:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			write(1, "exit\n", 5);
 			last_exit_code = minishell->exit_status;
-			// rl_clear_history();
+			rl_clear_history();
 			free_mini(minishell);
 			exit(last_exit_code);
 		}

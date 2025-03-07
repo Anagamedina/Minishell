@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 14:31:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:11:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ void	control_and_d(char *line)
 	return (input);
 }
 */
+/*
+char	*read_input(void)
+{
+	char	*line;
+
+	line = readline("minishell> ");
+	if (!line) // Si readline devuelve NULL, retorna inmediatamente
+	{
+		write(1, "exit\n", 5);
+		exit(0);
+	}
+	if (*line) // Agrega la línea al historial si no está vacía
+		add_history(line);
+	return (line);
+}
+*/
 
 char	*read_input(t_mini *mini)
 {
@@ -90,7 +106,7 @@ char	*read_input(t_mini *mini)
 		{
 			free(input);
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
-			free_mini(mini); // ✅ Asegurar que liberamos `mini`
+			free_mini(mini);
 			exit(1);
 		}
 		if (ft_strlen(temp) == 0)
