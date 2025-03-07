@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:02:19 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/06 12:42:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:31:39 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,16 @@ char	*read_input(t_mini *mini)
 	char	*temp;
 
 	input = readline("minishell> ");
-	if (!input) // ✅ Ctrl+D en el prompt principal
+	if (!input)
 	{
 		write(2, "exit\n", 5);
-		free_mini(mini); // ✅ Liberar memoria antes de salir
+		free_mini(mini);
 		exit(0);
 	}
 	while (!check_quotes_line(input))
 	{
 		temp = readline("> ");
-		if (!temp) // ✅ Ctrl+D en una línea incompleta
+		if (!temp)
 		{
 			free(input);
 			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
@@ -118,10 +118,6 @@ char	*read_input(t_mini *mini)
 	return (input);
 }
 
-
-
-
-
 void	configure_terminal(void)
 {
 	struct termios	term;
@@ -137,7 +133,6 @@ void	configure_terminal(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-
 int	check_quotes_line(const char *line)
 {
 	int	i;
@@ -147,42 +142,15 @@ int	check_quotes_line(const char *line)
 	i = 0;
 	in_single = 0;
 	in_double = 0;
-
 	while (line[i] != '\0')
 	{
-		if (line[i] == '"' && !in_single)  // Solo contar si no estamos en comillas simples
+		if (line[i] == '"' && !in_single)
 			in_double = !in_double;
-		else if (line[i] == '\'' && !in_double)  // Solo contar si no estamos en comillas dobles
+		else if (line[i] == '\'' && !in_double)
 			in_single = !in_single;
 		i++;
 	}
-	// Si hay una comilla sin cerrar, devolver FALSE
 	if (in_single || in_double)
 		return (FALSE);
 	return (TRUE);
 }
-
-
-
-/*char	*read_multiline_input(char *input)
-{
-	char	*new_input;
-	char	*temp;
-
-	while (check_quotes_line(input))
-	{
-		temp = readline("> ");  // 🔹 Prompt secundario como Bash
-		if (!temp)  // Si el usuario presiona Ctrl+D, cancelamos
-		{
-			free(input);
-			write(2, "minishell: unexpected EOF while looking for matching quote\n", 58);
-			return (NULL);
-		}
-		new_input = ft_strjoin(input, "\n");  // Agregar salto de línea
-		free(input);
-		input = ft_strjoin(new_input, temp);  // Concatenar entrada nueva
-		free(new_input);
-		free(temp);
-	}
-	return (input);
-}*/

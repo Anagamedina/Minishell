@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:08:29 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/21 13:00:15 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 13:29:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	count_consecutive_quotes(const char *line)
 
 	i = 0;
 	consecutive_quotes = 0;
-	inside_quotes = FALSE;
+	inside_quotes = 0;
 	while (line[i] != '\0')
 	{
 		if ((line[i] == D_QUOTE && line[i + 1] == D_QUOTE) || \
 			(line[i] == S_QUOTE && line[i + 1] == S_QUOTE && \
-			inside_quotes == FALSE))
+			inside_quotes == 0))
 		{
 			consecutive_quotes ++;
 			i ++;
@@ -42,8 +42,13 @@ int	calculate_length_excluding_quotes(char *line)
 	int	consecutive_quotes;
 	int	new_length;
 
+	new_length = 0;
+	if (!line)
+		return (-1);
 	consecutive_quotes = count_consecutive_quotes(line);
-	new_length = ft_strlen(line) - (consecutive_quotes * 2);
+	new_length = (int) ft_strlen(line) - (consecutive_quotes * 2);
+	if (new_length < 0)
+		new_length = 0;
 	return (new_length);
 }
 
@@ -51,6 +56,8 @@ int	skip_quotes_pairs(char *line, int *i, int *start_dquotes, int *end_dquotes)
 {
 	int	skipped;
 
+	if (!line || !i)
+		return (0);
 	skipped = 0;
 	if ((line[*i] == D_QUOTE && line[*i + 1] == D_QUOTE) || \
 		(line[*i] == S_QUOTE && line[*i + 1] == S_QUOTE && \
@@ -80,6 +87,8 @@ void	copy_without_consecutive_quotes(char *line, char *new_line)
 	int	start_dquotes;
 	int	end_dquotes;
 
+	if (!line || !new_line)
+		return ;
 	i = 0;
 	j = 0;
 	start_dquotes = FALSE;
@@ -89,8 +98,8 @@ void	copy_without_consecutive_quotes(char *line, char *new_line)
 		if (!skip_quotes_pairs(line, &i, &start_dquotes, &end_dquotes))
 		{
 			new_line[j] = line[i];
-			i ++;
-			j ++;
+			i++;
+			j++;
 		}
 	}
 	new_line[j] = '\0';
@@ -111,6 +120,8 @@ char	*remove_consecutive_quotes(char *line)
 	if (!line || *line == '\0')
 		return (NULL);
 	len = calculate_length_excluding_quotes(line);
+	if (len < 0)
+		return (NULL);
 	new_line = malloc(sizeof(char) * (len + 1));
 	if (!new_line)
 		return (NULL);

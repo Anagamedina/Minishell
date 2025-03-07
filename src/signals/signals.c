@@ -16,9 +16,9 @@ void	handle_signal_heredoc(int sig)
 {
 	if (sig == SIGINT) // Si se presiona Ctrl+C
 	{
-		write(2, "\n", 1);
-		close(3);
-		exit(EXIT_SUCCESS); // Finaliza el proceso del heredoc
+		write(1, "\n", 1);
+		close(STDIN_FILENO);
+		// exit(130); // Finaliza el proceso del heredoc
 	}
 }
 
@@ -41,6 +41,18 @@ void handle_signal_child(int sig)
 		write(2, "\n", 1);
 	}
 }
+
+int setup_here_doc_signals(void)
+{
+	int	tmp = configure_signal_handler(SIGINT, handle_signal_heredoc);
+	if (tmp == -1)
+		return (-1);
+	int	tmp1= configure_signal_handler(SIGQUIT, SIG_IGN);
+	if ( tmp1 == -1)
+		return (-1);
+	return (1);
+}
+
 
 /* 📌 Configurar señales para el shell */
 int setup_parent_signals(void)
@@ -73,7 +85,7 @@ int setup_signals(int mode)
 		return (setup_parent_signals());
 	else if (mode == CHILD)
 		return (setup_child_signals());
-	// else if (mode == HERE_DOC)
-	// 	return (set)
+	else if (mode == HERE_DOC)
+		return (setup_here_doc_signals());
 	return (-1);
 }

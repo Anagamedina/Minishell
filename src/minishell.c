@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 12:22:16 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:32:08 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	setup_signals(PARENT);
-	/*
-		echo helloasjdfksjdfklasdjfljasdfkljasdl;fkja;sldf
-	*/
 	while (1)
 	{
 		input = read_input(minishell);
@@ -43,7 +40,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (ft_strlen(input) == 0)
 		{
-			free(input);
 			continue;
 		}
 		if (minishell->tokens)
@@ -52,7 +48,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!minishell->tokens || !validate_syntax(minishell->tokens) ||
 		!validate_and_update_words_positions(minishell))
 		{
-			free(input);
 			continue;
 		}
 		update_words_in_tokens(minishell);
@@ -65,7 +60,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!minishell->exec)
 		{
 			perror("Error: init exec.\n");
-			free(input);
 			free_mini(minishell);
 			exit(1);
 		}
@@ -77,11 +71,9 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("bash: command not found\n");
 			free_cmd_list(&minishell->exec->first_cmd);
-			free(input);
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
-		// print_list_commands(minishell->exec->first_cmd);
 		if (execute_commands(minishell) != TRUE)
 		{
 			free_cmd_list(&minishell->exec->first_cmd);
@@ -89,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 			free(input);
 			exit(1);
 		}
-		// free_cmd_list(&minishell->exec->first_cmd);
 		free(input);
 	}
 	free_mini(minishell);
