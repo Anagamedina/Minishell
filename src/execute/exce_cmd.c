@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:45:04 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:59:54 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ int	execute_commands(t_mini *mini)
 	t_list	*t_list_exec_cmd;
 	t_cmd	*curr_cmd;
 	int		input_fd;
-	int		pipe_fd[2] = {-1, -1};
+	int		pipe_fd[2];
 	int		i;
 
 	i = 0;
+	pipe_fd[0] = -1;
+	pipe_fd[1] = -1;
 	input_fd = STDIN_FILENO;
 	t_list_exec_cmd = mini->exec->first_cmd;
 	while (t_list_exec_cmd)

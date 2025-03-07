@@ -6,39 +6,22 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:17:43 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 23:42:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:46:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
 int	is_dollar_followed_by_squote(const char *str, int i, int len_str)
 {
-	while (str[i] == ' ')
-		i++;
-	if (str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
-		return (TRUE);
-	return (FALSE);
-}
-*/
-int	is_dollar_followed_by_squote(const char *str, int i, int len_str)
-{
-	// Validar que no nos salgamos del rango
 	if (i >= len_str || len_str < 2)
 		return (FALSE);
-
-	// Saltar espacios pero sin sobrepasar el final de la cadena
 	while (str[i] == ' ' && i < len_str)
 		i++;
-
-	// Verificar que no accedemos a un índice inválido
 	if (i < len_str && str[i] == S_QUOTE && str[len_str - 2] == S_QUOTE)
 		return (TRUE);
-
 	return (FALSE);
 }
-
 
 int	check_dquote_dollar_and_squotes(const char *str)
 {
@@ -47,7 +30,6 @@ int	check_dquote_dollar_and_squotes(const char *str)
 
 	i = 0;
 	len_str = (int)ft_strlen(str);
-
 	while (str[i] != '\0')
 	{
 		if (str[i] == DOLLAR_SIGN)

@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/07 17:22:22 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/07 19:19:31 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,6 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_PARSER)/parser_utils.c \
 		$(SRC_PARSER)/parser_input.c \
 		$(SRC_PARSER)/parser_handle_not_expand.c \
-		$(SRC_PARSER)/parser_borrador.c \
 		$(SRC_EXPAND)/expand_env.c \
 		$(SRC_EXPAND)/expand_merge.c \
 		$(SRC_EXPAND)/expand_split.c \
