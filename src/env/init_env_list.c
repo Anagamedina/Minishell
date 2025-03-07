@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 17:21:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 13:43:32 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:42:59 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int split_key_value(t_env *new_env, char *key_value_variable)
 		return (FALSE);
 	}
 	new_env->key = ft_strdup(split_var[0]);
-	if (!new_env->key) {
+	if (!new_env->key)
+	{
 		free_string_matrix(split_var);
 		return (FALSE);
 	}
@@ -69,7 +70,8 @@ static int split_key_value(t_env *new_env, char *key_value_variable)
 	if (split_var[1] != NULL)
 	{
 		new_env->value = ft_strdup(split_var[1]);
-		if (!new_env->value) {
+		if (!new_env->value)
+		{
 			free(new_env->key);
 			free_string_matrix(split_var);
 			return (FALSE);
@@ -78,7 +80,8 @@ static int split_key_value(t_env *new_env, char *key_value_variable)
 	else
 	{
 		new_env->value = ft_strdup("");
-		if (!new_env->value) {
+		if (!new_env->value)
+		{
 			free(new_env->key);
 			free_string_matrix(split_var);
 			return (FALSE);

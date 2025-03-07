@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:45:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/06 11:42:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:14:56 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
 	cmd = process_command_token(token, paths, cmd_id);
 	if (!cmd)
 	{
-		// free_cmd_list (cmd_list);
-		 free_command(cmd);
+		 // free_command(cmd);
 		return ;
 	}
 	new_node = ft_lstnew(cmd);
@@ -54,7 +53,6 @@ void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
 	if (!new_node)
 	{
 		free_command(cmd);
-		// free_cmd_list(cmd_list);
 		return ;
 	}
 	ft_lstadd_back(cmd_list, new_node);

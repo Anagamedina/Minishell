@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 02:06:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:41:37 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,49 +112,6 @@ int	cd_change_directory(char *new_path, t_mini *mini)
 	free(new_pwd);
 	return (0);
 }
-/*static int	cd_change_directory(char *new_path, t_mini *mini)
-{
-	char	*new_pwd;
-	char	*old_pwd;
-	char	*tmp_old_pwd;
-
-	old_pwd = getcwd(NULL, 0);
-	if (!old_pwd)
-	{
-		old_pwd = get_variable_in_env_list(mini->env, "PWD");
-		if (old_pwd)
-		{
-			tmp_old_pwd = ft_strdup(old_pwd);
-			if (!tmp_old_pwd)
-				return (1);
-			old_pwd = ft_strdup(tmp_old_pwd);
-		}
-		else
-		{
-			ft_putendl_fd("cd: error: cannot determine current directory", 2);
-			return (1);
-		}
-	}
-	if (handle_cd_errors(new_path) == 1)
-	{
-		if (old_pwd)
-			free(old_pwd);
-		return (1);
-	}
-	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
-	free(old_pwd);
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		ft_putstr_fd("cd: error: lost directory, moving to /\n", 2);
-		chdir("/");
-		set_variable_in_env_list(&(mini->env), "PWD", "/");
-		return (0);
-	}
-	set_variable_in_env_list(&(mini->env), "PWD", new_pwd);
-	free(new_pwd);
-	return (0);
-}*/
 
 char	*get_cd_path(t_mini *mini, t_cmd *cmd, int *status)
 {
@@ -193,35 +150,3 @@ int	ft_cd(t_mini *mini, t_cmd *cmd)
 	free(new_path);
 	return (status);
 }
-
-/*int	ft_cd(t_mini *mini, t_cmd *cmd)
-{
-	char	*new_path;
-	int		is_a_tilde;
-	int		status;
-
-	new_path = NULL;
-	is_a_tilde = 0;
-	status = 0;
-	if (!cmd->cmd_args[1])
-		status = cd_without_args(mini->env, &new_path);
-	else if (ft_strcmp(cmd->cmd_args[1], "-") == 0 && !cmd->cmd_args[2])
-		status = cd_with_dash(mini->env, &new_path, is_a_tilde);
-	else if (ft_strcmp(cmd->cmd_args[1], "~") == 0 && !cmd->cmd_args[2])
-		status = cd_with_dash(mini->env, &new_path, 2);
-	else
-	{
-		new_path = ft_strdup(cmd->cmd_args[1]);
-		if (!new_path)
-			return (1);
-	}
-	if (status == 1 || !new_path || new_path[0] == '\0')
-	{
-		ft_putstr_fd("Error: cd: invalid path\n", 2);
-		free(new_path);
-		return (1);
-	}
-	status = cd_change_directory(new_path, mini);
-	free(new_path);
-	return (status);
-}*/

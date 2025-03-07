@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:02:07 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 01:48:49 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 11:58:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ static char	*ft_new_str(const char *s, int start, int end)
 	int		i;
 	char	*str;
 
-	i = 0;
-	str = NULL;
-	str = malloc((end - start + 1) * sizeof(char));
+	str = malloc(sizeof(char) * (end - start + 1));
 	if (!str)
 		return (NULL);
+	i = 0;
 	while (start < end)
 	{
 		str[i] = s[start];
@@ -58,20 +57,19 @@ static char	*ft_new_str(const char *s, int start, int end)
 	return (str);
 }
 
-static void	*ft_free_split(char **matrix, int count)
+static void	ft_free_split(char **matrix, int count)
 {
 	int	i;
 
 	i = 0;
 	if (!*matrix)
-		return (NULL);
+		return ;
 	while (i < count)
 	{
 		free(matrix[i]);
 		i++;
 	}
 	free(matrix);
-	return (NULL);
 }
 
 char	**ft_split(const char *s, char c)
@@ -94,7 +92,8 @@ char	**ft_split(const char *s, char c)
 			new_matrix[j] = ft_new_str(s, index_substr, i);
 			if (!(new_matrix[j]))
 			{
-				return (ft_free_split(new_matrix, j));
+				ft_free_split(new_matrix, j);
+				return (NULL);
 			}
 			index_substr = -1;
 			j++;
