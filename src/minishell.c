@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 14:32:08 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:03:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (ft_strlen(input) == 0)
 		{
+			free(input);
 			continue;
 		}
 		if (minishell->tokens)
@@ -48,6 +49,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!minishell->tokens || !validate_syntax(minishell->tokens) ||
 		!validate_and_update_words_positions(minishell))
 		{
+			// free_tokens_list(&minishell->tokens);
+			free(input);
 			continue;
 		}
 		update_words_in_tokens(minishell);
@@ -71,6 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			printf("bash: command not found\n");
 			free_cmd_list(&minishell->exec->first_cmd);
+			free(input);
 			continue ;
 		}
 		add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);

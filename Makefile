@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/07 17:09:10 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/07 17:22:22 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_TOKENIZE)/token_utils_word_count.c \
 		$(SRC_CMD)/cmd_init.c \
 		$(SRC_CMD)/cmd_args.c \
+		$(SRC_CMD)/cmd_list.c \
 		$(SRC_CMD)/cmd_errors.c \
 		$(SRC_CMD)/cmd_init_utils.c \
 		$(SRC_CMD)/print_cmd.c \
