@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 12:16:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:14:23 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 		if (((t_tokens *)token_list->content)->type_token == CMD_EXTERNAL \
 			|| ((t_tokens *)token_list->content)->type_token == BUILTINS)
 		{
-			add_command_to_list(&commands_list, (t_tokens *)token_list->content, paths, &cmd_id);
+			add_command_to_list(&commands_list, \
+					(t_tokens *)token_list->content, paths, &cmd_id);
 		}
 		else if (commands_list)
-			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), token_list);
+			add_redirection ((t_cmd *)(ft_lstlast(commands_list)->content), \
+					token_list);
 		token_list = token_list->next;
 	}
 	if (commands_list)
@@ -131,7 +133,6 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
 		{
 			cmd_node = commands_list;
-			//while (cmd_node && ((cmd = (t_cmd *)cmd_node->content)))
 			while (cmd_node)
 			{
 				cmd = (t_cmd *) cmd_node->content;

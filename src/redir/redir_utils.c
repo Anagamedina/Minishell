@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/06 19:21:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:20:26 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,8 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
-
 int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
-	// if (cmd->output_fd != STDIN_FILENO)
-	// 	close(cmd->output_fd);
-	// Solo cerramos el fd si es válido (mayor o igual a 0)
 	if (cmd->output_fd >= 0 && cmd->output_fd != STDOUT_FILENO)
 		close(cmd->output_fd);
 	cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
@@ -42,4 +38,19 @@ int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 		return (FALSE);
 	}
 	return (TRUE);
+}
+
+char	*generate_heredoc_filename(int nbr_heredoc)
+{
+	char	*num_str;
+	char	*tmp_name;
+
+	num_str = ft_itoa(nbr_heredoc);
+	if (!num_str)
+		return (NULL);
+	tmp_name = ft_strjoin("/tmp/heredoc", num_str);
+	free(num_str);
+	if (!tmp_name)
+		return (NULL);
+	return (tmp_name);
 }

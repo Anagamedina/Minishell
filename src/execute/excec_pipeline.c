@@ -6,10 +6,9 @@
 /*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/06 19:02:19 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:26:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/minishell.h"
 
@@ -43,7 +42,7 @@ void	wait_children(t_mini *mini)
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 {
-	heredoc(curr_cmd); // ✅ heredoc()
+	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
 		if (curr_cmd->input_fd != STDIN_FILENO)
@@ -60,23 +59,6 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini)
 	}
 	execute_builtin_or_external(curr_cmd, mini);
 }
-
-/*void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
-{
-	if (curr_cmd->input_fd != STDIN_FILENO)
-		close(curr_cmd->input_fd);
-	if (curr_cmd->output_fd != STDOUT_FILENO)
-		close(curr_cmd->output_fd);
-	if (!curr_cmd->last_cmd)
-	{
-		close(pipe_fd[1]);
-		*input_fd = pipe_fd[0];
-	}
-	else
-	{
-			close(pipe_fd[0]);
-	}
-}*/
 
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
@@ -97,15 +79,15 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 }
 
-
-void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd)
+void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
+		int pipe_fd[2], int *input_fd)
 {
 	pid_t	pid;
+
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("Error creando proceso hijo");
-		//añadido ahora
 		free_mini(mini);
 		exit(EXIT_FAILURE);
 	}

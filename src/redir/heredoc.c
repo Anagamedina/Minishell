@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 14:10:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:55:48 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,32 +57,11 @@ char	*expand_variables(char *line)
 	return (expanded_line);
 }
 
-char	*generate_heredoc_filename(int nbr_heredoc)
-{
-	char	*num_str;
-	char	*tmp_name;
-
-	num_str = ft_itoa(nbr_heredoc);
-	if (!num_str)
-		return (NULL);
-	tmp_name = ft_strjoin("/tmp/heredoc", num_str);
-	free(num_str);
-	if (!tmp_name)
-		return (NULL);
-	return (tmp_name);
-}
-
 int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 {
 	char	*line;
 	char	*expand_line;
 
-	// if (setup_signals(HERE_DOC) == 1)
-	// {
-	// 	close(fd_tmp);
-	// 	return (130);
-	// }
-	// // signal(SIGINT, handle_signal_heredoc);
 	setup_signals(HERE_DOC);
 	line = readline("> ");
 	while (line && ft_strcmp(line, delimiter) != 0)
@@ -111,36 +90,6 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	return (0);
 }
 
-
-
-/*int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
-{
-	int		fd_tmp;
-	char	*tmp_name;
-
-	tmp_name = generate_heredoc_filename(nbr_heredoc);
-	if (!tmp_name)
-		return (-1);
-	fd_tmp = open_file(tmp_name, HEREDOC);
-	if (fd_tmp == -1)
-	{
-		free(tmp_name);
-		return (-1);
-	}
-	setup_signals(HERE_DOC);
-    write_heredoc_content(fd_tmp, redir->filename, expand_vars);
-    // close(fd_tmp);
-	close(fd_tmp);
-	free(redir->filename);
-	redir->filename = ft_strdup(tmp_name);
-	free(tmp_name);
-
-	// if (isatty(STDIN_FILENO) == 0)
-	// 	exit(130);
-	return (0);
-}
-*/
-
 int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
@@ -155,15 +104,12 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 		free(tmp_name);
 		return (-1);
 	}
-
 	setup_signals(HERE_DOC);
-	// signal(SIGINT, handle_signal_heredoc); // Manejo de señales antes de escribir
 	write_heredoc_content(fd_tmp, redir->filename, expand_vars);
 	close(fd_tmp);
 	free(redir->filename);
 	redir->filename = ft_strdup(tmp_name);
 	free(tmp_name);
-
 	return (0);
 }
 
