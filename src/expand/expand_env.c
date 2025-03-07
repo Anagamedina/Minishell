@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 19:53:36 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:35:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ char	*replace_dollar_variable_skip_s_quote(char *token, t_list *env_list)
 		{
 			i++;
 			var_name = extract_var_name_expand(token, &i);
+			//TODO: posible leak en esta funcion
 			if (!append_variable_value(&result, env_list, var_name))
 			{
 				return (free(result), NULL);
