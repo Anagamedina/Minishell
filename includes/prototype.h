@@ -232,7 +232,6 @@ char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_
 
 //************** INIT_COMMAND.C ********/
 
-int			is_type_of_operator(t_tokens *token);
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);

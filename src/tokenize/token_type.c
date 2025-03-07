@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:32:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:48:36 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	set_token_type(char *str)
  * @return TRUE or FALSE
  */
 
+/*
 int	is_type_of_operator(t_tokens *token)
 {
 	return (token->type_token == PIPE || \
@@ -49,6 +50,7 @@ int	is_type_of_operator(t_tokens *token)
 		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND || token->type_token == HEREDOC);
 }
+*/
 
 int	is_builtin_or_external(t_tokens *token)
 {
