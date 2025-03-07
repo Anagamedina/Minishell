@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 00:44:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:52:32 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	builtin_exit(t_cmd *cmd, t_mini *mini)
 	}
 	else
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		ft_putstr_fd("minishell: exit: too many arguments", 2);
 	}
 	mini->exit_status = 1;
 	return (1);
