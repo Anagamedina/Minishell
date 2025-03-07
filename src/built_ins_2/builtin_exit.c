@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:27:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:44:57 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(cmd->cmd_args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		cleanup_and_exit(mini, 255);
+		// cleanup_and_exit(mini, 255);
+		cleanup_and_exit(mini, 2);
 	}
 	tmp_status = ft_atoll(cmd->cmd_args[1]);
 	mini->exit_status = (unsigned char) tmp_status;

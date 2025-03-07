@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 16:20:26 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:40:15 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 	cmd->output_fd = open_file(curr_redir->filename, REDIR_OUT);
 	if (cmd->output_fd == -1)
 	{
-		perror("Error abriendo archivo de SALIDA");
 		return (FALSE);
 	}
 	return (TRUE);

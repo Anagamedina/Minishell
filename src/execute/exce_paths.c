@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exce_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:12:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 18:18:33 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:13:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,9 @@ char	**get_path(char **env)
 		paths = ft_split(path_var, ':');
 		free(path_var);
 		if (!paths)
-		{
-			perror("Error: No se pudo dividir PATH en subrutas");
 			return (NULL);
-		}
 	}
+	else
+		return (NULL);
 	return (paths);
 }

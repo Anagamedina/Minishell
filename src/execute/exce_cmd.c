@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 18:59:54 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:57:01 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,15 @@ int	redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 		return (TRUE);
 	if (cmd->output_fd == -1)
 	{
-		write(2, "Error: Archivo no válido para redirección\n", 42);
 		return (FALSE);
 	}
 	*saved_stdout = dup(STDOUT_FILENO);
 	if (*saved_stdout == -1)
 	{
-		write(2, "Error guardando stdout\n", 23);
 		return (FALSE);
 	}
 	if (dup2(cmd->output_fd, STDOUT_FILENO) == -1)
 	{
-		write(2, "Error redirigiendo salida\n", 26);
 		return (FALSE);
 	}
 	close(cmd->output_fd);

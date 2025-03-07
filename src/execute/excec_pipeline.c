@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excec_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/07 16:26:17 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:57:38 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 		curr_cmd->has_pipe = 1;
 		if (pipe(pipe_fd) == -1)
 		{
-			perror("Error creando pipe");
 			exit(EXIT_FAILURE);
 		}
 		curr_cmd->output_fd = pipe_fd[1];
@@ -87,7 +86,6 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	pid = fork();
 	if (pid < 0)
 	{
-		perror("Error creando proceso hijo");
 		free_mini(mini);
 		exit(EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 23:12:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:24:58 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		if (minishell->tokens)
 			free_tokens_list(&minishell->tokens);
 		minishell->tokens = generate_token_list(input);
-		if (!minishell->tokens || !validate_syntax(minishell->tokens) ||
+		if (!minishell->tokens || !validate_syntax(minishell->tokens) || \
 		!validate_and_update_words_positions(minishell))
 		{
 			// free_tokens_list(&minishell->tokens);
@@ -76,9 +76,12 @@ int	main(int argc, char **argv, char **envp)
 		minishell->exec = init_exec(minishell->env);
 		if (!minishell->exec)
 		{
-			perror("Error: init exec.\n");
-			free_mini(minishell);
-			exit(1);
+			// perror("Error: init exec.\n");
+			ft_putendl_fd("Error: command not found", 2);
+			// free_mini(minishell);
+			free(input);
+			// exit(1);
+			continue ;
 		}
 		if (minishell->exec->first_cmd)
 			free_cmd_list(&minishell->exec->first_cmd);

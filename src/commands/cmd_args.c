@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:30:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 23:13:33 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:56:00 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	assign_cmd_args(t_cmd **cmd, t_list *token_list)
 			(*cmd)->cmd_args[j] = ft_strdup(token->str);
 			if (!(*cmd)->cmd_args[j])
 			{
-				perror("Error al duplicar argumento");
 				return ;
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 19:36:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:44:13 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	check_file(t_tokens *curr_next)
 	{
 		write(2, "bash: ", 6);
 		write(2, curr_next->str, ft_strlen(curr_next->str));
-		write(2, ": Permission denied\n", 20);
+		write(2, ": No such file or directory\n", 28);
 	}
 	else
 		close(fd);
