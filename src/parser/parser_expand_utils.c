@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:12:21 by anamedin          #+#    #+#             */
-/*   Updated: 2025/02/22 18:12:34 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:28:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ char	*append_result(char *result, char *to_append)
 {
 	char	*updated;
 
+	if (!result)
+		result = ft_strdup("");
+	if (!result || !to_append)
+		return (NULL);
 	updated = ft_strjoin(result, to_append);
 	free(result);
 	return (updated);
@@ -58,6 +62,7 @@ char	*append_non_dollar_char(char *result, char c)
 {
 	char	*tmp;
 
+	tmp = NULL;
 	tmp = ft_substr(&c, 0, 1);
 	if (!tmp)
 		return (NULL);

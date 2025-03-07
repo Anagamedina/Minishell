@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 21:00:33 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:35:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,81 +34,80 @@ char	*find_value_in_env(t_list *env_list, char *var_name_token)
 	return (NULL);
 }
 
+static char	*extract_var_name_expand(char *token, size_t *i)
+{
+	size_t	start;
+	char	*var_name;
 
-char	*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, \
-t_list *env_list)
+	start = *i;
+	while (token[*i] && token[*i] != SPACE && token[*i] != S_QUOTE)
+		(*i)++;
+	var_name = ft_substr(token, start, *i - start);
+	return (var_name);
+}
+
+static int	append_variable_value(char **result, t_list *env_lst, char *var_na)
+{
+	char	*var_value;
+	char	*tmp;
+
+	if (!var_na)
+	{
+		free(*result);
+		return (0);
+	}
+	var_value = find_value_in_env(env_lst, var_na);
+	free(var_na);
+	tmp = *result;
+	if (var_value)
+	{
+		*result = ft_strjoin(*result, var_value);
+		free(var_value);
+	}
+	else
+		*result = ft_strjoin(*result, "");
+	free(tmp);
+	if (!*result)
+		return (0);
+	return (1);
+}
+
+static int	append_char_to_result(char **result, char c)
+{
+	char	*tmp;
+
+	tmp = *result;
+	*result = ft_strjoin_char(*result, c);
+	free(tmp);
+	return (*result != NULL);
+}
+
+char	*replace_dollar_variable_skip_s_quote(char *token, t_list *env_list)
 {
 	char	*result;
 	char	*var_name;
-	char	*var_value;
-	char	*tmp;
 	size_t	i;
-	int		start;
 
-	if (!token_rm_d_quote || !env_list)
+	if (!token || !env_list)
 		return (NULL);
 	result = ft_strdup("");
-	if (result == NULL)
+	if (!result)
 		return (NULL);
 	i = 0;
-	while (token_rm_d_quote[i] != '\0')
+	while (token[i])
 	{
-		if (token_rm_d_quote[i] == DOLLAR_SIGN)
+		if (token[i] == DOLLAR_SIGN)
 		{
-			i ++;
-			start = i;
-			while (token_rm_d_quote[i] != '\0' && token_rm_d_quote[i] \
-			!= SPACE && token_rm_d_quote[i] != S_QUOTE)
-				i ++;
-			var_name = ft_substr(token_rm_d_quote, start, i - start);
-			if (var_name == NULL)
+			i++;
+			var_name = extract_var_name_expand(token, &i);
+			//TODO: posible leak en esta funcion
+			if (!append_variable_value(&result, env_list, var_name))
 			{
-				free(result);
-				return (NULL);
+				return (free(result), NULL);
 			}
-			var_value = find_value_in_env(env_list, var_name);
-			free(var_name);
-			tmp = result;
-			result = ft_strjoin(result, var_value ? var_value : "");
-			free(tmp);
 		}
-		else
-		{
-			tmp = result;
-			result = ft_strjoin_char(result, token_rm_d_quote[i]);
-			free(tmp);
-			i ++;
-		}
+		else if (!append_char_to_result(&result, token[i++]))
+			return (free(result), NULL);
 	}
 	return (result);
 }
-
-
-/*
-static void	replace_dollar_variable(char **split_word, t_list *env_list) {
-	char	*var_name;
-	char	*var_value;
-	int		i;
-
-	i = 0;
-	while ((*split_word)[i] != '\0')
-	{
-		if ((*split_word)[i] == DOLLAR_SIGN)
-		{
-			var_name = ft_strdup(*split_word + 1);
-			if (var_name == NULL)
-				return ;
-			var_value = find_value_in_env(env_list, var_name);
-			free(*split_word);
-			if (var_value != NULL)
-				*split_word = ft_strdup(var_value);
-			else
-				*split_word = ft_strdup("");
-		}
-		else
-			i ++;
-	}
-	free(var_name);
-	free(var_value);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 21:18:44 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:08:35 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 // char		*read_input(void);
 char	*read_input(t_mini *mini);
 void		configure_terminal(void);
-int			check_quotes_line(const char *line);
 void		parser_tokens(t_mini *mini);
 
 //**************BUILTINS-1********/
@@ -63,7 +62,6 @@ t_env		*find_env_var(t_list *env_list, char *key);
 int			set_variable_in_env_list(t_list **env_list, char *key, char *new_value);
 int			env_variable_exists(t_list *env_list, char *key_to_find);
 int			ft_export(t_cmd *curr_cmd, t_mini* mini);
-char		*ft_strjoin_export(const char *s1, char c, const char *s2);
 
 //************ EXPORT_UTILS.C **********/
 
@@ -71,6 +69,9 @@ int			update_env_var_exist(t_list **env_lst, char *name, char *value, int flag);
 int			add_new_env_variable(t_list **env, char *var_name, char *var_value);
 
 //************ BUILTINS_PART_ONE_UTILS.C **********/
+
+char	*get_var_name_append(char *arg);
+char	*get_var_value_append(char *arg);
 char	*ft_strjoin_export(const char *s1, char c, const char *s2);
 //************ MAIN BUILTINS ********/
 int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
@@ -230,7 +231,6 @@ char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_
 
 //************** INIT_COMMAND.C ********/
 
-int			is_type_of_operator(t_tokens *token);
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
 void		print_list_commands(t_list *cmd_list);

@@ -5,12 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/07 23:12:41 by anamedin         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 19:58:03 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 21:31:02 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 18:13:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	handle_exit(t_mini *minishell)
+{
+	int	last_exit_code;
+
+	write(1, "exit\n", 5);
+	last_exit_code = minishell->exit_status;
+	rl_clear_history();
+	free_mini(minishell);
+	exit(last_exit_code);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,31 +41,22 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	char	*input;
 	t_mini	*minishell;
-	int		last_exit_code;
 
 	minishell = init_mini_list(envp);
 	if (!minishell)
 	{
-		perror("Error: init minishell.\n");
+		ft_putendl_fd("Error: init minishell.", 2);
 		return (1);
 	}
 	setup_signals(PARENT);
 	while (1)
 	{
 		input = read_input(minishell);
+		// hanlde Ctrl+D eof
 		if (!input)
-		{
-			write(1, "exit\n", 5);
-			last_exit_code = minishell->exit_status;
-			// rl_clear_history();
-			free_mini(minishell);
-			exit(last_exit_code);
-		}
+			handle_exit(minishell);
 		if (ft_strlen(input) == 0)
-		{
-			free(input);
-			continue;
-		}
+			continue ;
 		if (minishell->tokens)
 			free_tokens_list(&minishell->tokens);
 		minishell->tokens = generate_token_list(input);

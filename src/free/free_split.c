@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 21:54:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 17:08:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:00:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	free_string_matrix(char **matrix_2d)
 	while (matrix_2d[i])
 	{
 		free(matrix_2d[i]);
-		// matrix_2d[i] = NULL;
+		matrix_2d[i] = NULL;
 		i++;
 	}
 	free(matrix_2d);
-	// matrix_2d = NULL;
+	matrix_2d = NULL;
 }
 
 void	free_partial_split(char **out, const int k)
