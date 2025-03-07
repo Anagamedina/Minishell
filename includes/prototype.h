@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/07 21:36:16 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
@@ -49,7 +61,6 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 // char		*read_input(void);
 char	*read_input(t_mini *mini);
 void		configure_terminal(void);
-int			check_quotes_line(const char *line);
 void		parser_tokens(t_mini *mini);
 
 //**************BUILTINS-1********/
