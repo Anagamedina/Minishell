@@ -6,56 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 16:55:48 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:11:21 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static	char	*replace_variable(char *expanded_line, \
-		char *var_name, char *var_value, int i)
-{
-	char	*prefix;
-	char	*new_line;
-
-	prefix = ft_substr(expanded_line, 0, i);
-	new_line = ft_strjoin(prefix, var_value);
-	free(prefix);
-	prefix = ft_strjoin(new_line, &expanded_line[i + ft_strlen(var_name) + 1]);
-	free(new_line);
-	return (prefix);
-}
-
-char	*expand_variables(char *line)
-{
-	char	*expanded_line;
-	char	*var_name;
-	char	*var_value;
-	char	*new_line;
-	int		i;
-
-	i = 0;
-	expanded_line = ft_strdup(line);
-	while (expanded_line[i])
-	{
-		if (expanded_line[i] == '$' && (ft_isalnum(expanded_line[i + 1]) || \
-					expanded_line[i + 1] == '_'))
-		{
-			var_name = extract_var_name(&expanded_line[i + 1]);
-			var_value = getenv(var_name);
-			if (var_value)
-			{
-				new_line = replace_variable(expanded_line, \
-						var_name, var_value, i);
-				free(expanded_line);
-				expanded_line = new_line;
-			}
-			free(var_name);
-		}
-		i++;
-	}
-	return (expanded_line);
-}
 
 int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 {
@@ -67,9 +22,7 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	while (line && ft_strcmp(line, delimiter) != 0)
 	{
 		if (expand_vars)
-		{
 			expand_line = expand_variables(line);
-		}
 		else
 			expand_line = ft_strdup(line);
 		if (expand_line)

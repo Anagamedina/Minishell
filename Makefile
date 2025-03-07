@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/07 16:46:00 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/07 17:09:10 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_REDIR)/redir_init.c \
 		$(SRC_REDIR)/redir_utils.c \
 		$(SRC_REDIR)/heredoc.c \
+		$(SRC_REDIR)/redir_expand.c \
 		$(SRC_FREE)/free_cmd.c \
 		$(SRC_FREE)/free_env.c \
 		$(SRC_FREE)/free_exec.c \
