@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: catalinab <catalinab@student.1337.ma>      +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/07 12:27:45 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:25:58 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handle_signal_heredoc(int sig)
 	{
 		write(1, "\n", 1);
 		close(STDIN_FILENO);
-		// exit(130); // Finaliza el proceso del heredoc
 	}
 }
 
@@ -33,7 +32,6 @@ void handle_signal_parent(int sig)
 	}
 }
 
-/* 📌 Manejar señales en los procesos hijos */
 void handle_signal_child(int sig)
 {
 	if (sig == SIGINT) // Ctrl+C en un comando ejecutándose
@@ -54,7 +52,6 @@ int setup_here_doc_signals(void)
 }
 
 
-/* 📌 Configurar señales para el shell */
 int setup_parent_signals(void)
 {
 	int	tmp = configure_signal_handler(SIGINT, handle_signal_parent);
