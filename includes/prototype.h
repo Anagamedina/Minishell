@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 20:25:56 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:01:51 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int			ft_unset(t_list **env_list, t_cmd *cmd);
 //************ BUILTIN_EXIT.c ************/
 int			builtin_exit(t_cmd *cmd, t_mini *mini);
 long long	ft_atoll(const char *str);
-void		error_exit(t_mini *mini);
 void		cleanup_and_exit(t_mini *mini, int status);
 
 //************ INIT_STRUCTUC MINISHELL ********/
