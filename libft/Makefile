@@ -6,7 +6,7 @@
 #    By:  dasalaza < dasalaza@student.42barcel>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/20 18:38:08 by anamedin          #+#    #+#              #
-#    Updated: 2025/01/30 16:50:38 by dasalaza         ###   ########.fr        #
+#    Updated: 2025/03/08 19:45:17 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ OBJS = $(SRCS:.c=.o)
 
 OBJS_BONUS = $(SRC_BONUS:.c=.o)
 
-#Regla implícita
 all: $(NAME)
 
 $(NAME): $(OBJS)
