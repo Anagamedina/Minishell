@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/08 01:09:18 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:16:02 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ char	*handle_unclosed_quotes(char *input, t_mini *mini)
 		if (ft_strlen(temp) == 0)
 		{
 			free(temp);
-			// free(input);
-			write(2, "\n", 1);
 			continue ;
 		}
 		input = concatenate_input(input, temp);

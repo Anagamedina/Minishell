@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_expand_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:12:21 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 20:28:11 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:07:24 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ char	*append_non_dollar_char(char *result, char c)
 	char	*tmp;
 
 	tmp = NULL;
-	tmp = ft_substr(&c, 0, 1);
+	tmp = malloc(2);
+	tmp[0] = c;
+	tmp[1] = '\0';
 	if (!tmp)
 		return (NULL);
 	result = append_result(result, tmp);
