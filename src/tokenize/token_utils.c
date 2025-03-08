@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/05 23:17:34 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:29:52 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_list	*convert_tokens_to_list(char **tokens)
 		if (!node_to_add)
 		{
 			free(curr_token);
-			ft_lstclear(&token_list, free);
+			ft_lstclear(&token_list, free_tokens_void);
 			return (NULL);
 		}
 		ft_lstadd_back(&token_list, node_to_add);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 11:56:02 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 23:14:34 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:25:32 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ static void	process_dollar_with_quotes(t_tokens *token, t_list *env_list)
 	char	*res;
 
 	tmp = remove_quotes_str(token->str, D_QUOTE);
+	free(token->str);
 	token->str = ft_strdup(tmp);
+	free(tmp);
 	res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+	free(token->str);
 	token->str = ft_strdup(res);
 	free(res);
 }

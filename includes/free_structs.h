@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:21:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 11:07:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:28:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // free_tokens.c
 void	free_tokens_list(t_list **tokens);
+void	free_tokens_void(void *content);
 
 //	free_cmd.c
 void 		free_cmd_list(t_list **cmd_list);
