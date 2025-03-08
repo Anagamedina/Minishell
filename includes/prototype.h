@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 23:08:35 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:21:29 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,9 @@ int	check_consecutive_operators(t_list *token_list);
 int			setup_signals(int mode);
 int			configure_signal_handler(int signal, void (*handler)(int));
 
-
+void	handle_exit(t_mini *minishell);
+int		handle_input(char *input, t_mini *minishell);
+void	miniloop(t_mini *minishell);
 void	handle_special_cases(t_tokens *token, t_list *env_list, \
 		t_tokens *next_token);
 void	remove_and_replace_quotes(t_tokens *token, char quote_type);

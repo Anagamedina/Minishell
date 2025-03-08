@@ -1,7 +1,6 @@
 
 #include "../../includes/minishell.h"
 
-/* 📌 Configurar un manejador de señal */
 int configure_signal_handler(int signal, void (*handler)(int))
 {
 	struct sigaction sa;
@@ -15,4 +14,14 @@ int configure_signal_handler(int signal, void (*handler)(int))
 		return (-1);
 	}
 	return (0);
+}
+void	handle_exit(t_mini *minishell)
+{
+	int	last_exit_code;
+
+	write(1, "exit\n", 5);
+	last_exit_code = minishell->exit_status;
+	rl_clear_history();
+	free_mini(minishell);
+	exit(last_exit_code);
 }
