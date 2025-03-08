@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 17:53:32 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:31:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,25 @@ typedef enum e_type_token
 	PIPE,
 	HEREDOC,
 	FILENAME,
-}					t_type_token;
+}	t_type_token;
 
 typedef struct s_tokens
 {
-    char            *str;
-    t_type_token	type_token;
-    size_t          length;
+	char			*str;
+	t_type_token	type_token;
+	size_t			length;
 	int				is_valid_cmd;
 	int				id_token;
-    struct s_tokens	*next;
-    struct s_tokens	*prev;
-}                   t_tokens;
+	struct s_tokens	*next;
+	struct s_tokens	*prev;
+}	t_tokens;
 
 typedef struct s_env
 {
-	char            *key;
-	char            *value;
-	// char            *full_var;
-	struct s_env    *next;
-}				t_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_split_data
 {
@@ -75,11 +74,11 @@ typedef struct s_split_data
 	char	*str;
 	int		start;
 	int		end;
-	int		k;       // index of current token
+	int		k;
 	int		wc;
-}				t_split_data;
+}	t_split_data;
 
-typedef struct	s_redir
+typedef struct s_redir
 {
 	int				fd_input;
 	int				fd_output;
@@ -87,14 +86,14 @@ typedef struct	s_redir
 	char			*filename;
 	char			*delimiter;
 	struct s_redir	*next;
-} 				t_redir;
+}	t_redir;
 
 typedef struct s_cmd
 {
 	char			*cmd;
 	char			**cmd_args;
 	int				count_args;
-	char 			*cmd_path;
+	char			*cmd_path;
 	int				cmd_id;
 	int				is_builtin;
 	int				is_external;
@@ -104,28 +103,28 @@ typedef struct s_cmd
 	int				last_cmd;
 	t_list			*redir_list;
 	struct s_cmd	*next;
-}				t_cmd;
+}	t_cmd;
 
 typedef struct s_exec
 {
 	t_list			*first_cmd;
-	char 			**env_vars;
+	char			**env_vars;
 	char			**paths;
 	int				pipe_input_fd;
 	int				pipe_output_fd;
-	int             cmd_count;
+	int				cmd_count;
 	int				is_running;
-}				t_exec;
+}	t_exec;
 
 typedef struct s_mini
 {
-	int             bash_lvl;
-	int             chars_in_line;
-	t_list          *env;
-	char			**envp_to_array;
-	t_list          *tokens;
-	t_exec			*exec;
-	int             exit_status;
-}				t_mini;
+	int			bash_lvl;
+	int			chars_in_line;
+	t_list		*env;
+	char		**envp_to_array;
+	t_list		*tokens;
+	t_exec		*exec;
+	int			exit_status;
+}	t_mini;
 
 #endif

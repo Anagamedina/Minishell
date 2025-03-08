@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:21:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 13:28:42 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:15:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	free_tokens_list(t_list **tokens);
 void	free_tokens_void(void *content);
 
 //	free_cmd.c
-void 		free_cmd_list(t_list **cmd_list);
-void		free_command(t_cmd *cmd);
-t_cmd		*handle_cmd_error(t_cmd *new);
+void	free_cmd_list(t_list **cmd_list);
+void	free_command(t_cmd *cmd);
+t_cmd	*handle_cmd_error(t_cmd *new);
 
 //	free_redir.c
 void	free_redir(void *content);
-void free_redir_list(t_list **redir_list);
+void	free_redir_list(t_list **redir_list);
 void	free_env_list(t_list **env);
 void	free_env_node(t_env *env);
 void	free_env_array(char **env_array, int allocated);
