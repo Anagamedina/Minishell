@@ -6,18 +6,11 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:02:07 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 11:58:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:08:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static void	ft_init_variables(size_t *i, int *count_words, int *index_substr)
-{
-	*i = 0;
-	*count_words = 0;
-	*index_substr = -1;
-}
 
 static int	ft_wcount(const char *s, char c)
 {
@@ -32,7 +25,7 @@ static int	ft_wcount(const char *s, char c)
 			ind++;
 		if (s[ind] != c && s[ind] != '\0')
 			num_words++;
-		while (s[ind] != c && s[ind] != '\0')
+		while (s[ind] != '\0' && s[ind] != c)
 			ind++;
 	}
 	return (num_words);
@@ -72,31 +65,41 @@ static void	ft_free_split(char **matrix, int count)
 	free(matrix);
 }
 
+static int	ft_add_word(char **matrix, const char *s, int *index, int *j)
+{
+	matrix[*j] = ft_new_str(s, index[0], index[1]);
+	if (!matrix[*j])
+	{
+		ft_free_split(matrix, *j);
+		return (0);
+	}
+	index[0] = -1;
+	(*j)++;
+	return (1);
+}
+
 char	**ft_split(const char *s, char c)
 {
-	int		index_substr;
+	int		index_substr[2];
 	char	**new_matrix;
 	size_t	i;
 	int		j;
 
-	ft_init_variables(&i, &j, &index_substr);
+	ft_init_variables(&i, &j, &index_substr[0]);
 	new_matrix = (char **) ft_calloc (ft_wcount(s, c) + 1, sizeof(char *));
 	if (!new_matrix)
 		return (NULL);
 	while (i <= ft_strlen(s))
 	{
-		if (s[i] != c && index_substr < 0)
-			index_substr = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index_substr >= 0)
+		if (s[i] != c && index_substr[0] < 0)
+			index_substr[0] = (int) i;
+		else if ((s[i] == c || i == ft_strlen(s)) && index_substr[0] >= 0)
 		{
-			new_matrix[j] = ft_new_str(s, index_substr, i);
-			if (!(new_matrix[j]))
+			index_substr[1] = (int) i;
+			if (!ft_add_word(new_matrix, s, index_substr, &j))
 			{
-				ft_free_split(new_matrix, j);
 				return (NULL);
 			}
-			index_substr = -1;
-			j++;
 		}
 		i++;
 	}
