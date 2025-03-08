@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:30:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:27:00 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ static int	add_env_node(t_list **env_list, char *env_var)
 	new_env = create_env_node(env_var);
 	if (!new_env)
 	{
-		ft_lstclear(env_list, (void (*)(void *))free_env_node);
+		// ft_lstclear(env_list, (void (*)(void *))free_env_node);
 		return (FALSE);
 	}
 	new_node = ft_lstnew(new_env);
 	if (!new_node)
 	{
 		free_env_node(new_env);
-		ft_lstclear(env_list, (void (*)(void *))free_env_node);
+		// ft_lstclear(env_list, (void (*)(void *))free_env_node);
 		return (FALSE);
 	}
 	ft_lstadd_back(env_list, new_node);

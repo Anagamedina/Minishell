@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 00:29:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:43:26 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	free_tokens_void(void *content)
 	if (!content)
 		return ;
 	tokens = (t_tokens *)content;
+	if (!tokens)
+	{
+		return ;
+	}
+	
 	if (tokens->str)
 	{
 		free(tokens->str);
@@ -29,28 +34,10 @@ void	free_tokens_void(void *content)
 void	free_tokens_list(t_list **tokens)
 {
 	if (!tokens || !*tokens)
-		return;
-	ft_lstclear(tokens, free_tokens_void);
-	*tokens = NULL;  // ✅ Evita punteros colgantes
-}
-
-/*
-void	free_tokens_list(t_list **tokens)
-{
-	t_list		*tmp;
-	t_tokens	*token;
-
-	if (!tokens || !*tokens)
-		return;
-	while (*tokens)
 	{
-		tmp = (*tokens)->next;
-		token = (t_tokens *)(*tokens)->content;
-		if (token->str)
-			free(token->str);
-		free(token);
-		free(*tokens);
-		*tokens = tmp;
+		return ;
 	}
+	ft_lstclear(tokens, free_tokens_void);
+	*tokens = NULL;
 }
-*/
+

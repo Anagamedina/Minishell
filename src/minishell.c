@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 01:22:48 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:52:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	handle_input(char *input, t_mini *minishell)
 		handle_exit(minishell);
 	if (ft_strlen(input) == 0)
 	{
-		free(input);
+		// free(input);
 		return (1);
 	}
 	return (2);
@@ -27,11 +27,16 @@ int	handle_input(char *input, t_mini *minishell)
 int	tokenize_and_validate(t_mini *minishell, char *input)
 {
 	if (minishell->tokens)
+	{
 		free_tokens_list(&minishell->tokens);
+		minishell->tokens = NULL;	
+	}
 	minishell->tokens = generate_token_list(input);
 	if (!minishell->tokens || !validate_syntax(minishell->tokens) || \
 		!validate_and_update_words_positions(minishell))
 	{
+		free_tokens_list(&minishell->tokens);
+		minishell->tokens = NULL;
 		free(input);
 		return (0);
 	}
@@ -80,9 +85,12 @@ void	miniloop(t_mini *minishell)
 		if (!handle_input(input, minishell))
 			break ;
 		if (!tokenize_and_validate(minishell, input))
+		{
+			// free(input);
 			continue ;
+		}
 		if (!execute_commands_pipeline(minishell))
-			break ;
+			continue ;
 		free(input);
 	}
 }

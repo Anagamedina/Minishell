@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 18:06:30 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/06 12:33:35 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:55:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_exec	*init_exec(t_list *env_list)
 	exec_info->cmd_count = 0;
 	exec_info->paths = get_path(exec_info->env_vars);
 	exec_info->is_running = 1;
-	if (!exec_info->env_vars || !exec_info->paths)
+	if (!exec_info->env_vars )//|| !exec_info->paths)
 	{
 		free_exec(exec_info);
 		return (NULL);
