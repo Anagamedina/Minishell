@@ -261,7 +261,8 @@ char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 t_cmd		*init_command(void);
-void		handle_child(t_cmd *curr_cmd, t_mini *mini);
+// void		handle_child(t_cmd *curr_cmd, t_mini *mini);
+void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 
 //*************redis**************/
 
