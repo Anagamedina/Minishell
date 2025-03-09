@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 04:08:06 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 19:16:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,15 @@ static	void	apply_output_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		if (handle_output_redirection(cmd, curr_redir) == TRUE)
 			*redir_applied = 1;
 	}
+}
+
+
+static	void	apply_append_redirection(t_cmd *cmd, t_redir *curr_redir, \
+		int *redir_applied)
+{
 	if (curr_redir->type == REDIR_APPEND)
 	{
-		if (handle_output_redirection(cmd, curr_redir) == TRUE)
+		if (handle_append_redirection(cmd, curr_redir) == TRUE)
 			*redir_applied = 1;
 	}
 }
@@ -79,9 +85,41 @@ int	apply_redirections(t_cmd *cmd)
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
+
+		// 🔹 Procesar redirecciones de entrada primero
 		apply_input_redirection(cmd, curr_redir, &redirection_applied);
-		apply_output_redirection(cmd, curr_redir, &redirection_applied);
+
+		// 🔹 Primero manejar `>>` para evitar que `>` lo sobrescriba
+		if (curr_redir->type == REDIR_APPEND)
+			apply_append_redirection(cmd, curr_redir, &redirection_applied);
+		else if (curr_redir->type == REDIR_OUT)
+			apply_output_redirection(cmd, curr_redir, &redirection_applied);
+
 		redir_node = redir_node->next;
 	}
 	return (redirection_applied);
 }
+
+
+
+
+/*int	apply_redirections(t_cmd *cmd)
+{
+	t_list	*redir_node;
+	t_redir	*curr_redir;
+	int		redirection_applied;
+
+	redir_node = cmd->redir_list;
+	redirection_applied = 0;
+	while (redir_node)
+	{
+		curr_redir = (t_redir *)redir_node->content;
+		apply_append_redirection(cmd, curr_redir, &redirection_applied);
+		apply_input_redirection(cmd, curr_redir, &redirection_applied);
+		apply_output_redirection(cmd, curr_redir, &redirection_applied);
+
+		redir_node = redir_node->next;
+	}
+	return (redirection_applied);
+}
+*/

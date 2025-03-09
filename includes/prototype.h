@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 16:32:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 19:08:53 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,7 @@ void		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
 int			handle_output_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			handle_input_redirection(t_cmd *cmd, t_redir *curr_redir);
 char		*generate_heredoc_filename(int nbr_heredoc);
+int			handle_append_redirection(t_cmd *cmd, t_redir *curr_redir);
 //*************HEREDOC**************/
 int			heredoc(t_cmd *cmd);
 void		redirect_out(int output_fd);

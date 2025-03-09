@@ -46,8 +46,8 @@ int	pre_executor(t_mini *mini, t_cmd *cmd)
 		mini->exit_status = cases_builtins(mini, cmd);
 		return (TRUE);
 	}
-	if (apply_redirections(cmd) == -1)
-		return (FALSE);
+	// if (apply_redirections(cmd) == -1)
+	// 	return (FALSE);
 	if (!redirect_out_builtin(cmd, &saved_stdout))
 		return (FALSE);
 	mini->exit_status = cases_builtins(mini, cmd);
