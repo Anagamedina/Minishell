@@ -6,27 +6,11 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 14:10:22 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/18 16:12:23 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:35:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-// Created by daruuu on 1/24/25.
-//
 #include "../includes/minishell.h"
-/*
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	if (s1 == NULL || s2 == NULL)
-		return (-1);
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i ++;
-	return ((unsigned char)s1[i] - (unsigned char )s2[i]);
-}
-*/
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -65,4 +49,3 @@ char	*ft_strcpy(char *dest, const char *src)
 	dest[i] = '\0';
 	return (dest);
 }
-

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/08 14:43:14 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:39:24 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	handle_command_not_found(t_cmd *cmd, t_tokens *current_token)
 	write(2, current_token->str, ft_strlen(current_token->str));
 	write(2, ": command not found\n", 20);
 	if (!cmd)
-        return ;
-
+		return ;
 }
 
 t_cmd	*create_new_command(t_tokens *current_token, char **paths)

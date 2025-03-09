@@ -6,13 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/04 20:21:59 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:35:08 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	cases_builtins(t_mini* mini, t_cmd* curr_cmd)
+int	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 {
 	int	exit_status;
 

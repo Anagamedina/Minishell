@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 00:25:19 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:37:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	execute_commands(t_mini *mini)
 			continue ;
 		setup_fds(curr_cmd, pipe_fd, &input_fd);
 		fork_and_execute(curr_cmd, mini, pipe_fd, &input_fd);
-
 		t_list_exec_cmd = t_list_exec_cmd->next;
 	}
 	wait_children(mini);
