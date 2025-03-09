@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 17:11:21 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:13:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 			expand_line = ft_strdup(line);
 		if (expand_line)
 		{
-			write(fd_tmp, expand_line, ft_strlen(expand_line));
+			//write(fd_tmp, expand_line, ft_strlen(expand_line));
+			ft_putendl_fd(expand_line, fd_tmp);
 			write(fd_tmp, "\n", 1);
 			free(expand_line);
 		}

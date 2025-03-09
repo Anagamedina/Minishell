@@ -3,71 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 16:31:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 23:00:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_signal_heredoc(int sig)
+int	restore_signal_to_default(int signal)
 {
-	if (sig == SIGINT) // Si se presiona Ctrl+C
-	{
-		write(1, "\n", 1);
-		close(STDIN_FILENO);
-	}
-}
-
-void handle_signal_parent(int sig)
-{
-	if (sig == SIGINT)		// Ctrl+C en el shell
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();		// Indica que estamos en una nueva línea
-		rl_replace_line("", 0);	// Borra la línea actual de readline
-		rl_redisplay();			// Redibuja el prompt
-	}
-	//Si NO quieres usar una variable global (g_mini),
-	//pasa minishell en setup_signals(), como en el siguiente paso.
-
-}
-
-void handle_signal_child(int sig)
-{
-	if (sig == SIGINT) // Ctrl+C en un comando ejecutándose
-	{
-		write(2, "\n", 1);
-	}
-}
-
-int setup_here_doc_signals(void)
-{
-	int	tmp = configure_signal_handler(SIGINT, handle_signal_heredoc);
-	if (tmp == -1)
-		return (-1);
-	int	tmp1= configure_signal_handler(SIGQUIT, SIG_IGN);
-	if ( tmp1 == -1)
-		return (-1);
-	return (1);
-}
-
-int setup_parent_signals(void)
-{
-	int	tmp = configure_signal_handler(SIGINT, handle_signal_parent);
-	if (tmp == -1)
-		return (-1);
-	int	tmp1= configure_signal_handler(SIGQUIT, SIG_IGN);
-	if ( tmp1 == -1)
-		return (-1);
-	return (1);
-}
-
-int restore_signal_to_default(int signal)
-{
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
@@ -77,8 +24,36 @@ int restore_signal_to_default(int signal)
 	return (0);
 }
 
-/* 📌 Configurar señales para procesos hijos */
-int setup_child_signals(void)
+static int	setup_here_doc_signals(void)
+{
+	int	tmp_ignore;
+	int	tmp_quit;
+
+	tmp_quit = configure_signal_handler(SIGINT, handle_signal_heredoc);
+	if (tmp_quit == -1)
+		return (-1);
+	tmp_ignore = configure_signal_handler(SIGQUIT, SIG_IGN);
+	if (tmp_ignore == -1)
+		return (-1);
+	return (1);
+}
+
+static int	setup_parent_signals(void)
+{
+	int	tmp;
+	int	tmp1;
+
+	tmp = configure_signal_handler(SIGINT, handle_signal_parent);
+	if (tmp == -1)
+		return (-1);
+	tmp1 = configure_signal_handler(SIGQUIT, SIG_IGN);
+	if (tmp1 == -1)
+		return (-1);
+	return (1);
+}
+
+
+static int	setup_child_signals(void)
 {
 	if (configure_signal_handler(SIGINT, handle_signal_child) == -1)
 		return (-1);
@@ -87,8 +62,7 @@ int setup_child_signals(void)
 	return (1);
 }
 
-/* 📌 Llamar a la función correcta según el contexto */
-int setup_signals(int mode)
+int	setup_signals(int mode)
 {
 	if (mode == PARENT)
 		return (setup_parent_signals());
@@ -98,13 +72,3 @@ int setup_signals(int mode)
 		return (setup_here_doc_signals());
 	return (-1);
 }
-
-// static int restore_signal_to_default(int signal)
-// {
-// 	if (signal == SIGQUIT) // Solo restauramos señales que queramos manejar
-// 	{
-// 		if (sigaction(signal, &(struct sigaction){.sa_handler = SIG_DFL, .sa_flags = SA_RESTART}, NULL) == -1)
-// 			return (-1);
-// 	}
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 19:16:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:17:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ int	open_file(char *file, int type)
 	else
 		return (-1);
 	if (fd == -1)
-	{
-		// fprintf(stderr, "Error al abrir '%s': ", file);
-		// perror("");
 		return (-1);
-	}
 	return (fd);
 }
 
@@ -63,7 +59,6 @@ static	void	apply_output_redirection(t_cmd *cmd, t_redir *curr_redir, \
 	}
 }
 
-
 static	void	apply_append_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		int *redir_applied)
 {
@@ -85,23 +80,17 @@ int	apply_redirections(t_cmd *cmd)
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
-
-		// 🔹 Procesar redirecciones de entrada primero
+		// Procesar redirecciones de entrada primero
 		apply_input_redirection(cmd, curr_redir, &redirection_applied);
-
-		// 🔹 Primero manejar `>>` para evitar que `>` lo sobrescriba
+		// Primero manejar `>>` para evitar que `>` lo sobrescriba
 		if (curr_redir->type == REDIR_APPEND)
 			apply_append_redirection(cmd, curr_redir, &redirection_applied);
 		else if (curr_redir->type == REDIR_OUT)
 			apply_output_redirection(cmd, curr_redir, &redirection_applied);
-
 		redir_node = redir_node->next;
 	}
 	return (redirection_applied);
 }
-
-
-
 
 /*int	apply_redirections(t_cmd *cmd)
 {

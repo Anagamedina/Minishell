@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:57:18 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 14:43:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:59:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_command_void(void *content)
 	if (!content)
 		return ;
 	cmd = (t_cmd *)content;
-
 	if (cmd->cmd)
 		free(cmd->cmd);
 	if (cmd->cmd_args)
@@ -27,7 +26,7 @@ void	free_command_void(void *content)
 	if (cmd->cmd_path)
 		free(cmd->cmd_path);
 	if (cmd->redir_list)
-			free_redir_list(&cmd->redir_list);
+		free_redir_list(&cmd->redir_list);
 	free(cmd);
 }
 
@@ -35,7 +34,7 @@ void	free_cmd_list(t_list **cmd_list)
 {
 	if (!*cmd_list)
 		return ;
-	ft_lstclear(cmd_list, (void (*) (void *))free_command_void);
+	ft_lstclear(cmd_list, (void (*)(void *))free_command_void);
 	*cmd_list = NULL;
 }
 

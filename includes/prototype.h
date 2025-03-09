@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 19:08:53 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 23:07:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ void		handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 void		setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 int			check_repeated_redirections(t_list *token_list);
 char		**env_list_to_array(t_list *env_list);
+
 //*************SIGNALS**************/
 int			validate_syntax(t_list *token_list);
 int			validate_pipes_and_separators(t_list *token_list);
@@ -297,12 +298,16 @@ void		print_syntax_error_token(const char *token_str);
 int			validate_and_update_words_positions(t_mini *mini);
 int			check_consecutive_operators(t_list *token_list);
 
-//*************signals.c**************/make r
+//*************signals.c**************/
+
 int			setup_signals(int mode);
-int configure_signal_handler(int signal, void (*handler)(int));
 
+//*************signals_utils.c**************/
 
-//*************utils.c**************/
+int			configure_signal_handler(int signal, void (*handler)(int));
+void		handle_signal_heredoc(int sig);
+void		handle_signal_parent(int sig);
+void		handle_signal_child(int sig);
 
 void		handle_exit(t_mini *minishell);
 int			handle_input(char *input, t_mini *minishell);

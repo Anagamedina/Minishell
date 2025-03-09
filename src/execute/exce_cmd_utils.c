@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 13:38:10 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:52:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,8 @@ void	execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini)
 	{
 		if (!curr_cmd->cmd_path)
 		{
-			// mini->exit_status = 127;
 			exit(127);
-			// return ;
 		}
-		//testear...mini->exit_status = EXIT_FAILURE; return ;
 		if (!mini->envp_to_array)
 			exit(EXIT_FAILURE);
 		execute_external(curr_cmd, mini->envp_to_array);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 16:11:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:54:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	wait_children(t_mini *mini)
 		else if (WIFSIGNALED(status))
 		{
 			signal = WTERMSIG(status);
-			if (signal == SIGINT)  // Ctrl + C
+			if (signal == SIGINT)
 			{
 				mini->exit_status = 130;
 			}
-			else if (signal == SIGQUIT) // Ctrl + backslash
+			else if (signal == SIGQUIT)
 			{
 				mini->exit_status = 131;
 				write(2, "Quit (core dumped)\n", 19);
@@ -63,13 +63,13 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		if (curr_cmd->input_fd != STDIN_FILENO)
 		{
 			redirect_in(curr_cmd->input_fd);
-			if (pipe_fd[1] >= 0) // PROTECCIÓN
+			if (pipe_fd[1] >= 0)
 				close(pipe_fd[1]);
 		}
 		if (curr_cmd->output_fd != STDOUT_FILENO)
 		{
 			redirect_out(curr_cmd->output_fd);
-			if (pipe_fd[0] >= 0) // PROTECCIÓN
+			if (pipe_fd[0] >= 0)
 				close(pipe_fd[0]);
 		}
 	}
@@ -110,6 +110,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 		int pipe_fd[2], int *input_fd)
 {
 	pid_t	pid;
+
 	pid = fork();
 	if (pid < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 11:52:31 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/07 23:15:02 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 22:09:03 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	handle_dollar_case(t_tokens *token, t_list *env_list, \
 	*result = expand_variable(*result, env_list, &token->str[*i], j - *i);
 	*i = j;
 }
-
 
 char	*expand_consecutives_variables(t_tokens *token, t_list *env_list)
 {

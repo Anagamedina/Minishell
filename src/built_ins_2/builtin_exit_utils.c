@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 16:28:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:50:30 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	cleanup_and_exit(t_mini *mini, int status)
 {
 	free_mini(mini);
-	rl_clear_history();  // Evita memory leaks del historial de readline
+	rl_clear_history();
 	exit(status);
 }
 
