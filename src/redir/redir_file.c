@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 23:39:43 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:08:06 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ static	void	apply_input_redirection(t_cmd *cmd, t_redir *curr_redir, \
 static	void	apply_output_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		int *redir_applied)
 {
-	if (curr_redir->type == REDIR_OUT || curr_redir->type == REDIR_APPEND)
+	if (curr_redir->type == REDIR_OUT)
+	{
+		if (handle_output_redirection(cmd, curr_redir) == TRUE)
+			*redir_applied = 1;
+	}
+	if (curr_redir->type == REDIR_APPEND)
 	{
 		if (handle_output_redirection(cmd, curr_redir) == TRUE)
 			*redir_applied = 1;
