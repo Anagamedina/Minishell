@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/09 16:26:58 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
@@ -12,7 +24,7 @@
 
 #include "../../includes/minishell.h"
 
-static int	check_quotes_line(const char *line)
+int	check_quotes_line(const char *line)
 {
 	int	i;
 	int	in_single;
@@ -34,7 +46,7 @@ static int	check_quotes_line(const char *line)
 	return (TRUE);
 }
 
-
+/*
 static void	handle_unexpected_eof(char *input, t_mini *mini)
 {
 	free(input);
@@ -42,7 +54,6 @@ static void	handle_unexpected_eof(char *input, t_mini *mini)
 	free_mini(mini);
 	exit(1);
 }
-
 
 static char	*concatenate_input(char *input, char *temp)
 {
@@ -62,6 +73,8 @@ static char	*concatenate_input(char *input, char *temp)
 	return (result);
 }
 
+*/
+/*
 char	*handle_unclosed_quotes(char *input, t_mini *mini)
 {
 	char	*temp;
@@ -87,14 +100,13 @@ char	*handle_unclosed_quotes(char *input, t_mini *mini)
 		input = new_input; // ✅ Asignamos correctamente la nueva memoria
 	}
 	return (input);
-}
-
+}*/
 
 char	*read_input(t_mini *mini)
 {
 	char	*line;
-	char	*tmp;
 
+	// setup_signals(PARENT);
 	line = readline("minishell> ");
 	if (!line)
 	{
@@ -104,12 +116,14 @@ char	*read_input(t_mini *mini)
 	}
 	if (*line)
 		add_history(line);
+	return (line);
+}
+	/*
 	tmp = handle_unclosed_quotes(line, mini);
 	if (!tmp)
 	{
 		free(line);
 		return (NULL);
 	}
-	return (tmp);
-}
+	*/
 

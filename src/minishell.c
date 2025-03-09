@@ -6,12 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 13:36:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:19:04 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*
 int	handle_input(char *input, t_mini *minishell)
 {
 	if (!input)
@@ -21,7 +22,7 @@ int	handle_input(char *input, t_mini *minishell)
 		return (1);
 	}
 	return (2);
-}
+}*/
 
 int	tokenize_and_validate(t_mini *minishell, char *input)
 {
@@ -77,21 +78,46 @@ int	execute_commands_pipeline(t_mini *minishell)
 	return (1);
 }
 
+static int	validate_input(char *input, t_mini *minishell)
+{
+	if (!check_quotes_line(input))
+	{
+		printf("Error: unclosed quotes detected.\n");
+		minishell->exit_status = 1;
+		return (0);
+	}
+	if (ft_strlen(input) == 0)
+		return (0); // No hacer nada si el input está vacío
+
+	return (1);
+}
+
 void	miniloop(t_mini *minishell)
 {
 	char	*input;
 
+
 	while (1)
 	{
 		input = read_input(minishell);
-		if (!handle_input(input, minishell))
-			break ;
+		if (!input)
+			continue;
+
+		if (!validate_input(input, minishell))
+		{
+			free(input);
+			continue;
+		}
 		if (!tokenize_and_validate(minishell, input))
 		{
+			free(input);
 			continue ;
 		}
 		if (!execute_commands_pipeline(minishell))
+		{
+			free(input);
 			continue ;
+		}
 		free(input);
 	}
 }

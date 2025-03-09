@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/09 15:22:39 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
@@ -25,3 +36,5 @@ void	handle_exit(t_mini *minishell)
 	free_mini(minishell);
 	exit(last_exit_code);
 }
+
+

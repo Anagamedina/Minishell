@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 01:42:09 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:31:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void handle_signal_parent(int sig)
 		rl_replace_line("", 0);	// Borra la línea actual de readline
 		rl_redisplay();			// Redibuja el prompt
 	}
+	//Si NO quieres usar una variable global (g_mini),
+	//pasa minishell en setup_signals(), como en el siguiente paso.
+
 }
 
 void handle_signal_child(int sig)
@@ -51,7 +54,6 @@ int setup_here_doc_signals(void)
 	return (1);
 }
 
-
 int setup_parent_signals(void)
 {
 	int	tmp = configure_signal_handler(SIGINT, handle_signal_parent);
@@ -62,6 +64,7 @@ int setup_parent_signals(void)
 		return (-1);
 	return (1);
 }
+
 int restore_signal_to_default(int signal)
 {
 	struct sigaction sa;

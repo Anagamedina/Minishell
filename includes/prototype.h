@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 22:01:51 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:32:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
 // char		*read_input(void);
+int			check_quotes_line(const char *line);
 char		*read_input(t_mini *mini);
 void		configure_terminal(void);
 void		parser_tokens(t_mini *mini);
@@ -297,7 +298,10 @@ int			check_consecutive_operators(t_list *token_list);
 
 //*************signals.c**************/make r
 int			setup_signals(int mode);
-int			configure_signal_handler(int signal, void (*handler)(int));
+int configure_signal_handler(int signal, void (*handler)(int));
+
+
+//*************utils.c**************/
 
 void		handle_exit(t_mini *minishell);
 int			handle_input(char *input, t_mini *minishell);
