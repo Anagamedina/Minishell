@@ -62,16 +62,6 @@ int setup_parent_signals(void)
 		return (-1);
 	return (1);
 }
-
-// static int restore_signal_to_default(int signal)
-// {
-// 	if (signal == SIGQUIT) // Solo restauramos señales que queramos manejar
-// 	{
-// 		if (sigaction(signal, &(struct sigaction){.sa_handler = SIG_DFL, .sa_flags = SA_RESTART}, NULL) == -1)
-// 			return (-1);
-// 	}
-// 	return (0);
-// }
 int restore_signal_to_default(int signal)
 {
 	struct sigaction sa;
@@ -89,8 +79,7 @@ int setup_child_signals(void)
 {
 	if (configure_signal_handler(SIGINT, handle_signal_child) == -1)
 		return (-1);
-
-	if (restore_signal_to_default(SIGQUIT) == -1) 
+	if (restore_signal_to_default(SIGQUIT) == -1)
 		return (-1);
 	return (1);
 }
@@ -106,3 +95,13 @@ int setup_signals(int mode)
 		return (setup_here_doc_signals());
 	return (-1);
 }
+
+// static int restore_signal_to_default(int signal)
+// {
+// 	if (signal == SIGQUIT) // Solo restauramos señales que queramos manejar
+// 	{
+// 		if (sigaction(signal, &(struct sigaction){.sa_handler = SIG_DFL, .sa_flags = SA_RESTART}, NULL) == -1)
+// 			return (-1);
+// 	}
+// 	return (0);
+// }

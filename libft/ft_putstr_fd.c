@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:38:44 by anamedin          #+#    #+#             */
-/*   Updated: 2024/02/16 18:49:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:14:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ void	ft_putstr_fd(char *s, int fd)
 			i++;
 		}
 	}
-}
-
-void	ft_init_variables(size_t *i, int *count_w, int *index_substr)
-{
-	*i = 0;
-	*count_w = 0;
-	*index_substr = -1;
 }
 
 void	ft_init_variables(size_t *i, int *count_w, int *index_substr)

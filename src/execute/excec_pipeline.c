@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 03:00:47 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:08:00 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,27 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 
 void	wait_children(t_mini *mini)
 {
-	int	status;
+	int		status;
+	int		signal;
 
 	while (waitpid(-1, &status, 0) > 0)
+	{
 		if (WIFEXITED(status))
 			mini->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			signal = WTERMSIG(status);
+			if (signal == SIGINT)  // Ctrl + C
+			{
+				mini->exit_status = 130;
+			}
+			else if (signal == SIGQUIT) // Ctrl + backslash
+			{
+				mini->exit_status = 131;
+				write(2, "Quit (core dumped)\n", 19);
+			}
+		}
+	}
 }
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
@@ -49,7 +65,6 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 			redirect_in(curr_cmd->input_fd);
 			if (pipe_fd[1] >= 0) // PROTECCIÓN
 				close(pipe_fd[1]);
-
 		}
 		if (curr_cmd->output_fd != STDOUT_FILENO)
 		{
@@ -71,8 +86,6 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		close(pipe_fd[1]);
 	execute_builtin_or_external(curr_cmd, mini);
 }
-
-
 
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
