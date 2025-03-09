@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/08 14:45:15 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:03:37 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,13 @@ char	*read_input(t_mini *mini)
 	if (!line)
 	{
 		write(1, "exit\n", 5);
-		// free_mini(mini); // ✅ Liberamos `mini` antes de salir
+		free_mini(mini); //? 
 		exit(0);
 	}
 	if (*line)
 		add_history(line);
-
 	tmp = handle_unclosed_quotes(line, mini);
-	if (!tmp) // Si la función retorna NULL, liberamos `line`
+	if (!tmp)
 	{
 		free(line);
 		return (NULL);

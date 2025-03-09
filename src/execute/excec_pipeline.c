@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 00:20:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:00:47 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		if (curr_cmd->input_fd != STDIN_FILENO)
 		{
 			redirect_in(curr_cmd->input_fd);
-			close(pipe_fd[1]);
+			if (pipe_fd[1] >= 0) // PROTECCIÓN
+				close(pipe_fd[1]);
 
 		}
 		if (curr_cmd->output_fd != STDOUT_FILENO)
 		{
 			redirect_out(curr_cmd->output_fd);
-			close(pipe_fd[0]);
+			if (pipe_fd[0] >= 0) // PROTECCIÓN
+				close(pipe_fd[0]);
 		}
 	}
 	else
@@ -63,8 +65,10 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		if (curr_cmd->input_fd != STDIN_FILENO)
 			redirect_in(curr_cmd->input_fd);
 	}
-	close(pipe_fd[0]);
-	close(pipe_fd[1]);
+	if (pipe_fd[0] >= 0)
+		close(pipe_fd[0]);
+	if (pipe_fd[1] >= 0)
+		close(pipe_fd[1]);
 	execute_builtin_or_external(curr_cmd, mini);
 }
 
@@ -93,8 +97,6 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 		int pipe_fd[2], int *input_fd)
 {
 	pid_t	pid;
-	printf("El PID del PADRE es: %d\n", getpid());
-
 	pid = fork();
 	if (pid < 0)
 	{
@@ -103,7 +105,6 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		printf("El PID del HIJO es: %d\n", getpid());
 		setup_signals(CHILD);
 		handle_child(cmd, mini, pipe_fd);
 		exit(EXIT_SUCCESS);

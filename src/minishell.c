@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 14:52:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:16:29 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	execute_commands_pipeline(t_mini *minishell)
 			minishell->exec->paths);
 	if (!minishell->exec->first_cmd)
 	{
+		minishell->exit_status = 127;
 		ft_putendl_fd("Command not found", 2);
+		free_exec(minishell->exec); // ✅ Liberamos `exec`???
+		minishell->exec = NULL; //????
 		return (0);
 	}
 	add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
@@ -86,7 +89,6 @@ void	miniloop(t_mini *minishell)
 			break ;
 		if (!tokenize_and_validate(minishell, input))
 		{
-			// free(input);
 			continue ;
 		}
 		if (!execute_commands_pipeline(minishell))

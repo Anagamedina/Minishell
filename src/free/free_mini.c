@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_mini.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 21:49:36 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/06 17:10:40 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/09 01:06:53 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	free_mini(t_mini *mini)
     {
     	return ;
     }
-	rl_clear_history();
+	// rl_clear_history();
     if (mini->tokens)
     {
     	free_tokens_list(&mini->tokens);

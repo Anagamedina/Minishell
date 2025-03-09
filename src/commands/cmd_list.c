@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:39:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 17:42:57 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:55:49 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,11 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	while (token_list)
 	{
 		process_token(&commands_list, token_list, paths, &cmd_id);
-		token_list = token_list->next;
+		// add new protection here ls | cd .. (path no exist)
+		if (commands_list != NULL)	
+			token_list = token_list->next;
+		else 
+			return (NULL);
 	}
 	if (commands_list)
 	{

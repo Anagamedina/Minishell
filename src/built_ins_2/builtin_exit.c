@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 00:52:32 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/09 01:32:54 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
 int	builtin_exit(t_cmd *cmd, t_mini *mini)
 {
 	int	arg_count;
-
+	
 	arg_count = 0;
 	while (cmd->cmd_args[arg_count] != NULL)
 		arg_count++;
