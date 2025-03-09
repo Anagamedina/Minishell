@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 01:06:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:28:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ long long	ft_atoll(const char *str)
 	return (result * sign);
 }
 
+/*
 void	error_exit(t_mini *mini)
 {
 	ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 	cleanup_and_exit(mini, 255);
 }
+*/

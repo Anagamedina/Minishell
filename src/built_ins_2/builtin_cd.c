@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 00:31:30 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:11:32 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,11 @@ int	ft_cd(t_mini *mini, t_cmd *cmd)
 	char	*new_path;
 	int		status;
 
-
-	if (cmd->count_args > 2)	
+	if (cmd->count_args > 2)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
 		return (1);
 	}
-	
 	new_path = get_cd_path(mini, cmd, &status);
 	if (status == 1 || !new_path || new_path[0] == '\0')
 	{

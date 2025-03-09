@@ -26,3 +26,17 @@ void	ft_putstr_fd(char *s, int fd)
 		}
 	}
 }
+
+void	ft_init_variables(size_t *i, int *count_w, int *index_substr)
+{
+	*i = 0;
+	*count_w = 0;
+	*index_substr = -1;
+}
+
+void	ft_init_variables(size_t *i, int *count_w, int *index_substr)
+{
+	*i = 0;
+	*count_w = 0;
+	*index_substr = -1;
+}

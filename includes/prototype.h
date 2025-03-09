@@ -6,14 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 01:21:29 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:01:51 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTOTYPE_H
 # define PROTOTYPE_H
 
-// # include "../libft/libft.h"
 # include "minishell.h"
 
 typedef struct s_env		t_env;
@@ -35,7 +34,7 @@ t_env		*init_empty_env_node(void);
 
 int			validate_syntax_name_value(char *new_local_var);
 t_list		*init_env_list(char **envp);
-int			ft_env(t_list* env_list);
+int			ft_env(t_list *env_list);
 
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);
@@ -44,24 +43,22 @@ char		*get_var_name(const char *line);
 char		*get_var_value(char *line);
 char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
-
 //*************INPUT***********/
 // char		*read_input(void);
-char	*read_input(t_mini *mini);
+char		*read_input(t_mini *mini);
 void		configure_terminal(void);
 void		parser_tokens(t_mini *mini);
 
 //**************BUILTINS-1********/
 
-void		print_export(t_list** env_list);
-
+void		print_export(t_list **env_list);
 t_env		*find_env_var(t_list *env_list, char *key);
 
 //************** BUILT_IN_export.c********/
 
 int			set_variable_in_env_list(t_list **env_list, char *key, char *new_value);
 int			env_variable_exists(t_list *env_list, char *key_to_find);
-int			ft_export(t_cmd *curr_cmd, t_mini* mini);
+int			ft_export(t_cmd *curr_cmd, t_mini *mini);
 
 //************ EXPORT_UTILS.C **********/
 
@@ -70,42 +67,40 @@ int			add_new_env_variable(t_list **env, char *var_name, char *var_value);
 
 //************ BUILTINS_PART_ONE_UTILS.C **********/
 
-char	*get_var_name_append(char *arg);
-char	*get_var_value_append(char *arg);
-char	*ft_strjoin_export(const char *s1, char c, const char *s2);
+char		*get_var_name_append(char *arg);
+char		*get_var_value_append(char *arg);
+char		*ft_strjoin_export(const char *s1, char c, const char *s2);
 //************ MAIN BUILTINS ********/
-int cases_builtins(t_mini* mini, t_cmd* curr_cmd);
+int			cases_builtins(t_mini *mini, t_cmd *curr_cmd);
 
 //************ BUILTIN_ECHO.c ************/
-char	*expand_exit_status(t_mini *mini, char *str);
-// int			ft_echo(t_cmd *cmd);//, t_mini *mini);
+char		*expand_exit_status(t_mini *mini, char *str);
 int			ft_echo(t_cmd *cmd, t_mini *mini);
 
 //************ BUILTIN_PWD.c ************/
 int			ft_pwd(t_mini *mini);
 
 //************ BUILTIN_CD.c ************/
-int			ft_cd(t_mini* mini, t_cmd* cmd);
-int			ft_cd(t_mini* mini, t_cmd* cmd);
+int			ft_cd(t_mini *mini, t_cmd *cmd);
+int			ft_cd(t_mini *mini, t_cmd *cmd);
 
 //************ BUILTIN_UNSET.c ************/
 int			ft_unset(t_list **env_list, t_cmd *cmd);
 
 //************ BUILTIN_EXIT.c ************/
-int 		builtin_exit(t_cmd *cmd, t_mini *mini);
-long long 	ft_atoll(const char *str);
-void 		error_exit(t_mini *mini);
-void		cleanup_and_exit(t_mini* mini, int status);
+int			builtin_exit(t_cmd *cmd, t_mini *mini);
+long long	ft_atoll(const char *str);
+void		cleanup_and_exit(t_mini *mini, int status);
 
 //************ INIT_STRUCTUC MINISHELL ********/
 
-void		configure_shell_env(t_list** env_list, char *shell_level);
+void		configure_shell_env(t_list **env_list, char *shell_level);
 t_mini		*init_mini_list(char **envp);
 
 //************************* BUILTINS-2 ***********************/
 
 //************** builtin_pwd.c ********************/
-int ft_pwd(t_mini* mini);
+int			ft_pwd(t_mini *mini);
 
 //************************* TOKENIZE ************************/
 
@@ -163,7 +158,7 @@ void		remove_and_replace_quotes(t_tokens *token, char quote_type);
 char		*append_non_dollar_char(char *result, char c);
 int			is_valid_input(t_tokens *token, t_list *env_list);
 char		*handle_dollar_alone(char *result);
-char	*expand_variable(char *result, t_list *env_list, \
+char		*expand_variable(char *result, t_list *env_list, \
 		const char *var, int len);
 
 //************** parser_syntax_quotes.c ********************/
@@ -226,7 +221,6 @@ char		*ft_strjoin_char(char *str, char c);
 //************** expand_env.c ********************/
 
 char		*find_value_in_env(t_list *env_list, char *var_name_token);
-// void		replace_dollar_variable(char **split_word, t_list *env_list);
 char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
 
 //************** INIT_COMMAND.C ********/
@@ -246,16 +240,16 @@ void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int 
 void		process_command_args(t_list *current, t_cmd *cmd);
 //************** BUILT_INS_UTILS.C ********/
 
-t_list		*create_new_env_node(char* key, char* value);
+t_list		*create_new_env_node(char *key, char *value);
 
 //************** ERRORS_COMMAND.C ********/
 
 int			error_empty_token(t_tokens *token, t_list *cmd_list);
 int			error_cmd_creation(t_cmd *cmd, t_list *cmd_list);
 int			error_node_creation(t_list *node, t_cmd *cmd, t_list *cmd_list);
-char 		**get_path(char **env);
-char 		*get_cmd_path(t_tokens *token, char **paths);
-t_exec 		*init_exec(t_list *env_list);
+char		**get_path(char **env);
+char		*get_cmd_path(t_tokens *token, char **paths);
+t_exec		*init_exec(t_list *env_list);
 char		**env_list_to_array(t_list *env_list);
 char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
@@ -273,45 +267,44 @@ void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens *file_t
 int			apply_redirections(t_cmd *cmd);
 int			is_redir(t_tokens *token);
 t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
-void 		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
+void		execute_builtin_or_external(t_cmd *curr_cmd, t_mini *mini);
 int			handle_output_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			handle_input_redirection(t_cmd *cmd, t_redir *curr_redir);
 char		*generate_heredoc_filename(int nbr_heredoc);
 //*************HEREDOC**************/
-int 	heredoc(t_cmd *cmd);
-void 	redirect_out(int output_fd);
-void 	redirect_in(int input_fd);
-int		create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
-int		write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
-char 	*expand_variables(char *line);
-void	fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
-void	wait_children(t_mini *mini);
-void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
-void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
-int 	check_repeated_redirections(t_list *token_list);
-char	**env_list_to_array(t_list *env_list);
+int			heredoc(t_cmd *cmd);
+void		redirect_out(int output_fd);
+void		redirect_in(int input_fd);
+int			create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
+int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
+char		*expand_variables(char *line);
+void		fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
+void		wait_children(t_mini *mini);
+void		handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+void		setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
+int			check_repeated_redirections(t_list *token_list);
+char		**env_list_to_array(t_list *env_list);
 //*************SIGNALS**************/
-int validate_syntax(t_list *token_list);
-int validate_pipes_and_separators(t_list *token_list);
-int validate_and_update_words_positions(t_mini *mini);
-int check_start_and_end_tokens(t_list *token_list);
-int	is_redir_out(t_tokens* token);
-int	count_env_variables_ia(char **env);
-void	print_syntax_error_token(const char *token_str);
-int	validate_and_update_words_positions(t_mini *mini);
-int	check_consecutive_operators(t_list *token_list);
+int			validate_syntax(t_list *token_list);
+int			validate_pipes_and_separators(t_list *token_list);
+int			validate_and_update_words_positions(t_mini *mini);
+int			check_start_and_end_tokens(t_list *token_list);
+int			is_redir_out(t_tokens *token);
+int			count_env_variables_ia(char **env);
+void		print_syntax_error_token(const char *token_str);
+int			validate_and_update_words_positions(t_mini *mini);
+int			check_consecutive_operators(t_list *token_list);
 
 //*************signals.c**************/make r
 int			setup_signals(int mode);
 int			configure_signal_handler(int signal, void (*handler)(int));
 
-void	handle_exit(t_mini *minishell);
-int		handle_input(char *input, t_mini *minishell);
-void	miniloop(t_mini *minishell);
-void	handle_special_cases(t_tokens *token, t_list *env_list, \
-		t_tokens *next_token);
-void	remove_and_replace_quotes(t_tokens *token, char quote_type);
-void	print_command_not_found(const char *cmd);
-void	handle_memory_allocation_error(void);
-void	handle_env_duplication_error(char **env_array, int index);
+void		handle_exit(t_mini *minishell);
+int			handle_input(char *input, t_mini *minishell);
+void		miniloop(t_mini *minishell);
+void		handle_special_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
+void		remove_and_replace_quotes(t_tokens *token, char quote_type);
+void		print_command_not_found(const char *cmd);
+void		handle_memory_allocation_error(void);
+void		handle_env_duplication_error(char **env_array, int index);
 #endif
