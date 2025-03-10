@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 16:49:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:03:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 			ft_putendl_fd(expand_line, fd_tmp);
 			free(expand_line);
 		}
-		// if (isatty(STDIN_FILENO) == 0)
-		// {
-		// 	free(line);
-		// 	exit(130);
-		// }
+		/*if (isatty(STDIN_FILENO) == 0)
+		{
+			free(line);
+			exit(130);
+		}
+		*/
 		free(line);
 		line = readline("> ");
 	}
@@ -76,7 +77,6 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 }
 */
 
-
 int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
@@ -99,15 +99,13 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 	return (0);
 }
 
-
-void child_heredoc(t_tokens *curr_token, t_mini *mini) 
+void	child_heredoc(t_tokens *curr_token, t_mini *mini)
 {
 	pid_t	pid;
 	t_redir	*redir;
-	int 	status;
-	
-	redir = (t_redir *)curr_token;
+	int		status;
 
+	redir = (t_redir *)curr_token;
 	pid = fork();
 	if (pid < 0)
 	{
@@ -119,15 +117,15 @@ void child_heredoc(t_tokens *curr_token, t_mini *mini)
 		setup_signals(HERE_DOC);
 		// heredoc(curr_token->cmd);
 		// exit(EXIT_SUCCESS);
-		if (create_heredoc(redir, 0, 1) == -1) 
+		if (create_heredoc(redir, 0, 1) == -1)
 			exit(1);
 		exit(0);
 	}
 	else
 	{
-		waitpid(pid, &status, 0); // Esperar a que el hijo termine
+		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			return ; // Si el heredoc se interrumpe con Ctrl+C
+			return ;
 	}
 }
 
@@ -146,8 +144,8 @@ int	heredoc(t_cmd *cmd)
 		curr_redir = (t_redir *)redir_node->content;
 		if (curr_redir->type == HEREDOC)
 		{
-			expand_vars = !(curr_redir->filename[0] == '"' || 
-					curr_redir->filename[0] == '\'');
+			expand_vars = !(curr_redir->filename[0] == '"' || \
+				curr_redir->filename[0] == '\'');
 			if (create_heredoc(curr_redir, nbr_heredoc, expand_vars) == -1)
 			{
 				perror("Error creando heredoc");
@@ -159,5 +157,3 @@ int	heredoc(t_cmd *cmd)
 	}
 	return (0);
 }
-
-//-----MAIN FUNCTION----//
