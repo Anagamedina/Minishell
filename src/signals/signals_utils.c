@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 13:02:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:23:02 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	handle_signal_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		close(STDIN_FILENO);
+		// close(STDIN_FILENO);
 	}
 }
 

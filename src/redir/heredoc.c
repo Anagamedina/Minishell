@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 13:14:50 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:49:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,42 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	return (free(line), 0);
 }
 
+/*
+int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
+{
+	char	*line;
+	char	*expand_line;
+
+	setup_signals(HERE_DOC);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line) // Manejar Ctrl+D
+		{
+			ft_putendl_fd("warning: here-document delimited by EOF", 2);
+			break;
+		}
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break;
+		}
+		if (expand_vars)
+			expand_line = expand_variables(line);
+		else
+			expand_line = ft_strdup(line);
+		if (expand_line)
+		{
+			ft_putendl_fd(expand_line, fd_tmp);
+			free(expand_line);
+		}
+		free(line);
+	}
+	return (0);
+}
+*/
+
+
 int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
@@ -55,13 +91,44 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 		free(tmp_name);
 		return (-1);
 	}
-	setup_signals(HERE_DOC);
 	write_heredoc_content(fd_tmp, redir->filename, expand_vars);
 	close(fd_tmp);
 	free(redir->filename);
 	redir->filename = ft_strdup(tmp_name);
 	free(tmp_name);
 	return (0);
+}
+
+
+void child_heredoc(t_tokens *curr_token, t_mini *mini) 
+{
+	pid_t	pid;
+	t_redir	*redir;
+	int 	status;
+	
+	redir = (t_redir *)curr_token;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		free_mini(mini);
+		exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		setup_signals(HERE_DOC);
+		// heredoc(curr_token->cmd);
+		// exit(EXIT_SUCCESS);
+		if (create_heredoc(redir, 0, 1) == -1) 
+			exit(1);
+		exit(0);
+	}
+	else
+	{
+		waitpid(pid, &status, 0); // Esperar a que el hijo termine
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			return ; // Si el heredoc se interrumpe con Ctrl+C
+	}
 }
 
 int	heredoc(t_cmd *cmd)
@@ -79,7 +146,7 @@ int	heredoc(t_cmd *cmd)
 		curr_redir = (t_redir *)redir_node->content;
 		if (curr_redir->type == HEREDOC)
 		{
-			expand_vars = !(curr_redir->filename[0] == '"' || \
+			expand_vars = !(curr_redir->filename[0] == '"' || 
 					curr_redir->filename[0] == '\'');
 			if (create_heredoc(curr_redir, nbr_heredoc, expand_vars) == -1)
 			{
@@ -92,3 +159,5 @@ int	heredoc(t_cmd *cmd)
 	}
 	return (0);
 }
+
+//-----MAIN FUNCTION----//
