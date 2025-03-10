@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/10 13:26:27 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/10 18:11:16 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_CMD)/cmd_list.c \
 		$(SRC_CMD)/cmd_errors.c \
 		$(SRC_CMD)/cmd_init_utils.c \
-		$(SRC_CMD)/print_cmd.c \
 		$(SRC_BUILTINS1)/built_in_export.c \
 		$(SRC_BUILTINS1)/built_in_unset.c \
 		$(SRC_BUILTINS1)/built_in_utils.c \
