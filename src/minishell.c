@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:10:06 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:55:51 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	execute_commands_pipeline(t_mini *minishell)
 		free_exec(minishell->exec);
 	minishell->exec = init_exec(minishell->env);
 	if (!minishell->exec)
-		return (ft_putendl_fd("Error: command not found", 2), 0);
+		return (0);
 	if (minishell->exec->first_cmd)
 		free_cmd_list(&minishell->exec->first_cmd);
 	minishell->exec->first_cmd = create_cmd_list(minishell->tokens, \
@@ -107,35 +107,6 @@ void	miniloop(t_mini *minishell)
 	}
 }
 
-
-
-/*void	miniloop(t_mini *minishell)
-{
-	char	*input;
-
-	while (1)
-	{
-		input = read_input(minishell);
-		if (!input)
-			continue ;
-		if (!validate_input(input, minishell))
-		{
-			free(input);
-			continue ;
-		}
-		if (!tokenize_and_validate(minishell, input))
-		{
-			free(input);
-			continue ;
-		}
-		if (!execute_commands_pipeline(minishell))
-		{
-			free(input);
-			continue ;
-		}
-		free(input);
-	}
-}*/
 
 int	main(int argc, char **argv, char **envp)
 {

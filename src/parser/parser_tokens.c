@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 21:19:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:51:21 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	update_command_type(t_mini *mini, t_tokens *curr_token)
 		free(cmd_path);
 		return (1);
 	}
-	print_command_not_found(curr_token->str);
+	// print_command_not_found(curr_token->str);
 	return (0);
 }
 

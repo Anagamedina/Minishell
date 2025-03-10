@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 13:29:52 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:58:12 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,3 @@ t_list	*generate_token_list(char *line)
 	return (tokens_list);
 }
 
-void	print_list_token(t_list *tokens_list)
-{
-	t_list		*current;
-	t_tokens	*token;
-	int			i;
-
-	current = tokens_list;
-	i = 1;
-	while (current != NULL)
-	{
-		token = (t_tokens *)current->content;
-		printf("TOKEN [%i] :\n", i);
-		printf("str: [%s]\n", token->str);
-		printf("type: [%i]\n", token->type_token);
-		printf("len: [%zu]\n", token->length);
-		i ++;
-		current = current->next;
-		printf("-------------------\n");
-	}
-}

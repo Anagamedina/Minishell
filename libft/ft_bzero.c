@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:39:05 by anamedin          #+#    #+#             */
-/*   Updated: 2024/11/04 17:35:39 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:56:48 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,3 @@ void	ft_bzero(void *s, size_t n)
 	while (i < n)
 		ptr[i++] = '\0';
 }
-
-/*void print_memory(char *str, size_t len)
-{
-    size_t i = 0;
-    while (i < len)
-    {
-        printf("%d ", (unsigned char)str[i]);
-        i++;
-    }
-    printf("\n");
-}
-
-int main()
-{
-    char buffer[10];
-    size_t i = 0;
-
-    while (i < 10)
-    {
-        buffer[i] = 'A';
-        i++;
-    }
-
-    print_memory(buffer, 10);
-    bzero(buffer, 5);
-    printf("Después de bzero:\n");
-    print_memory(buffer, 10);
-
-    return 0;
-}*/
