@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:00:41 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:07:08 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	tokenize_and_validate(t_mini *minishell, char *input)
 		minishell->tokens = NULL;
 	}
 	minishell->tokens = generate_token_list(input);
-	if (!minishell->tokens || !validate_syntax(minishell->tokens) || \
+	if (!minishell->tokens || !validate_syntax(minishell->tokens, minishell) || \
 		!validate_and_update_words_positions(minishell))
 	{
 		free_tokens_list(&minishell->tokens);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 09:56:03 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:06:28 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ int			has_dollar_followed_by_digit(const char *str);
 //************** parser_func.c ********************/
 
 //************** EXPAND.c ********************/
-
 //************** expand_vars.c ********************/
 
 // void		expand_dollar(t_tokens *token_list, t_list *env_list);
@@ -298,7 +297,8 @@ int			check_repeated_redirections(t_list *token_list);
 char		**env_list_to_array(t_list *env_list);
 
 //*************SIGNALS**************/
-int			validate_syntax(t_list *token_list);
+// int			validate_syntax(t_list *token_list);
+int	validate_syntax(t_list *token_list, t_mini *mini);
 int			validate_pipes_and_separators(t_list *token_list);
 int			validate_and_update_words_positions(t_mini *mini);
 int			check_start_and_end_tokens(t_list *token_list);

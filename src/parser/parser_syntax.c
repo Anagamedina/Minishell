@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:50:56 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 20:03:01 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:04:17 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	validate_pipes_and_separators(t_list *token_list)
 	return (TRUE);
 }
 
-int	validate_syntax(t_list *token_list)
+/*int	validate_syntax(t_list *token_list)
 {
 	if (!check_redir_after_pipe(token_list))
 		return (FALSE);
@@ -49,4 +49,22 @@ int	validate_syntax(t_list *token_list)
 		!validate_pipes_and_separators(token_list))
 		return (FALSE);
 	return (TRUE);
+}*/
+
+
+int	validate_syntax(t_list *token_list, t_mini *mini)
+{
+	if (!check_redir_after_pipe(token_list))
+	{
+		mini->exit_status = 2;  // Error de sintaxis en redirección después de un pipe
+		return (FALSE);
+	}
+	if (!check_repeated_redirections(token_list) || \
+		!validate_pipes_and_separators(token_list))
+	{
+		mini->exit_status = 2;  // Error de sintaxis general
+		return (FALSE);
+	}
+	return (TRUE);
 }
+
