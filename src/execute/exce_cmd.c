@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 17:02:06 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 10:18:58 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:23:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	pre_executor(t_mini *mini, t_cmd *cmd)
 		mini->exit_status = cases_builtins(mini, cmd);
 		return (TRUE);
 	}
-	// if (apply_redirections(cmd) == -1)
-	// 	return (FALSE);
 	if (!redirect_out_builtin(cmd, &saved_stdout))
 		return (FALSE);
 	mini->exit_status = cases_builtins(mini, cmd);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 15:59:10 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:36:34 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void	check_file_out(t_tokens *curr_next)
 	else
 		close(fd);
 }
-
 
 static void	check_file_append(t_tokens *curr_next)
 {

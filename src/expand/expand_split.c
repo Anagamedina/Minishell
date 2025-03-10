@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:27:00 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:32:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:39:15 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,3 @@ char	**ft_split_new_version(char *str)
 		return (NULL);
 	return (out);
 }
-

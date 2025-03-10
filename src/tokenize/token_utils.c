@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:26:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:58:12 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:25:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,3 @@ t_list	*generate_token_list(char *line)
 	free(tokens_array);
 	return (tokens_list);
 }
-

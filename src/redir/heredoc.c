@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 17:03:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:29:11 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 	free(tmp_name);
 	return (0);
 }
-
+//TODO: change this function to return type INT
 void	child_heredoc(t_tokens *curr_token, t_mini *mini)
 {
 	pid_t	pid;

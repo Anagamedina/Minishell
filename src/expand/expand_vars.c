@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:42:28 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:27:51 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ static void	replace_env_var_in_token(char **token, t_list *env_list)
 	*token = ft_strdup(new_token);
 	free(new_token);
 }
-//????? leaks??
 
 static void	process_split_words(char **split_word, t_list *env_list)
 {
-	int	i;
-	char *tmp;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	while (split_word[i])
@@ -45,9 +44,9 @@ static void	process_split_words(char **split_word, t_list *env_list)
 			i++;
 			continue ;
 		}
-		tmp = split_word[i];  // Guardamos el puntero original antes de modificarlo
+		tmp = split_word[i];
 		replace_env_var_in_token(&split_word[i], env_list);
-		free(tmp);  // Liberamos la memoria anterior de split_word[i]
+		free(tmp);
 		i++;
 	}
 }

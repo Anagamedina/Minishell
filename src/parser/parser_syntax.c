@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:50:56 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 11:10:19 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 17:34:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,18 @@ int	validate_pipes_and_separators(t_list *token_list)
 	return (TRUE);
 }*/
 
-
 int	validate_syntax(t_list *token_list, t_mini *mini)
 {
 	if (!check_redir_after_pipe(token_list))
 	{
-		mini->exit_status = 2; 
+		mini->exit_status = 2;
 		return (FALSE);
 	}
 	if (!check_repeated_redirections(token_list) || \
 		!validate_pipes_and_separators(token_list))
 	{
-		mini->exit_status = 2;  
+		mini->exit_status = 2;
 		return (FALSE);
 	}
 	return (TRUE);
 }
-
