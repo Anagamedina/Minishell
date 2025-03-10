@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 17:44:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:32:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_mini	*init_mini_list(char **envp)
 	minishell = malloc(sizeof(t_mini));
 	if (!minishell)
 		return (NULL);
-	minishell->bash_lvl = -1;
+	minishell->bash_lvl = 1;
 	minishell->chars_in_line = -1;
 	minishell->env = init_env_list(envp);
 	if (!minishell->env)

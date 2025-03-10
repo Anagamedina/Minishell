@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 19:52:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/27 00:38:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:33:45 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ static void	increment_shlvl(t_list **env_list, char *shell_level)
 		new_shlvl = ft_strdup("1");
 	}
 	else
+	{
 		new_shlvl = ft_itoa(shlvl + 1);
+	}
 	if (new_shlvl)
 	{
 		if (!set_variable_in_env_list(env_list, "SHLVL", new_shlvl))

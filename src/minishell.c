@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:55:51 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:32:04 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	execute_commands_pipeline(t_mini *minishell)
 		minishell->exit_status = 127;
 		ft_putendl_fd("Command not found", 2);
 		free_exec(minishell->exec);
-		minishell->exec = NULL; 
+		minishell->exec = NULL;
 		return (0);
 	}
 	add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
@@ -79,6 +79,7 @@ void	miniloop(t_mini *minishell)
 {
 	char	*input;
 
+	setup_signals(PARENT);
 	while (1)
 	{
 		input = read_input(minishell);
@@ -96,17 +97,17 @@ void	miniloop(t_mini *minishell)
 		}
 		if (!execute_commands_pipeline(minishell))
 		{
-			free_tokens_list(&minishell->tokens); 
+			free_tokens_list(&minishell->tokens);
 			minishell->tokens = NULL;
 			free(input);
 			continue ;
 		}
-		free_tokens_list(&minishell->tokens);  
+		free_tokens_list(&minishell->tokens);
 		minishell->tokens = NULL;
 		free(input);
 	}
+	rl_clear_history();
 }
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -118,7 +119,6 @@ int	main(int argc, char **argv, char **envp)
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);
-	setup_signals(PARENT);
 	miniloop(minishell);
 	last_exit_code = minishell->exit_status;
 	free_mini(minishell);

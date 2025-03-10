@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 01:56:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:02:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	handle_signal_parent(int sig)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
+		// rl_redisplay();
 	}
 }
 

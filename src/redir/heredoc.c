@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 01:15:01 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 13:14:50 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 			ft_putendl_fd(expand_line, fd_tmp);
 			free(expand_line);
 		}
-		if (isatty(STDIN_FILENO) == 0)
-		{
-			free(line);
-			exit(130);
-		}
+		// if (isatty(STDIN_FILENO) == 0)
+		// {
+		// 	free(line);
+		// 	exit(130);
+		// }
 		free(line);
 		line = readline("> ");
 	}
