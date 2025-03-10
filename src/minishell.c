@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 00:15:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:00:41 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	tokenize_and_validate(t_mini *minishell, char *input)
 	{
 		free_tokens_list(&minishell->tokens);
 		minishell->tokens = NULL;
-		free(input);
 		return (0);
 	}
 	update_words_in_tokens(minishell);
@@ -49,8 +48,8 @@ static int	execute_commands_pipeline(t_mini *minishell)
 	{
 		minishell->exit_status = 127;
 		ft_putendl_fd("Command not found", 2);
-		free_exec(minishell->exec); // Liberamos `exec`???
-		minishell->exec = NULL; //???>?
+		free_exec(minishell->exec);
+		minishell->exec = NULL; 
 		return (0);
 	}
 	add_details_to_cmd_list(minishell->exec->first_cmd, minishell->tokens);
@@ -97,12 +96,46 @@ void	miniloop(t_mini *minishell)
 		}
 		if (!execute_commands_pipeline(minishell))
 		{
+			free_tokens_list(&minishell->tokens);  // Liberar tokens después de ejecutarlos
+			minishell->tokens = NULL;
+			free(input);
+			continue ;
+		}
+		free_tokens_list(&minishell->tokens);  // Liberar tokens después de ejecutarlos
+		minishell->tokens = NULL;
+		free(input);
+	}
+}
+
+
+
+/*void	miniloop(t_mini *minishell)
+{
+	char	*input;
+
+	while (1)
+	{
+		input = read_input(minishell);
+		if (!input)
+			continue ;
+		if (!validate_input(input, minishell))
+		{
+			free(input);
+			continue ;
+		}
+		if (!tokenize_and_validate(minishell, input))
+		{
+			free(input);
+			continue ;
+		}
+		if (!execute_commands_pipeline(minishell))
+		{
 			free(input);
 			continue ;
 		}
 		free(input);
 	}
-}
+}*/
 
 int	main(int argc, char **argv, char **envp)
 {
