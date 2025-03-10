@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 01:49:22 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:56:03 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,10 @@ int			handle_output_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			handle_input_redirection(t_cmd *cmd, t_redir *curr_redir);
 char		*generate_heredoc_filename(int nbr_heredoc);
 int			handle_append_redirection(t_cmd *cmd, t_redir *curr_redir);
+int			is_redir_append(t_tokens *token);
+int			is_redir_out(t_tokens *token);
+
+
 //*************HEREDOC**************/
 int			heredoc(t_cmd *cmd);
 void		redirect_out(int output_fd);
