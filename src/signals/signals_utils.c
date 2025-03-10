@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 16:23:02 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:07:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ void	handle_signal_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal_status = 1;
 		write(1, "\n", 1);
-		// close(STDIN_FILENO);
+		close(STDIN_FILENO);
 	}
 }
 
@@ -52,10 +53,11 @@ void	handle_signal_parent(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_signal_status = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		// rl_redisplay();
+		rl_redisplay();
 	}
 }
 

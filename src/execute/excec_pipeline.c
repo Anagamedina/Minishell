@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/10 01:35:55 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:11:31 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	wait_children(t_mini *mini)
 			if (signal == SIGINT)
 			{
 				mini->exit_status = 130;
+				write(1, "\n", 1);
 			}
 			else if (signal == SIGQUIT)
 			{
@@ -121,7 +122,8 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	{
 		setup_signals(CHILD);
 		handle_child(cmd, mini, pipe_fd);
-		exit(EXIT_SUCCESS);
+		exit(mini->exit_status);
+		// exit(EXIT_SUCCESS);
 	}
 	else
 	{

@@ -6,11 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 17:12:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 19:19:07 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	g_signal_status;
 
 int	tokenize_and_validate(t_mini *minishell, char *input)
 {
@@ -82,6 +84,7 @@ void	miniloop(t_mini *minishell)
 	setup_signals(PARENT);
 	while (1)
 	{
+		g_signal_status = 0;
 		input = read_input(minishell);
 		if (!input)
 			continue ;
@@ -114,8 +117,12 @@ int	main(int argc, char **argv, char **envp)
 	t_mini	*minishell;
 	int		last_exit_code;
 
-	(void) argc;
 	(void) argv;
+	if (argc != 1)
+	{
+		ft_putendl_fd("no use arguments", 2);
+		exit(1);
+	}
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);
