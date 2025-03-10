@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/07 20:40:02 by anamedin         ###   ########.fr        #
+#    Updated: 2025/03/10 01:50:42 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_BUILTINS1)/export_utils.c \
 		$(SRC_DIR)/built_ins_main.c \
 		$(SRC_BUILTINS2)/builtin_cd.c \
+		$(SRC_BUILTINS2)/builtin_cd_utils.c \
 		$(SRC_BUILTINS2)/builtin_exit.c \
 		$(SRC_BUILTINS2)/builtin_exit_utils.c \
 		$(SRC_BUILTINS2)/builtin_pwd.c \

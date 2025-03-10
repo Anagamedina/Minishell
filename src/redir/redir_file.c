@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:51:03 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 22:17:14 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:22:45 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ int	apply_redirections(t_cmd *cmd)
 	while (redir_node)
 	{
 		curr_redir = (t_redir *)redir_node->content;
-		// Procesar redirecciones de entrada primero
 		apply_input_redirection(cmd, curr_redir, &redirection_applied);
-		// Primero manejar `>>` para evitar que `>` lo sobrescriba
 		if (curr_redir->type == REDIR_APPEND)
 			apply_append_redirection(cmd, curr_redir, &redirection_applied);
 		else if (curr_redir->type == REDIR_OUT)

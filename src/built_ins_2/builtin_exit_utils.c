@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 21:50:30 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 00:24:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ static void	init_varible_atoll(int *sign, int *i, \
 	*result = 0;
 	*prev_result = 0;
 }
+
+/*
+static long long check_overflow(long long result, long long prev_result, int sign)
+{
+	if ((sign == 1 && result < prev_result) || (sign == -1 && result < prev_result))
+	{
+		if (sign == 1)
+			return (9223372036854775807);
+	}
+}
+*/
 
 long long	ft_atoll(const char *str)
 {
@@ -50,19 +61,8 @@ long long	ft_atoll(const char *str)
 		result = (result * 10) + (str[i] - '0');
 		if ((sign == 1 && result < prev_result) || \
 				(sign == -1 && result < prev_result))
-		{
-			if (sign == 1)
-				return (9223372036854775807);
-		}
+			return (9223372036854775807);
 		i ++;
 	}
 	return (result * sign);
 }
-
-/*
-void	error_exit(t_mini *mini)
-{
-	ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
-	cleanup_and_exit(mini, 255);
-}
-*/

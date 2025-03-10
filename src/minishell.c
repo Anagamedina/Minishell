@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 22:08:25 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 00:15:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,13 @@ int	tokenize_and_validate(t_mini *minishell, char *input)
 	return (1);
 }
 
-int	execute_commands_pipeline(t_mini *minishell)
+static int	execute_commands_pipeline(t_mini *minishell)
 {
 	if (minishell->exec)
 		free_exec(minishell->exec);
 	minishell->exec = init_exec(minishell->env);
 	if (!minishell->exec)
-	{
-		ft_putendl_fd("Error: command not found", 2);
-		return (0);
-	}
+		return (ft_putendl_fd("Error: command not found", 2), 0);
 	if (minishell->exec->first_cmd)
 		free_cmd_list(&minishell->exec->first_cmd);
 	minishell->exec->first_cmd = create_cmd_list(minishell->tokens, \

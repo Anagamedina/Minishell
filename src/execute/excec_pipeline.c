@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excec_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 21:54:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:35:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 23:07:47 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:49:22 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int			add_new_env_variable(t_list **env, char *var_name, char *var_value);
 char		*get_var_name_append(char *arg);
 char		*get_var_value_append(char *arg);
 char		*ft_strjoin_export(const char *s1, char c, const char *s2);
+
 //************ MAIN BUILTINS ********/
 int			cases_builtins(t_mini *mini, t_cmd *curr_cmd);
 
@@ -83,7 +84,12 @@ int			ft_pwd(t_mini *mini);
 
 //************ BUILTIN_CD.c ************/
 int			ft_cd(t_mini *mini, t_cmd *cmd);
-int			ft_cd(t_mini *mini, t_cmd *cmd);
+
+//************ BUILTIN_UTILS_CD.c ************/
+
+int			handle_cd_errors(char *new_path);
+char		*get_old_pwd(t_mini *mini);
+char		*get_cd_path(t_mini *mini, t_cmd *cmd, int *status);
 
 //************ BUILTIN_UNSET.c ************/
 int			ft_unset(t_list **env_list, t_cmd *cmd);

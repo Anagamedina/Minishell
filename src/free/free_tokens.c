@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tokens.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 14:43:26 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:21:09 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_tokens_void(void *content)
 	{
 		return ;
 	}
-	
 	if (tokens->str)
 	{
 		free(tokens->str);
@@ -31,6 +30,7 @@ void	free_tokens_void(void *content)
 	}
 	free(tokens);
 }
+
 void	free_tokens_list(t_list **tokens)
 {
 	if (!tokens || !*tokens)
@@ -40,4 +40,3 @@ void	free_tokens_list(t_list **tokens)
 	ft_lstclear(tokens, free_tokens_void);
 	*tokens = NULL;
 }
-

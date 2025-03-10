@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 16:26:58 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/03/09 02:03:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:26:54 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +34,36 @@ int	check_quotes_line(const char *line)
 	return (TRUE);
 }
 
+/* setup_signals(PARENT);*/
+char	*read_input(t_mini *mini)
+{
+	char	*line;
+
+	line = readline("minishell> ");
+	if (!line)
+	{
+		write(1, "exit\n", 5);
+		free_mini(mini);
+		exit(0);
+	}
+	if (*line)
+		add_history(line);
+	return (line);
+}
+/**
+tmp = handle_unclosed_quotes(line, mini);
+if (!tmp)
+{
+	free(line);
+	return (NULL);
+}
+*/
 /*
 static void	handle_unexpected_eof(char *input, t_mini *mini)
 {
 	free(input);
-	ft_putendl_fd("minishell: unexpected EOF while looking for matching quote", 2);
+	ft_putendl_fd("minishell: unexpected EOF \
+	while looking for matching quote", 2);
 	free_mini(mini);
 	exit(1);
 }
@@ -101,29 +114,3 @@ char	*handle_unclosed_quotes(char *input, t_mini *mini)
 	}
 	return (input);
 }*/
-
-char	*read_input(t_mini *mini)
-{
-	char	*line;
-
-	// setup_signals(PARENT);
-	line = readline("minishell> ");
-	if (!line)
-	{
-		write(1, "exit\n", 5);
-		free_mini(mini); //? 
-		exit(0);
-	}
-	if (*line)
-		add_history(line);
-	return (line);
-}
-	/*
-	tmp = handle_unclosed_quotes(line, mini);
-	if (!tmp)
-	{
-		free(line);
-		return (NULL);
-	}
-	*/
-

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 17:44:20 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 19:09:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:23:18 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 	}
 	return (TRUE);
 }
-
 
 int	handle_append_redirection(t_cmd *cmd, t_redir *curr_redir)
 {

@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/09 23:00:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:23:47 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	setup_parent_signals(void)
 		return (-1);
 	return (1);
 }
-
 
 static int	setup_child_signals(void)
 {
