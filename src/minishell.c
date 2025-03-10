@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 19:19:07 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:05:26 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,15 @@ void	miniloop(t_mini *minishell)
 		g_signal_status = 0;
 		input = read_input(minishell);
 		if (!input)
+		{
+			minishell->exit_status = 0;
 			continue ;
+		}
+		if (g_signal_status) // Si Ctrl+C fue presionado
+		{
+			minishell->exit_status = 130;
+			continue; // Volver al prompt sin ejecutar nada
+		}
 		if (!validate_input(input, minishell))
 		{
 			free(input);

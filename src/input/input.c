@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/10 22:07:03 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
@@ -43,7 +55,9 @@ char	*read_input(t_mini *mini)
 	if (!line)
 	{
 		write(1, "exit\n", 5);
+		mini->exit_status = 0; // Asegurar que $? sea 0
 		free_mini(mini);
+		rl_clear_history();
 		exit(0);
 	}
 	if (*line)
