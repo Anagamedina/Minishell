@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:45:15 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 01:49:32 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 01:58:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	cd_change_directory(char *new_path, t_mini *mini)
 	free(new_pwd);
 	return (0);
 }
-
 
 int	ft_cd(t_mini *mini, t_cmd *cmd)
 {
