@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_token_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:03:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:40:14 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:32:04 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,71 +84,3 @@ char	*get_and_reconstruct_token(char *split_word, const char *var_val, int i)
 	new_token[len_token] = '\0';
 	return (new_token);
 }
-
-/*
- *ORIGINAL
-char	**ft_split_new_version(char *str)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		wc;
-	char	**out;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	wc = 0;
-	while (str[i] != '\0')
-	{
-		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
-			i ++;
-		if (str[i])
-			wc ++;
-		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
-			i ++;
-	}
-	out = (char **) malloc(sizeof(char *) * (wc + 1));
-	i = 0;
-	while (str[i] != '\0')
-	{
-		j = i;
-		while (str[i] && (str[i] == ' '))
-			i ++;
-		while (str[i] != '\0' && str[i] != ' ')
-			i ++;
-		while (str[i] && (str[i] == ' ') && str[i] != '\0')
-			i ++;
-		if (i > j)
-		{
-			out[k] = (char *)malloc(sizeof(char) * ((i) + 1));
-			ft_strncpy(out[k++], &str[j], i - j);
-		}
-	}
-	out[k] = NULL;
-	return (out);
-}
-*/
-
-/*
-static int	has_more_than_one_dollar_without_spaces_in_token(const char *str)
-{
-	int	i;
-	int	count_dollar;
-
-	i = 0;
-	count_dollar = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == DOLLAR_SIGN)
-		{
-			count_dollar ++;
-			if (str[i + 1] == DOLLAR_SIGN)
-				return (FALSE);
-		}
-		i ++;
-	}
-	if (count_dollar > 1)
-		return (TRUE);
-	return (FALSE);
-}*/

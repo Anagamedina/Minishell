@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_utils.c                                      :+:      :+:    :+:   */
+/*   expand_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:27:00 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/02/03 19:31:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:32:49 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,46 +107,3 @@ char	**ft_split_new_version(char *str)
 	return (out);
 }
 
-/*
-char	**ft_split_new_version(char *str)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		wc;
-	char	**out;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	wc = 0;
-	while (str[i] != '\0')
-	{
-		while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
-			i ++;
-		if (str[i])
-			wc ++;
-		while (str[i] && (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'))
-			i ++;
-	}
-	out = (char **) malloc(sizeof(char *) * (wc + 1));
-	i = 0;
-	while (str[i] != '\0')
-	{
-		j = i;
-		while (str[i] && (str[i] == ' '))
-			i ++;
-		while (str[i] != '\0' && str[i] != ' ')
-			i ++;
-		while (str[i] && (str[i] == ' ') && str[i] != '\0')
-			i ++;
-		if (i > j)
-		{
-			out[k] = (char *)malloc(sizeof(char) * ((i) + 1));
-			ft_strncpy(out[k++], &str[j], i - j);
-		}
-	}
-	out[k] = NULL;
-	return (out);
-}
-*/

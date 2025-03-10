@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:07:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:10:06 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,12 @@ void	miniloop(t_mini *minishell)
 		}
 		if (!execute_commands_pipeline(minishell))
 		{
-			free_tokens_list(&minishell->tokens);  // Liberar tokens después de ejecutarlos
+			free_tokens_list(&minishell->tokens); 
 			minishell->tokens = NULL;
 			free(input);
 			continue ;
 		}
-		free_tokens_list(&minishell->tokens);  // Liberar tokens después de ejecutarlos
+		free_tokens_list(&minishell->tokens);  
 		minishell->tokens = NULL;
 		free(input);
 	}
