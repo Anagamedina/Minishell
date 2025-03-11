@@ -6,13 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 22:05:26 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 04:13:43 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_signal_status;
+// int	g_signal_status;
 
 int	tokenize_and_validate(t_mini *minishell, char *input)
 {
@@ -84,18 +84,20 @@ void	miniloop(t_mini *minishell)
 	setup_signals(PARENT);
 	while (1)
 	{
-		g_signal_status = 0;
 		input = read_input(minishell);
 		if (!input)
 		{
 			minishell->exit_status = 0;
 			continue ;
 		}
-		if (g_signal_status) // Si Ctrl+C fue presionado
+		/*
+		if (g_signal_status == 1)
 		{
 			minishell->exit_status = 130;
-			continue; // Volver al prompt sin ejecutar nada
+			g_signal_status = 0;
+			continue ;
 		}
+		*/
 		if (!validate_input(input, minishell))
 		{
 			free(input);
@@ -126,16 +128,22 @@ int	main(int argc, char **argv, char **envp)
 	int		last_exit_code;
 
 	(void) argv;
-	if (argc != 1)
-	{
-		ft_putendl_fd("no use arguments", 2);
-		exit(1);
-	}
+	(void) argc;
+
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);
+	// configure_terminal();
 	miniloop(minishell);
 	last_exit_code = minishell->exit_status;
 	free_mini(minishell);
 	return (last_exit_code);
 }
+
+	/*
+	if (argc > 1)
+	{
+		ft_putendl_fd("Error: no use arguments", 2);
+		exit(1);
+	}
+	*/

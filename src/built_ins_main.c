@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins_main.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/11 04:29:04 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_ins_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
@@ -49,6 +61,7 @@ int	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
 	{
 		exit_status = builtin_exit(curr_cmd, mini);
+		// cleanup_and_exit(mini, exit_status);
 		if (exit_status == 255 || exit_status == 0)
 			cleanup_and_exit(mini, exit_status);
 	}

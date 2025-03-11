@@ -6,19 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 22:07:03 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   input.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 01:26:54 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 03:52:05 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +35,13 @@ int	check_quotes_line(const char *line)
 }
 
 /* setup_signals(PARENT);*/
+/*
+write(1, "exit\n", 5);
+mini->exit_status = 0; // Asegurar que $? sea 0
+free_mini(mini);
+rl_clear_history();
+exit(0);
+*/
 char	*read_input(t_mini *mini)
 {
 	char	*line;
@@ -54,17 +49,42 @@ char	*read_input(t_mini *mini)
 	line = readline("minishell> ");
 	if (!line)
 	{
-		write(1, "exit\n", 5);
-		mini->exit_status = 0; // Asegurar que $? sea 0
-		free_mini(mini);
-		rl_clear_history();
-		exit(0);
+		handle_exit(mini);
 	}
 	if (*line)
 		add_history(line);
 	return (line);
 }
-/**
+
+void	configure_terminal(void)
+{
+	struct termios	term;
+
+	// Verifica si la entrada estándar está conectada a una terminal
+	if (isatty(STDIN_FILENO))
+		printf("Running in a terminal: %s\n", ttyname(STDIN_FILENO));
+	else
+	{
+		printf("Not running in a terminal\n");
+		return ; // Si no está en una terminal, no hace falta configurar nada
+	}
+	// Obtiene los atributos actuales de la terminal
+	if (tcgetattr(STDIN_FILENO, &term) == -1)
+	{
+		ft_putendl_fd("tcgetattr", 2);
+		return ;
+	}
+	// Activa la visualización de caracteres de control (mostrar ^C, ^\)
+	term.c_lflag |= ECHOCTL;
+
+	// Aplica los cambios inmediatamente
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	{
+		perror("tcsetattr");
+	}
+}
+
+/*
 tmp = handle_unclosed_quotes(line, mini);
 if (!tmp)
 {

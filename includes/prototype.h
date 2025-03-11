@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:24:56 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 03:42:49 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ char		*get_var_value(char *line);
 char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
-// char		*read_input(void);
 int			check_quotes_line(const char *line);
 char		*read_input(t_mini *mini);
 void		configure_terminal(void);
@@ -318,6 +317,7 @@ int			configure_signal_handler(int signal, void (*handler)(int));
 void		handle_signal_heredoc(int sig);
 void		handle_signal_parent(int sig);
 void		handle_signal_child(int sig);
+int			restore_signal_to_default(int signal);
 
 void		handle_exit(t_mini *minishell);
 int			handle_input(char *input, t_mini *minishell);

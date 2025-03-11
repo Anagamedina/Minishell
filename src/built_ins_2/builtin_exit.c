@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 11:23:28 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 00:52:32 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 04:19:36 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	builtin_exit(t_cmd *cmd, t_mini *mini)
 	while (cmd->cmd_args[arg_count] != NULL)
 		arg_count++;
 	if (arg_count == 1)
+	{
+		mini->exit_status = 0;
 		cleanup_and_exit(mini, mini->exit_status);
+	}
 	if (arg_count == 2)
 	{
 		exit_with_one_argument(cmd, mini);

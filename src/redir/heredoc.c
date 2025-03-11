@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 22:01:04 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/11 06:32:42 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
@@ -51,10 +63,12 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	setup_signals(HERE_DOC);
 	while (1)
 	{
+		/*
 		if (g_signal_status)
 		{
 			return (-1);
 		}
+		*/
 		line = readline("> ");
 		if (!line) // Manejar Ctrl+D
 		{
@@ -162,7 +176,7 @@ int	child_heredoc(t_tokens *curr_token, t_mini *mini)
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
 			write(2, "\nHeredoc cancelado\n", 20);
-			g_signal_status = 1; // Marcar que Ctrl+C
+			// g_signal_status = 1; // Marcar que Ctrl+C
 			return (-1);
 		}
 	}
