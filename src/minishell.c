@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 11:32:37 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:26:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	miniloop(t_mini *minishell)
 			free(input);
 			continue ;
 		}
-		setup_signals(CHILD); 
+		setup_signals(CHILD);
 		if (!execute_commands_pipeline(minishell))
 		{
 			free_tokens_list(&minishell->tokens);
@@ -116,7 +116,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-
+	/*
+	if (argc > 1)
+	{
+		ft_putendl_fd("Error: no use arguments", 2);
+		exit(1);
+	}
+	*/
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);

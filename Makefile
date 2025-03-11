@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/10 18:11:16 by dasalaza         ###   ########.fr        #
+#    Updated: 2025/03/11 18:47:49 by dasalaza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,8 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_EXECUTE)/exce_init.c \
 		$(SRC_EXECUTE)/exce_cmd_type.c \
 		$(SRC_EXECUTE)/exce_cmd.c \
-		$(SRC_EXECUTE)/excec_pipeline.c \
+		$(SRC_EXECUTE)/exce_pipeline.c \
+		$(SRC_EXECUTE)/exce_pipeline_child.c \
 		$(SRC_EXECUTE)/exce_cmd_utils.c \
 		$(SRC_EXECUTE)/exce_utils.c \
 		$(SRC_REDIR)/redir_file.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 01:58:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:42:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 typedef struct s_redir		t_redir;
 typedef struct s_exec		t_exec;
-
-//typedef struct s_pipe t_pipe;
 
 //************** INIT_ENV_list ************/
 
@@ -44,7 +42,7 @@ char		*get_var_value(char *line);
 char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
-// char		*read_input(void);
+
 int			check_quotes_line(const char *line);
 char		*read_input(t_mini *mini);
 void		configure_terminal(void);
@@ -153,9 +151,6 @@ char		*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
 
-//************** parser_tokens.c ********************/
-void		parser_tokens(t_mini *mini);
-
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
@@ -179,7 +174,6 @@ char		*remove_d_quote_and_s_quotes_str(char *str);
 
 int			check_dquote_dollar_and_squotes(const char *str);
 void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
-//int			check_d_quote_dollar_s_quote(const char *str);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token);
 int			has_string_before_dollar(const char *str);
@@ -244,6 +238,7 @@ t_cmd		*process_command_token(t_tokens *token, char **paths, int *cmd_id);
 void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
 void		process_command_args(t_list *current, t_cmd *cmd);
+
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char *key, char *value);
@@ -281,16 +276,13 @@ int			handle_append_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			is_redir_append(t_tokens *token);
 int			is_redir_out(t_tokens *token);
 
-
 //*************HEREDOC**************/
 int			heredoc(t_cmd *cmd);
-// int	heredoc(t_cmd *cmd, int shell_lvl);
+
 void		redirect_out(int output_fd);
 void		redirect_in(int input_fd);
 int			create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
-// int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars, int shell_lvl);
 int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
-// int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars, int shell_lvl);
 char		*expand_variables(char *line);
 void		fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
 void		wait_children(t_mini *mini);
@@ -315,10 +307,7 @@ int			check_consecutive_operators(t_list *token_list);
 
 int			setup_signals(int mode);
 
-// int			setup_signals(int mode, int bash_level);
-
 //*************signals_utils.c**************/
-
 
 int			configure_signal_handler(int signal, void (*handler)(int));
 void		handle_signal_heredoc(int sig);

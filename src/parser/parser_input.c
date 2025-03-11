@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:22:58 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 17:37:09 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:05:16 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,6 @@ void	parse_redir(t_mini *mini)
 		if (token_list->next != NULL)
 		{
 			curr_token_next = (t_tokens *)token_list->next->content;
-			//------heredoc----//
-			// if (is_redir_heredoc(curr_token) && curr_token_next)
-			// {
-			// 	child_heredoc(curr_token, curr_token_next);
-			// }
 			if (is_redir_append(curr_token) && curr_token_next)
 				check_file_append(curr_token_next);
 			if (is_redir_out(curr_token) && curr_token_next)

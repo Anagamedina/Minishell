@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   excec_pipeline.c                                   :+:      :+:    :+:   */
+/*   exce_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/11 11:23:31 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:30:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ void	wait_children(t_mini *mini)
 		}
 	}
 }
-
+/*
 void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 {
-	// heredoc(curr_cmd, mini->bash_lvl);
 	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
@@ -87,6 +86,7 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		close(pipe_fd[1]);
 	execute_builtin_or_external(curr_cmd, mini);
 }
+*/
 
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
@@ -120,7 +120,6 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		// signal(SIGINT, handle_signal_child);//cambio ultimo
 		handle_child(cmd, mini, pipe_fd);
 		exit(EXIT_SUCCESS);
 	}
