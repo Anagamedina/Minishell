@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 10:33:44 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:27:12 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	handle_signal_child(int sig)
 		ft_putstr_fd("\n", 1);
 		// write(1, "\n", 1);
 	}
+	// exit (130);
 }
 void	handle_exit(t_mini *minishell)
 {

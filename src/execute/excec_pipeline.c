@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/11 10:47:02 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:23:31 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		// signal(SIGINT, handle_signal_child);
+		// signal(SIGINT, handle_signal_child);//cambio ultimo
 		handle_child(cmd, mini, pipe_fd);
 		exit(EXIT_SUCCESS);
 	}
