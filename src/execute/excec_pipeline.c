@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   excec_pipeline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/10 01:35:55 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:47:02 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	wait_children(t_mini *mini)
 
 void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 {
+	// heredoc(curr_cmd, mini->bash_lvl);
 	heredoc(curr_cmd);
 	if (apply_redirections(curr_cmd) > 0)
 	{
@@ -119,7 +120,7 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		setup_signals(CHILD);
+		// signal(SIGINT, handle_signal_child);
 		handle_child(cmd, mini, pipe_fd);
 		exit(EXIT_SUCCESS);
 	}

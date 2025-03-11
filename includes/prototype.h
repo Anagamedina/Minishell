@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 11:24:56 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 01:58:08 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,10 +284,13 @@ int			is_redir_out(t_tokens *token);
 
 //*************HEREDOC**************/
 int			heredoc(t_cmd *cmd);
+// int	heredoc(t_cmd *cmd, int shell_lvl);
 void		redirect_out(int output_fd);
 void		redirect_in(int input_fd);
 int			create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
+// int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars, int shell_lvl);
 int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
+// int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars, int shell_lvl);
 char		*expand_variables(char *line);
 void		fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
 void		wait_children(t_mini *mini);
@@ -312,7 +315,10 @@ int			check_consecutive_operators(t_list *token_list);
 
 int			setup_signals(int mode);
 
+// int			setup_signals(int mode, int bash_level);
+
 //*************signals_utils.c**************/
+
 
 int			configure_signal_handler(int signal, void (*handler)(int));
 void		handle_signal_heredoc(int sig);

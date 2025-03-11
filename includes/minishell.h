@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/08 20:31:24 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:44:59 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@
 # include <fcntl.h>  
 # include <sys/wait.h>
 # include <sys/types.h>
-# include <sys/termios.h>
-# include <signal.h>
-# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "macros.h"
+# include <sys/termios.h>
+# include <signal.h>
 
 typedef enum e_type_token
 {

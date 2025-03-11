@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 17:12:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 10:49:42 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	miniloop(t_mini *minishell)
 {
 	char	*input;
 
-	setup_signals(PARENT);
 	while (1)
 	{
 		input = read_input(minishell);
@@ -95,6 +94,7 @@ void	miniloop(t_mini *minishell)
 			free(input);
 			continue ;
 		}
+		setup_signals(CHILD); 
 		if (!execute_commands_pipeline(minishell))
 		{
 			free_tokens_list(&minishell->tokens);
@@ -116,6 +116,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);
