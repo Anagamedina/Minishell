@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 00:24:18 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prototype.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
@@ -12,8 +24,6 @@
 
 #ifndef PROTOTYPE_H
 # define PROTOTYPE_H
-
-# include "minishell.h"
 
 typedef struct s_env		t_env;
 typedef struct s_tokens		t_tokens;
@@ -112,7 +122,6 @@ int			ft_pwd(t_mini *mini);
 //************** TOKEN_LIST.c ********************/
 
 t_tokens	*init_token(char *str, int token_type);
-void		print_list_token(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 
 //************** TOKEN_FREE.c ********************/
@@ -168,7 +177,6 @@ char		*expand_variable(char *result, t_list *env_list, \
 int			handle_single_quote(t_tokens *token);
 int			has_even_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
-char		*remove_d_quote_and_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
 
@@ -176,7 +184,6 @@ int			check_dquote_dollar_and_squotes(const char *str);
 void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
 int			check_backslash_before_dollar(const char *str);
 void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token);
-int			has_string_before_dollar(const char *str);
 int			check_dquote_squote_dollar_case(char *str);
 int			handle_no_expand_cases(t_tokens *token, t_tokens *next_token);
 int			has_consecutives_env_variables_in_token(t_tokens *token);
@@ -199,7 +206,6 @@ int			has_dollar_followed_by_digit(const char *str);
 //************** EXPAND.c ********************/
 //************** expand_vars.c ********************/
 
-// void		expand_dollar(t_tokens *token_list, t_list *env_list);
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 
 //************** expand_token_utils.c ********************/
@@ -227,13 +233,11 @@ char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_
 
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
-void		print_list_commands(t_list *cmd_list);
 t_cmd		*create_new_command(t_tokens *current_token, char **paths);
 t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
-void		finalize_cmd_list(t_list *commands_list);
 t_cmd		*process_command_token(t_tokens *token, char **paths, int *cmd_id);
 void		add_redirection(t_cmd *cmd, t_list *current);
 void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
@@ -256,7 +260,6 @@ char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 t_cmd		*init_command(void);
-// void		handle_child(t_cmd *curr_cmd, t_mini *mini);
 void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 
 //*************redis**************/
@@ -298,24 +301,21 @@ int			validate_pipes_and_separators(t_list *token_list);
 int			validate_and_update_words_positions(t_mini *mini);
 int			check_start_and_end_tokens(t_list *token_list);
 int			is_redir_out(t_tokens *token);
-int			count_env_variables_ia(char **env);
 void		print_syntax_error_token(const char *token_str);
 int			validate_and_update_words_positions(t_mini *mini);
 int			check_consecutive_operators(t_list *token_list);
 
 //*************signals.c**************/
 
-int			setup_signals(int mode);
+int			setup_signals(int mode, t_mini* mini);
 
 //*************signals_utils.c**************/
 
-int			configure_signal_handler(int signal, void (*handler)(int));
 void		handle_signal_heredoc(int sig);
 void		handle_signal_parent(int sig);
 void		handle_signal_child(int sig);
 
 void		handle_exit(t_mini *minishell);
-int			handle_input(char *input, t_mini *minishell);
 void		miniloop(t_mini *minishell);
 void		handle_special_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
 void		remove_and_replace_quotes(t_tokens *token, char quote_type);

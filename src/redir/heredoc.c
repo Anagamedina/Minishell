@@ -6,18 +6,19 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:48:05 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/11 18:07:05 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 23:56:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//TODO: setup_signals(remove NULL)
 int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 {
 	char	*line;
 	char	*expand_line;
 
-	setup_signals(HERE_DOC);
+	setup_signals(HERE_DOC, NULL);
 	line = readline("> ");
 	while (line && ft_strcmp(line, delimiter) != 0)
 	{
@@ -73,7 +74,7 @@ void	child_heredoc(t_tokens *curr_token, t_mini *mini)
 	}
 	if (pid == 0)
 	{
-		setup_signals(HERE_DOC);
+		setup_signals(HERE_DOC, mini);
 		if (create_heredoc(redir, 0, 1) == -1)
 			exit(1);
 		exit(0);

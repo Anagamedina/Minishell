@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 21:28:32 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 17:38:58 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
@@ -51,10 +63,9 @@ static int	setup_child_signals(void)
 	return (1);
 }
 
-int	setup_signals(int mode)
+int	setup_signals(int mode, t_mini *mini)
 {
-	// if (!isatty(STDIN_FILENO))
-	// 	return (0);
+	(void) mini;
 	if (mode == PARENT)
 		return (setup_parent_signals());
 	else if (mode == CHILD)

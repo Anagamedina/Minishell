@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 10:46:07 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/11 23:56:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*read_input(t_mini *mini)
 {
 	char	*line;
 
-	setup_signals(PARENT);
+	setup_signals(PARENT, mini);
 	line = readline("minishell> ");
 	if (!line)
 	{

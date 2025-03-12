@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/11 23:45:56 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
@@ -94,7 +106,7 @@ void	miniloop(t_mini *minishell)
 			free(input);
 			continue ;
 		}
-		setup_signals(CHILD);
+		setup_signals(CHILD, minishell);
 		if (!execute_commands_pipeline(minishell))
 		{
 			free_tokens_list(&minishell->tokens);

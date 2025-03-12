@@ -6,16 +6,12 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 10:44:59 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/12 00:25:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-// # ifndef READLINE_LIBRARY
-// #  define READLINE_LIBRARY
-// # endif
 
 # include "../libft/libft.h"
 # include "prototype.h"
@@ -24,8 +20,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h> 
-# include <fcntl.h>  
+# include <stdio.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <readline/readline.h>

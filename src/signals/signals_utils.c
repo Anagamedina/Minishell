@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 21:28:32 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/11 23:50:19 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 15:15:57 by dasalaza          #+#    #+#             */
@@ -21,7 +33,6 @@ void	handle_signal_heredoc(int sig)
 	}
 }
 
-// void	handle_signal_parent(int sig, t_mini *minishell)
 void	handle_signal_parent(int sig)
 {
 	if (sig == SIGINT)
@@ -31,8 +42,6 @@ void	handle_signal_parent(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	// update mini->exit_status
-	// mini->exit_status = 130;
 }
 
 void	handle_signal_child(int sig)
