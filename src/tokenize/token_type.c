@@ -6,32 +6,13 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 21:23:07 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 18:11:41 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:41:55 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	set_token_type(char *str)
-{
-	if (!str || ft_strlen(str) == 0)
-		return (NULL_TYPE);
-	if (ft_strcmp(str, "<") == 0)
-		return (REDIR_IN);
-	else if (ft_strcmp(str, ">") == 0)
-		return (REDIR_OUT);
-	else if (ft_strcmp(str, ">>") == 0)
-		return (REDIR_APPEND);
-	else if (ft_strcmp(str, "<<") == 0)
-		return (HEREDOC);
-	else if (ft_strcmp(str, "|") == 0)
-		return (PIPE);
-	else if (ft_strcmp(str, ";") == 0)
-		return (DELIMITER);
-	else
-		return (WORD);
-}
-
+/*
 int	is_type_of_operator(t_tokens *token)
 {
 	return (token->type_token == PIPE || \
@@ -39,6 +20,7 @@ int	is_type_of_operator(t_tokens *token)
 		token->type_token == REDIR_OUT || \
 		token->type_token == REDIR_APPEND || token->type_token == HEREDOC);
 }
+*/
 
 int	is_builtin_or_external(t_tokens *token)
 {

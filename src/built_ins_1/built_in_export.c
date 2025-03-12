@@ -60,7 +60,7 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 	append_flag = extract_env_var(arg, &var_name, &var_value);
 	if (!var_name)
 		return ;
-	updated = update_env_var_exist(env_list, var_name, var_value, append_flag);
+	updated = update_env_var(env_list, var_name, var_value, append_flag);
 	if (!updated)
 		add_new_env_variable(env_list, var_name, var_value);
 	else

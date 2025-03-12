@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 18:31:52 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_exit_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:57:25 by anamedin          #+#    #+#             */
@@ -27,17 +39,6 @@ static void	init_varible_atoll(int *sign, int *i, \
 	*result = 0;
 	*prev_result = 0;
 }
-
-/*
-static long long check_overflow(long long result, long long prev_result, int sign)
-{
-	if ((sign == 1 && result < prev_result) || (sign == -1 && result < prev_result))
-	{
-		if (sign == 1)
-			return (9223372036854775807);
-	}
-}
-*/
 
 long long	ft_atoll(const char *str)
 {

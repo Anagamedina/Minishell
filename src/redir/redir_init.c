@@ -36,15 +36,15 @@ t_redir	*init_redirection(t_tokens *token, t_tokens *next_token)
 	return (new_redir);
 }
 
-void	add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, \
-		t_tokens *file_token)
+void	add_redir_to_cmd(t_cmd *cmd, t_tokens *redir_tk,
+						t_tokens *file_tk)
 {
 	t_redir	*new_redir;
 	t_list	*new_node;
 
-	if (!cmd || !redir_token || !file_token)
+	if (!cmd || !redir_tk || !file_tk)
 		return ;
-	new_redir = init_redirection(redir_token, file_token);
+	new_redir = init_redirection(redir_tk, file_tk);
 	if (!new_redir)
 		return ;
 	new_node = ft_lstnew(new_redir);

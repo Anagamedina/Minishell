@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
+void	handle_tokens(t_tokens *token, t_list *env_lst, t_tokens *nxt_tokn)
 {
 	if (handle_single_quote(token))
 	{
@@ -21,16 +21,16 @@ void	handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token)
 	}
 	if (handle_special_quotes(token))
 	{
-		handle_special_cases(token, env_list, next_token);
+		handle_special_cases(token, env_lst, nxt_tokn);
 		return ;
 	}
 	if (has_even_double_quotes(token) \
 			|| ft_strchr_true(token->str, DOLLAR_SIGN))
-		handle_dollar_cases(token, env_list, next_token);
+		handle_dolar_case(token, env_lst, nxt_tokn);
 	if (has_even_double_quotes(token))
-		handle_dollar_cases(token, env_list, next_token);
+		handle_dolar_case(token, env_lst, nxt_tokn);
 	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-		handle_dollar_cases(token, env_list, next_token);
+		handle_dolar_case(token, env_lst, nxt_tokn);
 }
 
 static int	update_command_type(t_mini *mini, t_tokens *curr_token)

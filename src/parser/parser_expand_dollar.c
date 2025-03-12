@@ -49,37 +49,37 @@ static void	process_dollar_with_quotes(t_tokens *token, t_list *env_list)
 	free(token->str);
 	token->str = ft_strdup(tmp);
 	free(tmp);
-	res = replace_dollar_variable_skip_s_quote(token->str, env_list);
+	res = replace_dolar_var_skip_s_quote(token->str, env_list);
 	free(token->str);
 	token->str = ft_strdup(res);
 	free(res);
 }
 
-void	handle_dollar_cases(t_tokens *token, \
-								t_list *env_list, t_tokens *next_token)
+void	handle_dolar_case(t_tokens *tk,
+						t_list *env_lst, t_tokens *nxt_tkn)
 {
 	char	*tmp;
 
-	if (check_dquote_dollar_and_squotes(token->str))
+	if (check_dquote_dollar_and_squotes(tk->str))
 	{
-		remove_and_replace_quotes(token, D_QUOTE);
+		remove_and_replace_quotes(tk, D_QUOTE);
 		return ;
 	}
-	if (check_dquote_squote_dollar_case(token->str))
+	if (check_dquote_squote_dollar_case(tk->str))
 	{
-		process_dollar_with_quotes(token, env_list);
+		process_dollar_with_quotes(tk, env_lst);
 		return ;
 	}
-	if (handle_no_expand_cases(token, next_token) == 0)
+	if (handle_no_expand_cases(tk, nxt_tkn) == 0)
 	{
-		tmp = token->str;
-		if (has_consecutives_env_variables_in_token(token))
+		tmp = tk->str;
+		if (has_consecutives_env_variables_in_token(tk))
 		{
-			handle_consecutive_vars(token, env_list);
-			if (tmp != token->str)
+			handle_consecutive_vars(tk, env_lst);
+			if (tmp != tk->str)
 				tmp = NULL;
 		}
 		else
-			remove_and_replace_quotes(token, D_QUOTE);
+			remove_and_replace_quotes(tk, D_QUOTE);
 	}
 }

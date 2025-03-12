@@ -60,7 +60,7 @@ int	ft_pwd(t_mini *mini)
 		return (1);
 	}
 	ft_putendl_fd(curr_dir, 1);
-	set_variable_in_env_list((&mini->env), "PWD", curr_dir);
+	set_variable_in_env_lst((&mini->env), "PWD", curr_dir);
 	free(curr_dir);
 	return (0);
 }

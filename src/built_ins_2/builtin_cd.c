@@ -22,16 +22,16 @@ int	cd_change_directory(char *new_path, t_mini *mini)
 		return (1);
 	if (handle_cd_errors(new_path) == 1)
 		return (free(old_pwd), 1);
-	set_variable_in_env_list(&(mini->env), "OLDPWD", old_pwd);
+	set_variable_in_env_lst(&(mini->env), "OLDPWD", old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
 		ft_putstr_fd("cd: error: lost directory, moving to /\n", 2);
 		chdir("/");
-		set_variable_in_env_list(&(mini->env), "PWD", "/");
+		set_variable_in_env_lst(&(mini->env), "PWD", "/");
 		return (free(old_pwd), 0);
 	}
-	set_variable_in_env_list(&(mini->env), "PWD", new_pwd);
+	set_variable_in_env_lst(&(mini->env), "PWD", new_pwd);
 	free(old_pwd);
 	free(new_pwd);
 	return (0);

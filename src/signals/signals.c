@@ -6,24 +6,13 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 21:28:32 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/12 17:38:58 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/11 19:45:48 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:41:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
 int	restore_signal_to_default(int signal)
 {
 	struct sigaction	sa;
@@ -35,6 +24,7 @@ int	restore_signal_to_default(int signal)
 		return (-1);
 	return (0);
 }
+*/
 
 static int	setup_here_doc_signals(void)
 {

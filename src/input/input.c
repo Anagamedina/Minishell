@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 23:56:02 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:42:44 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,27 @@ if (!tmp)
 	return (NULL);
 }
 */
+
+int	set_token_type(char *str)
+{
+	if (!str || ft_strlen(str) == 0)
+		return (NULL_TYPE);
+	if (ft_strcmp(str, "<") == 0)
+		return (REDIR_IN);
+	else if (ft_strcmp(str, ">") == 0)
+		return (REDIR_OUT);
+	else if (ft_strcmp(str, ">>") == 0)
+		return (REDIR_APPEND);
+	else if (ft_strcmp(str, "<<") == 0)
+		return (HEREDOC);
+	else if (ft_strcmp(str, "|") == 0)
+		return (PIPE);
+	else if (ft_strcmp(str, ";") == 0)
+		return (DELIMITER);
+	else
+		return (WORD);
+}
+
 /*
 static void	handle_unexpected_eof(char *input, t_mini *mini)
 {

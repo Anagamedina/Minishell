@@ -83,30 +83,30 @@ static int	append_char_to_result(char **result, char c)
 }
 
 //TODO:	posible leak en esta funcion
-char	*replace_dollar_variable_skip_s_quote(char *token, t_list *env_list)
+char	*replace_dolar_var_skip_s_quote(char *tk_update, t_list *env_list)
 {
 	char	*result;
 	char	*var_name;
 	size_t	i;
 
-	if (!token || !env_list)
+	if (!tk_update || !env_list)
 		return (NULL);
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
 	i = 0;
-	while (token[i])
+	while (tk_update[i])
 	{
-		if (token[i] == DOLLAR_SIGN)
+		if (tk_update[i] == DOLLAR_SIGN)
 		{
 			i++;
-			var_name = extract_var_name_expand(token, &i);
+			var_name = extract_var_name_expand(tk_update, &i);
 			if (!append_variable_value(&result, env_list, var_name))
 			{
 				return (free(result), NULL);
 			}
 		}
-		else if (!append_char_to_result(&result, token[i++]))
+		else if (!append_char_to_result(&result, tk_update[i++]))
 			return (free(result), NULL);
 	}
 	return (result);

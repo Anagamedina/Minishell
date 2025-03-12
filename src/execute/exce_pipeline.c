@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exce_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 19:14:51 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exce_pipeline.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
@@ -107,8 +119,7 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 }
 
-void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
-		int pipe_fd[2], int *input_fd)
+void	fork_and_execute(t_cmd *cmd, t_mini *mini, int p_fd[2], int *fd_in)
 {
 	pid_t	pid;
 
@@ -120,11 +131,11 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		handle_child(cmd, mini, pipe_fd);
+		handle_child(cmd, mini, p_fd);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		handle_parent(cmd, pipe_fd, input_fd);
+		handle_parent(cmd, p_fd, fd_in);
 	}
 }
