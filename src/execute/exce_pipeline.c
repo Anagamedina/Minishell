@@ -1,12 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   excec_pipeline.c                                   :+:      :+:    :+:   */
+/*   exce_pipeline.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/13 00:53:14 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exce_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:05:02 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/10 20:11:31 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 19:30:48 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +57,6 @@ void	wait_children(t_mini *mini)
 			if (signal == SIGINT)
 			{
 				mini->exit_status = 130;
-				write(1, "\n", 1);
 			}
 			else if (signal == SIGQUIT)
 			{
@@ -55,7 +66,7 @@ void	wait_children(t_mini *mini)
 		}
 	}
 }
-
+/*
 void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 {
 	heredoc(curr_cmd);
@@ -87,6 +98,7 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 		close(pipe_fd[1]);
 	execute_builtin_or_external(curr_cmd, mini);
 }
+*/
 
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
@@ -107,11 +119,15 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 }
 
-void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
-		int pipe_fd[2], int *input_fd)
+void	fork_and_execute(t_cmd *cmd, t_mini *mini, int p_fd[2], int *fd_in)
 {
 	pid_t	pid;
 
+	if (!cmd || !mini)
+	{
+		ft_putendl_fd("Error: fork_and_execute received NULL", 2);
+		exit(EXIT_FAILURE);
+	}
 	pid = fork();
 	if (pid < 0)
 	{
@@ -120,13 +136,11 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, \
 	}
 	if (pid == 0)
 	{
-		setup_signals(CHILD);
-		handle_child(cmd, mini, pipe_fd);
-		exit(mini->exit_status);
-		// exit(EXIT_SUCCESS);
+		handle_child(cmd, mini, p_fd);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		handle_parent(cmd, pipe_fd, input_fd);
+		handle_parent(cmd, p_fd, fd_in);
 	}
 }

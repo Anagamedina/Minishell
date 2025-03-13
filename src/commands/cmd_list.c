@@ -28,7 +28,7 @@ void	process_token(t_list **commands_list, t_list *token_list, \
 
 	token = (t_tokens *)token_list->content;
 	if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
-		add_command_to_list(commands_list, token, paths, cmd_id);
+		cmds_to_lst(commands_list, token, paths, cmd_id);
 	else if (*commands_list)
 		add_redirection((t_cmd *)(ft_lstlast(*commands_list)->content),
 			token_list);

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 03:42:49 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 19:19:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTOTYPE_H
 # define PROTOTYPE_H
-
-# include "minishell.h"
 
 typedef struct s_env		t_env;
 typedef struct s_tokens		t_tokens;
@@ -22,8 +20,6 @@ typedef struct s_mini		t_mini;
 typedef struct s_split_data	t_split_data;
 typedef struct s_redir		t_redir;
 typedef struct s_exec		t_exec;
-
-//typedef struct s_pipe t_pipe;
 
 //************** INIT_ENV_list ************/
 
@@ -44,6 +40,7 @@ char		*get_var_value(char *line);
 char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 //*************INPUT***********/
+
 int			check_quotes_line(const char *line);
 char		*read_input(t_mini *mini);
 void		configure_terminal(void);
@@ -56,13 +53,13 @@ t_env		*find_env_var(t_list *env_list, char *key);
 
 //************** BUILT_IN_export.c********/
 
-int			set_variable_in_env_list(t_list **env_list, char *key, char *new_value);
+int			set_variable_in_env_lst(t_list **env_lst, char *key, char *new_val);
 int			env_variable_exists(t_list *env_list, char *key_to_find);
 int			ft_export(t_cmd *curr_cmd, t_mini *mini);
 
 //************ EXPORT_UTILS.C **********/
 
-int			update_env_var_exist(t_list **env_lst, char *name, char *value, int flag);
+int			update_env_var(t_list **env_lst, char *name, char *value, int flag);
 int			add_new_env_variable(t_list **env, char *var_name, char *var_value);
 
 //************ BUILTINS_PART_ONE_UTILS.C **********/
@@ -113,7 +110,6 @@ int			ft_pwd(t_mini *mini);
 //************** TOKEN_LIST.c ********************/
 
 t_tokens	*init_token(char *str, int token_type);
-void		print_list_token(t_list *tokens_list);
 t_list		*convert_tokens_to_list(char **tokens);
 
 //************** TOKEN_FREE.c ********************/
@@ -152,14 +148,10 @@ char		*remove_consecutive_quotes(char *line);
 
 //************** PARSER.c ********************/
 
-//************** parser_tokens.c ********************/
-void		parser_tokens(t_mini *mini);
-
 //************** parser_syntax_dollar.c ********************/
 
 int			check_special_c(char c);
 char		*remove_quotes_str(const char *str, char c);
-int			handle_special_balanced_dquotes(t_tokens *token);
 void		remove_and_replace_quotes(t_tokens *token, char quote_type);
 char		*append_non_dollar_char(char *result, char c);
 int			is_valid_input(t_tokens *token, t_list *env_list);
@@ -172,16 +164,13 @@ char		*expand_variable(char *result, t_list *env_list, \
 int			handle_single_quote(t_tokens *token);
 int			has_even_double_quotes(t_tokens *token);
 int			handle_special_quotes(t_tokens *token);
-char		*remove_d_quote_and_s_quotes_str(char *str);
 
 //************** parser_syntax_expand.c ********************/
 
 int			check_dquote_dollar_and_squotes(const char *str);
-void		handle_dollar_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
-//int			check_d_quote_dollar_s_quote(const char *str);
+void		handle_dolar_case(t_tokens *tk, t_list *env_lst, t_tokens *nxt_tkn);
 int			check_backslash_before_dollar(const char *str);
-void		handle_tokens(t_tokens *token, t_list *env_list, t_tokens *next_token);
-int			has_string_before_dollar(const char *str);
+void		handle_tokens(t_tokens *token, t_list *env_lst, t_tokens *nxt_tokn);
 int			check_dquote_squote_dollar_case(char *str);
 int			handle_no_expand_cases(t_tokens *token, t_tokens *next_token);
 int			has_consecutives_env_variables_in_token(t_tokens *token);
@@ -204,14 +193,13 @@ int			has_dollar_followed_by_digit(const char *str);
 //************** EXPAND.c ********************/
 //************** expand_vars.c ********************/
 
-// void		expand_dollar(t_tokens *token_list, t_list *env_list);
 void		get_var_from_token(t_tokens *token_list, t_list *env_list);
 
 //************** expand_token_utils.c ********************/
 
 char		*extract_var_name(const char *str);
 int			update_token_str(t_tokens *token, char **split_word);
-char		*get_and_reconstruct_token(char *split_word, const char *var_value, int i);
+char		*get_and_reconstruct_token(char *split_wrd, char *var_value, int i);
 void		copy_word_to_token(const char *word, char *merged_token, size_t *k);
 
 //************** expand_split.c ********************/
@@ -226,23 +214,22 @@ char		*ft_strjoin_char(char *str, char c);
 //************** expand_env.c ********************/
 
 char		*find_value_in_env(t_list *env_list, char *var_name_token);
-char		*replace_dollar_variable_skip_s_quote(char *token_rm_d_quote, t_list *env_list);
+char		*replace_dolar_var_skip_s_quote(char *tk_update, t_list *env_list);
 
 //************** INIT_COMMAND.C ********/
 
 int			is_builtin_command(char *cmd);
 t_cmd		*init_command(void);
-void		print_list_commands(t_list *cmd_list);
 t_cmd		*create_new_command(t_tokens *current_token, char **paths);
 t_list		*create_cmd_list(t_list *token_list, char **paths);
 void		count_args(t_list *token_list, t_cmd *cmd);
 void		add_args(t_cmd **cmd, t_list *token_list);
 int			add_details_to_cmd_list(t_list *commands_list, t_list *token_list);
-void		finalize_cmd_list(t_list *commands_list);
 t_cmd		*process_command_token(t_tokens *token, char **paths, int *cmd_id);
 void		add_redirection(t_cmd *cmd, t_list *current);
-void		add_command_to_list(t_list **cmd_list, t_tokens *token, char **paths, int *cmd_id);
+void		cmds_to_lst(t_list **cmd_lst, t_tokens *tk, char **paths, int *id);
 void		process_command_args(t_list *current, t_cmd *cmd);
+
 //************** BUILT_INS_UTILS.C ********/
 
 t_list		*create_new_env_node(char *key, char *value);
@@ -260,7 +247,6 @@ char		*is_cmd_external(t_mini *mini, t_tokens *token);
 int			execute_commands(t_mini *mini);
 void		execute_external(t_cmd *cmd, char **envp);
 t_cmd		*init_command(void);
-// void		handle_child(t_cmd *curr_cmd, t_mini *mini);
 void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 
 //*************redis**************/
@@ -268,7 +254,7 @@ void		handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd);
 void		update_words_in_tokens(t_mini *mini);
 void		parse_redir(t_mini *mini);
 int			open_file(char *file, int type);
-void		add_redirection_to_cmd(t_cmd *cmd, t_tokens *redir_token, t_tokens *file_token);
+void		add_redir_to_cmd(t_cmd *cmd, t_tokens *redir_tk, t_tokens *file_tk);
 int			apply_redirections(t_cmd *cmd);
 int			is_redir(t_tokens *token);
 t_redir		*init_redirection(t_tokens *token, t_tokens *next_token);
@@ -280,15 +266,16 @@ int			handle_append_redirection(t_cmd *cmd, t_redir *curr_redir);
 int			is_redir_append(t_tokens *token);
 int			is_redir_out(t_tokens *token);
 
-
 //*************HEREDOC**************/
 int			heredoc(t_cmd *cmd);
+
 void		redirect_out(int output_fd);
 void		redirect_in(int input_fd);
 int			create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars);
 int			write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars);
 char		*expand_variables(char *line);
-void		fork_and_execute(t_cmd *cmd, t_mini *mini, int pipe_fd[2], int *input_fd);
+void		fork_and_execute(t_cmd *cmd, t_mini *mini, int p_fd[2], int *fd_in);
+
 void		wait_children(t_mini *mini);
 void		handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
 void		setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd);
@@ -296,33 +283,28 @@ int			check_repeated_redirections(t_list *token_list);
 char		**env_list_to_array(t_list *env_list);
 
 //*************SIGNALS**************/
-// int			validate_syntax(t_list *token_list);
+
 int			validate_syntax(t_list *token_list, t_mini *mini);
 int			validate_pipes_and_separators(t_list *token_list);
 int			validate_and_update_words_positions(t_mini *mini);
-int			check_start_and_end_tokens(t_list *token_list);
 int			is_redir_out(t_tokens *token);
-int			count_env_variables_ia(char **env);
 void		print_syntax_error_token(const char *token_str);
 int			validate_and_update_words_positions(t_mini *mini);
 int			check_consecutive_operators(t_list *token_list);
 
 //*************signals.c**************/
 
-int			setup_signals(int mode);
+int			setup_signals(int mode, t_mini *mini);
 
 //*************signals_utils.c**************/
 
-int			configure_signal_handler(int signal, void (*handler)(int));
 void		handle_signal_heredoc(int sig);
 void		handle_signal_parent(int sig);
 void		handle_signal_child(int sig);
-int			restore_signal_to_default(int signal);
 
 void		handle_exit(t_mini *minishell);
-int			handle_input(char *input, t_mini *minishell);
 void		miniloop(t_mini *minishell);
-void		handle_special_cases(t_tokens *token, t_list *env_list, t_tokens *next_token);
+void		handle_special_cases(t_tokens *tok, t_list *env, t_tokens *nxt_tok);
 void		remove_and_replace_quotes(t_tokens *token, char quote_type);
 void		print_command_not_found(const char *cmd);
 void		handle_memory_allocation_error(void);

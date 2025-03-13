@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:03:10 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 17:37:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:20:46 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	copy_word_to_token(const char *word, char *merged_token, size_t *k)
 	}
 }
 
-char	*get_and_reconstruct_token(char *split_word, const char *var_val, int i)
+char	*get_and_reconstruct_token(char *split_wrd, char *var_val, int i)
 {
 	int		before;
 	int		after;
@@ -67,12 +67,12 @@ char	*get_and_reconstruct_token(char *split_word, const char *var_val, int i)
 	char	*new_token;
 
 	before = 0;
-	while (split_word[i] && split_word[i] == SPACE)
+	while (split_wrd[i] && split_wrd[i] == SPACE)
 		before ++;
-	while (split_word[i] && split_word[i] != SPACE)
+	while (split_wrd[i] && split_wrd[i] != SPACE)
 		i ++;
 	after = 0;
-	while (split_word[i] && split_word[i] == SPACE)
+	while (split_wrd[i] && split_wrd[i] == SPACE)
 		after ++;
 	len_token = before + (int) ft_strlen(var_val) + after;
 	new_token = malloc(sizeof(char) * (len_token + 1));

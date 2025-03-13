@@ -46,7 +46,7 @@ static void	check_pwd_exist_in_env_list(t_list **env_list)
 
 static void	reset_shlvl(t_list **env_list)
 {
-	set_variable_in_env_list(env_list, SHLVL, "0");
+	set_variable_in_env_lst(env_list, SHLVL, "0");
 }
 
 static void	increment_shlvl(t_list **env_list, char *shell_level)
@@ -66,7 +66,7 @@ static void	increment_shlvl(t_list **env_list, char *shell_level)
 	}
 	if (new_shlvl)
 	{
-		if (!set_variable_in_env_list(env_list, "SHLVL", new_shlvl))
+		if (!set_variable_in_env_lst(env_list, "SHLVL", new_shlvl))
 			perror("Error: Failed to update SHLVL");
 		free(new_shlvl);
 	}

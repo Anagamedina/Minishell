@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 12:02:14 by catalinab         #+#    #+#             */
-/*   Updated: 2025/03/11 06:29:31 by dasalaza         ###   ########.fr       */
+/*   Created: 2025/03/11 21:28:32 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/12 18:41:25 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
 int	restore_signal_to_default(int signal)
 {
 	struct sigaction	sa;
@@ -23,48 +24,43 @@ int	restore_signal_to_default(int signal)
 		return (-1);
 	return (0);
 }
+*/
 
 static int	setup_here_doc_signals(void)
 {
-	int	tmp_ignore;
-	int	tmp_quit;
-
-	tmp_quit = configure_signal_handler(SIGINT, handle_signal_heredoc);
-	if (tmp_quit == -1)
-		return (-1);
-	tmp_ignore = configure_signal_handler(SIGQUIT, SIG_IGN);
-	if (tmp_ignore == -1)
-		return (-1);
+	signal(SIGINT, handle_signal_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 	return (1);
 }
 
 static int	setup_parent_signals(void)
 {
-	if (configure_signal_handler(SIGINT, handle_signal_parent) == -1)
-		return (-1);
-	if (configure_signal_handler(SIGQUIT, SIG_IGN) == -1)
-		return (-1);
+	signal(SIGINT, handle_signal_parent);
+	signal(SIGQUIT, SIG_IGN);
 	return (1);
 }
 
-/*
+static void	handle_sigquit_child(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+}
+
 static int	setup_child_signals(void)
 {
-	if (configure_signal_handler(SIGINT, handle_signal_child) == -1)
-		return (-1);
-	if (restore_signal_to_default(SIGQUIT) == -1)
-		return (-1);
+	signal(SIGINT, handle_signal_child);
+	signal(SIGQUIT, handle_sigquit_child);
 	return (1);
 }
-*/
 
-int	setup_signals(int mode)
+int	setup_signals(int mode, t_mini *mini)
 {
+	(void) mini;
 	if (mode == PARENT)
 		return (setup_parent_signals());
-	/*if (mode == CHILD)
-		return (setup_child_signals());*/
-	if (mode == HERE_DOC)
+	else if (mode == CHILD)
+		return (setup_child_signals());
+	else if (mode == HERE_DOC)
 		return (setup_here_doc_signals());
 	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 19:45:45 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 21:19:49 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:18:35 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	remove_and_replace_quotes(t_tokens *token, char quote_type)
 	}
 }
 
-void	handle_special_cases(t_tokens *token, t_list *env_list, \
-		t_tokens *next_token)
+void	handle_special_cases(t_tokens *tok, t_list *env, t_tokens *nxt_tok)
 {
-	if (ft_strchr_true(token->str, DOLLAR_SIGN))
-		handle_dollar_cases(token, env_list, next_token);
+	if (ft_strchr_true(tok->str, DOLLAR_SIGN))
+		handle_dolar_case(tok, env, nxt_tok);
 	else
-		remove_and_replace_quotes(token, D_QUOTE);
+		remove_and_replace_quotes(tok, D_QUOTE);
 }

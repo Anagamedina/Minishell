@@ -20,22 +20,22 @@ static int	append_env_value(char **new_value, char *existing, char *value)
 	return (TRUE);
 }
 
-int	set_variable_in_env_list(t_list **env_list, char *key, char *new_value)
+int	set_variable_in_env_lst(t_list **env_lst, char *key, char *new_val)
 {
 	t_list	*current_node;
 	t_env	*var;
 
-	if (!env_list || !key)
+	if (!env_lst || !key)
 		return (0);
-	current_node = *env_list;
+	current_node = *env_lst;
 	while (current_node)
 	{
 		var = (t_env *) current_node->content;
 		if (ft_strcmp(var->key, key) == 0)
 		{
 			free(var->value);
-			if (new_value)
-				var->value = ft_strdup(new_value);
+			if (new_val)
+				var->value = ft_strdup(new_val);
 			else
 				var->value = ft_strdup("");
 			return (1);
@@ -81,7 +81,7 @@ int	add_new_env_variable(t_list **env, char *var_name, char *var_value)
 	return (TRUE);
 }
 
-int	update_env_var_exist(t_list **env_lst, char *name, char *value, int flag)
+int	update_env_var(t_list **env_lst, char *name, char *value, int flag)
 {
 	char	*new_value;
 	char	*existing_value;
@@ -96,7 +96,7 @@ int	update_env_var_exist(t_list **env_lst, char *name, char *value, int flag)
 		if (!append_env_value(&new_value, existing_value, value))
 			return (FALSE);
 	}
-	result = set_variable_in_env_list(env_lst, name, new_value);
+	result = set_variable_in_env_lst(env_lst, name, new_value);
 	if (result == 1)
 	{
 		free(name);

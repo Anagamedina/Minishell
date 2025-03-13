@@ -6,11 +6,45 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:50:56 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 17:34:46 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:50:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	print_syntax_error(char *token)
+{
+	write(2, "bash: syntax error near unexpected token `", 42);
+	write(2, token, ft_strlen(token));
+	write(2, "'\n", 2);
+}
+
+static int	check_start_and_end_tokens(t_list *token_list)
+{
+	t_tokens	*first;
+	t_tokens	*last;
+	t_list		*current;
+
+	current = token_list;
+	if (!current)
+		return (FALSE);
+	first = (t_tokens *)current->content;
+	if (first->type_token == PIPE || first->type_token == DELIMITER)
+	{
+		print_syntax_error(first->str);
+		return (FALSE);
+	}
+	while (current->next)
+		current = current->next;
+	last = (t_tokens *)current->content;
+	if (last->type_token == PIPE || last->type_token == DELIMITER || \
+	is_redir(last))
+	{
+		print_syntax_error(last->str);
+		return (FALSE);
+	}
+	return (TRUE);
+}
 
 static int	check_redir_after_pipe(t_list *token_list)
 {

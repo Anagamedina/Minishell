@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
+/*   Updated: 2025/03/11 23:45:56 by dasalaza         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 04:13:43 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:26:27 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// int	g_signal_status;
 
 int	tokenize_and_validate(t_mini *minishell, char *input)
 {
@@ -81,23 +91,11 @@ void	miniloop(t_mini *minishell)
 {
 	char	*input;
 
-	setup_signals(PARENT);
 	while (1)
 	{
 		input = read_input(minishell);
 		if (!input)
-		{
-			minishell->exit_status = 0;
 			continue ;
-		}
-		/*
-		if (g_signal_status == 1)
-		{
-			minishell->exit_status = 130;
-			g_signal_status = 0;
-			continue ;
-		}
-		*/
 		if (!validate_input(input, minishell))
 		{
 			free(input);
@@ -108,6 +106,7 @@ void	miniloop(t_mini *minishell)
 			free(input);
 			continue ;
 		}
+		setup_signals(CHILD, minishell);
 		if (!execute_commands_pipeline(minishell))
 		{
 			free_tokens_list(&minishell->tokens);
@@ -127,19 +126,8 @@ int	main(int argc, char **argv, char **envp)
 	t_mini	*minishell;
 	int		last_exit_code;
 
-	(void) argv;
 	(void) argc;
-
-	minishell = init_mini_list(envp);
-	if (!minishell)
-		return (ft_putendl_fd("Error: init minishell.", 2), 1);
-	// configure_terminal();
-	miniloop(minishell);
-	last_exit_code = minishell->exit_status;
-	free_mini(minishell);
-	return (last_exit_code);
-}
-
+	(void) argv;
 	/*
 	if (argc > 1)
 	{
@@ -147,3 +135,11 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	*/
+	minishell = init_mini_list(envp);
+	if (!minishell)
+		return (ft_putendl_fd("Error: init minishell.", 2), 1);
+	miniloop(minishell);
+	last_exit_code = minishell->exit_status;
+	free_mini(minishell);
+	return (last_exit_code);
+}

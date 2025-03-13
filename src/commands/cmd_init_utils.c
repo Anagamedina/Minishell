@@ -18,7 +18,7 @@ void	add_redirection(t_cmd *cmd, t_list *current)
 
 	token = (t_tokens *)current->content;
 	if (is_redir(token) && cmd && current->next)
-		add_redirection_to_cmd(cmd, token, (t_tokens *)current->next->content);
+		add_redir_to_cmd(cmd, token, (t_tokens *)current->next->content);
 }
 
 t_cmd	*process_command_token(t_tokens *token, char **paths, int *cmd_id)
@@ -36,13 +36,13 @@ t_cmd	*process_command_token(t_tokens *token, char **paths, int *cmd_id)
 	return (new_cmd);
 }
 
-void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
-		char **paths, int *cmd_id)
+void	cmds_to_lst(t_list **cmd_lst, t_tokens *tk,
+					char **paths, int *id)
 {
 	t_cmd	*cmd;
 	t_list	*new_node;
 
-	cmd = process_command_token(token, paths, cmd_id);
+	cmd = process_command_token(tk, paths, id);
 	if (!cmd)
 		return ;
 	new_node = ft_lstnew(cmd);
@@ -51,7 +51,7 @@ void	add_command_to_list(t_list **cmd_list, t_tokens *token, \
 		free_command(cmd);
 		return ;
 	}
-	ft_lstadd_back(cmd_list, new_node);
+	ft_lstadd_back(cmd_lst, new_node);
 }
 
 void	process_command_args(t_list *current, t_cmd *cmd)
