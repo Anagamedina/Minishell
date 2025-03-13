@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 04:29:04 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:12:49 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int	cases_builtins(t_mini *mini, t_cmd *curr_cmd)
 	else if (ft_strcmp(curr_cmd->cmd, "unset") == 0)
 		exit_status = ft_unset(&(mini->env), curr_cmd);
 	else if (ft_strcmp(curr_cmd->cmd, "env") == 0)
-		exit_status = ft_env(mini->env);
+	{
+		if (curr_cmd->cmd_args && curr_cmd->cmd_args[1] == NULL)
+			exit_status = ft_env(mini->env);
+		else
+			return (127);
+	}
 	else if (ft_strcmp(curr_cmd->cmd, "cd") == 0)
 		exit_status = ft_cd(mini, curr_cmd);
 	else if (ft_strcmp(curr_cmd->cmd, "exit") == 0)
