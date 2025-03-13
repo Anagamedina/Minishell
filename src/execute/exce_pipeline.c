@@ -6,7 +6,7 @@
 /*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/12 19:14:51 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:53:14 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,11 @@ void	fork_and_execute(t_cmd *cmd, t_mini *mini, int p_fd[2], int *fd_in)
 {
 	pid_t	pid;
 
+	if (!cmd || !mini)
+	{
+		ft_putendl_fd("Error: fork_and_execute received NULL", 2);
+		exit(EXIT_FAILURE);
+	}
 	pid = fork();
 	if (pid < 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/12 18:42:44 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/13 00:54:06 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	check_quotes_line(const char *line)
 	return (TRUE);
 }
 
-/* setup_signals(PARENT);*/
 char	*read_input(t_mini *mini)
 {
 	char	*line;

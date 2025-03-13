@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:26:11 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/05 23:51:13 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/13 01:13:02 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*convert_escape_sequences(const char *str)
 	result = malloc(len + 1);
 	if (!result)
 	{
-		perror("malloc error");
 		return (NULL);
 	}
 	process_string(str, result);

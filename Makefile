@@ -13,8 +13,8 @@
 NAME = minishell
 CC = cc #-O1 #-v
 #CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
-#CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
-CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) -g -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
+#CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) -g -fsanitize=address -fsanitize=leak
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini
