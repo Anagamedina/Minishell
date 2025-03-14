@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 20:05:07 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:45:55 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_list	*init_env_list(char **envp)
 	{
 		if (!add_env_node(&env_list, envp[i]))
 		{
-			free_env_list(&env_list);	//new
+			free_env_list(&env_list);
 			return (NULL);
 		}
 		i ++;

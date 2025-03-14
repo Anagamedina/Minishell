@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 18:40:39 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:45:44 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	extract_env_var(char *arg, char **var_name, char **var_value)
 	else
 		*var_value = get_var_value(arg);
 	if (!*var_name)
-		return (error_export_syntax(arg), free(*var_value), 0);
+		// return (error_export_syntax(arg), free(*var_value), 0);
+		return (free(*var_value), 0);
 	if (!ft_strchr(arg, '='))
 		return (free(*var_value), *var_value = NULL, append_flag);
 	return (append_flag);
@@ -70,7 +71,6 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 		add_new_env_variable(env_list, var_name, var_value);
 	else
 	{
-		free(var_value);
 		var_value = NULL;
 	}
 }
