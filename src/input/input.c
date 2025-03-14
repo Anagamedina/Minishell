@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/13 00:54:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:56:26 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*read_input(t_mini *mini)
 	if (!line)
 	{
 		write(1, "exit\n", 5);
+		rl_clear_history(); //new
 		free_mini(mini);
 		exit(0);
 	}
