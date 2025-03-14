@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:39:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/14 21:21:42 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:15:05 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)
 			continue ;
 		}
 		if (token->type_token == CMD_EXTERNAL || token->type_token == BUILTINS)
-			process_command_node(commands_list, token, current, &cmd_count);
+			process_command_node(commands_list, current, &cmd_count);
 		current = current->next;
 	}
 	return (0);

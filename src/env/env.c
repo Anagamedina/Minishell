@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 20:45:55 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:03:30 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,13 @@ t_list	*init_env_list(char **envp)
 	return (env_list);
 }
 
+void	print_str(char *cmd_str)
+{
+	ft_putstr_fd("env: ", 2);
+	ft_putstr_fd(cmd_str, 2);
+	ft_putendl_fd(": No such file or directory", 2);
+}
+
 int	ft_env(t_list *env_list, t_cmd *cmd)
 {
 	t_list	*current;
@@ -69,9 +76,7 @@ int	ft_env(t_list *env_list, t_cmd *cmd)
 		return (1);
 	if (cmd->cmd_args && cmd->cmd_args[1] != NULL)
 	{
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(cmd->cmd_args[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		print_str(cmd->cmd_args[1]);
 		return (127);
 	}
 	current = env_list;

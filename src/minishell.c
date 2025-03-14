@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 21:18:57 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:16:18 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,8 @@ void	miniloop(t_mini *minishell)
 		input = read_input(minishell);
 		if (!input)
 			continue ;
-		if (!validate_input(input, minishell))
-		{
-			free(input);
-			continue ;
-		}
-		if (!tokenize_and_validate(minishell, input))
+		if (!validate_input(input, minishell) \
+			|| !tokenize_and_validate(minishell, input))
 		{
 			free(input);
 			continue ;
@@ -97,14 +93,10 @@ void	miniloop(t_mini *minishell)
 		setup_signals(CHILD, minishell);
 		if (!execute_commands_pipeline(minishell))
 		{
-			free_tokens_list(&minishell->tokens);
-			minishell->tokens = NULL;
-			free(input);
+			cleanup_input(minishell, input);
 			continue ;
 		}
-		free_tokens_list(&minishell->tokens);
-		minishell->tokens = NULL;
-		free(input);
+		cleanup_input(minishell, input);
 	}
 	rl_clear_history();
 }
@@ -114,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	t_mini	*minishell;
 	int		last_exit_code;
 
-	(void) argc;
+	(void) argv;
 	if (argc > 1)
 	{
 		ft_putendl_fd("Error: no use arguments", 2);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 21:17:17 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:12:44 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ int	set_token_type(char *str)
 		return (DELIMITER);
 	else
 		return (WORD);
+}
+
+void	cleanup_input(t_mini *minishell, char *input)
+{
+	free_tokens_list(&minishell->tokens);
+	minishell->tokens = NULL;
+	free(input);
 }

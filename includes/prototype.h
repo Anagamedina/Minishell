@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 17:53:11 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 22:07:10 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char		*get_variable_in_env_list(t_list *env_list, char *key_to_find);
 
 int			check_quotes_line(const char *line);
 char		*read_input(t_mini *mini);
+void		cleanup_input(t_mini *minishell, char *input);
 void		configure_terminal(void);
 void		parser_tokens(t_mini *mini);
 
