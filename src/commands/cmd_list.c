@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 17:39:34 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/10 12:32:15 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:21:42 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ t_list	*create_cmd_list(t_list *token_list, char **paths)
 	return (commands_list);
 }
 
-void	process_command_node(t_list *cmd_node, t_tokens *token, \
-		t_list *current, int *cmd_count)
+void	process_command_node(t_list *cmd_node, t_list *current, int *cmd_count)
 {
 	t_cmd	*cmd;
 
@@ -75,8 +74,6 @@ void	process_command_node(t_list *cmd_node, t_tokens *token, \
 		}
 		cmd_node = cmd_node->next;
 	}
-	if (!cmd_node)
-		printf("Error: Command '%s' not found.\n", token->str);
 }
 
 int	add_details_to_cmd_list(t_list *commands_list, t_list *token_list)

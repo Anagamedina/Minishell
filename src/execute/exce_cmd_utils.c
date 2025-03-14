@@ -6,20 +6,12 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:11:54 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/13 00:43:37 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:18:01 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*
-void	execute_external(t_cmd *cmd, char **envp)
-{
-	execve(cmd->cmd_path, cmd->cmd_args, envp);
-	perror("Error ejecutando comando externo con execve");
-	exit(EXIT_FAILURE);
-}
-*/
 void	execute_external(t_cmd *cmd, char **envp)
 {
 	if (!cmd->cmd_path)
@@ -28,7 +20,6 @@ void	execute_external(t_cmd *cmd, char **envp)
 		exit(127);
 	}
 	execve(cmd->cmd_path, cmd->cmd_args, envp);
-	perror("execve failed"); // Añade esto para ver si hay error
 	exit(EXIT_FAILURE);
 }
 

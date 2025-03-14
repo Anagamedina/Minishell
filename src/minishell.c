@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 23:45:56 by dasalaza         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
 /*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 18:37:44 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/11 18:26:27 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:18:57 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +115,11 @@ int	main(int argc, char **argv, char **envp)
 	int		last_exit_code;
 
 	(void) argc;
-	(void) argv;
-	/*
 	if (argc > 1)
 	{
 		ft_putendl_fd("Error: no use arguments", 2);
 		exit(1);
 	}
-	*/
 	minishell = init_mini_list(envp);
 	if (!minishell)
 		return (ft_putendl_fd("Error: init minishell.", 2), 1);

@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/14 19:49:14 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:16:23 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 		if (!new_cmd->cmd_path)
 		{
 			handle_command_not_found(new_cmd, current_token);
-			free(new_cmd);	// add new
+			free(new_cmd);
 			return (NULL);
 		}
 	}

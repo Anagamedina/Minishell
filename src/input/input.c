@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:41 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 20:56:26 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:17:17 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*read_input(t_mini *mini)
 	if (!line)
 	{
 		write(1, "exit\n", 5);
-		rl_clear_history(); //new
+		rl_clear_history();
 		free_mini(mini);
 		exit(0);
 	}
@@ -51,14 +51,6 @@ char	*read_input(t_mini *mini)
 		add_history(line);
 	return (line);
 }
-/**
-tmp = handle_unclosed_quotes(line, mini);
-if (!tmp)
-{
-	free(line);
-	return (NULL);
-}
-*/
 
 int	set_token_type(char *str)
 {
@@ -79,60 +71,3 @@ int	set_token_type(char *str)
 	else
 		return (WORD);
 }
-
-/*
-static void	handle_unexpected_eof(char *input, t_mini *mini)
-{
-	free(input);
-	ft_putendl_fd("minishell: unexpected EOF \
-	while looking for matching quote", 2);
-	free_mini(mini);
-	exit(1);
-}
-
-static char	*concatenate_input(char *input, char *temp)
-{
-	char	*new_input;
-	char	*result;
-
-	new_input = ft_strjoin(input, "\n");
-	free(input);
-	if (!new_input)
-	{
-		free(temp);
-		return (NULL);
-	}
-	result = ft_strjoin(new_input, temp);
-	free(new_input);
-	free(temp);
-	return (result);
-}
-
-*/
-/*
-char	*handle_unclosed_quotes(char *input, t_mini *mini)
-{
-	char	*temp;
-	char	*new_input;
-
-	while (!check_quotes_line(input))
-	{
-		temp = readline("> ");
-		if (!temp)
-			handle_unexpected_eof(input, mini);
-
-		if (ft_strlen(temp) == 0)
-		{
-			free(temp);
-			continue;
-		}
-		new_input = concatenate_input(input, temp);
-		if (!new_input)
-		{
-			free(input);
-			return (NULL);
-		}
-		input = new_input; // ✅ Asignamos correctamente la nueva memoria
-	}
-	return (input);
-}*/

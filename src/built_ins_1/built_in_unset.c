@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:55:30 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/14 19:36:54 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 21:15:52 by dasalaza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	unset_variable(t_list **env_list, char *var_name)
 			else
 				*env_list = current->next;
 			free_env_node(env_var);
-			free(current); //new
+			free(current);
 			return ;
 		}
 		prev = current;
