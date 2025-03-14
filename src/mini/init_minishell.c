@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:59:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/10 22:44:08 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:58:43 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ t_mini	*init_mini_list(char **envp)
 	minishell->chars_in_line = -1;
 	minishell->env = init_env_list(envp);
 	if (!minishell->env)
+	{
 		return (NULL);
+	}
 	minishell->envp_to_array = env_list_to_array(minishell->env);
 	if (minishell->env == NULL)
 	{

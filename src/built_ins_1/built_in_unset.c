@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:55:30 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 16:20:15 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:36:54 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	unset_variable(t_list **env_list, char *var_name)
 			else
 				*env_list = current->next;
 			free_env_node(env_var);
+			free(current); //new
 			return ;
 		}
 		prev = current;

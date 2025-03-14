@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:47:46 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/09 13:37:06 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 20:05:07 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ static int	add_env_node(t_list **env_list, char *env_var)
 
 	new_env = create_env_node(env_var);
 	if (!new_env)
+	{
 		return (FALSE);
+	}
 	new_node = ft_lstnew(new_env);
 	if (!new_node)
 	{
@@ -49,19 +51,29 @@ t_list	*init_env_list(char **envp)
 	while (envp[i] != NULL)
 	{
 		if (!add_env_node(&env_list, envp[i]))
+		{
+			free_env_list(&env_list);	//new
 			return (NULL);
+		}
 		i ++;
 	}
 	return (env_list);
 }
 
-int	ft_env(t_list *env_list)
+int	ft_env(t_list *env_list, t_cmd *cmd)
 {
 	t_list	*current;
 	t_env	*env_var;
 
 	if (!env_list)
 		return (1);
+	if (cmd->cmd_args && cmd->cmd_args[1] != NULL)
+	{
+		ft_putstr_fd("env: ", 2);
+		ft_putstr_fd(cmd->cmd_args[1], 2);
+		ft_putendl_fd(": No such file or directory", 2);
+		return (127);
+	}
 	current = env_list;
 	while (current)
 	{

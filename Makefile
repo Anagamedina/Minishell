@@ -6,7 +6,7 @@
 #    By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/01 17:34:21 by anamedin          #+#    #+#              #
-#    Updated: 2025/03/11 18:47:49 by dasalaza         ###   ########.fr        #
+#    Updated: 2025/03/14 18:00:30 by anamedin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc #-O1 #-v
 #CFLAGS = -Iincludes  -I$(LIBFT_DIR) #-fsanitize=address
 CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) #-fsanitize=address
-#CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) -g -fsanitize=address -fsanitize=leak
+# CFLAGS = -Wall -Wextra -Werror -Iincludes -I$(LIBFT_DIR) -g -fsanitize=address -fsanitize=leak
 SRC_DIR = src
 SRC_ENV= $(SRC_DIR)/env
 SRC_MINI= $(SRC_DIR)/mini

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_init_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anamedin <anamedin@student.42barcel>       +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:45:37 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/07 16:15:12 by anamedin         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:20:05 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ t_cmd	*process_command_token(t_tokens *token, char **paths, int *cmd_id)
 	return (new_cmd);
 }
 
-void	cmds_to_lst(t_list **cmd_lst, t_tokens *tk,
-					char **paths, int *id)
+void	cmds_to_lst(t_list **cmd_lst, t_tokens *tk, char **paths, int *id)
 {
 	t_cmd	*cmd;
 	t_list	*new_node;

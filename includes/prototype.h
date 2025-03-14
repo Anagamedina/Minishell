@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prototype.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 22:23:09 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/12 19:19:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:53:11 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env		*init_empty_env_node(void);
 
 int			validate_syntax_name_value(char *new_local_var);
 t_list		*init_env_list(char **envp);
-int			ft_env(t_list *env_list);
+int			ft_env(t_list *env_list, t_cmd *cmd);
 
 //************** ENV_UTILS_LOCALS.c ************/
 int			validate_var_name(const char *line);

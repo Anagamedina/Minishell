@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:55:27 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/07 18:26:29 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:40:39 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	handle_append_case(char **var_name, char **var_value, char *arg)
 	temp = *var_name;
 	*var_name = get_var_name_append(arg);
 	free(temp);
+	if (*var_value)
+		free(*var_value);
 	*var_value = get_var_value_append(arg);
 	return (1);
 }
@@ -59,12 +61,18 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 
 	append_flag = extract_env_var(arg, &var_name, &var_value);
 	if (!var_name)
+	{
+		free(var_value);
 		return ;
+	}
 	updated = update_env_var(env_list, var_name, var_value, append_flag);
 	if (!updated)
 		add_new_env_variable(env_list, var_name, var_value);
 	else
+	{
+		free(var_value);
 		var_value = NULL;
+	}
 }
 
 int	ft_export(t_cmd *curr_cmd, t_mini *mini)

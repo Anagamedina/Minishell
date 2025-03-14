@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dasalaza <dasalaza@student.42barcelona.c>  +#+  +:+       +#+        */
+/*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 21:03:47 by dasalaza          #+#    #+#             */
-/*   Updated: 2025/03/12 18:31:52 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:41:44 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 void	cleanup_and_exit(t_mini *mini, int status)
 {
+	ft_putendl_fd("exit", 2);
 	free_mini(mini);
 	rl_clear_history();
 	exit(status);

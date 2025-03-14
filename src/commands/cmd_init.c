@@ -6,7 +6,7 @@
 /*   By: anamedin <anamedin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:39:52 by anamedin          #+#    #+#             */
-/*   Updated: 2025/03/09 13:39:24 by dasalaza         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:49:14 by anamedin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_cmd	*init_command(void)
 void	handle_command_not_found(t_cmd *cmd, t_tokens *current_token)
 {
 	write(2, "bash: ", 6);
-	write(2, current_token->str, ft_strlen(current_token->str));
-	write(2, ": command not found\n", 20);
+	ft_putstr_fd(current_token->str, 2);
+	ft_putendl_fd(": command not found", 2);
 	if (!cmd)
 		return ;
 }
@@ -65,6 +65,7 @@ t_cmd	*create_new_command(t_tokens *current_token, char **paths)
 		if (!new_cmd->cmd_path)
 		{
 			handle_command_not_found(new_cmd, current_token);
+			free(new_cmd);	// add new
 			return (NULL);
 		}
 	}
