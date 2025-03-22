@@ -9,13 +9,23 @@ This project aims to create a functional shell that interprets and executes comm
 ## Objective
 The shell should provide an interactive experience, support essentially such as redirections and pipelines, and manage variables and signals, all with a focus on efficiency and memory management.
 
+## Structure 
+of diferents List or linked list we used un the project
+
+Inline-style:
+![alt text](https://raw.githubusercontent.com/Daruuu/Minishell/docs/images/structure_list.png "Struct of project list")
+
+
+
+
 ## Project Structure
 
 The project includes a **Makefile** to simplify the compilation process files to ensure a clear, modular structure.
 Additionally, the documentation is stored in the `docs` folder for easy reference.
 
 ### Key Folders and Files:
-- **`docs/`**: Contains documentation files, including the `README.md`, project diagrams, and other useful documents.
+
+- **`docs/`**: Contains documentation files and notes and other useful documents.
 
 - **`src/`**: Contains the source code of the project, divided into functional folders:
     - **`built_ins_1/`** and **`built_ins_2/`**: Handle internal commands like `echo`, `cd`, `pwd`, `export`, `unset`, etc.
@@ -50,38 +60,4 @@ Additionally, the documentation is stored in the `docs` folder for easy referenc
 
 
 
-
-
-## Features
-
-### User Interface
-- Displays a prompt while waiting for commands.
-- Maintains a functional history to remember previous commands.
-
-### Command Execution
-- Locates and executes commands using `PATH` or relative and absolute paths.
-- Implements redirections:
-    - Input (`<`)
-    - Output (`>`, `>>`)
-    - Heredoc (`<<`)
-- Supports pipelines (`|`) to chain commands together.
-
-### Variables and Environment
-- Expands environment variables (`$` and `$?`).
-- Manages single and double quotes, respecting rules for metacharacters(ASCII).
-
-### Signal Handling
-- Handles `ctrl-C`, `ctrl-D`, and `ctrl-\` signals like in Bash, with specific effects for interactive mode.
-- Uses a single global(if is necessary) variable to store the signal number.
-
-### Built-ins
-The shell includes essential built-in commands:
-
-- `echo` with `-n` option
-- `cd` to change directories
-- `pwd` to display the current directory
-- `export` to manage environment variables
-- `unset` to remove environment variables
-- `env` to display environment variables
-- `exit` to exit the shell
 
