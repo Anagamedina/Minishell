@@ -9,13 +9,17 @@ This project aims to create a functional shell that interprets and executes comm
 ## Objective
 The shell should provide an interactive experience, support essentially such as redirections and pipelines, and manage variables and signals, all with a focus on efficiency and memory management.
 
-## Structure 
-of diferents List or linked list we used un the project
+### Structure of Different Lists Used in Minishell
 
-Inline-style:
-![alt text](https://raw.githubusercontent.com/Daruuu/Minishell/docs/images/structure_list.png "Struct of project list")
+The following diagram illustrates all the linked lists used in the project and how they are interconnected.
 
+<img src="https://raw.githubusercontent.com/Anagamedina/Minishell/main/docs/images/structure_list.png" width="500" height="500">
 
+### Program Flow in Minishell
+
+Diagram showing the execution flow, from input processing to command execution and output handling.
+
+<img src="https://raw.githubusercontent.com/Anagamedina/Minishell/main/docs/images/flow_minishell.png" width="500" height="500">
 
 
 ## Project Structure
