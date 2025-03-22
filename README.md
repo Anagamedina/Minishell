@@ -1,153 +1,197 @@
-# Proyecto Minishell
+# Minishell Project
 
-**Desarrollado por Ana Medina Burgos y Darunny Salazar**
+Developed by:
+- [Ana](https://github.com/Anagamedina)
+- [Daruny](https://github.com/Daruuu)
 
-![Minishell Banner](assets/header.png)
 
-El proyecto **Minishell** busca crear un shell funcional que interprete y ejecute comandos de manera similar a Bash, cumpliendo con los requisitos fundamentales de la Academia 42.
+This project aims to create a functional shell that interprets and executes commands similar to Bash, meeting the fundamental requirements of 42 School.
 
-## Objetivo
-El shell deberá ofrecer una experiencia interactiva, soportar funcionalidades esenciales de redirección y pipelines, y gestionar variables y señales, todo con un enfoque en la eficiencia y la gestión de memoria.
+## Objective
+The shell should provide an interactive experience, support essentially such as redirections and pipelines, and manage variables and signals, all with a focus on efficiency and memory management.
 
-## Funcionalidades
+## Project Structure
 
-### Interfaz de Usuario
-- Muestra una entrada mientras espera comandos.
-- Mantiene un historial funcional para recordar comandos anteriores.
+The project includes a **Makefile** to simplify the compilation process files to ensure a clear, modular structure.
+Additionally, the documentation is stored in the `docs` folder for easy reference.
 
-### Ejecución de Comandos
-- Localiza y ejecuta comandos usando `PATH` o rutas relativas y absolutas.
-- Implementa redirecciones:
-  - Entrada (`<`)
-  - Salida (`>`, `>>`)
-  - Heredoc (`<<`)
-- Soporta pipelines (`|`) para conectar comandos en una cadena.
+### Key Folders and Files:
+- **`docs/`**: Contains documentation files, including the `README.md`, project diagrams, and other useful documents.
 
-### Variables y Entorno
-- Expande variables de entorno (`$` y `$?`).
-- Gestiona comillas simples y dobles, respetando reglas para metacaracteres.
+- **`src/`**: Contains the source code of the project, divided into functional folders:
+    - **`built_ins_1/`** and **`built_ins_2/`**: Handle internal commands like `echo`, `cd`, `pwd`, `export`, `unset`, etc.
+    - **`commands/`**: Contains functions for handling command arguments and execution.
+    - **`env/`**: Manages environment variables and their setup.
+    - **`execute/`**: Responsible for executing commands, including handling pipes and redirections.
+    - **`expand/`**: Handles variable and environment variable expansions.
+    - **`free/`**: Manages memory freeing functions for various structures.
+    - **`input/`**: Deals with input parsing and terminal interaction.
+    - **`parser/`**: Contains functions for parsing input, managing quotes, and handling tokens.
+    - **`redir/`**: Manages redirections, including input/output redirection and heredoc.
+    - **`signals/`**: Handles signal management (e.g., `Ctrl+C`, `Ctrl+D`).
+    - **`tokenize/`**: Responsible for tokenizing input and handling special characters.
 
-### Control de Señales
-- Gestiona señales `ctrl-C`, `ctrl-D`, y `ctrl-\` como en Bash, con efectos específicos para el modo interactivo.
-- Usa una sola variable global para almacenar el número de señal.
+- **`libft/`**: Custom library used for string manipulation and other utility functions.
+
+- **`testing/`**: Contains test files and testing utilities, including scripts and Unity framework setup for unit tests.
+
+### Important Files:
+- **`Makefile`**: Automates the build process.
+- **`minishell.c`**: Main entry point for the shell program.
+- **`README.md`**: Provides an overview of the project, its functionality, and setup instructions.
+- **`test_builtins.sh`**: A shell script to test built-in commands.
+- **`pipes_test.sh`**: Tests the functionality of pipes in the shell.
+
+
+
+
+
+
+
+
+
+
+
+
+## Features
+
+### User Interface
+- Displays a prompt while waiting for commands.
+- Maintains a functional history to remember previous commands.
+
+### Command Execution
+- Locates and executes commands using `PATH` or relative and absolute paths.
+- Implements redirections:
+    - Input (`<`)
+    - Output (`>`, `>>`)
+    - Heredoc (`<<`)
+- Supports pipelines (`|`) to chain commands together.
+
+### Variables and Environment
+- Expands environment variables (`$` and `$?`).
+- Manages single and double quotes, respecting rules for metacharacters(ASCII).
+
+### Signal Handling
+- Handles `ctrl-C`, `ctrl-D`, and `ctrl-\` signals like in Bash, with specific effects for interactive mode.
+- Uses a single global(if is necessary) variable to store the signal number.
 
 ### Built-ins
-El shell incluye los comandos internos esenciales:
-  - `echo` con opción `-n`
-  - `cd` para cambio de directorio
-  - `pwd` para mostrar el directorio actual
-  - `export` para manejar variables de entorno
-  - `unset` para eliminar variables de entorno
-  - `env` para mostrar las variables de entorno
-  - `exit` para salir del shell
+The shell includes essential built-in commands:
 
-## Requerimientos Técnicos
-- Uso de la biblioteca `libft` y funciones específicas autorizadas.
-- Gestión de memoria para evitar leaks (excepto en `readline`, según especificaciones).
+- `echo` with `-n` option
+- `cd` to change directories
+- `pwd` to display the current directory
+- `export` to manage environment variables
+- `unset` to remove environment variables
+- `env` to display environment variables
+- `exit` to exit the shell
 
-## Estructura del Proyecto
-El proyecto cuenta con un **Makefile** para facilitar la compilación, y cada funcionalidad está organizada en archivos `.h` y `.c` que garantizan una estructura clara y modular.
+## Technical Requirements
 
-Aquí tienes la sección organizada para tu **README** con un formato claro y estructurado:
+- Use of the `libft` library and authorized specific functions.
+- Memory management to prevent leaks (except for `readline`, as specified).
 
----
 
-## 📌 **Notas Importantes & Comandos Útiles**
+## 📌 **Important Notes & Useful Commands**
 
-### 🔹 **Ejecutar Bash sin variables de entorno ni configuraciones**
+### 🔹 **Running Bash without Environment Variables or Configurations**
 
-``` plaintext 
+```plaintext
 env -i bash --noprofile --norc
 ```
 
-**¿Qué hace este comando?**  
-Ejecuta **Bash en un entorno limpio**, sin cargar configuraciones ni heredar variables del entorno actual.
+**What does this command do?**  
+It runs **Bash in a clean environment**, without loading configurations or inheriting variables from the current environment.
 
-#### **📌 Desglose del comando:**
+#### **📌 Breakdown of the Command:**
 - **`env -i`** (`--ignore-environment`)
-    - Inicia un nuevo entorno **vacío**, sin heredar variables como `PATH`, `HOME`, `USER`.
-    - Útil para pruebas o depuración sin configuraciones heredadas.
+    - Starts a new **empty environment**, without inheriting variables like `PATH`, `HOME`, `USER`.
+    - Useful for testing or debugging without inherited configurations.
 
 - **`bash --noprofile --norc`**
-    - **`--noprofile`** → No carga `~/.bash_profile`, `~/.bash_login` ni `/etc/profile`.
-    - **`--norc`** → No ejecuta `~/.bashrc`, evitando configuraciones personalizadas.
+    - **`--noprofile`** → Does not load `~/.bash_profile`, `~/.bash_login`, or `/etc/profile`.
+    - **`--norc`** → Does not execute `~/.bashrc`, avoiding custom configurations.
 
-### **📌 Ejemplo de uso**
+### **📌 Example Usage**
 
-Para verificar que el entorno realmente está vacío, ejecuta:
+To verify that the environment is indeed empty, run:
 
 ```sh
   env -i bash --noprofile --norc
   env
 ```
 
-**Salida esperada:** (Sin variables de entorno cargadas)
+**Expected Output:** (No environment variables loaded)
 ```sh
-  # No muestra ninguna variable de entorno
+  # No environment variables will be displayed
 ```
 
 ---
 
-## VARIABLES DE ENTORNO A INICIALIZAR
+## ENVIRONMENT VARIABLES TO INITIALIZE
 
-### **📌 Configuración del Entorno en Minishell**
+### **📌 Environment Configuration in Minishell**
 
-Esta sección describe las **variables de entorno** que se inicializan si no existen al ejecutar **Minishell**, basándonos en nuestra función `configure_shell_env()`.
-
----
-
-## **🔹 Variables de entorno inicializadas**
-Minishell verifica y crea las siguientes variables si no existen en el entorno:
-
-| **Variable** | **Propósito** | **Valor predeterminado si no existe** |
-|-------------|--------------|----------------------------------------|
-| `OLDPWD` | Guarda el directorio anterior para `cd -` | `""` (vacío hasta que `cd` lo modifique) |
-| `PATH` | Define los directorios donde buscar comandos ejecutables | `"/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"` |
-| `HOME` | Directorio home del usuario | Valor de `getenv("HOME")` o `"/home/"` si no existe |
-| `USER` | Nombre del usuario actual | `getenv("USER")` o `"unknown"` si no existe |
-| `SHLVL` | Nivel del shell, aumenta con cada nueva instancia | Si `SHLVL >= 100`, se reinicia a `"1"` |
+This section describes the **environment variables** that are initialized if they don't exist when running **Minishell**, based on our `configure_shell_env()` function.
 
 ---
 
-## **🔹 Manejo especial de `OLDPWD` y `PWD`**
-### **¿Debe `OLDPWD` reiniciarse a `""` o mantenerse?**
-Si `OLDPWD` ya existe con una ruta válida, **se deja intacto**.  
-Si `OLDPWD` no existe, **se inicializa en `""` (vacío)** hasta que `cd` lo actualice.
+## **🔹 Initialized Environment Variables**
+Minishell checks and creates the following variables if they don't exist in the environment:
 
-### **¿Cómo afecta `PWD`?**
-- `PWD` **se mantiene como está** porque representa el directorio actual.
-- Bash también lo mantiene si existe en `env`.
+| **Variable** | **Purpose** | **Default Value if Not Present** |
+|--------------|-------------|----------------------------------|
+| `OLDPWD`     | Stores the previous directory for `cd -` | `""` (empty until `cd` modifies it) |
+| `PATH`       | Defines directories to search for executable commands | `"/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin"` |
+| `HOME`       | User's home directory | Value of `getenv("HOME")` or `"/home/"` if not found |
+| `USER`       | Current user's name | `getenv("USER")` or `"unknown"` if not found |
+| `SHLVL`      | Shell level, increases with each new instance | If `SHLVL >= 100`, resets to `"1"` |
 
 ---
 
-## **🔹 Manejo de `SHLVL`**
-1. Si `SHLVL` **no existe o es negativo**, se inicializa en `0`.
-2. Si `SHLVL >= 100`, **se muestra una advertencia y se reinicia a `1`**.
-3. En otros casos, **se incrementa en `+1`**.
+## **🔹 Special Handling of `OLDPWD` and `PWD`**
+### **Should `OLDPWD` be reset to `""` or remain?**
+- If `OLDPWD` already exists with a valid path, **it remains unchanged**.
+- If `OLDPWD` does not exist, **it is initialized to `""` (empty)** until `cd` updates it.
 
-Ejemplo de mensaje de advertencia si `SHLVL >= 100`:
+### **How does `PWD` behave?**
+- `PWD` **remains as is**, as it represents the current directory.
+- Bash also keeps it if it exists in `env`.
+
+---
+
+## **🔹 Handling of `SHLVL`**
+1. If `SHLVL` **does not exist or is negative**, it is initialized to `0`.
+2. If `SHLVL >= 100`, **a warning is displayed, and it is reset to `1`**.
+3. In other cases, **it is incremented by `+1`**.
+
+Example warning message if `SHLVL >= 100`:
 ```sh
 mish: warning: shell level (100) too high, resetting to 1
 ```
 
 ---
 
-## **📌 ¿Cómo se comporta esto en Bash?**
-Ejecutando **Bash en un entorno vacío** (`env -i bash --noprofile --norc`), obtenemos:
+## **📌 How does this behave in Bash?**
+Running **Bash in an empty environment** (`env -i bash --noprofile --norc`), we get:
 ```sh
-PWD=/home/user
-SHLVL=1
-_=/usr/bin/env
+  PWD=/home/user
+  SHLVL=1
+  _=/usr/bin/env
 ```
-➡️ **Minishell replica este comportamiento, asegurando compatibilidad.**
+
+➡️ **Minishell replicates this behavior, ensuring compatibility.**
 
 ---
 
-🚀 **Con esta implementación, Minishell maneja el entorno de forma eficiente y compatible con Bash.**
+🚀 **With this implementation, Minishell handles the environment efficiently and is compatible with Bash.**
 
 ---
 
+**We hope this shell becomes an effective and user-friendly tool for interacting with the system.**
 
-**Esperamos que este shell se convierta en una herramienta eficaz y amigable para interactuar con el sistema.**
+Thank you for reviewing our project, and feel free to contact us with any questions or suggestions!
 
-¡Gracias por revisar nuestro proyecto y no dudes en contactarnos para cualquier pregunta o sugerencia!
+---
+
+Este formato hace que el contenido sea más legible y estructurado. Las secciones están claramente divididas con títulos descriptivos, lo que facilita la navegación.
