@@ -62,9 +62,9 @@ Usamos **Makefile** y una estructura modular. La documentación está en `docs/`
 - `scripts/`: scripts de prueba.
 
 ## Documentación
-- Flujo de señales: `docs/signals_flow.md`
-- Flujo de heredoc: `docs/heredoc_flow.md`
-- Checklist de evaluación: `docs/evaluation_checklist.md`
-- README de módulo Execute: `src/execute/README.md`
-- README de módulo Redir: `src/redir/README.md`
+- Flujo de señales: [`docs/signals_flow.md`](docs/signals_flow.md)
+- Flujo de heredoc: [`docs/heredoc_flow.md`](docs/heredoc_flow.md)
+- Checklist de evaluación: [`docs/evaluation_checklist.md`](docs/evaluation_checklist.md)
+- README de módulo Execute: [`src/execute/README.md`](src/execute/README.md)
+- README de módulo Redir: [`src/redir/README.md`](src/redir/README.md)
 
