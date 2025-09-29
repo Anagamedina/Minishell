@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  handle_input_redirection: abre fichero y setea cmd->input_fd              */
+/* -------------------------------------------------------------------------- */
 int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
 	if (cmd->input_fd != STDIN_FILENO)
@@ -27,6 +30,9 @@ int	handle_input_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  handle_output_redirection: abre/crea y setea cmd->output_fd               */
+/* -------------------------------------------------------------------------- */
 int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
 	if (cmd->output_fd >= 0 && cmd->output_fd != STDOUT_FILENO)
@@ -39,6 +45,9 @@ int	handle_output_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  handle_append_redirection: abre en append y setea cmd->output_fd          */
+/* -------------------------------------------------------------------------- */
 int	handle_append_redirection(t_cmd *cmd, t_redir *curr_redir)
 {
 	if (cmd->output_fd >= 0 && cmd->output_fd != STDOUT_FILENO)
@@ -51,6 +60,9 @@ int	handle_append_redirection(t_cmd *cmd, t_redir *curr_redir)
 	return (TRUE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  generate_heredoc_filename: /tmp/heredoc<N>                                */
+/* -------------------------------------------------------------------------- */
 char	*generate_heredoc_filename(int nbr_heredoc)
 {
 	char	*num_str;

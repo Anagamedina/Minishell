@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  redirect_out_builtin: redirige stdout temporal para ejecutar builtin       */
+/* -------------------------------------------------------------------------- */
 int	redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 {
 	*saved_stdout = -1;
@@ -34,6 +37,9 @@ int	redirect_out_builtin(t_cmd *cmd, int *saved_stdout)
 	return (TRUE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  pre_executor: ejecuta builtin en el padre si no hay pipes                 */
+/* -------------------------------------------------------------------------- */
 int	pre_executor(t_mini *mini, t_cmd *cmd)
 {
 	int	saved_stdout;
@@ -57,6 +63,9 @@ int	pre_executor(t_mini *mini, t_cmd *cmd)
 	return (TRUE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  execute_builtin_if_needed: decide si ejecutar builtin en el padre         */
+/* -------------------------------------------------------------------------- */
 int	execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 {
 	if (cmd->is_builtin == 1 && (*cmd_list)->next == NULL)
@@ -70,6 +79,9 @@ int	execute_builtin_if_needed(t_mini *mini, t_cmd *cmd, t_list **cmd_list)
 	return (FALSE);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  execute_commands: recorre cmds, forkea y espera hijos                     */
+/* -------------------------------------------------------------------------- */
 int	execute_commands(t_mini *mini)
 {
 	t_list	*t_list_exec_cmd;

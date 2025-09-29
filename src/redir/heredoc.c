@@ -12,7 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-//TODO: setup_signals(remove NULL)
+/* -------------------------------------------------------------------------- */
+/*  Heredoc helpers: lee líneas y escribe al temporal (/tmp/heredocN)         */
+/* -------------------------------------------------------------------------- */
 int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 {
 	char	*line;
@@ -37,6 +39,9 @@ int	write_heredoc_content(int fd_tmp, char *delimiter, int expand_vars)
 	return (free(line), 0);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Crea fichero temporal heredoc y sustituye redir->filename por ese path    */
+/* -------------------------------------------------------------------------- */
 int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 {
 	int		fd_tmp;
@@ -59,6 +64,9 @@ int	create_heredoc(t_redir *redir, int nbr_heredoc, int expand_vars)
 	return (0);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Versión con fork (hijo) - NO usada directamente tras unificar el flujo    */
+/* -------------------------------------------------------------------------- */
 void	child_heredoc(t_tokens *curr_token, t_mini *mini)
 {
 	pid_t	pid;
@@ -87,12 +95,17 @@ void	child_heredoc(t_tokens *curr_token, t_mini *mini)
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/*  Recorre redirecciones y ejecuta cada heredoc en un hijo (aisla señales)   */
+/* -------------------------------------------------------------------------- */
 int	heredoc(t_cmd *cmd)
 {
 	t_list		*redir_node;
 	t_redir		*curr_redir;
 	int			nbr_heredoc;
 	int			expand_vars;
+	pid_t		pid;
+	int			status;
 
 	expand_vars = 0;
 	redir_node = cmd->redir_list;
@@ -104,11 +117,22 @@ int	heredoc(t_cmd *cmd)
 		{
 			expand_vars = !(curr_redir->filename[0] == '"' || \
 				curr_redir->filename[0] == '\'');
-			if (create_heredoc(curr_redir, nbr_heredoc, expand_vars) == -1)
+			pid = fork();
+			if (pid < 0)
+				return (perror("fork"), -1);
+			if (pid == 0)
 			{
-				perror("Error creando heredoc");
-				return (-1);
+				setup_signals(HERE_DOC, NULL);
+				if (create_heredoc(curr_redir, nbr_heredoc, expand_vars) == -1)
+					exit(1);
+				exit(0);
 			}
+			if (waitpid(pid, &status, 0) == -1)
+				return (perror("waitpid"), -1);
+			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+				return (-1);
+			if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+				return (-1);
 			nbr_heredoc++;
 		}
 		redir_node = redir_node->next;

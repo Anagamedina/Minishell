@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  open_file: abre descriptor según tipo (IN, OUT, APPEND, HEREDOC)          */
+/* -------------------------------------------------------------------------- */
 int	open_file(char *file, int type)
 {
 	int	fd;
@@ -34,6 +37,9 @@ int	open_file(char *file, int type)
 	return (fd);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  apply_input_redirection: aplica IN/HEREDOC → actualiza cmd->input_fd      */
+/* -------------------------------------------------------------------------- */
 static	void	apply_input_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		int *redir_applied)
 {
@@ -49,6 +55,9 @@ static	void	apply_input_redirection(t_cmd *cmd, t_redir *curr_redir, \
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/*  apply_output_redirection: aplica >                                         */
+/* -------------------------------------------------------------------------- */
 static	void	apply_output_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		int *redir_applied)
 {
@@ -59,6 +68,9 @@ static	void	apply_output_redirection(t_cmd *cmd, t_redir *curr_redir, \
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/*  apply_append_redirection: aplica >>                                        */
+/* -------------------------------------------------------------------------- */
 static	void	apply_append_redirection(t_cmd *cmd, t_redir *curr_redir, \
 		int *redir_applied)
 {
@@ -69,6 +81,9 @@ static	void	apply_append_redirection(t_cmd *cmd, t_redir *curr_redir, \
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/*  apply_redirections: recorre lista y aplica en orden IN/HEREDOC, >>, >     */
+/* -------------------------------------------------------------------------- */
 int	apply_redirections(t_cmd *cmd)
 {
 	t_list	*redir_node;

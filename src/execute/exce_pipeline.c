@@ -24,6 +24,9 @@
 
 #include "../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  setup_fds: crea pipe si no es última cmd y fija input/output en cmd       */
+/* -------------------------------------------------------------------------- */
 void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (!curr_cmd->last_cmd)
@@ -42,6 +45,9 @@ void	setup_fds(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	curr_cmd->input_fd = *input_fd;
 }
 
+/* -------------------------------------------------------------------------- */
+/*  wait_children: espera a todos los hijos y fija exit_status acorde         */
+/* -------------------------------------------------------------------------- */
 void	wait_children(t_mini *mini)
 {
 	int		status;
@@ -100,6 +106,9 @@ void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 }
 */
 
+/* -------------------------------------------------------------------------- */
+/*  handle_parent: cierra FDs y propaga extremo de lectura al siguiente       */
+/* -------------------------------------------------------------------------- */
 void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 {
 	if (curr_cmd->input_fd != STDIN_FILENO && curr_cmd->input_fd >= 0)
@@ -119,6 +128,9 @@ void	handle_parent(t_cmd *curr_cmd, int *pipe_fd, int *input_fd)
 	}
 }
 
+/* -------------------------------------------------------------------------- */
+/*  fork_and_execute: forkea por cmd y delega a handle_child/parent           */
+/* -------------------------------------------------------------------------- */
 void	fork_and_execute(t_cmd *cmd, t_mini *mini, int p_fd[2], int *fd_in)
 {
 	pid_t	pid;

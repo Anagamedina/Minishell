@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  expand_variables: expande $VAR en una línea según el entorno              */
+/* -------------------------------------------------------------------------- */
 static	char	*replace_variable(char *expanded_line, \
 		char *var_name, char *var_value, int i)
 {

@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  init_exec: inicializa estructura de ejecución (env, paths, flags)         */
+/* -------------------------------------------------------------------------- */
 t_exec	*init_exec(t_list *env_list)
 {
 	t_exec	*exec_info;

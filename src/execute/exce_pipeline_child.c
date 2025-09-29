@@ -12,6 +12,9 @@
 
 #include "../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  apply_and_redirect: aplica redirecciones y duplica FDs a STDIN/STDOUT     */
+/* -------------------------------------------------------------------------- */
 static void	apply_and_redirect(t_cmd *curr_cmd, int *pipe_fd)
 {
 	if (apply_redirections(curr_cmd) > 0)
@@ -46,9 +49,20 @@ static void	close_unused_pipes(int *pipe_fd)
 		close(pipe_fd[1]);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  handle_child: flujo del proceso hijo del pipeline                         */
+/*  - Ejecuta heredoc (con posible salida 130)                                */
+/*  - Aplica redirecciones                                                    */
+/*  - Ejecuta builtin/externo                                                 */
+/* -------------------------------------------------------------------------- */
 void	handle_child(t_cmd *curr_cmd, t_mini *mini, int *pipe_fd)
 {
-	heredoc(curr_cmd);
+	if (heredoc(curr_cmd) == -1)
+	{
+		close_unused_pipes(pipe_fd);
+		mini->exit_status = 130;
+		exit(130);
+	}
 	apply_and_redirect(curr_cmd, pipe_fd);
 	close_unused_pipes(pipe_fd);
 	execute_builtin_or_external(curr_cmd, mini);

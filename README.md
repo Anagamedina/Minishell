@@ -1,5 +1,7 @@
 # Minishell Project
 
+[Leer en Español](README.es.md)
+
 Developed by:
 - [Ana](https://github.com/Anagamedina)
 - [Daruny](https://github.com/Daruuu)
@@ -56,6 +58,13 @@ Additionally, the documentation is stored in the `docs` folder for easy referenc
 - **[`minishell.c`](https://github.com/Anagamedina/Minishell/blob/main/src/minishell.c)**: Main entry point for the shell program.
 - **[`README.md`](https://github.com/Anagamedina/Minishell/blob/main/README.md)**: Provides an overview of the project, its functionality, and setup instructions.
 - **[`Scripts`](https://github.com/Anagamedina/Minishell/blob/main/scripts)**: Different shell scripts to test the functionality of pipes in the shell.
+
+## Documentation
+- Signals flow: `docs/signals_flow.md`
+- Heredoc flow: `docs/heredoc_flow.md`
+- Evaluation checklist: `docs/evaluation_checklist.md`
+- Execute module README: `src/execute/README.md`
+- Redirections module README: `src/redir/README.md`
 
 
 

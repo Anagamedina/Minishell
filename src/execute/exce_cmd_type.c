@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  is_builtin_command: detecta si cmd es un builtin                          */
+/* -------------------------------------------------------------------------- */
 int	is_builtin_command(char *cmd)
 {
 	return (ft_strcmp(cmd, ECHO_VAR) == 0 || ft_strcmp(cmd, EXPORT) == 0 || \
@@ -20,6 +23,9 @@ int	is_builtin_command(char *cmd)
 		ft_strcmp(cmd, EXIT) == 0);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  is_cmd_external: resuelve y clasifica comando externo                     */
+/* -------------------------------------------------------------------------- */
 char	*is_cmd_external(t_mini *mini, t_tokens *token)
 {
 	char	**paths;

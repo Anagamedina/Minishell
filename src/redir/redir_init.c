@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  init_redirection: construye nodo t_redir desde tokens                     */
+/* -------------------------------------------------------------------------- */
 t_redir	*init_redirection(t_tokens *token, t_tokens *next_token)
 {
 	t_redir	*new_redir;
@@ -36,6 +39,9 @@ t_redir	*init_redirection(t_tokens *token, t_tokens *next_token)
 	return (new_redir);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  add_redir_to_cmd: añade la redirección a la lista del comando             */
+/* -------------------------------------------------------------------------- */
 void	add_redir_to_cmd(t_cmd *cmd, t_tokens *redir_tk,
 						t_tokens *file_tk)
 {

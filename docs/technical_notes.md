@@ -94,3 +94,9 @@ Running **Bash in an empty environment** (`env -i bash --noprofile --norc`), we 
 Thank you for reviewing our project, and feel free to contact us with any questions or suggestions!
 
 ---
+
+## 🔗 Evaluation Guide
+
+For a practical testing guide when evaluating Minishell, see:
+
+- `docs/evaluation_checklist.md`

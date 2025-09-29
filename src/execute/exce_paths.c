@@ -12,6 +12,9 @@
 
 #include "../../includes/minishell.h"
 
+/* -------------------------------------------------------------------------- */
+/*  get_cmd_path: resuelve ruta ejecutable combinando PATH + token            */
+/* -------------------------------------------------------------------------- */
 char	*get_cmd_path(t_tokens *token, char **paths)
 {
 	char		*cmd_path;
@@ -73,6 +76,9 @@ char	*get_cmd_path(t_tokens *token, char **paths)
 	return (paths);
 }*/
 
+/* -------------------------------------------------------------------------- */
+/*  extract_path_variable: extrae valor de PATH del entorno                   */
+/* -------------------------------------------------------------------------- */
 char	*extract_path_variable(char **env)
 {
 	int		i;
@@ -87,6 +93,9 @@ char	*extract_path_variable(char **env)
 	return (NULL);
 }
 
+/* -------------------------------------------------------------------------- */
+/*  get_path: divide PATH en una matriz de rutas                              */
+/* -------------------------------------------------------------------------- */
 char	**get_path(char **env)
 {
 	char	**paths;
