@@ -44,17 +44,18 @@ Este documento explica paso a paso cómo se implementa el heredoc (`<<`) en el p
 ```mermaid
 flowchart TD
   A[Iterar redirecciones] --> B{tipo == HEREDOC}
-  B -- no --> A
-  B -- sí --> C[fork()]
+  B -- "no" --> A
+  B -- "si" --> C[fork()]
   C -->|child| D[setup_signals(HERE_DOC)]
   D --> E[create_heredoc]
   E --> F{ok?}
-  F -- sí --> G[exit(0)]
-  F -- no --> H[exit(1)]
+  F -- "si" --> G[exit(0)]
+  F -- "no" --> H[exit(1)]
   C -->|parent| I[waitpid()]
-  I --> J{SIGINT o exit != 0}
-  J -- sí --> K[return -1]
-  J -- no --> L[next redir]
+  I --> J{"SIGINT o exit != 0"}
+  J -- "si" --> K[return -1]
+  J -- "no" --> L[next redir]
+
 ```
 
 ---
