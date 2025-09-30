@@ -46,7 +46,7 @@ flowchart TD
   A[Iterar redirecciones] --> B{tipo == HEREDOC}
   B -- no --> A
   B -- si --> C[fork]
-  C -->|child| D[setup_signals(HERE_DOC)]
+  C -->|child| D[setup_signals_HERE_DOC]
   D --> E[create_heredoc]
   E --> F{ok}
   F -- si --> G[exit 0]
@@ -55,7 +55,6 @@ flowchart TD
   I --> J[SIGINT o exit distinto de 0]
   J -- si --> K[return -1]
   J -- no --> L[next redir]
-
 
 
 ```
