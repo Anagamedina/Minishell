@@ -60,11 +60,13 @@ Additionally, the documentation is stored in the `docs` folder for easy referenc
 - **[`Scripts`](https://github.com/Anagamedina/Minishell/blob/main/scripts)**: Different shell scripts to test the functionality of pipes in the shell.
 
 ## Documentation
-- Signals flow: `docs/signals_flow.md`
-- Heredoc flow: `docs/heredoc_flow.md`
-- Evaluation checklist: `docs/evaluation_checklist.md`
-- Execute module README: `src/execute/README.md`
-- Redirections module README: `src/redir/README.md`
+- Signals flow: [`docs/signals_flow.md`](docs/signals_flow.md)
+- Heredoc flow: [`docs/heredoc_flow.md`](docs/heredoc_flow.md)
+- Evaluation checklist: [`docs/evaluation_checklist.md`](docs/evaluation_checklist.md)
+- Builtins test guide: [`docs/builtins_test_guide.md`](docs/builtins_test_guide.md)
+- Specific evaluation points: [`docs/evaluation_points_guide.md`](docs/evaluation_points_guide.md)
+- Execute module README: [`src/execute/README.md`](src/execute/README.md)
+- Redirections module README: [`src/redir/README.md`](src/redir/README.md)
 
 
 
