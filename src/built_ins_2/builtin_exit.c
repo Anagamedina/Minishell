@@ -57,25 +57,6 @@ static int	is_out_of_llong_range(char *str)
 	return (0);
 }
 
-static void	exit_with_one_argument(t_cmd *cmd, t_mini *mini)
-{
-	long long	tmp_status;
-
-	tmp_status = 0;
-	if (!is_numeric(cmd->cmd_args[1]) \
-		|| is_out_of_llong_range(cmd->cmd_args[1]) == 1)
-	{
-		ft_putstr_fd("exit\n", 2);
-		ft_putstr_fd("minishell: exit: ", 2);
-		ft_putstr_fd(cmd->cmd_args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		cleanup_and_exit(mini, 2);
-	}
-	tmp_status = ft_atoll(cmd->cmd_args[1]);
-	mini->exit_status = (unsigned char) tmp_status;
-	cleanup_and_exit(mini, mini->exit_status);
-}
-
 int	builtin_exit(t_cmd *cmd, t_mini *mini)
 {
 	int	arg_count;
@@ -85,19 +66,23 @@ int	builtin_exit(t_cmd *cmd, t_mini *mini)
 		arg_count++;
 	if (arg_count == 1)
 		cleanup_and_exit(mini, mini->exit_status);
-	if (arg_count == 2)
+	if (!is_numeric(cmd->cmd_args[1]) || is_out_of_llong_range(cmd->cmd_args[1]))
 	{
-		exit_with_one_argument(cmd, mini);
-	}
-	else
-	{
-		ft_putendl_fd("exit", 2);
+		ft_putstr_fd("exit\n", 2);
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(cmd->cmd_args[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2);
-		mini->exit_status = 2;
-		cleanup_and_exit(mini, mini->exit_status);
+		ft_putendl_fd(": numeric argument required", 2);
+		cleanup_and_exit(mini, 2);
 	}
-	mini->exit_status = 1;
-	return (1);
+	if (arg_count > 2)
+	{
+		ft_putendl_fd("exit", 2);
+		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		mini->exit_status = 1;
+		return (1);
+	}
+	mini->exit_status = (unsigned char)ft_atoll(cmd->cmd_args[1]);
+	ft_putendl_fd("exit", 2);
+	cleanup_and_exit(mini, mini->exit_status);
+	return (0);
 }

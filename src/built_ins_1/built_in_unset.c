@@ -40,7 +40,7 @@ void	unset_variable(t_list **env_list, char *var_name)
 	}
 }
 
-int	ft_unset(t_list **env_list, t_cmd *cmd)
+int	ft_unset(t_list **env_list, t_cmd *cmd, t_mini *mini)
 {
 	int	i;
 	int	unset_path;
@@ -49,12 +49,26 @@ int	ft_unset(t_list **env_list, t_cmd *cmd)
 	i = 1;
 	while (cmd->cmd_args[i])
 	{
-		if (ft_strcmp(cmd->cmd_args[i], PATH_ENV) == 0)
-			unset_path = 1;
-		unset_variable(env_list, cmd->cmd_args[i]);
+		if (!is_valid_identifier(cmd->cmd_args[i]))
+		{
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(cmd->cmd_args[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			mini->exit_status = 1;
+		}
+		else
+		{
+			if (ft_strcmp(cmd->cmd_args[i], PATH_ENV) == 0)
+				unset_path = 1;
+			unset_variable(env_list, cmd->cmd_args[i]);
+		}
 		i ++;
 	}
 	if (unset_path)
-		ft_putendl_fd("Warning: PATH variable unset, external may not work", 2);
-	return (0);
+	{
+		if (mini->envp_to_array)
+			free_string_matrix(mini->envp_to_array);
+		mini->envp_to_array = env_list_to_array(mini->env);
+	}
+	return (mini->exit_status);
 }

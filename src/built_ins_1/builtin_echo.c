@@ -64,6 +64,7 @@ int	ft_echo(t_cmd *cmd, t_mini *mini)
 	print_echo_arguments(cmd->cmd_args, start_index, mini);
 	if (!no_newline)
 		write(1, "\n", 1);
+	mini->exit_status = 0;
 	return (0);
 }
 

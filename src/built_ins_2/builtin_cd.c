@@ -45,6 +45,7 @@ int	ft_cd(t_mini *mini, t_cmd *cmd)
 	if (cmd->count_args > 2)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
+		mini->exit_status = 1;
 		return (1);
 	}
 	new_path = get_cd_path(mini, cmd, &status);
@@ -52,9 +53,11 @@ int	ft_cd(t_mini *mini, t_cmd *cmd)
 	{
 		ft_putstr_fd("Error: cd: invalid path\n", 2);
 		free(new_path);
+		mini->exit_status = 1;
 		return (1);
 	}
 	status = cd_change_directory(new_path, mini);
 	free(new_path);
+	mini->exit_status = status;
 	return (status);
 }

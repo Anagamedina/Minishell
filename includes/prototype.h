@@ -30,9 +30,10 @@ t_env		*init_empty_env_node(void);
 
 int			validate_syntax_name_value(char *new_local_var);
 t_list		*init_env_list(char **envp);
-int			ft_env(t_list *env_list, t_cmd *cmd);
+int			ft_env(t_mini *mini, t_cmd *cmd);
 
 //************** ENV_UTILS_LOCALS.c ************/
+int			is_valid_identifier(const char *str);
 int			validate_var_name(const char *line);
 int			validate_var_value(const char *line);
 char		*get_var_name(const char *line);
@@ -89,7 +90,7 @@ char		*get_old_pwd(t_mini *mini);
 char		*get_cd_path(t_mini *mini, t_cmd *cmd, int *status);
 
 //************ BUILTIN_UNSET.c ************/
-int			ft_unset(t_list **env_list, t_cmd *cmd);
+int			ft_unset(t_list **env_list, t_cmd *cmd, t_mini *mini);
 
 //************ BUILTIN_EXIT.c ************/
 int			builtin_exit(t_cmd *cmd, t_mini *mini);

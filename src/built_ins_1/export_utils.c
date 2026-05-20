@@ -100,10 +100,14 @@ int	update_env_var(t_list **env_lst, char *name, char *value, int flag)
 	if (result == 1)
 	{
 		free(name);
-		if (value && flag == 0)
-			free(value);
-		else if (flag == 1)
+		if (flag == 1)
+		{
 			free(new_value);
+			if (value)
+				free(value);
+		}
+		else if (value)
+			free(value);
 	}
 	else if (flag == 1)
 		free(new_value);

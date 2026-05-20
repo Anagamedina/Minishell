@@ -65,8 +65,12 @@ char	*get_and_reconstruct_token(char *split_wrd, char *var_val, int i)
 	int		after;
 	int		len_token;
 	char	*new_token;
+	int		var_len;
 
 	before = 0;
+	var_len = 0;
+	if (var_val)
+		var_len = (int)ft_strlen(var_val);
 	while (split_wrd[i] && split_wrd[i] == SPACE)
 		before ++;
 	while (split_wrd[i] && split_wrd[i] != SPACE)
@@ -74,13 +78,14 @@ char	*get_and_reconstruct_token(char *split_wrd, char *var_val, int i)
 	after = 0;
 	while (split_wrd[i] && split_wrd[i] == SPACE)
 		after ++;
-	len_token = before + (int) ft_strlen(var_val) + after;
+	len_token = before + var_len + after;
 	new_token = malloc(sizeof(char) * (len_token + 1));
 	if (!new_token)
 		return (NULL);
 	ft_memset(new_token, SPACE, before);
-	ft_memcpy(new_token + before, var_val, ft_strlen(var_val));
-	ft_memset(new_token + before + ft_strlen(var_val), SPACE, after);
+	if (var_val)
+		ft_memcpy(new_token + before, var_val, var_len);
+	ft_memset(new_token + before + var_len, SPACE, after);
 	new_token[len_token] = '\0';
 	return (new_token);
 }

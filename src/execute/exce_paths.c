@@ -84,6 +84,8 @@ char	*extract_path_variable(char **env)
 	int		i;
 
 	i = 0;
+	if (!env)
+		return (NULL);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)

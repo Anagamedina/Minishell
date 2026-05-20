@@ -67,19 +67,24 @@ void	print_str(char *cmd_str)
 	ft_putendl_fd(": No such file or directory", 2);
 }
 
-int	ft_env(t_list *env_list, t_cmd *cmd)
+int	ft_env(t_mini *mini, t_cmd *cmd)
 {
 	t_list	*current;
 	t_env	*env_var;
 
-	if (!env_list)
+	if (!mini || !mini->env)
+	{
+		if (mini)
+			mini->exit_status = 1;
 		return (1);
+	}
 	if (cmd->cmd_args && cmd->cmd_args[1] != NULL)
 	{
 		print_str(cmd->cmd_args[1]);
+		mini->exit_status = 127;
 		return (127);
 	}
-	current = env_list;
+	current = mini->env;
 	while (current)
 	{
 		env_var = (t_env *) current->content;
@@ -92,5 +97,6 @@ int	ft_env(t_list *env_list, t_cmd *cmd)
 		printf("%s=%s\n", env_var->key, env_var->value);
 		current = current->next;
 	}
+	mini->exit_status = 0;
 	return (0);
 }

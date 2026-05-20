@@ -50,17 +50,20 @@ int	ft_pwd(t_mini *mini)
 	curr_dir = getcwd(NULL, 0);
 	if (!curr_dir)
 	{
-		env_pwd = get_variable_in_env_list(mini->env, "PWD=");
+		env_pwd = get_variable_in_env_list(mini->env, "PWD");
 		if (env_pwd)
 		{
 			ft_putendl_fd(env_pwd, 1);
-			return (1);
+			mini->exit_status = 0;
+			return (0);
 		}
 		ft_putendl_fd("Error: PWD not set", 2);
+		mini->exit_status = 1;
 		return (1);
 	}
 	ft_putendl_fd(curr_dir, 1);
 	set_variable_in_env_lst((&mini->env), "PWD", curr_dir);
 	free(curr_dir);
+	mini->exit_status = 0;
 	return (0);
 }

@@ -31,8 +31,9 @@ void	free_env_array(char **env_array, int allocated)
 {
 	while (allocated > 0)
 	{
-		free(env_array[allocated]);
 		allocated--;
+		if (env_array[allocated])
+			free(env_array[allocated]);
 	}
 	free(env_array);
 }
@@ -47,7 +48,10 @@ char	*convert_env_variable_to_string(t_env *env_var)
 	temp_str = ft_strjoin(env_var->key, "=");
 	if (!temp_str)
 		return (NULL);
-	env_string = ft_strjoin(temp_str, env_var->value);
+	if (env_var->value)
+		env_string = ft_strjoin(temp_str, env_var->value);
+	else
+		env_string = ft_strdup(temp_str);
 	free(temp_str);
 	return (env_string);
 }
@@ -72,7 +76,7 @@ int	populate_env_array(t_list *env_list, char **env_array, int env_count)
 		curr_node = curr_node->next;
 		i++;
 	}
-	env_array[env_count] = NULL;
+	env_array[i] = NULL;
 	return (1);
 }
 
@@ -81,16 +85,14 @@ char	**env_list_to_array(t_list *env_list)
 	char	**env_array;
 	int		env_count;
 
-	if (!env_list)
-		return (NULL);
 	env_count = count_env_variables(env_list);
 	env_array = ft_calloc(env_count + 1, sizeof(char *));
 	if (!env_array)
 		return (NULL);
-	if (!populate_env_array(env_list, env_array, env_count))
+	if (env_count > 0)
 	{
-		free(env_array);
-		return (NULL);
+		if (!populate_env_array(env_list, env_array, env_count))
+			return (NULL);
 	}
 	return (env_array);
 }

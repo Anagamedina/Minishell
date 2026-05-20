@@ -33,7 +33,6 @@ static void	replace_env_var_in_token(char **token, t_list *env_list)
 
 static void	process_split_words(char **split_word, t_list *env_list)
 {
-	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -44,9 +43,7 @@ static void	process_split_words(char **split_word, t_list *env_list)
 			i++;
 			continue ;
 		}
-		tmp = split_word[i];
 		replace_env_var_in_token(&split_word[i], env_list);
-		free(tmp);
 		i++;
 	}
 }
@@ -88,19 +85,17 @@ static int	process_token(t_tokens *curr_token, t_list *env_list)
 void	get_var_from_token(t_tokens *token_list, t_list *env_list)
 {
 	t_tokens	*curr_token;
-	int			pos_dolar;
 
 	curr_token = token_list;
 	while (curr_token != NULL)
 	{
 		if (curr_token->type_token == WORD)
 		{
-			pos_dolar = ft_strchr_c(curr_token->str, DOLLAR_SIGN);
-			if (pos_dolar == -1 && curr_token->str[pos_dolar + 1] == SPACE && \
-				(pos_dolar + 1 < (int)ft_strlen(curr_token->str)))
-				break ;
-			if (!process_token(curr_token, env_list))
-				return ;
+			if (ft_strchr(curr_token->str, DOLLAR_SIGN))
+			{
+				if (!process_token(curr_token, env_list))
+					return ;
+			}
 		}
 		curr_token = curr_token->next;
 	}

@@ -59,18 +59,22 @@ static void	add_or_update_env_variable(t_list **env_list, char *arg)
 	int		append_flag;
 	int		updated;
 
+	var_name = NULL;
+	var_value = NULL;
 	append_flag = extract_env_var(arg, &var_name, &var_value);
 	if (!var_name)
 	{
-		free(var_value);
+		if (var_value)
+			free(var_value);
 		return ;
 	}
 	updated = update_env_var(env_list, var_name, var_value, append_flag);
 	if (!updated)
-		add_new_env_variable(env_list, var_name, var_value);
-	else
 	{
-		var_value = NULL;
+		if (!add_new_env_variable(env_list, var_name, var_value))
+		{
+			// add_new_env_variable already frees them on failure
+		}
 	}
 }
 
@@ -80,6 +84,11 @@ int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 	int	error_flag;
 
 	error_flag = 0;
+	if (curr_cmd->count_args == 1)
+	{
+		print_export(&(mini->env));
+		return (0);
+	}
 	i = 1;
 	while (curr_cmd->cmd_args[i] != NULL)
 	{
@@ -97,6 +106,10 @@ int	ft_export(t_cmd *curr_cmd, t_mini *mini)
 	mini->envp_to_array = NULL;
 	mini->envp_to_array = env_list_to_array(mini->env);
 	if (!mini->envp_to_array)
+	{
+		mini->exit_status = 1;
 		return (1);
+	}
+	mini->exit_status = error_flag;
 	return (error_flag);
 }
