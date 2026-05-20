@@ -311,4 +311,14 @@ void		remove_and_replace_quotes(t_tokens *token, char quote_type);
 void		print_command_not_found(const char *cmd);
 void		handle_memory_allocation_error(void);
 void		handle_env_duplication_error(char **env_array, int index);
+
+//************* AST **************/
+t_ast_node	*create_ast_node(t_ast_type type);
+t_ast_node	*create_pipe_node(t_ast_node *left, t_ast_node *right);
+t_ast_node	*create_redir_node(int type, char *file, t_ast_node *left);
+t_ast_node	*create_command_node(char **args);
+void		free_ast(t_ast_node *node);
+t_ast_node	*build_ast(t_list *tokens);
+int			execute_ast(t_ast_node *node, t_mini *mini);
+
 #endif

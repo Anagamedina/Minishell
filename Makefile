@@ -29,6 +29,7 @@ SRC_CMD = $(SRC_DIR)/commands
 SRC_EXPAND= $(SRC_DIR)/expand
 SRC_FREE= $(SRC_DIR)/free
 SRC_SIGNALS= $(SRC_DIR)/signals
+SRC_AST= $(SRC_DIR)/ast
 
 OBJ_DIR = obj
 LIBFT_DIR = libft
@@ -106,7 +107,10 @@ SRC =	$(SRC_MINI)/init_minishell.c \
 		$(SRC_FREE)/free_split.c \
 		$(SRC_FREE)/free_tokens.c \
 		$(SRC_SIGNALS)/signals.c \
-		$(SRC_SIGNALS)/signals_utils.c
+		$(SRC_SIGNALS)/signals_utils.c \
+		$(SRC_AST)/ast_utils.c \
+		$(SRC_AST)/ast_builder.c \
+		$(SRC_AST)/ast_executor.c
 
 SRC_WITH_MAIN = $(SRC) $(SRC_DIR)/minishell.c
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_WITH_MAIN))

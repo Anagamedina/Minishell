@@ -121,4 +121,21 @@ typedef struct s_mini
 	int			exit_status;
 }	t_mini;
 
+typedef enum e_ast_type
+{
+	NODE_PIPE,
+	NODE_REDIRECT,
+	NODE_COMMAND
+}	t_ast_type;
+
+typedef struct s_ast_node
+{
+	t_ast_type			type;
+	char				**args;
+	int					redir_type;
+	char				*file;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
+
 #endif
